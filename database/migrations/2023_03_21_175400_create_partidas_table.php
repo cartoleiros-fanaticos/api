@@ -40,8 +40,6 @@ return new class extends Migration
             $table->boolean('valida')->nullable();
             $table->integer('placar_oficial_mandante')->nullable();
             $table->integer('placar_oficial_visitante')->nullable();
-            $table->string('url_confronto')->nullable();
-            $table->string('url_transmissao')->nullable();
             $table->timestamps();
         });
     }
