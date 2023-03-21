@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('clubes', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
             $table->string('temporada')->default(Carbon::now()->format('Y'));
+            $table->string('nome');
             $table->string('abreviacao');
             $table->text('escudo');
             $table->string('60x60');

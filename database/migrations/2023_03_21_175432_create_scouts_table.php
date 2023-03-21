@@ -15,10 +15,11 @@ return new class extends Migration
     {
         Schema::create('scouts', function (Blueprint $table) {
             $table->id();
+            $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->string('nome');
+            $table->string('sigla');
             $table->double('valor');
             $table->enum('tipo', ['Positivo', 'Negativo']);
-            $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->timestamps();
         });
     }

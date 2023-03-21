@@ -37,7 +37,7 @@ class Atletas extends Command
     {
         try {
 
-            echo PHP_EOL . 'Carregando dados do mercado.' . PHP_EOL;
+            echo PHP_EOL . 'Carregando dados.' . PHP_EOL;
 
             $client = new Client();
             $response = $client->get('https://api.cartolafc.globo.com/atletas/mercado');
@@ -93,7 +93,7 @@ class Atletas extends Command
 
             endforeach;
 
-            echo 'Atualizando tabela atletas.' . PHP_EOL . PHP_EOL;
+            echo 'Atualizando tabela atletas.' . PHP_EOL;
 
             foreach ((array) $response['atletas'] as $key => $val) :
 
@@ -140,6 +140,8 @@ class Atletas extends Command
                     );
                 endif;
             endforeach;
+
+            echo 'Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
 
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;

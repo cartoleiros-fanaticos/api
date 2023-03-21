@@ -44,7 +44,7 @@ class Game extends Command
 
             $dt = $response['fechamento'];
 
-            echo 'Atualizando dados.' . PHP_EOL . PHP_EOL;
+            echo 'Atualizando tabela game.' . PHP_EOL . PHP_EOL;
 
             ModelsGame::updateOrCreate(
                 [
@@ -64,7 +64,7 @@ class Game extends Command
             $response = $client->get('https://api.cartolafc.globo.com/partidas');
             $response = json_decode($response->getBody(), true);
 
-            echo 'Atualizando dados.' . PHP_EOL . PHP_EOL;
+            echo 'Atualizando a tabela partidas.' . PHP_EOL;
 
             foreach ((array) $response['partidas'] as $key => $val) :
 
@@ -96,6 +96,8 @@ class Game extends Command
                     ]
                 );
             endforeach;
+
+            echo 'Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
 
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;
