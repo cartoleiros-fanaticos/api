@@ -6,10 +6,12 @@ import {
 } from "react-router-dom";
 import "./index.css";
 
+import Login from './screns/login/index';
+
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <div>Hello world 2!</div>,
+        element: <Login />,
     },
 ]);
 
