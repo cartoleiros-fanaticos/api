@@ -7,11 +7,16 @@ import {
 import "./index.css";
 
 import Login from './screens/login';
+import Register from './screens/register';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Login />,
+    },
+    {
+        path: "/cadastro",
+        element: <Register />,
     },
 ]);
 

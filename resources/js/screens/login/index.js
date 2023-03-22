@@ -49,7 +49,7 @@ function login({ history }) {
             <Logo />
             <Form onSubmit={enter}>
                 <Label>
-                    <Input required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
+                    <Input type="email" required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
                     <Icon>person</Icon>
                 </Label>
                 <Label>
@@ -59,8 +59,8 @@ function login({ history }) {
                 <Button>
                     {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>ACESSAR</span>}
                 </Button>
-                <Text>Não tem uma conta?<Link>Crie uma</Link></Text>
-                <Text>Esqueceu sua senha?<Link>Recuperar senha</Link></Text>
+                <Text>Não tem uma conta? <Link>Crie uma</Link></Text>
+                <Text>Esqueceu sua senha? <Link>Recuperar senha</Link></Text>
             </Form>
         </Container>
     );

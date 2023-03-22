@@ -84,7 +84,7 @@ export const Button = styled.button.attrs(() => ({
 export const Text = styled.p`
     color: #f1f1f1;
     text-align: center;
-    font-size: 1em;
+    font-size: 0.95;
     letter-spacing: 1px;
     margin-bottom: 5px;
 `;
