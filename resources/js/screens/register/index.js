@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import backButton from 'browser-back-button';
 import Loader from 'react-loader-spinner';
-import { message, swal_ask, swal_success } from '../../utils/helpers';
+import { message, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 import InputMask from "react-input-mask";
 
@@ -22,8 +21,19 @@ function register({ history }) {
         celular: '',
         email: '',
         password: '',
-        confirm_password: '',
+        password_confirm: '',
     });
+
+    useEffect(() => {
+
+        let el = document.querySelectorAll('input[type=email]');
+        el.forEach(e => {
+            console.log(e);
+            e.type = 'text';
+            e.removeAttribute('autocomplete')
+        })
+
+    }, [])
 
     const [loading, sloading] = useState(false);
 
@@ -35,10 +45,12 @@ function register({ history }) {
 
         try {
 
-            let { data: { access_token } } = await api.post('usuarios', user);
+            await api.post('usuarios', user);
+            swal_success('Cadastro realizado com sucesso, você será redirecionado.');
 
-            localStorage.setItem('token', access_token);
-            history.push('/adm');
+            setTimeout(() => {
+                history.push('/adm');
+            }, 2000);
 
         } catch (e) {
             message(e);
@@ -51,23 +63,23 @@ function register({ history }) {
             <Title>Cadastro de Usuários</Title>
             <Form onSubmit={enter}>
                 <Label>
-                    <Input required placeholder="Nome" onChange={(e) => suser({ nome: e.target.value })} value={user.nome} />
+                    <Input required placeholder="Nome" onChange={(e) => suser({ ...user, nome: e.target.value })} value={user.nome} />
                     <Icon>person</Icon>
                 </Label>
                 <Label>
-                    <InputMask mask="(99) 99999-9999" required placeholder="WhatsApp" onChange={(e) => suser({ celular: e.target.value })} value={user.celular} />
+                    <InputMask mask="(99) 99999-9999" required placeholder="WhatsApp" onChange={(e) => suser({ ...user, celular: e.target.value })} value={user.celular} />
                     <Icon>stay_current_portrait</Icon>
                 </Label>
                 <Label>
-                    <Input type="email" required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
+                    <Input type="email" autocomplete="off" required placeholder="Email" onChange={(e) => suser({ ...user, email: e.target.value })} value={user.email} />
                     <Icon>mail_outline</Icon>
                 </Label>
                 <Label>
-                    <Input type="password" placeholder="Senha" required onChange={(e) => suser({ ...user, password: e.target.value })} value={user.password} />
+                    <Input type="password" placeholder="Senha" required onChange={(e) => suser({ ...user, ...user, password: e.target.value })} value={user.password} />
                     <Icon>lock</Icon>
                 </Label>
                 <Label>
-                    <Input type="password" placeholder="Confirmar Senha" required onChange={(e) => suser({ ...user, confirm_password: e.target.value })} value={user.confirm_password} />
+                    <Input type="password" placeholder="Confirmar Senha" required onChange={(e) => suser({ ...user, ...user, password_confirm: e.target.value })} value={user.password_confirm} />
                     <Icon>lock</Icon>
                 </Label>
                 <Button>

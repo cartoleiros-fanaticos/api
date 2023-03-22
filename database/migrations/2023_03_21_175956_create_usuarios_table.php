@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('recovery')->nullable();
             $table->string('password');
-            $table->enum('acesso',['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro']);
-            $table->enum('plano',['Demonstrativo', 'Premium Campeão', 'Premium Cartoleiro', 'Free Cartoleiro', 'Plano Stats']);
-            $table->enum('ativo',['Sim', 'Não']);
+            $table->enum('acesso',['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
+            $table->enum('plano',['Demonstrativo', 'Premium Campeão', 'Premium Cartoleiro', 'Free Cartoleiro', 'Plano Stats'])->default('Demonstrativo');
+            $table->enum('ativo',['Sim', 'Não'])->default('Sim');
             $table->timestamps();
         });
     }

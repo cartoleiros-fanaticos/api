@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link as A } from "react-router-dom";
 
 export const Container = styled.div`
     color: #f1f1f1;
@@ -11,11 +12,6 @@ export const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    @media screen and (max-width:900px){
-		width: 90%;
-		padding: 30px 25px;
-    }
 `;
 
 export const Logo = styled.img.attrs(() => ({
@@ -24,11 +20,14 @@ export const Logo = styled.img.attrs(() => ({
     width: 180px;
 `;
 
-export const Form = styled.form.attrs(() => ({
-    autocomplete: 'off'
-}))`
+export const Form = styled.form`
     width: 35%;
     padding: 50px;
+
+    @media screen and (max-width:900px){
+		width: 90%;
+		padding: 30px 25px;
+    }
 `;
 
 export const Label = styled.label`
@@ -89,7 +88,7 @@ export const Text = styled.p`
     margin-bottom: 5px;
 `;
 
-export const Link = styled.a`
+export const Link = styled(A)`
     color: #F68D42;
     text-align: center;
     cursor: pointer;

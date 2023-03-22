@@ -17,9 +17,7 @@ export const Title = styled.h3`
     color: #f1f1f1;
 `;
 
-export const Form = styled.form.attrs(() => ({
-    autocomplete: 'off'
-}))`
+export const Form = styled.form`
     width: 40%;
     padding: 30px 50px;
 

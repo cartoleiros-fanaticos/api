@@ -4,6 +4,8 @@ import Loader from 'react-loader-spinner';
 import { message, swal_ask, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 
+import { useNavigate } from "react-router-dom";
+
 import {
     Container,
     Logo,
@@ -16,12 +18,16 @@ import {
     Link,
 } from './styles';
 
-function login({ history }) {
+function login() {
+
+    let navigate = useNavigate();
 
     const [user, suser] = useState({
         email: '',
         password: '',
     });
+
+    useEffect(() => console.log(location), [])
 
     const [loading, sloading] = useState(false);
 
@@ -36,7 +42,7 @@ function login({ history }) {
             let { data: { access_token } } = await api.post('login', user);
 
             localStorage.setItem('token', access_token);
-            history.push('/adm');
+            navigate('/auth/atletas');
 
         } catch (e) {
             message(e);
@@ -59,7 +65,7 @@ function login({ history }) {
                 <Button>
                     {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>ACESSAR</span>}
                 </Button>
-                <Text>Não tem uma conta? <Link>Crie uma</Link></Text>
+                <Text>Não tem uma conta? <Link to="/cadastro">Crie uma</Link></Text>
                 <Text>Esqueceu sua senha? <Link>Recuperar senha</Link></Text>
             </Form>
         </Container>
