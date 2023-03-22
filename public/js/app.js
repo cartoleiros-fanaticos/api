@@ -7925,7 +7925,7 @@ var Button = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button.at
   };
 })(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    width: 100%;\n    height: 50px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    background: #F68D42;\n    color: #f1f1f1;\n    font-size: 1em;\n    border: none;\n    border-radius: 100px;\n    cursor: pointer;\n    margin-bottom: 15px;\n    transition: all 0.5s;\n    outline: none;\n    &:hover {\n        background: #d95f08;\n    }\n"])));
 var Text = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n    color: #f1f1f1;\n    text-align: center;\n    font-size: 0.95;\n    letter-spacing: 1px;\n    margin-bottom: 5px;\n"])));
-var Link = (0,styled_components__WEBPACK_IMPORTED_MODULE_0__["default"])(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link)(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    color: #F68D42;\n    text-align: center;\n    cursor: pointer;\n    &:hover {\n        text-decoration: underline;\n    }\n"])));
+var Link = (0,styled_components__WEBPACK_IMPORTED_MODULE_0__["default"])(react_router_dom__WEBPACK_IMPORTED_MODULE_1__.Link)(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    color: #F68D42;\n    text-align: center;\n    cursor: pointer;\n    text-decoration: none;\n    &:hover {\n        text-decoration: underline;\n    }\n"])));
 
 /***/ }),
 
@@ -8111,8 +8111,8 @@ function register(_ref) {
           visible: true,
           type: "TailSpin",
           color: "#fff",
-          height: 30,
-          width: 30
+          height: 25,
+          width: 25
         }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("span", {
           children: "Cadastrar"
         })

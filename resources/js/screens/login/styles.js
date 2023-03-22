@@ -92,6 +92,7 @@ export const Link = styled(A)`
     color: #F68D42;
     text-align: center;
     cursor: pointer;
+    text-decoration: none;
     &:hover {
         text-decoration: underline;
     }

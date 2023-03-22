@@ -83,7 +83,7 @@ function register({ history }) {
                     <Icon>lock</Icon>
                 </Label>
                 <Button>
-                    {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>Cadastrar</span>}
+                    {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={25} width={25} /> : <span>Cadastrar</span>}
                 </Button>
             </Form>
         </Container>
