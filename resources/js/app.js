@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 
-import Login from './screns/login/index';
+import Login from './screens/login';
 
 const router = createBrowserRouter([
     {

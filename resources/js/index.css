@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    height: 100vh;
+    overflow: hidden;
+    padding-right: 0 !important;
+  }
+
+  @media screen and (max-width:1024px){
+    html, body, #root {
+      min-height: calc(100vh - 56px);
+    }    
+  }
+  
+  body {
+    font: 14px 'Roboto', sans-serif;
+    color: #333;
+    -webkit-font-smoothing: antialiased !important;
+  }
+
+  ul {
+    list-style: none;
+  }

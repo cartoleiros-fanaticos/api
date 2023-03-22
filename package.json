@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "asynckit": "^0.4.0",
+    "browser-back-button": "^0.3.0",
     "combined-stream": "^1.0.8",
     "delayed-stream": "^1.0.0",
     "esbuild": "^0.17.12",
@@ -45,13 +46,13 @@
     "picomatch": "^2.3.1",
     "postcss": "^8.4.21",
     "proxy-from-env": "^1.1.0",
-    "react-loader-spinner": "^5.3.4",
+    "react-loader-spinner": "^4.0.0",
     "react-router-dom": "^6.9.0",
     "resolve": "^1.22.1",
     "rollup": "^3.20.0",
     "source-map-js": "^1.0.2",
     "supports-preserve-symlinks-flag": "^1.0.0",
-    "sweetalert2": "^11.7.3",
+    "sweetalert2": "^11.4.8",
     "vite-plugin-full-reload": "^1.0.5"
   },
   "repository": {
