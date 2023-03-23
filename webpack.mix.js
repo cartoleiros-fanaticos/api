@@ -16,7 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
     .browserSync({
         proxy: 'http://localhost',
         reloadDelay: 850,
-        port: 3002
+        port: 3001
     });
 
 if (mix.inProduction()) {

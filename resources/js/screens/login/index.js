@@ -4,6 +4,9 @@ import Loader from 'react-loader-spinner';
 import { message, swal_ask, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 
+import ModalRecovery from '../../modal/recovery';
+import Modal from '../../componets/modal';
+
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -21,6 +24,8 @@ import {
 function login() {
 
     let navigate = useNavigate();
+
+    const [modal, smodal] = useState(false);
 
     const [user, suser] = useState({
         email: '',
@@ -51,24 +56,36 @@ function login() {
     }
 
     return (
-        <Container>
-            <Logo />
-            <Form onSubmit={enter}>
-                <Label>
-                    <Input type="email" required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
-                    <Icon>person</Icon>
-                </Label>
-                <Label>
-                    <Input type="password" required onChange={(e) => suser({ ...user, password: e.target.value })} value={user.password} placeholder="Senha" />
-                    <Icon>lock</Icon>
-                </Label>
-                <Button>
-                    {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>ACESSAR</span>}
-                </Button>
-                <Text>Não tem uma conta? <Link to="/cadastro">Crie uma</Link></Text>
-                <Text>Esqueceu sua senha? <Link>Recuperar senha</Link></Text>
-            </Form>
-        </Container>
+        <>
+            <Container>
+                <Logo />
+                <Form onSubmit={enter}>
+                    <Label>
+                        <Input type="email" required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
+                        <Icon>person</Icon>
+                    </Label>
+                    <Label>
+                        <Input type="password" required onChange={(e) => suser({ ...user, password: e.target.value })} value={user.password} placeholder="Senha" />
+                        <Icon>lock</Icon>
+                    </Label>
+                    <Button>
+                        {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>ACESSAR</span>}
+                    </Button>
+                    <Text>Não tem uma conta? <Link to="/cadastro">Crie uma</Link></Text>
+                    <Text>Esqueceu sua senha? <Link onClick={() => smodal(true)}>Recuperar senha</Link></Text>
+                </Form>
+            </Container>
+            {
+                modal &&
+                <Modal
+                    icon="lock"
+                    title="Recuperar senha"
+                    modal={modal}
+                    smodal={smodal}
+                    Component={ModalRecovery}
+                />
+            }
+        </>
     );
 
 }
