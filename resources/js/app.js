@@ -9,6 +9,7 @@ import "./index.css";
 
 import Login from './screens/login';
 import Register from './screens/register';
+import Recovery from './screens/recovery';
 
 import Player from './screens/auth/player';
 
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     {
         path: "/cadastro",
         element: <Register />,
+    },
+    {
+        path: "/recovery",
+        element: <Recovery />,
     },
     {
         path: "/auth/atletas",

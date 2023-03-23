@@ -2,10 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import Loader from 'react-loader-spinner';
 import { message, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
-import InputMask from "react-input-mask";
+
+import { useNavigate } from "react-router-dom";
 
 import {
     Container,
+    Logo,
     Title,
     Form,
     Label,
@@ -14,12 +16,11 @@ import {
     Button,
 } from './styles';
 
-function register({ history }) {
+function recovery() {
+
+    let navigate = useNavigate();
 
     const [user, suser] = useState({
-        nome: '',
-        celular: '',
-        email: '',
         password: '',
         password_confirm: '',
     });
@@ -34,11 +35,13 @@ function register({ history }) {
 
         try {
 
-            await api.post('usuarios', user);
-            swal_success('Cadastro realizado com sucesso, você será redirecionado.');
+            const { data : { access_token } } = await api.post('recuperar-senha?action=new_password', user);
+            swal_success('Senha alterada com sucesso, você será redirecionado.');
+
+            localStorage.setItem('token', access_token);
 
             setTimeout(() => {
-                history.push('/adm');
+                navigate('/auth/atletas');
             }, 2000);
 
         } catch (e) {
@@ -47,22 +50,12 @@ function register({ history }) {
         };
     }
 
+
     return (
         <Container>
-            <Title>Cadastro de Usuários</Title>
+            <Logo />
+            <Title>Recuperação de Senha</Title>
             <Form onSubmit={enter}>
-                <Label>
-                    <Input required placeholder="Nome" onChange={(e) => suser({ ...user, nome: e.target.value })} value={user.nome} />
-                    <Icon>person</Icon>
-                </Label>
-                <Label>
-                    <InputMask mask="(99) 99999-9999" required placeholder="WhatsApp" onChange={(e) => suser({ ...user, celular: e.target.value })} value={user.celular} />
-                    <Icon>stay_current_portrait</Icon>
-                </Label>
-                <Label>
-                    <Input type="email" autocomplete="off" required placeholder="Email" onChange={(e) => suser({ ...user, email: e.target.value })} value={user.email} />
-                    <Icon>mail_outline</Icon>
-                </Label>
                 <Label>
                     <Input type="password" placeholder="Senha" required onChange={(e) => suser({ ...user, ...user, password: e.target.value })} value={user.password} />
                     <Icon>lock</Icon>
@@ -72,12 +65,21 @@ function register({ history }) {
                     <Icon>lock</Icon>
                 </Label>
                 <Button>
-                    {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={25} width={25} /> : <span>Cadastrar</span>}
+                    {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={25} width={25} /> : <span>Alterar Senha</span>}
                 </Button>
             </Form>
         </Container>
     );
-
 }
 
-export default register;
+export default recovery;
+
+{/* <div class="container">
+  <img src="./assets/imagens/logo.png" >
+  <h2>Recuperação de Senha</h2>
+  <form (ngSubmit)="novaSenha()">
+    <input required type="password" name="password" [(ngModel)]="password" placeholder="Nova senha">
+    <input required type="password" name="repassword" [(ngModel)]="repassword" placeholder="Confirmação da nova senha">
+    <input type="submit" value="Alterar Senha">
+  </form>
+</div> */}
