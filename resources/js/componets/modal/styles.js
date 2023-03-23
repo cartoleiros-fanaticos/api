@@ -14,7 +14,7 @@ export const Container = styled.div`
     position: absolute;
     z-index: 50;
     left: 50%;
-    top: 70%;
+    top: 60%;
     opacity: 0;
     visibility: hidden;
 `;

@@ -33,7 +33,7 @@ class UsuariosController extends Controller
 
         $regras = [
             'nome' => 'required',
-            'email' => 'required|unique:usuarios|regex:/^[a-z0-9._]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i',
+            'email' => 'required|unique:usuarios|regex:/^[a-z0-9._-]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i',
             'celular' => 'required|regex:/^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/',
             'password' => 'min:6|regex:/^(?=.*[a-zA-Z])(?=.*[0-9])/',
             'password_confirm' => 'required|same:password',

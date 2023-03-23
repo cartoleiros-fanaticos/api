@@ -20,11 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('mercado', [AtletasController::class, 'mercado']);
 
 Route::group([
-
+    
     'middleware' => 'api',
-
+    
 ], function ($router) {
-
+    
+    Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
     Route::post('login', [ AuthController::class, 'login' ]);
     Route::post('logout', [ AuthController::class, 'logout' ]);
     Route::post('refresh', [ AuthController::class, 'refresh' ]);

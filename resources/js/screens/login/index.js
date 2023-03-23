@@ -32,8 +32,6 @@ function login() {
         password: '',
     });
 
-    useEffect(() => console.log(location), [])
-
     const [loading, sloading] = useState(false);
 
     async function enter(e) {
@@ -72,7 +70,7 @@ function login() {
                         {loading ? <Loader visible={true} type="TailSpin" color="#fff" height={30} width={30} /> : <span>ACESSAR</span>}
                     </Button>
                     <Text>Não tem uma conta? <Link to="/cadastro">Crie uma</Link></Text>
-                    <Text>Esqueceu sua senha? <Link onClick={() => smodal(true)}>Recuperar senha</Link></Text>
+                    <Text>Esqueceu sua senha? <Link href="javascript:void(0)" onClick={() => smodal(true)}>Recuperar senha</Link></Text>
                 </Form>
             </Container>
             {

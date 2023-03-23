@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link as A } from "react-router-dom";
 
 export const Container = styled.div`
     color: #f1f1f1;
@@ -87,9 +88,10 @@ export const Text = styled.p`
     margin-bottom: 5px;
 `;
 
-export const Link = styled.span`
+export const Link = styled(A)`
     color: #F68D42;
     cursor: pointer;
+    text-decoration: none;
     &:hover {
         text-decoration: underline;
     }

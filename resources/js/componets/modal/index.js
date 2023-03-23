@@ -59,7 +59,7 @@ function modal({ title, icon, Component, modal, smodal }) {
         screen.current.style.opacity = 0;
         screen.current.style.visibility = 'hidden';
 
-        container.current.style.top = '-25%';
+        container.current.style.top = '60%';
         container.current.style.opacity = 0;
 
         setTimeout(() => smodal(false), 150);
