@@ -11,7 +11,7 @@ import {
   Button,
 } from './styles';
 
-function recovery() {
+function recovery({ smodal }) {
 
   const [data, sdata] = useState({
     email: ''
@@ -30,6 +30,7 @@ function recovery() {
       await api.post('recuperar-senha', data);
       swal_success('Foi enviado para seu email um link de recuperação.');
       sloading(false);
+      smodal(false);
 
     } catch (e) {
       message(e);

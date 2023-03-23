@@ -90,29 +90,68 @@ class AuthController extends Controller
     public function recuperar_senha(Request $request)
     {
 
-        $regras = [
-            'email' => 'required|regex:/^[a-z0-9._-]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i',
-        ];
+        if ($request->recovery) :
 
-        $mensagens = [
-            'email.required' => 'O campo email é obrigatório.',
-            'email.regex' => 'Email não é valido.',
-        ];
+            $regras = [
+                'password' => 'min:6|regex:/^(?=.*[a-zA-Z])(?=.*[0-9])/',
+                'password_confirm' => 'required|same:password',
+            ];
 
-        $validator = Validator::make($request->all(), $regras, $mensagens);
+            $mensagens = [
+                'password.regex' => 'O campo senha precisa ter letras e números.',
+                'password.min' => 'O campo senha precisa ter no minimo 6 digitos.',
+                'password_confirm.required' => 'O campo confirmar senha é obrigatório.',
+                'password_confirm.same' => 'O campo senha não bate com a confirmação, ambos precisam ser igual.',
+            ];
 
-        if ($validator->fails())
-            return response()->json(['message' => $validator->errors()->first()], 400);
+            $validator = Validator::make($request->all(), $regras, $mensagens);
 
-        $usuario = Usuarios::where('email', $request->email)->first();
+            if ($validator->fails())
+                return response()->json(['message' => $validator->errors()->first()], 400);
 
-        if (is_null($usuario))
-            return response()->json(['message' => 'Email informado não foi encontrado.'], 404);
+            $password = Hash::make($request->password);
 
-        $usuario->recovery = str_replace('/', '', Hash::make(Str::random(20)));
-        $usuario->save();
+            $usuario = Usuarios::where('recovery', $request->recovery)
+                ->first();
 
-        $response = Mail::to($usuario->email)->send(new RecuperarSenha($usuario->recovery));
+            if (!$usuario)
+                return response()->json(['message' => 'Dados não correspondem ao usuário, tente novamente.'], 400);
+
+            Usuarios::where('recovery', $request->recovery)
+                ->update([
+                    'password' => $password,
+                    'recovery' => null
+                ]);
+
+            $response = auth('api')->login($usuario);
+
+        else :
+
+            $regras = [
+                'email' => 'required|regex:/^[a-z0-9._-]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i',
+            ];
+
+            $mensagens = [
+                'email.required' => 'O campo email é obrigatório.',
+                'email.regex' => 'Email não é valido.',
+            ];
+
+            $validator = Validator::make($request->all(), $regras, $mensagens);
+
+            if ($validator->fails())
+                return response()->json(['message' => $validator->errors()->first()], 400);
+
+            $usuario = Usuarios::where('email', $request->email)->first();
+
+            if (is_null($usuario))
+                return response()->json(['message' => 'Email informado não foi encontrado.'], 400);
+
+            $usuario->recovery = str_replace('/', '', Hash::make(Str::random(20)));
+            $usuario->save();
+
+            $response = Mail::to($usuario->email)->send(new RecuperarSenha($usuario->recovery));
+
+        endif;
 
         return response()->json($response);
     }

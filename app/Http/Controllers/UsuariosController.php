@@ -65,7 +65,9 @@ class UsuariosController extends Controller
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request->password);
 
-        $response = $usuario->save();
+        $usuario->save();
+
+        $response = auth('api')->login($usuario);
 
         return response()->json($response);
     }

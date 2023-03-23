@@ -74,7 +74,7 @@ function modal({ title, icon, Component, modal, smodal }) {
                     <Icon color="#c40808" onClick={close}>close</Icon>
                 </Header>
                 <Content>
-                    <Component />
+                    <Component smodal={smodal} />
                 </Content>
             </Container>
             <Screen onClick={close} ref={screen}></Screen>

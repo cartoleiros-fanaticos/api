@@ -4,6 +4,8 @@ import { message, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 import InputMask from "react-input-mask";
 
+import { useNavigate } from "react-router-dom";
+
 import {
     Container,
     Title,
@@ -15,6 +17,8 @@ import {
 } from './styles';
 
 function register({ history }) {
+
+    const navigate = useNavigate();
 
     const [user, suser] = useState({
         nome: '',
@@ -34,11 +38,13 @@ function register({ history }) {
 
         try {
 
-            await api.post('usuarios', user);
+            const { data: access_token } = await api.post('usuarios', user);
             swal_success('Cadastro realizado com sucesso, você será redirecionado.');
 
+            localStorage.setItem('token', access_token);
+
             setTimeout(() => {
-                history.push('/adm');
+                navigate('/auth/atletas');
             }, 2000);
 
         } catch (e) {

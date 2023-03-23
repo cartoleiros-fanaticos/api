@@ -7770,7 +7770,9 @@ function modal(_ref) {
           children: "close"
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Content, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(Component, {})
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(Component, {
+          smodal: smodal
+        })
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Screen, {
       onClick: close,
@@ -7855,7 +7857,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-function recovery() {
+function recovery(_ref) {
+  var smodal = _ref.smodal;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       email: ''
     }),
@@ -7882,20 +7885,21 @@ function recovery() {
           case 5:
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.swal_success)('Foi enviado para seu email um link de recuperação.');
             sloading(false);
-            _context.next = 13;
+            smodal(false);
+            _context.next = 14;
             break;
-          case 9:
-            _context.prev = 9;
+          case 10:
+            _context.prev = 10;
             _context.t0 = _context["catch"](2);
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.message)(_context.t0);
             sloading(false);
-          case 13:
-            ;
           case 14:
+            ;
+          case 15:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 9]]);
+      }, _callee, null, [[2, 10]]);
     }));
     return _enter.apply(this, arguments);
   }
@@ -8251,6 +8255,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/helpers */ "./resources/js/utils/helpers.js");
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/api */ "./resources/js/utils/api.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/recovery/styles.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -8278,6 +8283,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 function recovery() {
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
+  var _useSearchParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useSearchParams)(),
+    _useSearchParams2 = _slicedToArray(_useSearchParams, 1),
+    params = _useSearchParams2[0];
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       password: '',
       password_confirm: ''
@@ -8302,10 +8310,10 @@ function recovery() {
             sloading(true);
             _context.prev = 2;
             _context.next = 5;
-            return _utils_api__WEBPACK_IMPORTED_MODULE_3__["default"].post('recuperar-senha?action=new_password', user);
+            return _utils_api__WEBPACK_IMPORTED_MODULE_3__["default"].post("recuperar-senha?recovery=".concat(params.get('recovery')), user);
           case 5:
             _yield$api$post = _context.sent;
-            access_token = _yield$api$post.data.access_token;
+            access_token = _yield$api$post.data;
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.swal_success)('Senha alterada com sucesso, você será redirecionado.');
             localStorage.setItem('token', access_token);
             setTimeout(function () {
@@ -8451,6 +8459,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/api */ "./resources/js/utils/api.js");
 /* harmony import */ var react_input_mask__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-input-mask */ "./node_modules/react-input-mask/index.js");
 /* harmony import */ var react_input_mask__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_input_mask__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/register/styles.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
@@ -8476,8 +8485,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function register(_ref) {
   var history = _ref.history;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       nome: '',
       celular: '',
@@ -8497,6 +8508,7 @@ function register(_ref) {
   }
   function _enter() {
     _enter = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var _yield$api$post, access_token;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
@@ -8506,24 +8518,27 @@ function register(_ref) {
             _context.next = 5;
             return _utils_api__WEBPACK_IMPORTED_MODULE_3__["default"].post('usuarios', user);
           case 5:
+            _yield$api$post = _context.sent;
+            access_token = _yield$api$post.data;
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.swal_success)('Cadastro realizado com sucesso, você será redirecionado.');
+            localStorage.setItem('token', access_token);
             setTimeout(function () {
-              history.push('/adm');
+              navigate('/auth/atletas');
             }, 2000);
-            _context.next = 13;
+            _context.next = 16;
             break;
-          case 9:
-            _context.prev = 9;
+          case 12:
+            _context.prev = 12;
             _context.t0 = _context["catch"](2);
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.message)(_context.t0);
             sloading(false);
-          case 13:
+          case 16:
             ;
-          case 14:
+          case 17:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 9]]);
+      }, _callee, null, [[2, 12]]);
     }));
     return _enter.apply(this, arguments);
   }

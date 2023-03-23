@@ -3,7 +3,7 @@ import Loader from 'react-loader-spinner';
 import { message, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import {
     Container,
@@ -18,7 +18,8 @@ import {
 
 function recovery() {
 
-    let navigate = useNavigate();
+    const navigate = useNavigate();
+    const [params] = useSearchParams();
 
     const [user, suser] = useState({
         password: '',
@@ -35,7 +36,7 @@ function recovery() {
 
         try {
 
-            const { data : { access_token } } = await api.post('recuperar-senha?action=new_password', user);
+            const { data: access_token } = await api.post(`recuperar-senha?recovery=${params.get('recovery')}`, user);
             swal_success('Senha alterada com sucesso, você será redirecionado.');
 
             localStorage.setItem('token', access_token);
