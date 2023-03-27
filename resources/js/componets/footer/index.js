@@ -1,7 +1,17 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import { 
-  Container
+  Container,
+  Content,
+  Item,
+  Title,
+  Items,
+  Image,
+  Label,
+  Description,
+  Copyright,
+  Text,
  } from './styles';
 
 function footer() {
@@ -36,8 +46,7 @@ function footer() {
             <Image src="../images/baixe-aplicativo.png" />
             <Label>BAIXE O APLICATIVO</Label>
             <Description>O Cartoleiro com você onde estiver</Description>
-            <Link href="javascript:void(0)">Play Store</Link>
-            <Link href="javascript:void(0)">Apple Store</Link>
+            <Link href="javascript:void(0)">Play Store</Link> <Link href="javascript:void(0)">Apple Store</Link>
           </Items>
           <Items>
             <Image src="../images/tornar-socio.png" />
