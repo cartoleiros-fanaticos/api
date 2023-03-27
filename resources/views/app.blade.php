@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    {{-- <link rel="icon" type="image/x-icon" href="/upload/images/logo/icon.png"> --}}
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
     <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>CARTOLEIRO</title>
+    <title>Cartoleiro Fanático</title>
     <link href="/css/material.icon.css" rel="stylesheet">
 </head>
 

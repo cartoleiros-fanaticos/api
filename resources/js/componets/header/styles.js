@@ -62,7 +62,7 @@ export const Item = styled.li`
 
 `;
 
-export const SubItem = styled.div`
+export const SubItem = styled.ul`
     top: 45px;
     position: absolute;
     background-color: #000000;

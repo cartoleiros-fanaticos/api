@@ -54,7 +54,7 @@ class Atletas extends Command
                     [
                         'nome' => $val['nome'],
                         'abreviacao' => $val['abreviacao'],
-                        'escudo' => base64_encode(file_get_contents($val['escudos']['60x60'])),
+                        'escudo' => 'data:image/png;base64,' . base64_encode(file_get_contents($val['escudos']['60x60'])),
                         '60x60' => $val['escudos']['60x60'],
                         '45x45' => $val['escudos']['45x45'],
                         '30x30' => $val['escudos']['30x30']
@@ -107,7 +107,7 @@ class Atletas extends Command
                             'nome' => $val['nome'],
                             'slug' => $val['slug'],
                             'apelido' => $val['apelido'],
-                            'foto' => $val['foto'],
+                            'foto' => str_replace('FORMATO', '220x220', $val['foto']),
                             'rodada_id' => $val['rodada_id'],
                             'clube_id' => $val['clube_id'],
                             'posicao_id' => $val['posicao_id'],

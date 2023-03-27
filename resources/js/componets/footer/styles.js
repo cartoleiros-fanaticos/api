@@ -9,7 +9,7 @@ export const Content = styled.div`
     justify-content: space-between;
     width: 82%;
     margin: auto;
-    padding: 10px ;
+    padding: 10px;
 `;
 
 export const Item = styled.div`

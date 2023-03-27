@@ -14,20 +14,31 @@ class AtletasController extends Controller
     public function index(Request $request)
     {
 
-        $atletas = Atletas::where(function ($q) use ($request) {
+        $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'clube_id', 'posicao_id', 'status_id', 'rodada_id')
+            ->selectRaw('(SELECT CONCAT(clube_casa_id, \'x\',  clube_visitante_id) FROM partidas WHERE rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS confronto')
+            ->where(function ($q) use ($request) {
 
-            if ($request->pesquisar) :
+                if ($request->clube_id)
+                    $q->where('clube_id', $request->clube_id);
 
-                $q->where('nome', 'LIKE', '%' . $request->pesquisar . '%')
-                    ->orWhere('apelido', 'LIKE', '%' . $request->pesquisar . '%');
+                if ($request->posicao_id)
+                    $q->where('posicao_id', $request->posicao_id);
 
-            endif;
-        })
-            ->paginate(50);
+                if ($request->status_id)
+                    $q->where('status_id', $request->status_id);
+            })
+            ->orderBy(($request->scout ?? 'G'), 'DESC')
+            ->get();
 
-        $clubes = Clubes::get();
-        $posicoes = Posicoes::get();
-        $status = Status::get();
+        $clubes = Clubes::get()
+            ->keyBy('id');
+
+        $posicoes = Posicoes::get()
+            ->keyBy('id');
+
+        $status = Status::get()
+            ->keyBy('id');
+
         $scouts = Scouts::get();
 
         return response()->json([
