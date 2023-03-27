@@ -1,9 +1,13 @@
 import React from 'react';
 
+import Header from '../../../componets/header';
+
 import { Container } from './styles';
 
 function Player() {
-  return 'entrou';
+  return (
+    <Header />
+  );
 }
 
 export default Player;

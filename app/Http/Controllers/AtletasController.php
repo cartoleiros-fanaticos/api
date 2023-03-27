@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class AtletasController extends Controller
 {
-    public function mercado(Request $request)
+    public function index(Request $request)
     {
 
         $atletas = Atletas::where(function ($q) use ($request) {

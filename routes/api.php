@@ -17,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('mercado', [AtletasController::class, 'mercado']);
-
 Route::group([
     
     'middleware' => 'api',
@@ -32,5 +30,6 @@ Route::group([
     Route::post('me', [ AuthController::class, 'me' ]);
 
     Route::resource('usuarios', UsuariosController::class);
+    Route::resource('atletas', AtletasController::class);
 
 });
