@@ -13,7 +13,7 @@ import {
     Content,
 } from './styles';
 
-function modal({ title, icon, Component, modal, smodal, data, loading }) {
+function modal({ title, icon, Component, modal, smodal, data, loading, width = '40%', height = 'auto', marginLeft = '-20%' }) {
 
     const container = useRef(null);
     const screen = useRef(null);
@@ -60,7 +60,12 @@ function modal({ title, icon, Component, modal, smodal, data, loading }) {
 
     return (
         <>
-            <Container ref={container}>
+            <Container
+                width={width}
+                height={height}
+                marginLeft={marginLeft}
+                ref={container}>
+                    
                 <Header>
                     <Icon color="#f1f1f1">{icon}</Icon>
                     <Title>{title}</Title>

@@ -12,10 +12,18 @@ export const Message = styled.p`
     user-select: none;
 `;
 
-export const Form = styled.form`
+export const Filter = styled.div`
     display: flex;
     margin-top: 25px;
     justify-content: space-between;
+    width: 100%;
+
+    @media screen and (max-width:900px){
+        display: grid;
+        grid-template-columns: 17% 17% 17% 17% 80px;
+        grid-column-gap: 10px;
+        grid-row-gap: 10px;
+    }
 `;
 
 export const Select = styled.select`
@@ -26,6 +34,10 @@ export const Select = styled.select`
     border-radius: 0.5em;
     color: #000000;
     font-size: 0.9em;
+
+    @media screen and (max-width:900px){                 
+        width: 100%;
+    }
 `;
 
 export const Option = styled.option``;
@@ -45,6 +57,10 @@ export const Button = styled.button`
         background-color: #F68D42;
         color: #ffffff;
     }
+
+    @media screen and (max-width:900px){                
+            width: 100%;
+    }
 `;
 
 export const Label = styled.label`
@@ -56,6 +72,11 @@ export const Label = styled.label`
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @media screen and (max-width:900px){
+        width: 100%;
+        grid-column: 1/6; 
+    }
 `;
 
 export const Input = styled.input.attrs(() => ({
@@ -76,6 +97,13 @@ export const Icon = styled.i.attrs(() => ({
     font-size: 1.2em;
     color: #000000;
     margin-right: 10px;    
+`;
+
+export const List = styled.div`
+    @media screen and (max-width:900px){
+        width: 100%;
+        overflow: auto;        
+    }
 `;
 
 export const Table = styled.table`

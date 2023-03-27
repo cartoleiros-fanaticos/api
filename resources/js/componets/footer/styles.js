@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-    background-color: #121212;
+    width: 100%;
+    background-color: #121212;    
 `;
 
 export const Content = styled.div`
@@ -9,13 +10,21 @@ export const Content = styled.div`
     justify-content: space-between;
     width: 82%;
     margin: auto;
-    padding: 10px;
+    padding: 10px;  
+
+    @media screen and (max-width:900px){
+        width: 100%;
+        padding: 0 10px;
+        justify-content: center;
+        flex-direction: column;
+    }
 `;
 
 export const Item = styled.div`
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+
     a {
         color: #ccc;
         text-decoration: none;
@@ -23,6 +32,11 @@ export const Item = styled.div`
         &:hover {
             text-decoration: underline;
         }
+    }
+
+    @media screen and (max-width:900px){
+        flex-direction: column;
+        margin-top: 25px;
     }
 
 `;
@@ -52,7 +66,6 @@ export const Description = styled.p`
     margin-bottom: 5px;
     color: #636363;
     font-size: 0.85em;
-
 `;
 
 export const Copyright = styled.div`
@@ -60,10 +73,22 @@ export const Copyright = styled.div`
     padding: 10px;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width:900px){
+        justify-content: center;
+        flex-direction: column;
+    }
 `;
 
 export const Text = styled.p`
     color: #F68D42;
     font-size: 0.9em;
+
+    @media screen and (max-width:900px){
+        text-align: center;
+        font-size: 0.85em;
+        margin: 5px;
+        cursor: default;
+    }
 `;
 

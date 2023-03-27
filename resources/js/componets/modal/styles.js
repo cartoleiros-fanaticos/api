@@ -4,9 +4,9 @@ export const Container = styled.div`
     user-select: none;
     background-color: #fff;
     
-    width: 40%;
-    margin-left: -20%;;
-    height: auto;
+    width: ${({ width }) => width};
+    margin-left: ${({ marginLeft }) => marginLeft};
+    height: ${({ height }) => height};
 
     display: flex;
     flex-direction: column;

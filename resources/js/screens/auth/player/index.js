@@ -12,13 +12,14 @@ import Container from '../../../componets/container';
 import {
   Content,
   Message,
-  Form,
+  Filter,
   Select,
   Option,
   Button,
   Label,
   Icon,
   Input,
+  List,
   Table,
   Thead,
   Tr,
@@ -72,6 +73,8 @@ function Player() {
 
     try {
 
+      sloadingdata(true);
+
       const { data } = await api.get(`atletas?clube_id=${filter.clube_id}&posicao_id=${filter.posicao_id}&status_id=${filter.status_id}&scout=${filter.scout}`);
 
       sdata(data);
@@ -115,13 +118,7 @@ function Player() {
 
   const component = () => (
     <Content>
-      <Form onSubmit={(e) => {
-
-        sloadingdata(true);
-        e.preventDefault();
-        getData()
-
-      }}>
+      <Filter>
         <Select onChange={e => sfilter({ ...filter, clube_id: e.target.value })} value={filter.clube_id}>
           <Option value="">Time</Option>
           {
@@ -144,61 +141,62 @@ function Player() {
             data.scouts.map((e) => <Option key={e.sigla} value={e.sigla}>{e.nome}</Option>)
           }
         </Select>
-        <Button>
+        <Button onClick={getData}>
           {loading_data ? <Loader visible={true} type="TailSpin" color="#000" height={18} width={18} /> : <span>Carregar</span>}
         </Button>
         <Label>
           <Icon>directions_run</Icon>
           <Input onChange={search} />
         </Label>
-      </Form>
-      <Table>
-        <Thead>
-          <Tr>
-            <Th>Time</Th>
-            <Th>Jogador</Th>
-            <Th>Preço</Th>
-            <Th>Status</Th>
-            <Th>Valorização</Th>
-            <Th>Última</Th>
-            <Th>Média</Th>
-            <Th>Jogos</Th>
-            <Th>Confronto</Th>
-          </Tr>
-        </Thead>
+      </Filter>
+      <List>
+        <Table>
+          <Thead>
+            <Tr>
+              <Th>Time</Th>
+              <Th>Jogador</Th>
+              <Th>Preço</Th>
+              <Th>Status</Th>
+              <Th>Valorização</Th>
+              <Th>Última</Th>
+              <Th>Média</Th>
+              <Th>Jogos</Th>
+              <Th>Confronto</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {
+              data.atletas.length ?
+                data.atletas.map(e =>
+                  <Tr onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
+                    <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
+                    <Td>
+                      <Image src={e.foto} />
+                      <Description>
+                        <Name>{e.apelido.substr(0, 10)}</Name>
+                        <Position>{data.posicoes[e.posicao_id].nome}</Position>
+                      </Description>
+                    </Td>
+                    <Td>{amount(e.preco_num)}</Td>
+                    <Td><Ico color={status[e.status_id].color}>{status[e.status_id].icon}</Ico></Td>
+                    <Td>{amount(e.variacao_num)}</Td>
+                    <Td>{amount(e.pontos_num)}</Td>
+                    <Td>{amount(e.media_num)}</Td>
+                    <Td>{e.jogos_num}</Td>
+                    <Td>
+                      <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />
+                      x
+                      <Image src={data.clubes[e.confronto.split('x')[1]]['60x60']} />
+                    </Td>
+                  </Tr>
+                )
+                :
+                <Message>Nenhum jogador encontrado</Message>
+            }
 
-        <Tbody>
-          {
-            data.atletas.length ?
-              data.atletas.map(e =>
-                <Tr onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
-                  <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
-                  <Td>
-                    <Image src={e.foto} />
-                    <Description>
-                      <Name>{e.apelido.substr(0, 10)}</Name>
-                      <Position>{data.posicoes[e.posicao_id].nome}</Position>
-                    </Description>
-                  </Td>
-                  <Td>{amount(e.preco_num)}</Td>
-                  <Td><Ico color={status[e.status_id].color}>{status[e.status_id].icon}</Ico></Td>
-                  <Td>{amount(e.variacao_num)}</Td>
-                  <Td>{amount(e.pontos_num)}</Td>
-                  <Td>{amount(e.media_num)}</Td>
-                  <Td>{e.jogos_num}</Td>
-                  <Td>
-                    <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />
-                    x
-                    <Image src={data.clubes[e.confronto.split('x')[1]]['60x60']} />
-                  </Td>
-                </Tr>
-              )
-              :
-              <Message>Nenhum jogador encontrado</Message>
-          }
-
-        </Tbody>
-      </Table>
+          </Tbody>
+        </Table>
+      </List>
     </Content>
   );
 
@@ -219,6 +217,8 @@ function Player() {
           Component={ModalPlayer}
           data={data_player}
           loading={loading_data_player}
+          width="60%"
+          marginLeft="-30%"
         />
       }
     </>

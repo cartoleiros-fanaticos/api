@@ -30,7 +30,7 @@ class AtletasController extends Controller
             ->orderBy(($request->scout ?? 'G'), 'DESC')
             ->get();
 
-        $clubes = Clubes::select('id', 'nome', '60x60')
+        $clubes = Clubes::select('id', 'nome', 'abreviacao', '60x60')
             ->get()
             ->keyBy('id');
 
@@ -56,11 +56,13 @@ class AtletasController extends Controller
 
     public function show(Request $request, string $id)
     {
-
-        $atleta = Atletas::where('atleta_id', $id)
+        $atleta = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'clube_id', 'posicao_id', 'status_id', 'rodada_id')
+            ->selectRaw('(SELECT CONCAT(clube_casa_id, \'x\',  clube_visitante_id) FROM partidas WHERE rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS confronto')
+            ->selectRaw('(SELECT DATE_FORMAT(partida_data, "%d/%m %H:%i") FROM partidas WHERE rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS partida_data')
+            ->where('atleta_id', $id)
             ->first();
 
-        $clubes = Clubes::select('id', 'nome', '60x60')
+        $clubes = Clubes::select('id', 'nome', 'abreviacao', '60x60')
             ->get()
             ->keyBy('id');
 

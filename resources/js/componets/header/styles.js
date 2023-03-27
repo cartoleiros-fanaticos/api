@@ -6,17 +6,32 @@ export const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
     position: fixed;
     top: 0;
-    width: 100%;
-    z-index: 25;
-    
+
     & > i {
-        cursor: pointer;
-        color: #F68D42;
-        font-size: 36px;
-        display: none;
-    }  
+        display: none
+    }
+
+    @media screen and (max-width:900px){
+        & > i {
+            display: block;
+        }
+    } 
+`;
+
+export const Screen = styled.div`
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 50;
+    background: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    transition-duration: 0.5s;
+    opacity: 0;
+    visibility: hidden;    
 `;
 
 export const Logo = styled.img.attrs(() => ({
@@ -32,7 +47,9 @@ export const Logo = styled.img.attrs(() => ({
 export const Icon = styled.i.attrs(() => ({
     className: 'material-icons'
 }))` 
-    
+    cursor: pointer;
+    color: #F68D42;
+    font-size: 36px; 
 `;
 
 export const Nav = styled.ul`
@@ -41,15 +58,62 @@ export const Nav = styled.ul`
     flex-wrap: wrap;    
 
     @media screen and (max-width:900px){
-        background-color: #000;
-        position: absolute;
-        width: 100%;
-        flex-wrap: none;
-        flex-direction: column;
+        width: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 70%;
+        position: fixed;
+        top: 0;
         left: 0;
-        top: 56px;
+        display: block; 
+        left: -70%;
+        z-index: 100;
+        transition-duration: 0.3s;
+        height: 100vh;        
+        background-color: #fff;
     }
 `;
+
+export const Header = styled.div`
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    height: 45px;
+    background: #222;
+    text-align: center;
+    color: #fff;   
+    padding-left: 10px; 
+
+    @media screen and (max-width:900px){
+        display: flex;
+
+        
+        i {          
+            font-size: 2em;
+        }
+
+    }
+`;
+
+export const Title = styled.span`
+    text-align: center;
+`;
+
+export const Close = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))`     
+    color: red;
+    font-size: 30px;
+    padding: 5px;
+    border-radius: 2em;
+    border: solid 2x red;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+`;
+
 
 export const Item = styled.li`
 
@@ -80,10 +144,12 @@ export const Item = styled.li`
 
                 
             justify-content: flex-start;
-            padding: 12px 10px;
+            padding: 15px 10px;
             font-size: 0.9em;
+            color: #000;
+            border-bottom: solid thin #f1f1f1;
 
-            &.material-icons {
+            & i {
                 margin-right: 10px;
                 font-size: 1.3em;
             }

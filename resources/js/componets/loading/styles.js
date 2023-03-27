@@ -8,7 +8,7 @@ export const Loading = styled.div`
     position: absolute;
     height: 150px;
     width: 150px;
-    z-index: 100;
+    z-index: 25;
     left: 50%;
     top: 50%;
     margin-left: -75px;

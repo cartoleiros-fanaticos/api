@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import backButton from 'browser-back-button';
 import Loader from 'react-loader-spinner';
-import { message, swal_ask, swal_success } from '../../utils/helpers';
+import { message } from '../../utils/helpers';
 import api from '../../utils/api';
 
 import ModalRecovery from '../../modal/recovery';

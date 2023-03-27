@@ -15,7 +15,7 @@ function container({ title, Component, loading }) {
     return (
         <Container>
             <Header />
-            <Content>
+            <Content className='content'>
                 {
                     loading ?
                         <Loading />
