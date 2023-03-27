@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-import Loader from 'react-loader-spinner';
 
 import {
     Container,
-    Loading,
-    Text,
     Content,
     Title
 } from './styles';
 
 import Header from '../../componets/header';
 import Footer from '../../componets/footer';
+import Loading from '../../componets/loading';
 
 function container({ title, Component, loading }) {
 
@@ -20,10 +18,7 @@ function container({ title, Component, loading }) {
             <Content>
                 {
                     loading ?
-                        <Loading>
-                            <Loader visible={true} type="TailSpin" color="#F68D42" height={48} width={48} timeout={15000} />
-                            <Text>Carregando aguarde.</Text>
-                        </Loading>
+                        <Loading />
                         :
                         <>
                             <Title>{title}</Title>

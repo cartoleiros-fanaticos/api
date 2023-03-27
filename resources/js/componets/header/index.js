@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import {
     Container,
@@ -16,98 +16,98 @@ function header() {
 
     return (
         <Container>
-            <Link to="/">
+            <NavLink to="/auth/">
                 <Logo />
-            </Link>
+            </NavLink>
             <Icon>dehaze</Icon>
             <Nav>
                 {
                     plano != 'Plano Stats' &&
                     <Item>
-                        <Link to="/escalacao">
+                        <NavLink to="/auth/escalacao">
                             <Icon>assignment</Icon>
                             ESCALAÇÃO
-                        </Link>
+                        </NavLink>
                     </Item>
                 }
                 <Item>
-                    <Link href="javascript:void(0)">
+                    <NavLink to="javascript:void(0)">
                         <Icon>assessment</Icon>
                         ESTATÍSTICAS
-                    </Link>
+                    </NavLink>
                     <SubItem>
                         <Item>
-                            <Link to="cruzamento-scouts">
+                            <NavLink to="/auth/cruzamento-scouts">
                                 <Icon>assessment</Icon>
                                 CRUZAMENTO SCOUTS
-                            </Link>
+                            </NavLink>
                         </Item>
                         <Item>
-                            <Link to="cruzamento-pontos">
+                            <NavLink to="/auth/cruzamento-pontos">
                                 <Icon>assessment</Icon>
                                 CRUZAMENTO PONTOS
-                            </Link>
+                            </NavLink>
                         </Item>
                         <Item>
-                            <Link to="cruzamento-media">
+                            <NavLink to="/auth/cruzamento-media">
                                 <Icon>assessment</Icon>
                                 CRUZAMENTO MÉDIA
-                            </Link>
+                            </NavLink>
                         </Item>
                     </SubItem>
                 </Item>
                 <Item>
-                    <Link to="/parciais">
+                    <NavLink to="/auth/parciais">
                         <Icon>directions_run</Icon>
                         PARCIAIS
-                    </Link>
+                    </NavLink>
                 </Item>
                 <Item>
-                    <Link to="/atletas">
+                    <NavLink to="/auth/atletas">
                         <Icon>shopping_basket</Icon>
                         MERCADO
-                    </Link>
+                    </NavLink>
                 </Item>
                 <Item>
-                    <Link to="/videos">
+                    <NavLink to="/auth/videos">
                         <Icon>videocam</Icon>
                         VÍDEOS
-                    </Link>
+                    </NavLink>
                 </Item>
                 {
                     plano != 'Plano Stats' &&
                     <Item>
-                        <Link to="/ligas">
+                        <NavLink to="/auth/ligas">
                             <Icon>verified_user</Icon>
                             LIGAS
-                        </Link>
+                        </NavLink>
                     </Item>
                 }
                 <Item>
-                    <Link to="/loja">
+                    <NavLink to="/auth/loja">
                         <Icon>shopping_cart</Icon>
                         LOJA
-                    </Link>
+                    </NavLink>
                 </Item>
                 <Item>
-                    <Link to="/destaques">
+                    <NavLink to="/auth/destaques">
                         <Icon>trending_up</Icon>
                         DESTAQUES
-                    </Link>
+                    </NavLink>
                 </Item>
                 <Item>
-                    <Link to="/contato">
+                    <NavLink to="/auth/contato">
                         <Icon>mail_outline</Icon>
                         CONTATO
-                    </Link>
+                    </NavLink>
                 </Item>
                 {
                     (plano === 'Demonstrativo' || plano === 'Free Cartoleiro') &&
                     <Item>
-                        <Link to="/planos">
+                        <NavLink to="/auth/planos">
                             <Icon>wysiwyg</Icon>
                             ASSINE JÁ
-                        </Link>
+                        </NavLink>
                     </Item>
                 }
             </Nav>

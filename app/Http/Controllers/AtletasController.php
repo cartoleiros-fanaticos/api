@@ -30,19 +30,53 @@ class AtletasController extends Controller
             ->orderBy(($request->scout ?? 'G'), 'DESC')
             ->get();
 
-        $clubes = Clubes::get()
+        $clubes = Clubes::select('id', 'nome', '60x60')
+            ->get()
             ->keyBy('id');
 
-        $posicoes = Posicoes::get()
+        $posicoes = Posicoes::select('id', 'nome')
+            ->get()
             ->keyBy('id');
 
-        $status = Status::get()
+        $status = Status::select('id', 'nome')
+            ->get()
             ->keyBy('id');
 
-        $scouts = Scouts::get();
+        $scouts = Scouts::select('sigla', 'nome')
+            ->get();
 
         return response()->json([
             'atletas' => $atletas,
+            'clubes' => $clubes,
+            'posicoes' => $posicoes,
+            'status' => $status,
+            'scouts' => $scouts,
+        ]);
+    }
+
+    public function show(Request $request, string $id)
+    {
+
+        $atleta = Atletas::where('atleta_id', $id)
+            ->first();
+
+        $clubes = Clubes::select('id', 'nome', '60x60')
+            ->get()
+            ->keyBy('id');
+
+        $posicoes = Posicoes::select('id', 'nome')
+            ->get()
+            ->keyBy('id');
+
+        $status = Status::select('id', 'nome')
+            ->get()
+            ->keyBy('id');
+
+        $scouts = Scouts::select('sigla', 'nome')
+            ->get();
+
+        return response()->json([
+            'atleta' => $atleta,
             'clubes' => $clubes,
             'posicoes' => $posicoes,
             'status' => $status,

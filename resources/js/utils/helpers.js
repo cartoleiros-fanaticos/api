@@ -1,6 +1,11 @@
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 
+export const amount = (value) => {
+    return parseFloat(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+
 export const swal_success = (text, title = 'Sucesso', icon = 'success', confirmButtonText = 'OK') => {
     return Swal.fire({ title, text, icon, confirmButtonText });
 }

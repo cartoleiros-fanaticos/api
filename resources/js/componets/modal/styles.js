@@ -11,22 +11,12 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
 
-    position: absolute;
+    position: fixed;
     z-index: 50;
     left: 50%;
     top: 60%;
     opacity: 0;
     visibility: hidden;
-`;
-
-export const Loading = styled.div` 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: #fafafa;
-    height: 284px;
 `;
 
 export const Screen = styled.div`
@@ -65,4 +55,5 @@ export const Title = styled.span`
 
 export const Content = styled.div`
     padding: 10px;
+    min-height: 450px;
 `;

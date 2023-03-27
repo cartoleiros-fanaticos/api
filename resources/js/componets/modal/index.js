@@ -1,15 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 import backButton from 'browser-back-button';
-import Loader from 'react-loader-spinner';
 
-import { message, swal_success, } from '../../utils/helpers';
-
-import api from '../../utils/api';
+import Loading from '../../componets/loading';
 
 import {
     Container,
-    Loading,
     Screen,
     Header,
     Icon,
@@ -17,13 +13,10 @@ import {
     Content,
 } from './styles';
 
-function modal({ title, icon, Component, modal, smodal }) {
+function modal({ title, icon, Component, modal, smodal, data, loading }) {
 
     const container = useRef(null);
     const screen = useRef(null);
-
-    const [loading, sloading] = useState(false);
-    const [waithing, swaithing] = useState(false);
 
     useEffect(() => {
         if (modal) open();
@@ -74,7 +67,15 @@ function modal({ title, icon, Component, modal, smodal }) {
                     <Icon color="#c40808" onClick={close}>close</Icon>
                 </Header>
                 <Content>
-                    <Component smodal={smodal} />
+                    {
+                        loading ?
+                            <Loading />
+                            :
+                            <Component
+                                data={data}
+                                smodal={smodal}
+                            />
+                    }
                 </Content>
             </Container>
             <Screen onClick={close} ref={screen}></Screen>

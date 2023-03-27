@@ -3,6 +3,15 @@ import styled from 'styled-components';
 export const Content = styled.div`
 `;
 
+export const Message = styled.p`
+    display: block;
+    text-align: center;
+    margin: 35px auto;
+    color: #999;
+    font-size: 0.9em;
+    user-select: none;
+`;
+
 export const Form = styled.form`
     display: flex;
     margin-top: 25px;
@@ -118,6 +127,12 @@ export const Td = styled.td`
     text-align: center;
     cursor: pointer;
     font-size: 0.8em;
+`;
+
+export const Ico = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))` 
+    color: ${({ color }) => color};
 `;
 
 export const Image = styled.img`
