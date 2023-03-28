@@ -46,8 +46,6 @@ class Game extends Command
             $dt = $response['fechamento'];
             $rodada_atual = $response['rodada_atual'];
 
-            echo $rodada_atual;
-
             echo 'Atualizando tabela game.' . PHP_EOL . PHP_EOL;
 
             ModelsGame::updateOrCreate(
@@ -103,13 +101,12 @@ class Game extends Command
 
             echo 'Carregando dados dos mais escalados.' . PHP_EOL;
 
-            $response = $client->get('https://api.cartola.globo.com/mercado/selecao');
+            $response = $client->get('https://api.cartola.globo.com/mercado/destaques');
             $response = json_decode($response->getBody(), true);
 
             echo 'Atualizando a tabela destaques.' . PHP_EOL;
 
-            foreach ((array) $response['selecao'] as $key => $val) :
-
+            foreach ((array) $response as $key => $val) :
                 Destaques::updateOrCreate(
                     [
                         'atleta_id' => $val['Atleta']['atleta_id']
@@ -118,13 +115,20 @@ class Game extends Command
                         'rodada' => $rodada_atual,
                         'apelido' => $val['Atleta']['apelido'],
                         'posicao' => $val['posicao'],
-                        'foto' => str_replace('FORMATO', '240x240', $val['Atleta']['foto']),
+                        'foto' => str_replace('FORMATO', '220x220', $val['Atleta']['foto']),
                         'escalacoes' => $val['escalacoes'],
                         'tipo' => 'Seleção'
                     ]
                 );
 
             endforeach;
+
+            echo 'Carregando dados dos capitães mais escalados.' . PHP_EOL;
+
+            $response = $client->get('https://api.cartola.globo.com/mercado/selecao');
+            $response = json_decode($response->getBody(), true);
+            
+            echo 'Atualizando a tabela destaques.' . PHP_EOL;
 
             foreach ((array) $response['capitaes'] as $key => $val) :
 
@@ -136,7 +140,7 @@ class Game extends Command
                         'rodada' => $rodada_atual,
                         'apelido' => $val['Atleta']['apelido'],
                         'posicao' => $val['posicao'],
-                        'foto' => str_replace('FORMATO', '240x240', $val['Atleta']['foto']),
+                        'foto' => str_replace('FORMATO', '220x220', $val['Atleta']['foto']),
                         'escalacoes' => $val['escalacoes'],
                         'tipo' => 'Capitães'
                     ]

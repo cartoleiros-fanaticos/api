@@ -12,6 +12,7 @@ import Register from './screens/register';
 import Recovery from './screens/recovery';
 
 import Player from './screens/auth/player';
+import Emphasis from './screens/auth/emphasis';
 
 const router = createBrowserRouter([
     {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
     {
         path: "/auth/atletas",
         element: <Player />,
+    },
+    {
+        path: "/auth/destaques",
+        element: <Emphasis />,
     },
 ]);
 
