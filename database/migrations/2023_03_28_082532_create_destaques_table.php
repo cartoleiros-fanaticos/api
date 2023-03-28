@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -13,11 +14,16 @@ return new class extends Migration
     {
         Schema::create('destaques', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('clube_id')->constrained('clubes');
-            $table->foreignId('atleta_id')->constrained('atletas');
+            $table->string('temporada')->default(Carbon::now()->format('Y'));
+            $table->string('rodada');
+            $table->string('apelido');
+            $table->string('posicao');
+            $table->string('foto');
             $table->integer('escalacoes');
-            $table->enum('tipo', [ 'Atleta', 'Capitão' ]);
+            
+            $table->integer('atleta_id')->unsigned();
+
+            $table->enum('tipo', [ 'Seleção', 'Capitães' ]);
 
             $table->timestamps();
         });

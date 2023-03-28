@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atletas;
 use App\Models\Clubes;
+use App\Models\Destaques;
 use App\Models\Game;
 use App\Models\Parciais;
 use App\Models\Posicoes;
@@ -427,5 +428,19 @@ class AtletasController extends Controller
             'confrontos' => $confrontos,
             'scouts' => $scouts
         ]);
+    }
+
+    public function destaques(Request $request)
+    {
+
+        $game = Game::first();
+
+        $response = Destaques::where('rodada', $game->rodada_atual)
+            ->orderBy('tipo')
+            ->orderBy('escalacoes', 'DESC')
+            ->get()
+            ->groupBy('tipo');
+
+        return response()->json($response);
     }
 }

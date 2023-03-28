@@ -14,8 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('atletas', function (Blueprint $table) {
-
-            $table->id();            
+            $table->id(); 
             $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->integer('atleta_id')->unsigned()->unique();
             $table->string('nome');

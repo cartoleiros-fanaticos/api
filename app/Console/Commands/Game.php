@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Destaques;
 use App\Models\Game as ModelsGame;
 use App\Models\Partidas;
 use Illuminate\Console\Command;
@@ -43,6 +44,9 @@ class Game extends Command
             $response = json_decode($response->getBody(), true);
 
             $dt = $response['fechamento'];
+            $rodada_atual = $response['rodada_atual'];
+
+            echo $rodada_atual;
 
             echo 'Atualizando tabela game.' . PHP_EOL . PHP_EOL;
 
@@ -95,6 +99,49 @@ class Game extends Command
                         'placar_oficial_visitante' => $val['placar_oficial_visitante'],
                     ]
                 );
+            endforeach;
+
+            echo 'Carregando dados dos mais escalados.' . PHP_EOL;
+
+            $response = $client->get('https://api.cartola.globo.com/mercado/selecao');
+            $response = json_decode($response->getBody(), true);
+
+            echo 'Atualizando a tabela destaques.' . PHP_EOL;
+
+            foreach ((array) $response['selecao'] as $key => $val) :
+
+                Destaques::updateOrCreate(
+                    [
+                        'atleta_id' => $val['Atleta']['atleta_id']
+                    ],
+                    [
+                        'rodada' => $rodada_atual,
+                        'apelido' => $val['Atleta']['apelido'],
+                        'posicao' => $val['posicao'],
+                        'foto' => str_replace('FORMATO', '240x240', $val['Atleta']['foto']),
+                        'escalacoes' => $val['escalacoes'],
+                        'tipo' => 'Seleção'
+                    ]
+                );
+
+            endforeach;
+
+            foreach ((array) $response['capitaes'] as $key => $val) :
+
+                Destaques::updateOrCreate(
+                    [
+                        'atleta_id' => $val['Atleta']['atleta_id']
+                    ],
+                    [
+                        'rodada' => $rodada_atual,
+                        'apelido' => $val['Atleta']['apelido'],
+                        'posicao' => $val['posicao'],
+                        'foto' => str_replace('FORMATO', '240x240', $val['Atleta']['foto']),
+                        'escalacoes' => $val['escalacoes'],
+                        'tipo' => 'Capitães'
+                    ]
+                );
+
             endforeach;
 
             echo 'Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
