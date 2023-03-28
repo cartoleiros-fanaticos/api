@@ -17,8 +17,6 @@ export const Container = styled.div`
     top: 60%;
     opacity: 0;
     visibility: hidden;
-    
-    overflow: auto;
 
     @media screen and (max-width:900px){
         margin-left: 0;
@@ -65,4 +63,6 @@ export const Title = styled.span`
 export const Content = styled.div`
     padding: 10px;
     min-height: 450px;
+    
+    overflow: auto;
 `;

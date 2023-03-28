@@ -8954,7 +8954,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    user-select: none;\n    background-color: #fff;\n    \n    width: ", ";\n    margin-left: ", ";\n    height: ", ";\n\n    display: flex;\n    flex-direction: column;\n\n    position: fixed;\n    z-index: 50;\n    left: 50%;\n    top: 60%;\n    opacity: 0;\n    visibility: hidden;\n    \n    overflow: auto;\n\n    @media screen and (max-width:900px){\n        margin-left: 0;\n        left: 0;\n        width: 100%;\n        height: 100vh;\n    } \n"])), function (_ref) {
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    user-select: none;\n    background-color: #fff;\n    \n    width: ", ";\n    margin-left: ", ";\n    height: ", ";\n\n    display: flex;\n    flex-direction: column;\n\n    position: fixed;\n    z-index: 50;\n    left: 50%;\n    top: 60%;\n    opacity: 0;\n    visibility: hidden;\n\n    @media screen and (max-width:900px){\n        margin-left: 0;\n        left: 0;\n        width: 100%;\n        height: 100vh;\n    } \n"])), function (_ref) {
   var width = _ref.width;
   return width;
 }, function (_ref2) {
@@ -8975,7 +8975,7 @@ var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(fun
   return color;
 });
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    color: #fff;  \n    margin-left: 15px;\n"])));
-var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    padding: 10px;\n    min-height: 450px;\n"])));
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    padding: 10px;\n    min-height: 450px;\n    \n    overflow: auto;\n"])));
 
 /***/ }),
 
@@ -9020,86 +9020,248 @@ function compare(_ref) {
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Content, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.jogos_num === atleta_b.jogos_num ? 'gray' : atleta_a.jogos_num > atleta_b.jogos_num ? 'green' : 'red',
+          color: atleta_a.jogos_num === atleta_b.jogos_num ? 'gray' : atleta_a.jogos_num > atleta_b.jogos_num ? '#008000' : '#c40808',
           children: atleta_a.jogos_num
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "JOGOS"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.jogos_num === atleta_b.jogos_num ? 'gray' : atleta_a.jogos_num > atleta_b.jogos_num ? 'red' : 'green',
+          color: atleta_a.jogos_num === atleta_b.jogos_num ? 'gray' : atleta_a.jogos_num > atleta_b.jogos_num ? '#c40808' : '#008000',
           children: atleta_b.jogos_num
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_num === atleta_b.media_num ? 'gray' : atleta_a.media_num > atleta_b.media_num ? 'green' : 'red',
+          color: atleta_a.media_num === atleta_b.media_num ? 'gray' : atleta_a.media_num > atleta_b.media_num ? '#008000' : '#c40808',
           children: atleta_a.media_num
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "M\xC9DIA"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_num === atleta_b.media_num ? 'gray' : atleta_a.media_num > atleta_b.media_num ? 'red' : 'green',
+          color: atleta_a.media_num === atleta_b.media_num ? 'gray' : atleta_a.media_num > atleta_b.media_num ? '#c40808' : '#008000',
           children: atleta_b.media_num
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontos_num === atleta_b.pontos_num ? 'gray' : atleta_a.pontos_num > atleta_b.pontos_num ? 'green' : 'red',
+          color: atleta_a.pontos_num === atleta_b.pontos_num ? 'gray' : atleta_a.pontos_num > atleta_b.pontos_num ? '#008000' : '#c40808',
           children: atleta_a.pontos_num
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "\xDALT. PONTUA\xC7\xC3O"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontos_num === atleta_b.pontos_num ? 'gray' : atleta_a.pontos_num > atleta_b.pontos_num ? 'red' : 'green',
+          color: atleta_a.pontos_num === atleta_b.pontos_num ? 'gray' : atleta_a.pontos_num > atleta_b.pontos_num ? '#c40808' : '#008000',
           children: atleta_b.pontos_num
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_pontos_casa === atleta_b.media_pontos_casa ? 'gray' : atleta_a.media_pontos_casa > atleta_b.media_pontos_casa ? 'green' : 'red',
+          color: atleta_a.media_pontos_casa === atleta_b.media_pontos_casa ? 'gray' : atleta_a.media_pontos_casa > atleta_b.media_pontos_casa ? '#008000' : '#c40808',
           children: atleta_a.media_pontos_casa
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "M\xC9DIA CASA"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_pontos_casa === atleta_b.media_pontos_casa ? 'gray' : atleta_a.media_pontos_casa > atleta_b.media_pontos_casa ? 'red' : 'green',
+          color: atleta_a.media_pontos_casa === atleta_b.media_pontos_casa ? 'gray' : atleta_a.media_pontos_casa > atleta_b.media_pontos_casa ? '#c40808' : '#008000',
           children: atleta_b.media_pontos_casa
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_pontos_fora === atleta_b.media_pontos_fora ? 'gray' : atleta_a.media_pontos_fora > atleta_b.media_pontos_fora ? 'green' : 'red',
+          color: atleta_a.media_pontos_fora === atleta_b.media_pontos_fora ? 'gray' : atleta_a.media_pontos_fora > atleta_b.media_pontos_fora ? '#008000' : '#c40808',
           children: atleta_a.media_pontos_fora
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "M\xC9DIA FORA"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.media_pontos_fora === atleta_b.media_pontos_fora ? 'gray' : atleta_a.media_pontos_fora > atleta_b.media_pontos_fora ? 'red' : 'green',
+          color: atleta_a.media_pontos_fora === atleta_b.media_pontos_fora ? 'gray' : atleta_a.media_pontos_fora > atleta_b.media_pontos_fora ? '#c40808' : '#008000',
           children: atleta_b.media_pontos_fora
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : atleta_a.pontuacao_min < atleta_b.pontuacao_min ? 'green' : 'red',
+          color: atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : atleta_a.pontuacao_min < atleta_b.pontuacao_min ? '#008000' : '#c40808',
           children: atleta_a.pontuacao_min
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "MIN. P. VALORIZAR"
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : atleta_a.pontuacao_min < atleta_b.pontuacao_min ? 'red' : 'green',
+          color: atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : atleta_a.pontuacao_min < atleta_b.pontuacao_min ? '#c40808' : '#008000',
           children: atleta_b.pontuacao_min
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_minima === atleta_b.pontuacao_minima ? 'gray' : atleta_a.pontuacao_minima > atleta_b.pontuacao_minima ? 'green' : 'red',
+          color: atleta_a.pontuacao_minima === atleta_b.pontuacao_minima ? 'gray' : atleta_a.pontuacao_minima > atleta_b.pontuacao_minima ? '#008000' : '#c40808',
           children: atleta_a.pontuacao_minima
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "PONTUA\xC7\xC3O MIN."
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_minima === atleta_b.pontuacao_minima ? 'gray' : atleta_a.pontuacao_minima > atleta_b.pontuacao_minima ? 'red' : 'green',
+          color: atleta_a.pontuacao_minima === atleta_b.pontuacao_minima ? 'gray' : atleta_a.pontuacao_minima > atleta_b.pontuacao_minima ? '#c40808' : '#008000',
           children: atleta_b.pontuacao_minima
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_maxima === atleta_b.pontuacao_maxima ? 'gray' : atleta_a.pontuacao_maxima > atleta_b.pontuacao_maxima ? 'green' : 'red',
+          color: atleta_a.pontuacao_maxima === atleta_b.pontuacao_maxima ? 'gray' : atleta_a.pontuacao_maxima > atleta_b.pontuacao_maxima ? '#008000' : '#c40808',
           children: atleta_a.pontuacao_maxima
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
           children: "PONTUA\xC7\xC3O MAX."
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
-          color: atleta_a.pontuacao_maxima === atleta_b.pontuacao_maxima ? 'gray' : atleta_a.pontuacao_maxima > atleta_b.pontuacao_maxima ? 'red' : 'green',
+          color: atleta_a.pontuacao_maxima === atleta_b.pontuacao_maxima ? 'gray' : atleta_a.pontuacao_maxima > atleta_b.pontuacao_maxima ? '#c40808' : '#008000',
           children: atleta_b.pontuacao_maxima
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Title, {
         children: "SCOUTS GERAL"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.G === atleta_b.G ? 'gray' : atleta_a.G > atleta_b.G ? '#008000' : '#c40808',
+          children: atleta_a.G
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "GOLS"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.G === atleta_b.G ? 'gray' : atleta_a.G > atleta_b.G ? '#c40808' : '#008000',
+          children: atleta_b.G
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.A === atleta_b.A ? 'gray' : atleta_a.A > atleta_b.A ? '#008000' : '#c40808',
+          children: atleta_a.A
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "ASSIST\xCANCIA"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.A === atleta_b.A ? 'gray' : atleta_a.A > atleta_b.A ? '#c40808' : '#008000',
+          children: atleta_b.A
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.finalizacao === atleta_b.finalizacao ? 'gray' : atleta_a.finalizacao > atleta_b.finalizacao ? '#008000' : '#c40808',
+          children: atleta_a.finalizacao
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "FINALIZA\xC7\xC3O"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.finalizacao === atleta_b.finalizacao ? 'gray' : atleta_a.finalizacao > atleta_b.finalizacao ? '#c40808' : '#008000',
+          children: atleta_b.finalizacao
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.DS === atleta_b.DS ? 'gray' : atleta_a.DS > atleta_b.DS ? '#008000' : '#c40808',
+          children: atleta_a.DS
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "DESARMES"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.DS === atleta_b.DS ? 'gray' : atleta_a.DS > atleta_b.DS ? '#c40808' : '#008000',
+          children: atleta_b.DS
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.FS === atleta_b.FS ? 'gray' : atleta_a.FS > atleta_b.FS ? '#008000' : '#c40808',
+          children: atleta_a.FS
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "FALTA SOFRIDA"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.FS === atleta_b.FS ? 'gray' : atleta_a.FS > atleta_b.FS ? '#c40808' : '#008000',
+          children: atleta_b.FS
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.DE === atleta_b.DE ? 'gray' : atleta_a.DE > atleta_b.DE ? '#008000' : '#c40808',
+          children: atleta_a.DE
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "DEFESAS"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.DE === atleta_b.DE ? 'gray' : atleta_a.DE > atleta_b.DE ? '#c40808' : '#008000',
+          children: atleta_b.DE
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.I === atleta_b.I ? 'gray' : atleta_a.I < atleta_b.I ? '#008000' : '#c40808',
+          children: atleta_a.I
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "IMPEDIMENTO"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.I === atleta_b.I ? 'gray' : atleta_a.I < atleta_b.I ? '#c40808' : '#008000',
+          children: atleta_b.I
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.cartoes === atleta_b.cartoes ? 'gray' : atleta_a.cartoes < atleta_b.cartoes ? '#008000' : '#c40808',
+          children: atleta_a.cartoes
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "CART\xC3O"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.cartoes === atleta_b.cartoes ? 'gray' : atleta_a.cartoes < atleta_b.cartoes ? '#c40808' : '#008000',
+          children: atleta_b.cartoes
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Title, {
+        children: "M\xC9DIA SCOUTS POR PARTIDA"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_gols === atleta_b.media_gols ? 'gray' : atleta_a.media_gols > atleta_b.media_gols ? '#008000' : '#c40808',
+          children: atleta_a.media_gols
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "GOLS"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_gols === atleta_b.media_gols ? 'gray' : atleta_a.media_gols > atleta_b.media_gols ? '#c40808' : '#008000',
+          children: atleta_b.media_gols
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_assistencia === atleta_b.media_assistencia ? 'gray' : atleta_a.media_assistencia > atleta_b.media_assistencia ? '#008000' : '#c40808',
+          children: atleta_a.media_assistencia
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "ASSIST\xCANCIA"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_assistencia === atleta_b.media_assistencia ? 'gray' : atleta_a.media_assistencia > atleta_b.media_assistencia ? '#c40808' : '#008000',
+          children: atleta_b.media_assistencia
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_finalizacao === atleta_b.media_finalizacao ? 'gray' : atleta_a.media_finalizacao > atleta_b.media_finalizacao ? '#008000' : '#c40808',
+          children: atleta_a.media_finalizacao
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "FINALIZA\xC7\xC3O"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_finalizacao === atleta_b.media_finalizacao ? 'gray' : atleta_a.media_finalizacao > atleta_b.media_finalizacao ? '#c40808' : '#008000',
+          children: atleta_b.media_finalizacao
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_roubos === atleta_b.media_roubos ? 'gray' : atleta_a.media_roubos > atleta_b.media_roubos ? '#008000' : '#c40808',
+          children: atleta_a.media_roubos
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "DESARMES"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_roubos === atleta_b.media_roubos ? 'gray' : atleta_a.media_roubos > atleta_b.media_roubos ? '#c40808' : '#008000',
+          children: atleta_b.media_roubos
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_falta_sofrida === atleta_b.media_falta_sofrida ? 'gray' : atleta_a.media_falta_sofrida > atleta_b.media_falta_sofrida ? '#008000' : '#c40808',
+          children: atleta_a.media_falta_sofrida
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "FALTA SOFRIDA"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_falta_sofrida === atleta_b.media_falta_sofrida ? 'gray' : atleta_a.media_falta_sofrida > atleta_b.media_falta_sofrida ? '#c40808' : '#008000',
+          children: atleta_b.media_falta_sofrida
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_defesa === atleta_b.media_defesa ? 'gray' : atleta_a.media_defesa > atleta_b.media_defesa ? '#008000' : '#c40808',
+          children: atleta_a.media_defesa
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "DEFESAS"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_defesa === atleta_b.media_defesa ? 'gray' : atleta_a.media_defesa > atleta_b.media_defesa ? '#c40808' : '#008000',
+          children: atleta_b.media_defesa
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_impedimento === atleta_b.media_impedimento ? 'gray' : atleta_a.media_impedimento < atleta_b.impedimento ? '#008000' : '#c40808',
+          children: atleta_a.media_impedimento
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "IMPEDIMENTO"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_impedimento === atleta_b.media_impedimento ? 'gray' : atleta_a.media_impedimento < atleta_b.impedimento ? '#c40808' : '#008000',
+          children: atleta_b.media_impedimento
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_1__.Item, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_cartoes === atleta_b.media_cartoes ? 'gray' : atleta_a.media_cartoes < atleta_b.cartoes ? '#008000' : '#c40808',
+          children: atleta_a.media_cartoes
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Text, {
+          children: "CART\xC3O"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_1__.Value, {
+          color: atleta_a.media_cartoes === atleta_b.media_cartoes ? 'gray' : atleta_a.media_cartoes < atleta_b.cartoes ? '#c40808' : '#008000',
+          children: atleta_b.media_cartoes
+        })]
       })]
     })]
   });
@@ -10023,7 +10185,8 @@ function Player() {
       smodal: smodalcompare,
       Component: _modal_compare__WEBPACK_IMPORTED_MODULE_6__["default"],
       data: data_player,
-      loading: loading_data_player
+      loading: loading_data_player,
+      height: "600px"
     })]
   });
 }

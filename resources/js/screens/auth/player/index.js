@@ -260,6 +260,7 @@ function Player() {
           Component={ModalCompare}
           data={data_player}
           loading={loading_data_player}
+          height="600px"
         />
       }
     </>
