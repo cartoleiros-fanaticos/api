@@ -6,7 +6,6 @@ use App\Models\Atletas;
 use App\Models\Clubes;
 use App\Models\Game;
 use App\Models\Parciais;
-use App\Models\Partidas;
 use App\Models\Posicoes;
 use App\Models\Scouts;
 use App\Models\Status;
@@ -107,7 +106,7 @@ class AtletasController extends Controller
             INNER JOIN partidas ON rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)
             INNER JOIN posicoes ON posicoes.id = posicao_id
             WHERE atleta_id = ?
-        ', [ $id ])[0];
+        ', [$id])[0];
 
         $geral = DB::select('
             SELECT 
@@ -228,7 +227,7 @@ class AtletasController extends Controller
 
         $mensagens = [
             'atleta_a.required' => 'O campo atleta_a é obrigatório.',
-            'atleta_b.required' => 'O campo valor é obrigatório.'
+            'atleta_b.required' => 'O campo atleta_b é obrigatório.'
         ];
 
         $validator = Validator::make($request->all(), $regras, $mensagens);
@@ -294,13 +293,15 @@ class AtletasController extends Controller
                     clubes ON clube_id = clubes.id
                 WHERE
                     atleta_id = ?
-            ', [$id, $id, $id])[0];
+            ',
+                [$id, $id, $id]
+            )[0];
 
             $pontos = Parciais::selectRaw('IFNULL(MIN(pontuacao), 0) as pontuacao_minima')
                 ->selectRaw('IFNULL(MAX(pontuacao), 0) as pontuacao_maxima')
                 ->where('atleta_id', $id)
                 ->first();
-    
+
             $response->pontuacao_minima = $pontos->pontuacao_minima;
             $response->pontuacao_maxima = $pontos->pontuacao_maxima;
 
@@ -310,6 +311,121 @@ class AtletasController extends Controller
         return response()->json([
             'atleta_a' => atletas($request->atleta_a),
             'atleta_b' => atletas($request->atleta_b),
+        ]);
+    }
+
+    public function pontos_cedidos(Request $request)
+    {
+
+        $regras = [
+            'time_id' => 'required',
+            'posicao_id' => 'required'
+        ];
+
+        $mensagens = [
+            'time_id.required' => 'O campo time_id é obrigatório.',
+            'posicao_id.required' => 'O campo posicao_id é obrigatório.'
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $mensagens);
+
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
+
+        $time_id = $request->time_id;
+        $posicao_id = $request->posicao_id;
+
+        $game = Game::first();
+
+        $posicao = Posicoes::where('id', $posicao_id)
+            ->first();
+
+        $time = DB::SELECT('
+            SELECT 
+                nome,
+                30x30 as escudo,
+                IF(clubes.id = clube_visitante_id, \'mandante\', \'visitante\') as mando
+            FROM clubes 
+            INNER JOIN partidas ON clube_casa_id = clubes.id OR clube_visitante_id = clubes.id  
+            WHERE clubes.id = ?	AND rodada = ?
+        ', [$time_id, $game->rodada_atual])[0];
+
+        if ($time->mando === 'visitante') :
+
+            $confrontos = DB::SELECT('
+                SELECT 
+                    clubes.id,
+                    CONCAT(nome, \' x \', ?) as confronto,
+                    30x30 as escudo_casa,
+                    ? as escudo_fora,
+                    rodada,
+                    DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
+                FROM partidas
+                INNER JOIN clubes ON clube_casa_id = clubes.id 
+                WHERE clube_visitante_id = ? AND valida = 1 AND rodada != ?
+            ', [$time->nome, $time->escudo, $time_id, $game->rodada_atual]);
+
+        else :
+
+            $confrontos = DB::SELECT('
+                SELECT 
+                    clubes.id,
+                    CONCAT(?, \' x \', nome) as confronto,
+                    ? as escudo_casa,
+                    30x30 as escudo_fora,
+                    rodada,
+                    DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
+                FROM partidas
+                INNER JOIN clubes ON clube_visitante_id = clubes.id 
+                WHERE clube_casa_id = ? AND valida = 1 AND rodada != ?
+            ', [$time->nome, $time->escudo, $time_id, $game->rodada_atual]);
+
+        endif;
+
+        foreach ($confrontos as $confronto) :
+
+            $confronto->atletas = DB::SELECT('
+                SELECT
+                    foto,
+                    apelido,
+                    pontuacao,
+                    parciais.A,
+                    parciais.G,
+                    parciais.CA,
+                    parciais.CV,
+                    parciais.DP,
+                    parciais.FC,
+                    parciais.FD,
+                    parciais.FF,
+                    parciais.FS,
+                    parciais.FT,
+                    parciais.GC,
+                    parciais.GS,
+                    parciais.I,
+                    parciais.PP,
+                    parciais.DS,
+                    parciais.SG,
+                    parciais.PS,
+                    parciais.PC,
+                    parciais.DE
+                FROM parciais 
+                INNER JOIN atletas ON parciais.atleta_id = atletas.atleta_id
+                WHERE atletas.clube_id = ? AND rodada = ? AND posicao_id = ?
+            ', [$confronto->id, $confronto->rodada, $posicao_id]);
+
+            $confronto->pontuacao_total = COLLECT($confronto->atletas)->sum('pontuacao');
+
+        endforeach;
+
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
+            ->get();
+
+        return response()->json([
+            'time' => $time,
+            'posicao' => $posicao,
+            'confrontos' => $confrontos,
+            'scouts' => $scouts
         ]);
     }
 }

@@ -7084,7 +7084,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;\n    list-style: none;\n  }", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\n    margin: 0;\n    padding: 0;\n    outline: 0;\n    box-sizing: border-box;\n    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;\n    list-style: none;\n  }\n\nbody {\n  overflow-y: auto;\n  overflow-x: hidden;\n}\n\nbody::-webkit-scrollbar-track {\n  -webkit-box-shadow: inset 0 0 6px #000;\n  -webkit-overflow-scrolling: touch;\n  -webkit-transform: translate3d(0,0,0);\n  background-color: #f1f1f1;    \n}\n\nbody::-webkit-scrollbar {\n  width: 7px;\n  background-color: #000;\n}\nbody::-webkit-scrollbar-thumb {\n  background-color: #000;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8975,7 +8975,7 @@ var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(fun
   return color;
 });
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    color: #fff;  \n    margin-left: 15px;\n"])));
-var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    padding: 10px;\n    min-height: 450px;\n    \n    overflow: auto;\n"])));
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    padding: 5px;\n    min-height: 450px;\n    margin: 5px;    \n    overflow: auto;\n\n    &::-webkit-scrollbar-track {\n        -webkit-box-shadow: inset 0 0 6px #000;\n        background-color: #f1f1f1;\n    }\n\n    &::-webkit-scrollbar {\n        width: 7px;\n        background-color: #000;\n    }\n    &::-webkit-scrollbar-thumb {\n        background-color: #000;\n    }\n"])));
 
 /***/ }),
 
@@ -9316,6 +9316,2052 @@ var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h4(_templa
 
 /***/ }),
 
+/***/ "./resources/js/modal/matches/index.js":
+/*!*********************************************!*\
+  !*** ./resources/js/modal/matches/index.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/helpers */ "./resources/js/utils/helpers.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles */ "./resources/js/modal/matches/styles.js");
+/* harmony import */ var _utils_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils/styles */ "./resources/js/utils/styles.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+function matches() {
+  var data = {
+    "scouts": [{
+      "sigla": "A",
+      "nome": "Assistência",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "DE",
+      "nome": "Defesas",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "PS",
+      "nome": "Pênalti sofrido",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "DP",
+      "nome": "Defesa pênalti",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "SG",
+      "nome": "Sem sofrer gol",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "FS",
+      "nome": "Falta sofrida",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "DS",
+      "nome": "Desarmes",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "FF",
+      "nome": "F. para fora",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "FD",
+      "nome": "F. defendida",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "FT",
+      "nome": "F. na trave",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "G",
+      "nome": "Gol",
+      "tipo": "Positivo"
+    }, {
+      "sigla": "FC",
+      "nome": "Falta cometida",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "GC",
+      "nome": "Gol contra",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "I",
+      "nome": "Impedimento",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "CA",
+      "nome": "Cartão amarelo",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "CV",
+      "nome": "Cartão vermelho",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "GS",
+      "nome": "Gol sofrido",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "PP",
+      "nome": "Pênalti perdido",
+      "tipo": "Negativo"
+    }, {
+      "sigla": "PC",
+      "nome": "Pênalti cometido",
+      "tipo": "Negativo"
+    }],
+    "time": {
+      "id": 262,
+      "nome": "Flamengo",
+      "abreviacao": "FLA",
+      "posicao": null,
+      "escudo": "iVBORw0KGgoAAAANSUhEUgAAAEEAAABBCAYAAACO98lFAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxNDIgNzkuMTYwOTI0LCAyMDE3LzA3LzEzLTAxOjA2OjM5ICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+nhxg7wAACIFJREFUeJzVm2lsVNcZhp97PJ7xNngZM8NicHAMxgYaKgpOHEgTFtOQtE2UNEujEiGRKm1+NEpStaUtKKQpaUQoVdtg0daKEkIEolACRCyiFpBCIEICamRjMMb24A3beOzZPMu5/WGb2CUzc2d8x8sjXcn2ud+573nn3LN8Z6wQAoH4HMgJVT7OsEvk4lCFhjCBOUCu/nrGHuFMAGBP4VRSE8Rdf0/Ny8fb0kzQ7Yrpwa9ca+G61x9TrN5ENCEUWcUlFK7biBoIEPR6AOhtv4Xz6hXajh+h5fBB1GBAN6HxJGYTmg/+i5wnn8XdWA9CEHS7UKXE+vBybCseZcban3Dh1Zdx19fpqTcu3N3PtQQZjUx5/EmEyYStdBW25d/BPKuQ6t9v4OSKEpr27yEtv4CFH+zGZJ10J85oyWZC4VzdxOtF1D0heeo05v+xDHPhHFx1tTj+e5EJc+ZiMJu5b8v7mLKt+Lo66am6jLlwDnM3vkvA7cJkycZcOIdrf95Md1VlPNoSM1H1BKMlmwV/20FiVhZnX3gCj72BJJuN00+U0lNTTfOh/ZhnF5GWl0/XhfMAWB58iKDbTVpBEQnJKfg6O4fUmZog4nppIaqeULRhE8mTp3Lm6Udx1l7FZJ2EyToJV10tl3/7c8yzZgPQevQz6srLmPb8agC6Lpyn5fCnFG14h7aKY0Pq3FM4NRoJUeEKSp6uuhnxPs0mZC28H+sjK2g6sBdn7dW7yv2OriG/q4G+mcFReRH7np0Y0tI4t/qpmKfUeKLJBGE0MvO1XwHQcfqUporNRX0DYOMnHwIQcDoJOJ2xaIw7ml6anB+8QPrc+wAIOHsiBygKM9a8THdVJc2H9gNgSEuLXWWc0dQTbp04zuxfrAdFwZRtvat87u/eo7etBU+THXd9HVnFD+JurMfTZKfgjXUk50zHVVdLzZZNujdADzSZ4LE30FZxDOvSUqzLSrHv2Tmk3PLAYowWC0qCga4L5wl63JgLihAGAyarDQDn9bvHkbGC5imyZvPbBL0eshc/jKVkyZCyE8uKqVg8nyvvbmRC4RxME62ceWolJ5YV8+WaZ1GlpO34Ed3F60VCqAIF5VUg45mJEzAKBX+3A3ddLbbSVViXrsRjbyB1Rh4p03Kp3bYV6fMhjEYSzelkLijGnD+LlsMH8TbZcV6tpvOL/wyp/7NOJ7cDktLMVFxSxuVyBCSHOp0ADhV1a+i2hkAgbgC5/7+LtJQsYe5bmzFZbbjqanE31uOqqyU1dwZBrxfrspV0nD7JxG8vo/oPG2nYUf619Y/wLrJeIu8JVRj13qHj9Ck+/+5Sqt76Ne6GG6RMy8Vy/2Kkz0dP1WVEYiLepps4r9VQ8Po6shY9cCc2ISU1tibEmZg2UEG3i8bdH5NknYSSkMDZ57/Hxdd/irO2BgBVlVT+5g1QYMH2j5j/p+186+8fM/mx7+sqXi9iMgEgyTaZtILZpEy/hwlF8wDuDJjp875J9+VLXPvLFpQEA9alpSSmZ9L06T/1Ua0zMZuQmpeP80o10u9n5mu/RJiSQFHwtjaTdm8+ttJV1P1jG42ffMjNvbv4cs0zyN5ePbXrRsSBcXOelWQRs1ch2dTYjr13xDJPYQfGiCbEQdBoENaEiCvGRzJSMCghvRrTBFSVii53xPsimvDK5EzNyYmxhisoNZkwPlunMxFN8KrqSOiIC1q1hzMhABAcxyYM0h52GgpnghPAHRy/JgzSHjalFc6EHoCeoNRJ0sjT/ZX2sOmwcCY0ArT7gzpJGnk6vtLeGO6+cFNkA8CpbjeO4Pg04pLrzjK9Idx94Uy4DnCm28OZbo9OskaN6+EKw70OF3QWMpqEbUu4vUMyfQNKyBTcOCEImCUyZHcO2RP6g8bWyWlsVIYzACKvGI/rKGa0iNiGSCYci1A+HojYhrB75P5x4RYwNjOkkXEBEyO9DmG30hLpEYgDwHOLzMksSU/WU2DcOOXwcK7HA3AgkgGg7RhuJ/Bck8/P8ozs4eobEXbd6h74cWe4+wbQkk84ArTYewNUusZmonQwla7egdxlC33aIxLRBIn0AWUA+zo0HMuPMoM0lvVrj4jWzFIZ4D/T7RnJDHHU2HsDA0t8P/0fnBY0mSCRrUC5Cuxoc8QkcCTY0eagP4NQ3q9ZE9HkGN8GvCcd7jHzddzBXPf6OelwA3jp06oZzSZIZCNQpgLbmm9HJXAk2NZ8e6AXlPVr1UxUBwoCkQFcAayzU4wYx8h5hE9VqXb7ANqAAonsihAyPARitUCoY/RaHUubov4oBUKhb/5dEcsD48gxYKVERp0Zjqk/C8QU4BJgiSU+DnQA35DIpliCYzqB6n/YS7HExomXYjUAhpE1UlGrFRQTsCTizfFlk0T+ddSeLhCKQOwbxYFwX/8YNSyGXYFApAD/BoqHW1eUnAWWSmTkY+cI6DLRC0Q6cBRYNMVoYENuNhaDvvnZjkCQN+vbafIFAM4BpRKpyxpet9XOYCMmGQ28mZvNdFOiLnU39PpZX99OaxwMAB3T6Spqr4KyE5jvDMpZFQ43uUmJ5AzTiC96PKy/0U5XIAhwCHhcInX9nwFd+6yK6ldQdgHZflVdeMLhpleFeakmRJRL7ICqUt7qoKy5C3/fEfv7wItacwTRELfFv0D8ENgOpN6bZORnUzOZmWzUFHvV42Przc6B3aoL+LFEakqVxUJcd0ACUQh8BCwQCjyWmcaLtvSQ34FyBSUftDo41Okc2BGeB34kkVXx1BnXIzYVtV1BKQecKjxU4/EZjna5EcCMJOOdb8V5pcr+Difv2DsHTpJ7gXXAWolsi6fGEUUg8gRi98BCJyPBoK61ZaprbZlqRoJh8AJot0DkjbbeuCIQJQJR8TWrvwqBKBltfSOKQBQLxN7+a6RXm0P4Hw++otZ3dpcCAAAAAElFTkSuQmCC",
+      "60x60": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-65.png",
+      "45x45": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-45.png",
+      "30x30": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "created_at": "2022-03-11 06:07:32",
+      "updated_at": "2022-09-09 10:00:04"
+    },
+    "posicao": {
+      "id": 5,
+      "nome": "Atacante",
+      "abreviacao": "ata",
+      "created_at": "2020-07-21 17:10:27",
+      "updated_at": "2020-07-21 17:10:27"
+    },
+    "confrontos": [{
+      "id": 293,
+      "confronto": "Athlético-PR x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2019/09/09/Athletico-PR-30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "3",
+      "partida_data": "23/04 16:30",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_jLJg754.png",
+        "apelido": "Pablo",
+        "pontuacao": -0.6,
+        "A": 1,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_7POtFfh.png",
+        "apelido": "Marcelo Cirino",
+        "pontuacao": 1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 1,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_VXCkQFM.png",
+        "apelido": "Canobbio",
+        "pontuacao": 4.8,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 2,
+        "FS": 3,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 3,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 5.2
+    }, {
+      "id": 354,
+      "confronto": "Ceará x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2019/10/10/ceara-30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "6",
+      "partida_data": "14/05 16:30",
+      "atletas": [{
+        "foto": "https://s.glbimg.com/es/sde/f/2022/02/22/391609eb9a9349eac73814c39b4be34c_50x50.png",
+        "apelido": "Erick",
+        "pontuacao": -0.30000000000000004,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 4,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/02/22/d2d6e5f9f0b8f9299ec51823ad4791c8_50x50.png",
+        "apelido": "Zé Roberto",
+        "pontuacao": 7,
+        "A": 1,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/08/11/f19c59d4d6626b101ff291f3e852072d_50x50.png",
+        "apelido": "Jô",
+        "pontuacao": 9.2,
+        "A": 0,
+        "G": 1,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 1,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 3,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 15.899999999999999
+    }, {
+      "id": 266,
+      "confronto": "Fluminense x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2015/01/12/Fluminense-escudo.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "8",
+      "partida_data": "29/05 18:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2022/04/20/49ddf4ceba0c02ddb6fc62fb80ffa3dd_50x50.png",
+        "apelido": "Willian",
+        "pontuacao": -0.30000000000000004,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/27/photo_50x50_zQfRwuQ.png",
+        "apelido": "Cano",
+        "pontuacao": 9,
+        "A": 0,
+        "G": 1,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 2,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 5,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2021/08/19/131f19bc697057f38a3c8ec99c785a97_50x50.png",
+        "apelido": "Luiz Henrique",
+        "pontuacao": 7.5,
+        "A": 3,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 2,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 6,
+        "PP": 0,
+        "DS": 4,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/17/photo_220x220.png",
+        "apelido": "John Kennedy",
+        "pontuacao": -0.5,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 1,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/04/20/f6b7d6073f1d67e5e9263e986f470c8b_50x50.png",
+        "apelido": "Matheus Martins",
+        "pontuacao": 4.1,
+        "A": 5,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 2,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 19.799999999999997
+    }, {
+      "id": 280,
+      "confronto": "Bragantino x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2020/01/01/30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "10",
+      "partida_data": "08/06 20:30",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2022/05/05/5c98a0d6cc76edfef83280072bbd3832_50x50.png",
+        "apelido": "Artur",
+        "pontuacao": 3.7,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 1,
+        "FS": 3,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 10,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/05/05/c2e17a280e19cf13328cce44f755ed84_50x50.png",
+        "apelido": "Ytalo",
+        "pontuacao": 2.2,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 1,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/05/05/d0de5e463c8123423e2713cdde571faf_50x50.png",
+        "apelido": "Helinho",
+        "pontuacao": 2.1,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 2,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 6,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 8
+    }, {
+      "id": 285,
+      "confronto": "Internacional x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2016/05/03/inter30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "11",
+      "partida_data": "11/06 21:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/07/photo_50x50_TAoUoam.png",
+        "apelido": "Wanderson",
+        "pontuacao": 17.1,
+        "A": 0,
+        "G": 2,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 5,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/07/photo_50x50_Ymwr1lY.png",
+        "apelido": "Alemão",
+        "pontuacao": 3.4,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 1,
+        "FF": 1,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/04/12/5422d339b6546dc0505e80e10b027269_50x50.png",
+        "apelido": "Pedro Henrique",
+        "pontuacao": 9,
+        "A": 0,
+        "G": 1,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 1,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 29.5
+    }, {
+      "id": 282,
+      "confronto": "Atlético-MG x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2017/11/23/Atletico-Mineiro-escudo30px.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "13",
+      "partida_data": "19/06 16:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/01/photo_50x50_HgdfwiM.png",
+        "apelido": "Hulk",
+        "pontuacao": 6.7,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 3,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 4,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/01/photo_50x50_yFYmdoD.png",
+        "apelido": "Vargas",
+        "pontuacao": -1.3,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/01/photo_50x50_9wKfftZ.png",
+        "apelido": "Ademir",
+        "pontuacao": 6.7,
+        "A": 0,
+        "G": 1,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/01/photo_50x50_o8gTFxZ.png",
+        "apelido": "Eduardo Sasha",
+        "pontuacao": 0,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 12.100000000000001
+    }, {
+      "id": 277,
+      "confronto": "Santos x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2014/04/14/santos_30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "15",
+      "partida_data": "02/07 19:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_eb1ett7.png",
+        "apelido": "Marcos Leonardo",
+        "pontuacao": 2.8,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 1,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/03/03/720ce11785d74738c66fdb3f797d770b_50x50.png",
+        "apelido": "Léo Baptistão ",
+        "pontuacao": 5.1,
+        "A": 1,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 1,
+        "FS": 3,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 8,
+        "PP": 0,
+        "DS": 3,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_CqBwl6X.png",
+        "apelido": "Ângelo",
+        "pontuacao": 1.5,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 1,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 5,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_jbahd9z.png",
+        "apelido": "Lucas Braga",
+        "pontuacao": 5.6,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 2,
+        "FF": 2,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 6,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/03/03/87ee12224aa1dccc15149c42181e9432_50x50.png",
+        "apelido": "Rwan",
+        "pontuacao": 1.9,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 16.9
+    }, {
+      "id": 264,
+      "confronto": "Corinthians x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2019/09/30/Corinthians_30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "16",
+      "partida_data": "10/07 16:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/02/photo_50x50_39SGFR6.png",
+        "apelido": "Róger Guedes",
+        "pontuacao": 2.7,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 3,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 6,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/02/photo_50x50_odfm6XT.png",
+        "apelido": "Gustavo Mosquito",
+        "pontuacao": 2.5,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 4,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/02/photo_50x50_TquvINB.png",
+        "apelido": "Giovane",
+        "pontuacao": -0.5,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 4.7
+    }, {
+      "id": 314,
+      "confronto": "Avaí x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2018/09/04/escudo-avai-30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "19",
+      "partida_data": "24/07 11:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2022/04/08/c60eb6c17dd46f0a98ac8d236bddbbd7_50x50.png",
+        "apelido": "Bissoli",
+        "pontuacao": 0.6,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 5,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/04/14/6351c93f1e7d0b3514916390f48db891_50x50.png",
+        "apelido": "Marcinho",
+        "pontuacao": 3.2,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 1,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/07/18/928d4688872689cf9875b1e26a3d4fd9_50x50.png",
+        "apelido": "Nathan",
+        "pontuacao": 0,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 3.8000000000000003
+    }, {
+      "id": 276,
+      "confronto": "São Paulo x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2014/04/14/sao_paulo_30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "21",
+      "partida_data": "06/08 20:30",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/08/photo_50x50_zc5jjjt.png",
+        "apelido": "David",
+        "pontuacao": -0.19999999999999996,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/03/01/3abaa943f1546750dd057d6cb3559ce5_50x50.png",
+        "apelido": "Calleri",
+        "pontuacao": 3,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 2,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/01/photo_50x50_0I7WXAm.png",
+        "apelido": "Erison",
+        "pontuacao": 1.2,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 4,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/06/28/beaa874f9953e86894fb3ff1e44fd934_50x50.png",
+        "apelido": "Marcos Guilherme",
+        "pontuacao": 2.4,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 2,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 4,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/16/photo_50x50.png",
+        "apelido": "Pedrinho",
+        "pontuacao": 11.2,
+        "A": 0,
+        "G": 1,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 7,
+        "PP": 0,
+        "DS": 3,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 17.6
+    }, {
+      "id": 275,
+      "confronto": "Palmeiras x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2014/04/14/palmeiras_30x30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "23",
+      "partida_data": "21/08 16:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/15/photo_50x50_eJOedW8.png",
+        "apelido": "Rony",
+        "pontuacao": 1.4,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 1,
+        "FF": 1,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 5,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/15/photo_50x50_dKDb4Xe.png",
+        "apelido": "Dudu",
+        "pontuacao": 9.7,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 1,
+        "FS": 5,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 10,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/15/photo_50x50_V15s07E.png",
+        "apelido": "José López",
+        "pontuacao": 0.6,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 1,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 11.7
+    }, {
+      "id": 263,
+      "confronto": "Botafogo x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2019/02/04/botafogo-30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "24",
+      "partida_data": "28/08 18:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/07/photo_50x50_t9xgUxE.png",
+        "apelido": "Victor Sá",
+        "pontuacao": 1.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 7,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://storage.googleapis.com/bkt-gglobo-sde-hdg-prd-sdeadmin_prod/media/person_role/2022/06/16/01982dd5226684462ec07bec6dffd11b_50x50.png",
+        "apelido": "Jeffinho",
+        "pontuacao": 6.4,
+        "A": 3,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 2,
+        "FF": 2,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 4,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/15/photo_50x50_XMfC6C1.png",
+        "apelido": "Luis Henrique",
+        "pontuacao": -0.19999999999999996,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 7.3
+    }, {
+      "id": 290,
+      "confronto": "Goiás x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2021/03/01/goias-30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "26",
+      "partida_data": "11/09 19:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/11/photo_50x50_onOMJJv.png",
+        "apelido": "Alesson",
+        "pontuacao": 0,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/11/photo_50x50_ARVnYib.png",
+        "apelido": "Vinicius",
+        "pontuacao": -1.4,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/04/05/aaad5989249282ee07375a4f7b9bf1da_50x50.png",
+        "apelido": "Renato Junior",
+        "pontuacao": 2.8,
+        "A": 1,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 1.4
+    }, {
+      "id": 356,
+      "confronto": "Fortaleza x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2021/09/19/30_0000_Fortaleza-2021.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "28",
+      "partida_data": "28/09 19:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2022/05/12/c5b6ac96aea31d2271156591230c8f4c_50x50.png",
+        "apelido": "Silvio Romero",
+        "pontuacao": -0.30000000000000004,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/09/28/photo_50x50_wjBokpm.png",
+        "apelido": "Pedro Rocha",
+        "pontuacao": 15.5,
+        "A": 0,
+        "G": 2,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 2,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 3,
+        "PI": 5,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/05/12/f14daa299b1fbfb010af7e0468342ccd_50x50.png",
+        "apelido": "Moisés",
+        "pontuacao": 4.6,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 1,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 3,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/05/12/f45da0b069dc4c621269c6f7735e27e6_50x50.png",
+        "apelido": "Depietri",
+        "pontuacao": -0.19999999999999996,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/07/16/27deb38ffaefdd66a10d7f246dcc678f_50x50.png",
+        "apelido": "Thiago Galhardo",
+        "pontuacao": 3.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 0,
+        "FS": 4,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/13/photo_50x50_TyD4lcH.png",
+        "apelido": "Júnior Santos",
+        "pontuacao": 9.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 4,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 6,
+        "PP": 0,
+        "DS": 5,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 31.799999999999997
+    }, {
+      "id": 1371,
+      "confronto": "Cuiabá x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2014/04/16/cuiaba30_.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "31",
+      "partida_data": "08/10 19:00",
+      "atletas": [{
+        "foto": "https://s.glbimg.com/es/sde/f/2022/02/23/4ba86feb09facb90b3a01b1712c3c8f5_50x50.png",
+        "apelido": "André Luís",
+        "pontuacao": 6.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 1,
+        "FS": 4,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 3,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/06/photo_50x50_AvLd8xm.png",
+        "apelido": "Deyverson",
+        "pontuacao": 6.3,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 2,
+        "FF": 2,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 7,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/06/photo_50x50_LlMyePJ.png",
+        "apelido": "Isidro Pitta",
+        "pontuacao": 6.7,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 1,
+        "FF": 4,
+        "FS": 4,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 5,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 19.099999999999998
+    }, {
+      "id": 327,
+      "confronto": "América-MG x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2019/02/28/escudo30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "33",
+      "partida_data": "22/10 19:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/03/08/photo_50x50_8mUcFok.png",
+        "apelido": "Wellington Paulista",
+        "pontuacao": -0.4,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/02/25/32fc5d9f18e690ed6ef80d16faae95cc_50x50.png",
+        "apelido": "Felipe Azevedo",
+        "pontuacao": 1.9,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 7,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/02/25/f952435e80bcd6628e6480a7ad0ed047_50x50.png",
+        "apelido": "Henrique Almeida",
+        "pontuacao": -0.30000000000000004,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/02/25/561f3ca4238e82e1b2e1479a1a66c551_50x50.png",
+        "apelido": "Everaldo",
+        "pontuacao": 10.4,
+        "A": 0,
+        "G": 1,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 1,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 7,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/03/31/a411b722d7d0edc88f871c1a48191dc1_50x50.png",
+        "apelido": "Aloísio",
+        "pontuacao": -1.2,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 1,
+        "PI": 3,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2022/08/10/2c133460f6f214aed522ba40302a5c33_50x50.png",
+        "apelido": "Mastriani",
+        "pontuacao": 0.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 10.5
+    }, {
+      "id": 294,
+      "confronto": "Coritiba x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2017/03/29/coritiba30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "36",
+      "partida_data": "06/11 16:00",
+      "atletas": [{
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_o07AeW3.png",
+        "apelido": "Alef Manga",
+        "pontuacao": 10.1,
+        "A": 0,
+        "G": 1,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 5,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/02/23/4b8edf6d0d6b8c3a3c39de67b5bd75e1_50x50.png",
+        "apelido": "Léo Gamalho",
+        "pontuacao": -0.09999999999999998,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 0,
+        "FS": 1,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_qDCu3iB.png",
+        "apelido": "Matheus Cadorini",
+        "pontuacao": 0.6,
+        "A": 0,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 1,
+        "FD": 0,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 5,
+        "PP": 0,
+        "DS": 2,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.sde.globo.com/media/person_role/2023/02/28/photo_50x50_6f5bwYY.png",
+        "apelido": "Fabrício Daniel",
+        "pontuacao": 1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 0,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 11.6
+    }, {
+      "id": 286,
+      "confronto": "Juventude x Flamengo",
+      "escudo_casa": "https://s.sde.globo.com/media/organizations/2021/04/29/juventude30.png",
+      "escudo_fora": "https://s.sde.globo.com/media/organizations/2018/04/09/Flamengo-30.png",
+      "rodada": "37",
+      "partida_data": "09/11 21:30",
+      "atletas": [{
+        "foto": "https://s.glbimg.com/es/sde/f/2022/03/03/9bdded7e0046ad8500605256f741994b_50x50.png",
+        "apelido": "Capixaba",
+        "pontuacao": 1.8,
+        "A": 1,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 2,
+        "FD": 0,
+        "FF": 1,
+        "FS": 3,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 1,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://s.glbimg.com/es/sde/f/2022/08/06/f016d3ea4f1bdceef28512d7bf47fd36_50x50.png",
+        "apelido": "Felipe Pires",
+        "pontuacao": -0.19999999999999996,
+        "A": 2,
+        "G": 0,
+        "CA": 1,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 0,
+        "FF": 0,
+        "FS": 2,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 2,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }, {
+        "foto": "https://storage.googleapis.com/bkt-gglobo-sde-hdg-prd-sdeadmin_prod/media/person_role/2022/08/29/photo_50x50_r7kZYAV.png",
+        "apelido": "Ruan",
+        "pontuacao": 1.1,
+        "A": 0,
+        "G": 0,
+        "CA": 0,
+        "CV": 0,
+        "DP": 0,
+        "FC": 0,
+        "FD": 1,
+        "FF": 0,
+        "FS": 0,
+        "FT": 0,
+        "GC": 0,
+        "GS": 0,
+        "I": 0,
+        "PI": 1,
+        "PP": 0,
+        "DS": 0,
+        "SG": 0,
+        "PS": 0,
+        "PC": 0,
+        "DE": 0
+      }],
+      "pontuacao_total": 2.7
+    }]
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Container, {
+    children: data.confrontos.length ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Title, {
+        children: ["Pontua\xE7\xE3o cedida do time do ", data.time.nome.toUpperCase(), " para os ", data.posicao.nome.toUpperCase(), "."]
+      }), data.confrontos.map(function (e) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Shield, {
+              src: e.escudo_casa
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Info, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Teams, {
+                children: e.confronto
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Time, {
+                children: "".concat(e.partida_data, " - Rodada ").concat(e.rodada)
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Shield, {
+              src: e.escudo_fora
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Content, {
+            children: [e.atletas.map(function (e) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Players, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Player, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Photo, {
+                      src: e.foto
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.NameScouts, {
+                      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Name, {
+                        children: e.apelido
+                      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Scouts, {
+                        children: data.scouts.map(function (item) {
+                          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Scout, {
+                            value: e[item.sigla],
+                            type: item.tipo,
+                            children: "".concat(e[item.sigla]).concat(item.sigla)
+                          });
+                        })
+                      })]
+                    })]
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Score, {
+                    value: e.pontuacao,
+                    children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(e.pontuacao)
+                  })]
+                })
+              });
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_2__.Total, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Text, {
+                children: "Total:"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_2__.Score, {
+                value: e.pontuacao_total,
+                children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(e.pontuacao_total)
+              })]
+            })]
+          })]
+        });
+      })]
+    }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_utils_styles__WEBPACK_IMPORTED_MODULE_3__.Message, {
+      children: "Nenhum jogador encontrado"
+    })
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (matches);
+
+/***/ }),
+
+/***/ "./resources/js/modal/matches/styles.js":
+/*!**********************************************!*\
+  !*** ./resources/js/modal/matches/styles.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Container": () => (/* binding */ Container),
+/* harmony export */   "Content": () => (/* binding */ Content),
+/* harmony export */   "Header": () => (/* binding */ Header),
+/* harmony export */   "Info": () => (/* binding */ Info),
+/* harmony export */   "Item": () => (/* binding */ Item),
+/* harmony export */   "Name": () => (/* binding */ Name),
+/* harmony export */   "NameScouts": () => (/* binding */ NameScouts),
+/* harmony export */   "Photo": () => (/* binding */ Photo),
+/* harmony export */   "Player": () => (/* binding */ Player),
+/* harmony export */   "Players": () => (/* binding */ Players),
+/* harmony export */   "Score": () => (/* binding */ Score),
+/* harmony export */   "Scout": () => (/* binding */ Scout),
+/* harmony export */   "Scouts": () => (/* binding */ Scouts),
+/* harmony export */   "Shield": () => (/* binding */ Shield),
+/* harmony export */   "Teams": () => (/* binding */ Teams),
+/* harmony export */   "Text": () => (/* binding */ Text),
+/* harmony export */   "Time": () => (/* binding */ Time),
+/* harmony export */   "Title": () => (/* binding */ Title),
+/* harmony export */   "Total": () => (/* binding */ Total)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  \n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display: block;\n    text-align: center;\n    width: 80%;\n    font-size: 0.9em;\n    padding: 5px;\n    margin: 10px auto;  \n"])));
+var Item = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    padding: 5px;\n    border: solid thin #ccc;\n    margin-bottom: 20px;\n"])));
+var Header = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n    justify-content: space-around;\n    margin-bottom: 10px;\n"])));
+var Shield = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    width: 30px;\n"])));
+var Info = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n"])));
+var Teams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    font-weight: 500;\n    font-size: 0.9em;\n"])));
+var Time = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].time(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n    color: #666;\n"])));
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    border: dashed thin #999;\n    padding: 5px;\n"])));
+var Players = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    padding: 5px;\n    border-bottom: dashed thin #999;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n"])));
+var Player = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: flex-start;\n    align-items: center;\n"])));
+var Photo = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    width: 30px;\n    margin-right: 5px;\n"])));
+var NameScouts = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: column;\n"])));
+var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n"])));
+var Scouts = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    display: flex;\n"])));
+var Scout = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].small(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    font-size: 0.7em;\n    margin-right: 5px;\n    color: ", ";\n    display: ", ";\n"])), function (_ref) {
+  var type = _ref.type;
+  return type > 'Positivo' ? 'green' : 'red';
+}, function (_ref2) {
+  var value = _ref2.value;
+  return value > 0 ? 'block' : 'none';
+});
+var Score = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n    color: ", ";\n"])), function (_ref3) {
+  var value = _ref3.value;
+  return value > 0 ? 'green' : 'red';
+});
+var Total = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    align-content: center;\n    padding: 5px 5px 0 5px;\n"])));
+var Text = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n"])));
+
+/***/ }),
+
 /***/ "./resources/js/modal/player/index.js":
 /*!********************************************!*\
   !*** ./resources/js/modal/player/index.js ***!
@@ -9330,14 +11376,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils/helpers */ "./resources/js/utils/helpers.js");
-/* harmony import */ var _componets_modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../componets/modal */ "./resources/js/componets/modal/index.js");
-/* harmony import */ var _modal_compare__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../modal/compare */ "./resources/js/modal/compare/index.js");
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
-/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! highcharts-react-official */ "./node_modules/highcharts-react-official/dist/highcharts-react.min.js");
-/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./styles */ "./resources/js/modal/player/styles.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils/api */ "./resources/js/utils/api.js");
+/* harmony import */ var _componets_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../componets/modal */ "./resources/js/componets/modal/index.js");
+/* harmony import */ var _modal_matches__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../modal/matches */ "./resources/js/modal/matches/index.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! highcharts */ "./node_modules/highcharts/highcharts.js");
+/* harmony import */ var highcharts__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(highcharts__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! highcharts-react-official */ "./node_modules/highcharts-react-official/dist/highcharts-react.min.js");
+/* harmony import */ var highcharts_react_official__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(highcharts_react_official__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./styles */ "./resources/js/modal/player/styles.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -9354,17 +11405,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function player(_ref) {
   var data = _ref.data,
     compare = _ref.compare;
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    data_player = _useState2[0],
-    sdataplayer = _useState2[1];
+    modal = _useState2[0],
+    smodal = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     loading = _useState4[0],
     sloading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState6 = _slicedToArray(_useState5, 2),
+    data_matches = _useState6[0],
+    sdatamatches = _useState6[1];
   var options = {
     chart: {
       zoomType: 'x',
@@ -9401,123 +11457,171 @@ function player(_ref) {
       color: '#000000'
     }]
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Container, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item1, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Button, {
+  function pontos_cedidos(_x2) {
+    return _pontos_cedidos.apply(this, arguments);
+  }
+  function _pontos_cedidos() {
+    _pontos_cedidos = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(atleta) {
+      var _yield$api$get, _data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            smodal(true);
+            sloading(true);
+            _context.next = 5;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("pontos-cedidos/atletas?time_id=".concat(atleta.clube_id, "&posicao_id=").concat(atleta.posicao_id));
+          case 5:
+            _yield$api$get = _context.sent;
+            _data = _yield$api$get.data;
+            sdatamatches(_data);
+            sloading(false);
+            _context.next = 15;
+            break;
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context.t0);
+            sloading(false);
+          case 15:
+            ;
+          case 16:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 11]]);
+    }));
+    return _pontos_cedidos.apply(this, arguments);
+  }
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Container, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item1, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Button, {
           onClick: function onClick() {
             return compare(data.atleta.atleta_id);
           },
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Icon, {
             children: "directions_run"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Text1, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Text1, {
             children: "Comparar"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Button, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Button, {
+          onClick: function onClick() {
+            return pontos_cedidos(data.atleta);
+          },
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Icon, {
             children: "security"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Text1, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Text1, {
             children: "Ver confronto"
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Name, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Name, {
           children: data.atleta.apelido
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Photo, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Photo, {
           src: data.atleta.foto
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Position, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Position, {
           children: "".concat(data.atleta.posicao_nome, " | ").concat(data.clubes[data.atleta.clube_id].abreviacao)
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Date, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Date, {
           children: data.atleta.partida_data
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Matches, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Shield, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Matches, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Shield, {
             src: data.clubes[data.atleta.clube_casa_id].escudo
-          }), "x", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Shield, {
+          }), "x", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Shield, {
             src: data.clubes[data.atleta.clube_visitante_id].escudo
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Logo, {})]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item2, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Title, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Text2, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Logo, {})]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item2, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Title, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Text2, {
             className: "analise",
             children: "AN\xC1LISE"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Text2, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Text2, {
             className: "jogador",
             children: "DO JOGADOR"
           })]
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item3, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Legend, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item3, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Legend, {
           children: "M\xE9dia"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Geral"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.media.geral)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.geral, " Jogos"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Casa"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.media.casa)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.casa, " Jogos"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Fora"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.media.fora)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.fora, " Jogos"]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item4, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Legend, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item4, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Legend, {
           children: "Pontua\xE7\xE3o"
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Geral"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.pontuacao.geral)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.geral, " Jogos"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Casa"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.pontuacao.casa)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.casa, " Jogos"]
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Box, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Label, {
             children: "Fora"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Value, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Value, {
             children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(data.atleta.pontuacao.fora)
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.QtdeMatches, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_7__.QtdeMatches, {
             children: [data.atleta.jogos.fora, " Jogos"]
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item5, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item5, {
         children: data.scouts.map(function (e) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Scout, {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Scout, {
             type: e.tipo,
             children: "".concat(data.atleta[e.sigla]).concat(e.sigla)
           }, e.sigla);
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item6, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Description, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item6, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Description, {
           children: data.atleta.observacao
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Item7, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)((highcharts_react_official__WEBPACK_IMPORTED_MODULE_5___default()), {
-          highcharts: (highcharts__WEBPACK_IMPORTED_MODULE_4___default()),
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_7__.Item7, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)((highcharts_react_official__WEBPACK_IMPORTED_MODULE_6___default()), {
+          highcharts: (highcharts__WEBPACK_IMPORTED_MODULE_5___default()),
           options: options
         })
       })]
-    })
+    }), modal && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_componets_modal__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      icon: "security",
+      title: "Pontos cedidos por time e posi\xE7\xE3o",
+      modal: modal,
+      smodal: smodal,
+      Component: _modal_matches__WEBPACK_IMPORTED_MODULE_4__["default"],
+      data: data_matches,
+      loading: loading,
+      height: "500px"
+    })]
   });
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (player);
@@ -9779,7 +11883,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modal_compare__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../modal/compare */ "./resources/js/modal/compare/index.js");
 /* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../componets/container */ "./resources/js/componets/container/index.js");
 /* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/player/styles.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _utils_styles__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../utils/styles */ "./resources/js/utils/styles.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -9795,6 +11900,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 
 
 
@@ -10007,25 +12113,25 @@ function Player() {
     }
   }
   var component = function component() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Content, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Filter, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Filter, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
           onChange: function onChange(e) {
             return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
               clube_id: e.target.value
             }));
           },
           value: filter.clube_id,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
             value: "",
             children: "Time"
           }), Object.values(data.clubes).map(function (e) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
               value: e.id,
               children: e.nome
             }, e.id);
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
           onChange: function onChange(e) {
             return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
               posicao_id: e.target.value
@@ -10033,12 +12139,12 @@ function Player() {
           },
           value: filter.posicao_id,
           children: Object.values(data.posicoes).map(function (e) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
               value: e.id,
               children: e.nome
             }, e.id);
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
           onChange: function onChange(e) {
             return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
               status_id: e.target.value
@@ -10046,114 +12152,114 @@ function Player() {
           },
           value: filter.status_id,
           children: Object.values(data.status).map(function (e) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
               value: e.id,
               children: e.nome
             }, e.id);
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Select, {
           onChange: function onChange(e) {
             return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
               scout: e.target.value
             }));
           },
           value: filter.scout,
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
             value: "",
             children: "Scouts"
           }), data.scouts.map(function (e) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Option, {
               value: e.sigla,
               children: e.nome
             }, e.sigla);
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Button, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Button, {
           onClick: getData,
-          children: loading_data ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(react_loader_spinner__WEBPACK_IMPORTED_MODULE_1__["default"], {
+          children: loading_data ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_loader_spinner__WEBPACK_IMPORTED_MODULE_1__["default"], {
             visible: true,
             type: "TailSpin",
             color: "#000",
             height: 18,
             width: 18
-          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("span", {
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
             children: "Carregar"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Label, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Icon, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Icon, {
             children: "directions_run"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Input, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Input, {
             onChange: search
           })]
         })]
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.List, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Table, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Thead, {
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tr, {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.List, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Table, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Thead, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tr, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Time"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Jogador"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Pre\xE7o"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Status"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Valoriza\xE7\xE3o"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "\xDAltima"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "M\xE9dia"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Jogos"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Th, {
                 children: "Confronto"
               })]
             })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tbody, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tbody, {
             children: data.atletas.length ? data.atletas.map(function (e) {
-              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tr, {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Tr, {
                 compare: e.compare,
                 onClick: function onClick() {
                   return getPlayer(e.atleta_id);
                 },
-                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
                     src: data.clubes[e.clube_id]['60x60']
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
                     src: e.foto
-                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Description, {
-                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Name, {
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Description, {
+                    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Name, {
                       children: e.apelido.substr(0, 10)
-                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Position, {
+                    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Position, {
                       children: data.posicoes[e.posicao_id].nome
                     })]
                   })]
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
                   children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.amount)(e.preco_num)
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
-                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Ico, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Ico, {
                     color: status[e.status_id].color,
                     children: status[e.status_id].icon
                   })
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
                   children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.amount)(e.variacao_num)
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
                   children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.amount)(e.pontos_num)
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
                   children: (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_2__.amount)(e.media_num)
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
                   children: e.jogos_num
-                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
-                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_8__.Td, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
                     src: data.clubes[e.confronto.split('x')[0]]['60x60']
-                  }), "x", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
+                  }), "x", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Image, {
                     src: data.clubes[e.confronto.split('x')[1]]['60x60']
                   })]
                 })]
               }, e.atleta_id);
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_8__.Message, {
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_utils_styles__WEBPACK_IMPORTED_MODULE_9__.Message, {
               children: "Nenhum jogador encontrado"
             })
           })]
@@ -10161,12 +12267,12 @@ function Player() {
       })]
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_7__["default"], {
       title: "Mercado",
       Component: component,
       loading: loading_page
-    }), modal_player && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_componets_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), modal_player && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_componets_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
       icon: "directions_run",
       title: "Informa\xE7\xF5es atleta",
       modal: modal_player,
@@ -10178,7 +12284,7 @@ function Player() {
       width: "60%",
       height: "620px",
       marginLeft: "-30%"
-    }), modal_compare && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_componets_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    }), modal_compare && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_componets_modal__WEBPACK_IMPORTED_MODULE_4__["default"], {
       icon: "compare_arrows",
       title: "Comparar atleta",
       modal: modal_compare,
@@ -10186,7 +12292,7 @@ function Player() {
       Component: _modal_compare__WEBPACK_IMPORTED_MODULE_6__["default"],
       data: data_player,
       loading: loading_data_player,
-      height: "600px"
+      height: "500px"
     })]
   });
 }
@@ -10213,7 +12319,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Input": () => (/* binding */ Input),
 /* harmony export */   "Label": () => (/* binding */ Label),
 /* harmony export */   "List": () => (/* binding */ List),
-/* harmony export */   "Message": () => (/* binding */ Message),
 /* harmony export */   "Name": () => (/* binding */ Name),
 /* harmony export */   "Option": () => (/* binding */ Option),
 /* harmony export */   "Position": () => (/* binding */ Position),
@@ -10226,49 +12331,48 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "Tr": () => (/* binding */ Tr)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19, _templateObject20, _templateObject21;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19, _templateObject20;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n"])));
-var Message = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display: block;\n    text-align: center;\n    margin: 35px auto;\n    color: #999;\n    font-size: 0.9em;\n    user-select: none;\n"])));
-var Filter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    display: flex;\n    margin-top: 25px;\n    justify-content: space-between;\n    width: 100%;\n\n    @media screen and (max-width:900px){\n        display: grid;\n        grid-template-columns: 17% 17% 17% 17% 80px;\n        grid-column-gap: 10px;\n        grid-row-gap: 10px;\n    }\n"])));
-var Select = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].select(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    outline: none;\n    padding: 5px 10px;\n    width: 15%;\n    border: solid 2px #000000;\n    border-radius: 0.5em;\n    color: #000000;\n    font-size: 0.9em;\n\n    @media screen and (max-width:900px){                 \n        width: 100%;\n    }\n"])));
-var Option = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].option(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral([""])));
-var Button = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    background-color: #ffffff;\n    border: solid 2px #F68D42;\n    color: #F68D42;\n    width: 12%;\n    border-radius: 0.5em;\n    font-weight: bold;\n    transition-duration: 0.5s;\n    outline: none;\n    cursor: pointer;\n    height: 33.5px;\n    &:hover {\n        background-color: #F68D42;\n        color: #ffffff;\n    }\n\n    @media screen and (max-width:900px){                \n            width: 100%;\n    }\n"])));
-var Label = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    width: 15%;\n    padding: 5px 10px;\n    width: 17%;\n    border-radius: 0.5em;\n    border: solid 2px #000000;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n\n    @media screen and (max-width:900px){\n        width: 100%;\n        grid-column: 1/6; \n    }\n"])));
+var Filter = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    margin-top: 25px;\n    justify-content: space-between;\n    width: 100%;\n\n    @media screen and (max-width:900px){\n        display: grid;\n        grid-template-columns: 17% 17% 17% 17% 80px;\n        grid-column-gap: 10px;\n        grid-row-gap: 10px;\n    }\n"])));
+var Select = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].select(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    outline: none;\n    padding: 5px 10px;\n    width: 15%;\n    border: solid 2px #000000;\n    border-radius: 0.5em;\n    color: #000000;\n    font-size: 0.9em;\n\n    @media screen and (max-width:900px){                 \n        width: 100%;\n    }\n"])));
+var Option = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].option(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral([""])));
+var Button = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    background-color: #ffffff;\n    border: solid 2px #F68D42;\n    color: #F68D42;\n    width: 12%;\n    border-radius: 0.5em;\n    font-weight: bold;\n    transition-duration: 0.5s;\n    outline: none;\n    cursor: pointer;\n    height: 33.5px;\n    &:hover {\n        background-color: #F68D42;\n        color: #ffffff;\n    }\n\n    @media screen and (max-width:900px){                \n            width: 100%;\n    }\n"])));
+var Label = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    width: 15%;\n    padding: 5px 10px;\n    width: 17%;\n    border-radius: 0.5em;\n    border: solid 2px #000000;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n\n    @media screen and (max-width:900px){\n        width: 100%;\n        grid-column: 1/6; \n    }\n"])));
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input.attrs(function () {
   return {
     placeholder: 'Nome jogador',
     type: 'search'
   };
-})(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["     \n    flex: 1;\n    width: 100%;\n    outline: none;\n    border: none;\n    color: #000000;\n    font-size: 0.9em;\n"])));
+})(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["     \n    flex: 1;\n    width: 100%;\n    outline: none;\n    border: none;\n    color: #000000;\n    font-size: 0.9em;\n"])));
 var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
   return {
     className: 'material-icons'
   };
-})(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral([" \n    font-size: 1.2em;\n    color: #000000;\n    margin-right: 10px;    \n"])));
-var List = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    @media screen and (max-width:900px){\n        width: 100%;\n        overflow: auto;        \n    }\n"])));
-var Table = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].table(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    width: 100%;\n"])));
-var Thead = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].thead(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    margin-top: 25px;\n    border: solid thin #000000;\n    padding: 10px;\n    color: #000000;\n    font-size: 0.9em;\n    border-radius: 0.5em;\n    cursor: default;\n"])));
-var Tr = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].tr(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    width: 100%;\n    border: solid thin #000000;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    border-radius: 0.5em;\n    margin-top: 15px;\n    transition-duration: 0.3s;\n    cursor: pointer;\n    opacity: ", ";\n    &:hover  {              \n        background: #fafafa;\n        transform: scale(1.05);\n        box-shadow: 0 5px 10px #cccccc;\n    }\n"])), function (_ref) {
+})(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral([" \n    font-size: 1.2em;\n    color: #000000;\n    margin-right: 10px;    \n"])));
+var List = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    @media screen and (max-width:900px){\n        width: 100%;\n        overflow: auto;        \n    }\n"])));
+var Table = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].table(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    width: 100%;\n"])));
+var Thead = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].thead(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    margin-top: 25px;\n    border: solid thin #000000;\n    padding: 10px;\n    color: #000000;\n    font-size: 0.9em;\n    border-radius: 0.5em;\n    cursor: default;\n"])));
+var Tr = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].tr(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    width: 100%;\n    border: solid thin #000000;\n    padding: 10px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    border-radius: 0.5em;\n    margin-top: 15px;\n    transition-duration: 0.3s;\n    cursor: pointer;\n    opacity: ", ";\n    &:hover  {              \n        background: #fafafa;\n        transform: scale(1.05);\n        box-shadow: 0 5px 10px #cccccc;\n    }\n"])), function (_ref) {
   var compare = _ref.compare;
   return compare ? 0.2 : 1;
 });
-var Th = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].th(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n    width: 107.234px;\n"])));
-var Tbody = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].tbody(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n\n"])));
-var Td = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].td(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-around;\n    align-items: center;\n    width: 107.234px;\n    text-align: center;\n    cursor: pointer;\n    font-size: 0.8em;\n"])));
+var Th = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].th(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n    width: 107.234px;\n"])));
+var Tbody = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].tbody(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n\n"])));
+var Td = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].td(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-around;\n    align-items: center;\n    width: 107.234px;\n    text-align: center;\n    cursor: pointer;\n    font-size: 0.8em;\n"])));
 var Ico = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
   return {
     className: 'material-icons'
   };
-})(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral([" \n    color: ", ";\n"])), function (_ref2) {
+})(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral([" \n    color: ", ";\n"])), function (_ref2) {
   var color = _ref2.color;
   return color;
 });
-var Image = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    width: 26px;\n    height: 26px;\n"])));
-var Description = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: column;\n    width: 95px;\n"])));
-var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject20 || (_templateObject20 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n"])));
-var Position = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].small(_templateObject21 || (_templateObject21 = _taggedTemplateLiteral(["\n    font-size: 0.7em;\n"])));
+var Image = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n    width: 26px;\n    height: 26px;\n"])));
+var Description = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: column;\n    width: 95px;\n"])));
+var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n"])));
+var Position = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].small(_templateObject20 || (_templateObject20 = _taggedTemplateLiteral(["\n    font-size: 0.7em;\n"])));
 
 /***/ }),
 
@@ -11152,6 +13256,25 @@ var message = function message(e) {
     });
   }
 };
+
+/***/ }),
+
+/***/ "./resources/js/utils/styles.js":
+/*!**************************************!*\
+  !*** ./resources/js/utils/styles.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Message": () => (/* binding */ Message)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Message = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: block;\n    text-align: center;\n    margin: 35px auto;\n    color: #999;\n    font-size: 0.9em;\n    user-select: none;  \n"])));
 
 /***/ }),
 

@@ -12,7 +12,6 @@ import Container from '../../../componets/container';
 
 import {
   Content,
-  Message,
   Filter,
   Select,
   Option,
@@ -33,6 +32,8 @@ import {
   Name,
   Position,
 } from './styles';
+
+import { Message } from '../../../utils/styles';
 
 function Player() {
 
@@ -260,7 +261,7 @@ function Player() {
           Component={ModalCompare}
           data={data_player}
           loading={loading_data_player}
-          height="600px"
+          height="500px"
         />
       }
     </>

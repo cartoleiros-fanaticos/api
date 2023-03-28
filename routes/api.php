@@ -32,5 +32,6 @@ Route::group([
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('atletas', AtletasController::class);
     Route::get('compare/atletas', [ AtletasController::class, 'compare' ]);
+    Route::get('pontos-cedidos/atletas', [ AtletasController::class, 'pontos_cedidos' ]);
 
 });

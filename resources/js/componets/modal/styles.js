@@ -52,7 +52,7 @@ export const Icon = styled.i.attrs(() => ({
     className: 'material-icons'
 }))` 
     cursor: default;
-    color: ${({ color }) => color };
+    color: ${({ color }) => color};
 `;
 
 export const Title = styled.span`
@@ -61,8 +61,21 @@ export const Title = styled.span`
 `;
 
 export const Content = styled.div`
-    padding: 10px;
+    padding: 5px;
     min-height: 450px;
-    
+    margin: 5px;    
     overflow: auto;
+
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #000;
+        background-color: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar {
+        width: 7px;
+        background-color: #000;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #000;
+    }
 `;

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
-import { amount } from '../../utils/helpers';
+import { amount, message } from '../../utils/helpers';
+import api from '../../utils/api';
 
 import Modal from '../../componets/modal';
-import ModalCompare from '../../modal/compare';
+import ModalMatches from '../../modal/matches';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
@@ -40,9 +41,10 @@ import {
 
 function player({ data, compare }) {
 
-    const [data_player, sdataplayer] = useState({});
-
+    const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(false);
+
+    const [data_matches, sdatamatches] = useState({});
 
     const options = {
         chart: { zoomType: 'x', height: 180 },
@@ -75,6 +77,25 @@ function player({ data, compare }) {
         ]
     }
 
+    async function pontos_cedidos(atleta) {
+  
+      try {
+  
+        smodal(true);
+        sloading(true);
+  
+        const { data } = await api.get(`pontos-cedidos/atletas?time_id=${atleta.clube_id}&posicao_id=${atleta.posicao_id}`);
+  
+        sdatamatches(data);
+        sloading(false);
+  
+      } catch (e) {
+        message(e);
+        sloading(false);
+      };
+  
+    }
+
     return (
         <>
             <Container>
@@ -83,7 +104,7 @@ function player({ data, compare }) {
                         <Icon>directions_run</Icon>
                         <Text1>Comparar</Text1>
                     </Button>
-                    <Button>
+                    <Button onClick={() => pontos_cedidos(data.atleta)}>
                         <Icon>security</Icon>
                         <Text1>Ver confronto</Text1>
                     </Button>
@@ -155,6 +176,19 @@ function player({ data, compare }) {
                     />
                 </Item7>
             </Container>
+            {
+                modal &&
+                <Modal
+                    icon="security"
+                    title="Pontos cedidos por time e posição"
+                    modal={modal}
+                    smodal={smodal}
+                    Component={ModalMatches}
+                    data={data_matches}
+                    loading={loading}
+                    height="500px"
+                />
+            }
         </>
     );
 }
