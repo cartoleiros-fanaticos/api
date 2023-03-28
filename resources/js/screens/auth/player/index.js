@@ -6,6 +6,7 @@ import api from '../../../utils/api';
 
 import Modal from '../../../componets/modal';
 import ModalPlayer from '../../../modal/player';
+import ModalCompare from '../../../modal/compare';
 
 import Container from '../../../componets/container';
 
@@ -35,7 +36,8 @@ import {
 
 function Player() {
 
-  const [modal, smodal] = useState(false);
+  const [modal_player, smodalplayer] = useState(false);
+  const [modal_compare, smodalcompare] = useState(false);
   const [data_player, sdataplayer] = useState({});
 
   const [filter, sfilter] = useState({
@@ -91,19 +93,43 @@ function Player() {
 
   async function getPlayer(atleta_id) {
 
+    const atleta_a = data.atletas.find(e => e.compare === true);
+
     try {
 
       sloadingdataplayer(true);
-      smodal(true);
 
-      const { data } = await api.get(`atletas/${atleta_id}}`);
-      sdataplayer(data);
+      if (atleta_a) {
+
+        smodalcompare(true);
+        const response = await api.get(`compare/atletas?atleta_a=${atleta_a.atleta_id}&atleta_b=${atleta_id}`);
+        sdataplayer(response.data);
+        delete atleta_a.compare;
+        sdata(data);
+
+      } else {
+
+        smodalplayer(true);
+        const response = await api.get(`atletas/${atleta_id}`);
+        sdataplayer(response.data);
+      }
+
       sloadingdataplayer(false);
 
     } catch (e) {
       message(e);
       sloadingdataplayer(false);
     };
+
+  }
+
+  async function compare(atleta_id) {
+
+    let atleta = data.atletas.find(e => e.atleta_id === atleta_id);
+    atleta.compare = true;
+    sdata(data);
+    smodalplayer(false);
+
   }
 
   function search(event) {
@@ -168,7 +194,7 @@ function Player() {
             {
               data.atletas.length ?
                 data.atletas.map(e =>
-                  <Tr onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
+                  <Tr compare={e.compare} onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
                     <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
                     <Td>
                       <Image src={e.foto} />
@@ -208,17 +234,32 @@ function Player() {
         loading={loading_page}
       />
       {
-        modal &&
+
+        modal_player &&
         <Modal
           icon="directions_run"
           title="Informações atleta"
-          modal={modal}
-          smodal={smodal}
+          modal={modal_player}
+          smodal={smodalplayer}
           Component={ModalPlayer}
           data={data_player}
           loading={loading_data_player}
+          fun={compare}
           width="60%"
+          height='620px'
           marginLeft="-30%"
+        />
+      }
+      {
+        modal_compare &&
+        <Modal
+          icon="compare_arrows"
+          title="Comparar atleta"
+          modal={modal_compare}
+          smodal={smodalcompare}
+          Component={ModalCompare}
+          data={data_player}
+          loading={loading_data_player}
         />
       }
     </>

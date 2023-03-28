@@ -13,7 +13,9 @@ import {
     Content,
 } from './styles';
 
-function modal({ title, icon, Component, modal, smodal, data, loading, width = '40%', height = 'auto', marginLeft = '-20%' }) {
+function modal({ title, icon, Component, modal, smodal, data, loading, fun = () => {}, width = '40%', height = 'auto', marginLeft = '-20%' }) {
+        
+    const { innerWidth } = window;
 
     const container = useRef(null);
     const screen = useRef(null);
@@ -36,8 +38,8 @@ function modal({ title, icon, Component, modal, smodal, data, loading, width = '
             container.current.style.cssText = `
                 opacity: 1;
                 visibility: visible;
-                top: 50%;
-                margin-top: -${container.current.offsetHeight / 2}px;
+                top: ${innerWidth <= 900 ? 0 : '50%'};
+                margin-top: -${innerWidth <= 900 ? 0 : (container.current.offsetHeight / 2)}px;
                 transition-duration: 0.5s;
                 `;
 
@@ -79,6 +81,7 @@ function modal({ title, icon, Component, modal, smodal, data, loading, width = '
                             <Component
                                 data={data}
                                 smodal={smodal}
+                                compare={fun}
                             />
                     }
                 </Content>

@@ -17,6 +17,15 @@ export const Container = styled.div`
     top: 60%;
     opacity: 0;
     visibility: hidden;
+    
+    overflow: auto;
+
+    @media screen and (max-width:900px){
+        margin-left: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+    } 
 `;
 
 export const Screen = styled.div`

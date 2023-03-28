@@ -31,5 +31,6 @@ Route::group([
 
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('atletas', AtletasController::class);
+    Route::get('compare/atletas', [ AtletasController::class, 'compare' ]);
 
 });

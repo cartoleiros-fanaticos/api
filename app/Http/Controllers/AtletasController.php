@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Atletas;
 use App\Models\Clubes;
+use App\Models\Game;
+use App\Models\Parciais;
+use App\Models\Partidas;
 use App\Models\Posicoes;
 use App\Models\Scouts;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use DB;
+use Validator;
 
 class AtletasController extends Controller
 {
@@ -73,6 +78,7 @@ class AtletasController extends Controller
                 posicao_id,
                 status_id,
                 rodada_id,
+                observacao,
                 G,
                 A,
                 DS,
@@ -100,7 +106,8 @@ class AtletasController extends Controller
             FROM atletas
             INNER JOIN partidas ON rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)
             INNER JOIN posicoes ON posicoes.id = posicao_id
-        ')[0];
+            WHERE atleta_id = ?
+        ', [ $id ])[0];
 
         $geral = DB::select('
             SELECT 
@@ -110,7 +117,7 @@ class AtletasController extends Controller
             FROM parciais 
             INNER JOIN partidas ON partidas.rodada = parciais.rodada AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)
             WHERE atleta_id = ?
-        ', [$atleta->atleta_id])[0];
+        ', [$id])[0];
 
         $casa = DB::select('
             SELECT 
@@ -120,7 +127,7 @@ class AtletasController extends Controller
             FROM parciais
             INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_casa_id = clube_id
             WHERE atleta_id = ?
-        ', [$atleta->atleta_id])[0];
+        ', [$id])[0];
 
         $fora = DB::select('
             SELECT 
@@ -130,24 +137,24 @@ class AtletasController extends Controller
             FROM parciais
             INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_visitante_id = clube_id
             WHERE atleta_id = ?
-        ', [$atleta->atleta_id])[0];
+        ', [$id])[0];
 
         $atleta->pontuacao = [
-            'pontuacao_geral' => $geral->pontuacao,
-            'pontos_casa' => $casa->pontuacao,
-            'pontos_fora' => $fora->pontuacao,
+            'geral' => $geral->pontuacao,
+            'casa' => $casa->pontuacao,
+            'fora' => $fora->pontuacao,
         ];
 
         $atleta->media = [
-            'media_geral' => $geral->media,
-            'media_casa' => $casa->media,
-            'media_fora' => $fora->media,
+            'geral' => $geral->media,
+            'casa' => $casa->media,
+            'fora' => $fora->media,
         ];
 
         $atleta->jogos = [
-            'jogos_geral' => $geral->jogos,
-            'jogos_casa' => $casa->jogos,
-            'jogos_fora' => $fora->jogos,
+            'geral' => $geral->jogos,
+            'casa' => $casa->jogos,
+            'fora' => $fora->jogos,
         ];
 
         $clubes = COLLECT(DB::SELECT('
@@ -161,13 +168,148 @@ class AtletasController extends Controller
         ', [$atleta->clube_casa_id, $atleta->clube_visitante_id]))
             ->keyBy('id');
 
-        $scouts = Scouts::select('sigla', 'nome')
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
             ->get();
+
+        $games = Game::where('temporada', Carbon::now()->format('Y'))
+            ->first();
+
+        $rodadas = COLLECT([]);
+
+        // $games->game_over = 1;
+        // $atleta->rodada_id = 38;
+
+        $a = 1;
+        $qtde_rodada = 7;
+        $rodada = $games->game_over ? $atleta->rodada_id : ($atleta->rodada_id - 1);
+
+        while ($a <= 38) :
+            $rodadas->push($a . 'º rodada');
+            $a++;
+        endwhile;
+
+        if ($rodada <= $qtde_rodada) $rodadas->splice($qtde_rodada);
+        else $rodadas = $rodadas->splice($rodada - $qtde_rodada, $qtde_rodada);
+
+        $parciais = COLLECT(
+            DB::SELECT('
+                SELECT 
+                    partidas.rodada,
+                    ROUND(IFNULL(pontuacao, 0), 2) as pontuacao,
+                    ROUND(IFNULL(valorizacao, 0), 2) as valorizacao
+                FROM partidas
+                LEFT JOIN parciais ON partidas.rodada = parciais.rodada AND atleta_id = ?
+                GROUP BY partidas.rodada, pontuacao, valorizacao
+                LIMIT ?
+                OFFSET ?
+            ', [$id, $qtde_rodada, $rodada])
+        );
 
         return response()->json([
             'atleta' => $atleta,
             'clubes' => $clubes,
             'scouts' => $scouts,
+            'grafico' => [
+                'rodadas' => $rodadas->all(),
+                'pontuacao' => $rodada ? $parciais->pluck('pontuacao') : [],
+                'valorizacao' => $rodada ? $parciais->pluck('valorizacao') : [],
+            ]
+        ]);
+    }
+
+    public function compare(Request $request)
+    {
+
+        $regras = [
+            'atleta_a' => 'required',
+            'atleta_b' => 'required'
+        ];
+
+        $mensagens = [
+            'atleta_a.required' => 'O campo atleta_a é obrigatório.',
+            'atleta_b.required' => 'O campo valor é obrigatório.'
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $mensagens);
+
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
+
+        function atletas($id)
+        {
+
+            $response = DB::SELECT(
+                '
+                SELECT	                
+                    foto,
+                    atleta_id,
+                    apelido,
+                    clubes.nome,
+                    clubes.60x60 as escudo,
+                    pontos_num,
+                    media_num,
+                    jogos_num,
+                    pontuacao_min,	
+                
+                    G,
+                    A,
+                    DS,
+                    (FF + FT + FD + G) as finalizacao,
+                    I,
+                    (CA + CV) as cartoes,
+                    DE,
+                    FS,
+                    FC,
+                    
+                    ROUND(IFNULL(G / jogos_num, 0), 2) as media_gols,
+                    ROUND(IFNULL(A / jogos_num, 0), 2) as media_assistencia,
+                    ROUND(IFNULL(DS / jogos_num, 0), 2) as media_roubos,
+                    ROUND(IFNULL((FF + FT + FD + G) / jogos_num, 0), 2) as media_finalizacao,
+                    ROUND(IFNULL(I / jogos_num, 0), 2) as media_impedimento,
+                    ROUND(IFNULL((CA + CV) / jogos_num, 0), 2) as media_cartoes,
+                    ROUND(IFNULL(DE / jogos_num, 0), 2) as media_defesa,
+                    ROUND(IFNULL(FS / jogos_num, 0), 2) as media_falta_sofrida,
+                    ROUND(IFNULL(FC / jogos_num, 0), 2) as media_falta_cometida,
+
+                    (
+                        SELECT 
+                            IFNULL(AVG(pontuacao), 0)
+                        FROM partidas 
+                        JOIN parciais ON partidas.rodada = partidas.rodada 
+                        WHERE clube_casa_id = clube_id AND atleta_id = ?
+                    ) as media_pontos_casa,
+
+                    (
+                        SELECT 
+                            IFNULL(AVG(pontuacao), 0)
+                        FROM partidas 
+                        JOIN parciais ON partidas.rodada = partidas.rodada 
+                        WHERE clube_visitante_id = clube_id AND atleta_id = ?
+                    ) as media_pontos_fora  
+                        
+                FROM 
+                    atletas
+                JOIN 
+                    clubes ON clube_id = clubes.id
+                WHERE
+                    atleta_id = ?
+            ', [$id, $id, $id])[0];
+
+            $pontos = Parciais::selectRaw('IFNULL(MIN(pontuacao), 0) as pontuacao_minima')
+                ->selectRaw('IFNULL(MAX(pontuacao), 0) as pontuacao_maxima')
+                ->where('atleta_id', $id)
+                ->first();
+    
+            $response->pontuacao_minima = $pontos->pontuacao_minima;
+            $response->pontuacao_maxima = $pontos->pontuacao_maxima;
+
+            return $response;
+        }
+
+        return response()->json([
+            'atleta_a' => atletas($request->atleta_a),
+            'atleta_b' => atletas($request->atleta_b),
         ]);
     }
 }

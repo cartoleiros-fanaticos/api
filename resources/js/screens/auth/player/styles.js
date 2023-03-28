@@ -131,6 +131,7 @@ export const Tr = styled.tr`
     margin-top: 15px;
     transition-duration: 0.3s;
     cursor: pointer;
+    opacity: ${({ compare }) => compare ? 0.2 : 1};
     &:hover  {              
         background: #fafafa;
         transform: scale(1.05);
