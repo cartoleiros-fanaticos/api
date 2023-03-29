@@ -12476,6 +12476,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function plans() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
@@ -12486,7 +12487,279 @@ function plans() {
     loading_page = _useState4[0],
     sloadingpage = _useState4[1];
   var component = function component() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Content, {});
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Box, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Title, {
+          children: "IMPERD\xCDVEL"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Plans, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Plan, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Name, {
+              children: "PLANO CARTOLEIRO"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Values, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Value, {
+                children: "R$79,99"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Pay, {
+              children: "PAGAR"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Plan, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Name, {
+              children: ["PLANO ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text, {
+                children: "CARTOLEIRO VIP"
+              })]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Values, {
+              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Value, {
+                children: "R$79,99"
+              })
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Pay, {
+              children: "PAGAR"
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Bonus, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text1, {
+          children: "B\xD4NUS PARA OS DOIS PLANOS"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text2, {
+          children: "Liga de assinantes valendo um PS4 e mais premia\xE7\xF5es"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Header, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text3, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text4, {
+          children: ["PLANO ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text, {
+            children: "CARTOLEIRO"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text4, {
+          children: ["PLANO ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text, {
+            children: "CARTOLEIRO VIP"
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.List, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "ACESSO AO APP (COM ESTAT\xCDSTICAS) E WHATS APP"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "TIMES EXCLUSIVOS DE ASSINANTES"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "A\xDADIO ANALISE DETALHADA POR POSI\xC7\xC3O"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "TABELA (CHANCE DE VIT\xD3RIA, PONTOS CONQUISTADOS E CEDIDOS SALDO DE GOLS E OUTRAS)"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "AN\xC1LISE DOS MAPAS DE CALOR"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "TABELA DE CONDI\xC7\xD5ES CLIMATICAS DOS JOGOS DA RODADA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "LIVE DE ASSINANTES"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "AN\xC1LISE INDIVIDUAL DOS JOGADORES"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "NOT\xCDCIAS NO TELEGRAM E WHATSAPP"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "TABELA DOS COBRADORES DE FALTA, ESCANTEIOS E P\xCANALTIS, E PERCENTUAL DE ACERTOS"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "FAZER DOWNLOAD DA TABELA ATR\xC1VES DO SITE / APP"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "GRUPO DE INTERA\xC7\xC3O DI\xC1RIA COM ROBERVAL COELHO"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "COMPARATIVOS DO JOGADORES NO APP, SITE E ACESSO TOTAL A PLATAFORMA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "SUPORTE PERSONALIZADO COM CONTE\xDADO DE ESTRAT\xC9GIA POR TIPO DE COMPETI\xC7\xC3O."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "M\xD3DULO B\xC1SICO DO NOVO CURSO DE ROBERVAL COELHO"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Item, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Label, {
+            children: "ACESSO A TODAS AS NOVAS AN\xC1LISES CRIADAS NO DECORRER DA TEMPORADA."
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "red",
+              children: "cancel"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.BoxIcon, {
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Icon, {
+              color: "green",
+              children: "check_circle"
+            })
+          })]
+        })]
+      })]
+    });
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: "PLANOS",
@@ -12507,13 +12780,64 @@ function plans() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Content": () => (/* binding */ Content)
+/* harmony export */   "Bonus": () => (/* binding */ Bonus),
+/* harmony export */   "Box": () => (/* binding */ Box),
+/* harmony export */   "BoxIcon": () => (/* binding */ BoxIcon),
+/* harmony export */   "Content": () => (/* binding */ Content),
+/* harmony export */   "Header": () => (/* binding */ Header),
+/* harmony export */   "Icon": () => (/* binding */ Icon),
+/* harmony export */   "Item": () => (/* binding */ Item),
+/* harmony export */   "Label": () => (/* binding */ Label),
+/* harmony export */   "List": () => (/* binding */ List),
+/* harmony export */   "Name": () => (/* binding */ Name),
+/* harmony export */   "Pay": () => (/* binding */ Pay),
+/* harmony export */   "Plan": () => (/* binding */ Plan),
+/* harmony export */   "Plans": () => (/* binding */ Plans),
+/* harmony export */   "Text": () => (/* binding */ Text),
+/* harmony export */   "Text1": () => (/* binding */ Text1),
+/* harmony export */   "Text2": () => (/* binding */ Text2),
+/* harmony export */   "Text3": () => (/* binding */ Text3),
+/* harmony export */   "Text4": () => (/* binding */ Text4),
+/* harmony export */   "Title": () => (/* binding */ Title),
+/* harmony export */   "Value": () => (/* binding */ Value),
+/* harmony export */   "Values": () => (/* binding */ Values)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19, _templateObject20, _templateObject21;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  \n"])));
+var Box = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    margin: auto;\n    width: 400px; \n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].small(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["     \n    position: relative;\n    background-color: #F68D42;\n    color: #000000;\n    padding: 5px 7px;\n    font-weight: bold;\n    font-size: 0.8em;\n    top: 10px;\n    left: 50%;\n    width: 100px;\n    margin-left: -50px;\n    height: 30px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n"])));
+var Plans = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: center;\n"])));
+var Plan = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    padding: 10px;\n    border: solid 1px #666;\n    text-align: center;\n    width: 50%;\n    margin: auto 10px;\n\n"])));
+var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h3(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    text-align: center;\n    font-size: 1.1em;\n    display: block;\n    margin: 10px 0 15px 0;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    & span {\n        color: #F68D42;\n    }\n"])));
+var Values = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    background-color: #000;\n    padding: 10px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-direction: column;\n\n    p {\n        color: #ffffff;\n        margin: 0;\n        display: block;\n        font-size: 0.9em;\n        font-weight: 500;\n        span {\n            text-decoration: line-through;\n        }\n    }\n"])));
+var Value = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h2(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n    color: #ffffff;\n    display: block;\n"])));
+var Pay = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a.attrs(function () {
+  return {
+    title: 'Clique para gerar o QRCODE PIX.'
+  };
+})(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    height: 30px;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    color: #ffffff;\n    font-weight: 500;\n    background-color: #F68D42;\n    border: solid 1px #F68D42;\n    font-size: 0.8em;\n    margin-top: 5px;\n    cursor: pointer;\n    &:hover {\n        color: #F68D42;\n        background: #ffffff;\n    }\n"])));
+var Text = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    display: block;\n    color: #F68D42;\n"])));
+var Bonus = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    margin: 25px auto;\n    width: 350px ;\n    text-align: center;\n"])));
+var Text1 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h3(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    color: #F68D42;\n"])));
+var Text2 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n"])));
+var Header = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    padding: 10px 5px;\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    display: grid;\n    grid-template-columns: 70% 15% 15%;   \n\n    @media screen and (max-width:900px){  \n        grid-template-columns: 50% 25% 25%;\n    }\n"])));
+var Text3 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    text-align: center;\n\n    @media screen and (max-width:900px){  \n        font-size: 0.7em;\n    }\n"])));
+var Text4 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    text-align: center;\n\n    @media screen and (max-width:900px){  \n        font-size: 0.7em;\n    }\n"])));
+var List = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n\n"])));
+var Item = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    border-bottom: solid 1px #F68D42;\n    padding: 10px 5px;\n    display: grid;\n    grid-template-columns: 70% 15% 15%;\n\n    @media screen and (max-width:900px){  \n        grid-template-columns: 50% 25% 25%;\n    }\n"])));
+var Label = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n\n    @media screen and (max-width:900px){  \n        text-align: center;\n        font-size: 0.8em;\n    }\n"])));
+var BoxIcon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject20 || (_templateObject20 = _taggedTemplateLiteral(["\n    text-align: center;\n    display: block;\n"])));
+var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
+  return {
+    className: 'material-icons'
+  };
+})(_templateObject21 || (_templateObject21 = _taggedTemplateLiteral(["  \n    color: ", ";\n"])), function (_ref) {
+  var color = _ref.color;
+  return color;
+});
 
 /***/ }),
 
