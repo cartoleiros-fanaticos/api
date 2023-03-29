@@ -117,6 +117,31 @@ export const Close = styled.i.attrs(() => ({
 
 export const Item = styled.li`
 
+    position: relative;
+    padding: 5px 0;
+
+    &:hover ul {
+        visibility: visible;
+        height: 110px;
+        opacity: 1;
+    }
+
+    a.planos {
+        border: solid 1px #F68D42;
+        background-color: #F68D42;
+        margin-left: 10px;
+        color: #fff !important;
+
+        i {
+            color: #fff;
+        }
+
+        &:hover {
+            background-color: #000;
+        }
+
+    }
+
     & > a {
         color: #f1f1f1;
         text-decoration: none;
@@ -141,7 +166,6 @@ export const Item = styled.li`
         }
 
         @media screen and (max-width:900px){
-
                 
             justify-content: flex-start;
             padding: 15px 10px;
@@ -165,11 +189,18 @@ export const Item = styled.li`
 `;
 
 export const SubItem = styled.ul`
-    top: 45px;
+    top: 35px;
     position: absolute;
     background-color: #000000;
-    width: 250px;
-    height: 0  ;
+    width: 220px;
+    height: 0;
     visibility: hidden;
+    transition-duration: 0.3s;
+    opacity: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
 `;
 

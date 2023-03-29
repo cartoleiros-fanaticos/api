@@ -94,7 +94,7 @@ function header() {
                     <Item>
                         <NavLink to="#">
                             <Icon>assessment</Icon>
-                            ESTATÍSTICAS
+                            CRUZAMENTOS
                         </NavLink>
                         <SubItem>
                             <Item>
@@ -162,17 +162,14 @@ function header() {
                             CONTATO
                         </NavLink>
                     </Item>
-                    {
-                        (plano === 'Demonstrativo' || plano === 'Free Cartoleiro') &&
-                        <Item>
-                            <NavLink to="/auth/planos">
-                                <Icon>wysiwyg</Icon>
-                                ASSINE JÁ
-                            </NavLink>
-                        </Item>
-                    }
+                    <Item>
+                        <NavLink className="planos" to="/auth/planos">
+                            <Icon>wysiwyg</Icon>
+                            ASSINE JÁ
+                        </NavLink>
+                    </Item>
                 </Nav>
-            </Container>
+            </Container >
             <Screen onClick={close_menu} ref={screen}></Screen>
         </>
     )

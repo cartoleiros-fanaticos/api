@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AtletasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\UsuariosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,10 @@ Route::group([
     Route::post('me', [ AuthController::class, 'me' ]);
 
     Route::resource('usuarios', UsuariosController::class);
+    Route::resource('cruzamento', CruzamentoController::class);
+
     Route::resource('atletas', AtletasController::class);
+
     Route::get('compare/atletas', [ AtletasController::class, 'compare' ]);
     Route::get('pontos-cedidos/atletas', [ AtletasController::class, 'pontos_cedidos' ]);
     Route::get('destaques/atletas', [ AtletasController::class, 'destaques' ]);

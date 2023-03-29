@@ -17,7 +17,7 @@ export const Content = styled.div`
 
 export const Title = styled.header`
     padding: 10px;
-    width: 250px;
+    width: 300px;
     margin: auto;
     border: solid 2px #F68D42;
     border-radius: 0.3em;

@@ -52,7 +52,7 @@ function emphasis() {
                 <List>
                     {
                         data['Capitães'].map((e, i) =>
-                            <Item>
+                            <Item key={i}>
                                 <Position>{i + 1} º</Position>
                                 <Photo src={e.foto} />
                                 <Box>
@@ -73,7 +73,7 @@ function emphasis() {
                 <List>
                     {
                         data['Seleção'].map((e, i) =>
-                            <Item>
+                            <Item key={i}>
                                 <Position>{i + 1} º</Position>
                                 <Photo src={e.foto} />
                                 <Box>

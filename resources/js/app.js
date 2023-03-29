@@ -13,6 +13,8 @@ import Recovery from './screens/recovery';
 
 import Player from './screens/auth/player';
 import Emphasis from './screens/auth/emphasis';
+import Crossing from './screens/auth/crossing';
+import Plans from './screens/auth/plans';
 
 const router = createBrowserRouter([
     {
@@ -34,6 +36,14 @@ const router = createBrowserRouter([
     {
         path: "/auth/destaques",
         element: <Emphasis />,
+    },
+    {
+        path: "/auth/cruzamento-scouts",
+        element: <Crossing />,
+    },
+    {
+        path: "/auth/planos",
+        element: <Plans />,
     },
 ]);
 

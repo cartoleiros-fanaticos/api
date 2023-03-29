@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->foreignId('clube_id')->constrained('clubes');
             $table->foreignId('atleta_id')->constrained('atletas');
+            $table->foreignId('posicao_id')->constrained('posicoes');
             
             $table->float('pontuacao');
             $table->float('valorizacao')->nullable();
