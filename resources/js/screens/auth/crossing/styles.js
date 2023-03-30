@@ -137,6 +137,13 @@ export const Download = styled.a`
     &:hover {
         background: #1faf8b;
     }
+
+    @media screen and (max-width:900px){  
+        margin: auto;
+        width: 50%;
+        margin-top: 25px;
+        display: block;
+    }
 `;
 
 export const ListTeams = styled.div`
@@ -177,6 +184,24 @@ export const Total = styled.span`
     display: flex;
     align-items: center;
 `;
+
+export const Tips = styled.div`
+    margin-top: 20px;
+    border: solid 2px #F68D42;
+    padding: 15px;
+    border-radius: 0.5em;
+    width: 100%;
+    grid-column: 1/3;
+`;
+
+export const TipsTitle = styled.h4`
+    margin-bottom: 10px;
+`;
+
+export const Text3 = styled.p`
+    font-size: 0.9em;
+`;
+
 
 
 

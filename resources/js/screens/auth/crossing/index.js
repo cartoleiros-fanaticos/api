@@ -24,11 +24,21 @@ import {
   Value,
   Versus,
   Total,
+  Tips,
+  TipsTitle,
+  Text3,
 } from './styles';
 
 import Container from '../../../componets/container';
 
 function crossing() {
+
+  const [filter, sfilter] = useState({
+    scout: { value: 'G', name: 'Gols' },
+    posicao_id: { value: '', name: undefined },
+    ultimas_rodadas: { value: 38, name: 'Todas as rodadas' },
+    total: { value: 'Nâo', name: 'Só casa x Só fora' },
+  });
 
   const [data, sdata] = useState({});
 
@@ -39,11 +49,15 @@ function crossing() {
     getData();
   }, [])
 
+  useEffect(() => {
+    enter();
+  }, [filter])
+
   async function enter() {
 
     try {
 
-      const { data } = await api.get(`cruzamento`);
+      const { data } = await api.get(`cruzamento?scout=${filter.scout.value}&posicao_id=${filter.posicao_id.value}&ultimas_rodadas=${filter.ultimas_rodadas.value}&total=${filter.total.value}`);
 
       sdata(data);
 
@@ -76,53 +90,53 @@ function crossing() {
       <Picker>
         <Box>
           <Header>
-            <Title>Gols</Title>
+            <Title>{filter.scout.name}</Title>
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => enter('scout', 'G')}>Gols</Item>
-            <Item onClick={() => enter('scout', 'A')}>Assistência</Item>
-            <Item onClick={() => enter('scout', 'DE')}>Defesas</Item>
-            <Item onClick={() => enter('scout', 'F')}>Finalização</Item>
-            <Item onClick={() => enter('scout', 'FS')}>Falta sofrida</Item>
-            <Item onClick={() => enter('scout', 'DS')}>Desarmes</Item>
-            <Item onClick={() => enter('scout', 'SG')}>Saldos de gols</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'G', name: 'Gols' } })}>Gols</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'A', name: 'Assistência' } })}>Assistência</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'DE', name: 'Defesas' } })}>Defesas</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'F', name: 'Finalização' } })}>Finalização</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'FS', name: 'Falta sofrida' } })}>Falta sofrida</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'DS', name: 'Desarmes' } })}>Desarmes</Item>
+            <Item onClick={() => sfilter({ ...filter, scout: { value: 'SG', name: 'Saldos de gols' } })}>Saldos de gols</Item>
           </List>
         </Box>
         <Box>
           <Header>
-            <Title>Todas as posições</Title>
+            <Title>{filter.posicao_id.name || 'Todas as posições'}</Title>
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => enter('posicao_id', '1')}>Todas as posições</Item>
-            <Item onClick={() => enter('posicao_id', '3')}>Zagueiros</Item>
-            <Item onClick={() => enter('posicao_id', '2')}>Lateral</Item>
-            <Item onClick={() => enter('posicao_id', '4')}>Meias</Item>
-            <Item onClick={() => enter('posicao_id', '5')}>Atacante</Item>
-            <Item onClick={() => enter('posicao_id', '1')}>Goleiro</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 1, name: 'Todas as posições' } })}>Todas as posições</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 3, name: 'Zagueiros' } })}>Zagueiros</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 2, name: 'Lateral' } })}>Lateral</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 4, name: 'Meias' } })}>Meias</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 5, name: 'Atacante' } })}>Atacante</Item>
+            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 1, name: 'Goleiro' } })}>Goleiro</Item>
           </List>
         </Box>
         <Box>
           <Header>
-            <Title>Todas as rodadas</Title>
+            <Title>{filter.ultimas_rodadas.name}</Title>
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => enter('rodada_id', nListl)}>Todas as rodadas</Item>
-            <Item onClick={() => enter('rodada_id', 2)}>Últimas 2</Item>
-            <Item onClick={() => enter('rodada_id', 3)}>Últimas 3</Item>
-            <Item onClick={() => enter('rodada_id', 5)}>Últimas 5</Item>
+            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 38, name: 'Todas as rodadas' } })}>Todas as rodadas</Item>
+            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 2, name: 'Últimas 2' } })}>Últimas 2</Item>
+            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 3, name: 'Últimas 3' } })}>Últimas 3</Item>
+            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 5, name: 'Últimas 5' } })}>Últimas 5</Item>
           </List>
         </Box>
         <Box>
           <Header>
-            <Title>Só casa x Só fora</Title>
+            <Title>{filter.total.name}</Title>
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => enter('casaxfora', null)}>Só casa x Só fora</Item>
-            <Item onClick={() => enter('totalxtotal', 2)}>Total x Total</Item>
+            <Item onClick={() => sfilter({ ...filter, total: { value: 'Não', name: 'Só casa x Só fora' } })}>Só casa x Só fora</Item>
+            <Item onClick={() => sfilter({ ...filter, total: { value: 'Sim', name: 'Total x Total' } })}>Total x Total</Item>
           </List>
         </Box>
       </Picker >
@@ -132,7 +146,7 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Cedidos</Text1>
           <Text2>FORA</Text2>
-          <Download onClick={() => download(data, 'conquistados_cedidos')}>Download</Download>
+          <Download onClick={() => download(data, 'CONQUISTADOS', 'CEDIDOS', filter)}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -163,7 +177,7 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Conquistados</Text1>
           <Text2>FORA</Text2>
-          <Download onClick={() => download(data, 'cedidas_conquistados')}>Download</Download>
+          <Download onClick={() => download(data, 'CEDIDOS', 'CONQUISTADOS', filter)}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -188,7 +202,15 @@ function crossing() {
           }
         </ListTeams>
       </ContainerTeams>
-    </Content >
+      <Tips>
+        <TipsTitle>Cruzada de Scouts</TipsTitle>
+        <Text3>Aqui você verá um cruzamento entre os scouts cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>
+        <Text3>Os scouts conquistados são os pontos conquistados pela equipe.</Text3>
+        <Text3>Os scouts cedidos: são quantos pontos as equipes adversárias pontuaram jogando contra.</Text3>
+        <Text3>Os scouts gols contras (GC) não são contabilizados.</Text3>
+        <Text3>Scouts apenas de jogos valido para o cartola FC.</Text3>
+      </Tips>
+    </Content>
   );
 
   return (

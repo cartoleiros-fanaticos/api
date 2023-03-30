@@ -6,7 +6,11 @@ export const Content = styled.div`
 
 export const Box = styled.div`
     margin: auto;
-    width: 400px; 
+    width: 400px;  
+
+    @media screen and (max-width:900px){  
+        width: 95%; 
+    } 
 `;
 
 export const Title = styled.small`     
@@ -49,6 +53,10 @@ export const Name = styled.h3`
     & span {
         color: #F68D42;
     }
+
+    @media screen and (max-width:900px){  
+        font-size: 0.9em; 
+    } 
 `;
 
 export const Values = styled.div`
@@ -106,6 +114,10 @@ export const Bonus = styled.div`
     margin: 25px auto;
     width: 350px ;
     text-align: center;
+
+    @media screen and (max-width:900px){  
+        width: 95%;
+    } 
 `;
 
 export const Text1 = styled.h3`
@@ -114,7 +126,12 @@ export const Text1 = styled.h3`
 
 export const Text2 = styled.p`
     font-size: 0.9em;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+
+    @media screen and (max-width:900px){  
+        display: block;
+        text-align: center;
+    } 
 `;
 
 export const Header = styled.div`

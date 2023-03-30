@@ -12,6 +12,7 @@ import {
     Title,
     Close,
     Item,
+    ButtonLink,
     SubItem,
 } from './styles';
 
@@ -92,10 +93,10 @@ function header() {
                         </Item>
                     }
                     <Item>
-                        <NavLink to="#">
+                        <ButtonLink>
                             <Icon>assessment</Icon>
                             CRUZAMENTOS
-                        </NavLink>
+                        </ButtonLink>
                         <SubItem>
                             <Item>
                                 <NavLink to="/auth/cruzamento-scouts">

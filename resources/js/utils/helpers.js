@@ -1,10 +1,11 @@
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import 'sweetalert2/src/sweetalert2.scss';
 
+import html2canvas from 'html2canvas';
+
 export const amount = (value) => {
     return parseFloat(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
-
 
 export const swal_success = (text, title = 'Sucesso', icon = 'success', confirmButtonText = 'OK') => {
     return Swal.fire({ title, text, icon, confirmButtonText });
@@ -61,7 +62,7 @@ export const message = (e) => {
     }
 }
 
-export const download = async (data, tipo) => {
+export const download = async (data, text_left, text_right, filter) => {
 
     document.body.style.cssText = `    
         font-family: Arial;
@@ -71,6 +72,7 @@ export const download = async (data, tipo) => {
     `;
 
     let section = document.createElement('section');
+    section.setAttribute('class', 'cruzmento_scouts');
 
     section.style.cssText = `
         background: #a0a002;
@@ -81,7 +83,7 @@ export const download = async (data, tipo) => {
 
     let container = document.createElement('div');
 
-    let blob = await fetch(`${location.origin}/images/marca.png`).then(r => r.blob());
+    let blob = await fetch(`${location.origin}/images/logo_preta.png`).then(r => r.blob());
     let dataUrl = await new Promise(resolve => {
         let reader = new FileReader();
         reader.onload = () => resolve(reader.result);
@@ -106,14 +108,12 @@ export const download = async (data, tipo) => {
         padding: 15px;
     `;
 
-    blob = await fetch(`${location.origin}/images/logo.png`).then(r => r.blob());
+    blob = await fetch(`${location.origin}/images/logo_preta.png`).then(r => r.blob());
     dataUrl = await new Promise(resolve => {
         let reader = new FileReader();
         reader.onload = () => resolve(reader.result);
         reader.readAsDataURL(blob);
     });
-
-    console.log(dataUrl);
 
     let img = document.createElement('img');
     img.src = dataUrl;
@@ -128,7 +128,7 @@ export const download = async (data, tipo) => {
     header.appendChild(h1);
 
     let h3 = document.createElement('h3');
-    h3.innerText = 'RANKING DE GOLS';
+    h3.innerText = `RANKING DE ${filter.scout.name.toUpperCase()}`;
     h3.style.cssText = `
         padding: 15px;
         color: #fff;
@@ -140,7 +140,7 @@ export const download = async (data, tipo) => {
     header.appendChild(h3);
 
     let h4 = document.createElement('h4');
-    h4.innerText = 'POSIÇÃO: Todas | RODADA: Todas | FILTRO: Casa x Fora';
+    h4.innerText = `POSIÇÃO: ${filter.posicao_id.name || 'Todas'} | RODADA: ${filter.ultimas_rodadas.name === 38 ? 'Todas' : filter.ultimas_rodadas.name} | FILTRO: ${filter.total.name}`;
     h4.style.cssText = `
         padding-bottom: 10px;
         color: #fff;
@@ -152,7 +152,7 @@ export const download = async (data, tipo) => {
     header.appendChild(h4);
 
     let h2 = document.createElement('h2');
-    h2.innerText = 'CONQUISTADOS ( EM CASA ) X CEDIDOS ( FORA )';
+    h2.innerText = `${text_left} ( EM CASA ) X ${text_right} ( FORA )`;
     h2.style.cssText = `
         padding: 10px;
         background: #fefecc;
@@ -211,7 +211,12 @@ export const download = async (data, tipo) => {
         div.appendChild(img);
 
         let span = document.createElement('span');
-        span.innerText = data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0;
+
+        if (text_left === 'CONQUISTADOS')
+            span.innerText = data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0;
+        else
+            span.innerText = data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0
+
         span.style.cssText = `
         font-weight: bold;
         color: #fff;
@@ -231,7 +236,13 @@ export const download = async (data, tipo) => {
         div.appendChild(span);
 
         span = document.createElement('span');
-        span.innerText = data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0;
+
+        if (text_left === 'CONQUISTADOS')
+            span.innerText = data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0;
+        else
+            span.innerText = data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0
+
+
         span.style.cssText = `
         font-weight: bold;
         color: #fff;
@@ -249,12 +260,17 @@ export const download = async (data, tipo) => {
         div.appendChild(img);
 
         let strong = document.createElement('strong');
-        strong.innerText = 0;
+
+        if (text_left === 'CONQUISTADOS')
+            strong.innerText = (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0) + (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0)
+        else
+            strong.innerText = (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0);
+
         strong.style.cssText = `
-        font-weight: bold;
-        color: #fff;
-        font-size: 1.4em;
-        `;
+            font-weight: bold;
+            color: #fff;
+            font-size: 1.4em;
+            `;
 
         li.appendChild(strong);
 
@@ -266,4 +282,19 @@ export const download = async (data, tipo) => {
     section.appendChild(container);
 
     document.body.appendChild(section);
+
+    return html2canvas(section).then(async canvas => {
+
+        let a = document.createElement('a');
+
+        a.href = canvas.toDataURL('image/png', 1.0)
+        a.className = 'cruzamento';
+        a.download = 'cruzada.png';
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.querySelector('.cruzmento_scouts').remove();
+
+    });
 }

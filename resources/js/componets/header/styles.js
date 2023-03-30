@@ -8,6 +8,7 @@ export const Container = styled.div`
     align-items: center;
     width: 100%;
     position: fixed;
+    z-index: 25;
     top: 0;
 
     & > i {
@@ -35,12 +36,12 @@ export const Screen = styled.div`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: '../images/logo.png'
+    src: '../images/favicon.png'
 }))`
-    width: 80px;     
+    height: 33px;     
 
     @media screen and (max-width:900px){
-        width: 60px;
+        height: 25px;
     }
 `;
 
@@ -164,9 +165,34 @@ export const Item = styled.li`
         &.active {
             color: #F68D42;
         }
+                    
+    }
 
-        @media screen and (max-width:900px){
-                
+    @media screen and (max-width:900px){
+
+        padding: 0;
+
+        &:hover ul {
+            height: 150px;
+        } 
+
+        a.planos {
+            border: none;
+            background-color: transparent;
+            margin-left: 0;
+            color: #000 !important;
+
+            i {
+                color: #F68D42;
+            }
+
+            &:hover {
+                background-color: none;
+            }
+
+        }
+        
+        & > a {
             justify-content: flex-start;
             padding: 15px 10px;
             font-size: 0.9em;
@@ -176,16 +202,20 @@ export const Item = styled.li`
             & i {
                 margin-right: 10px;
                 font-size: 1.3em;
-            }
+            }           
 
             &:hover {
                 color: #F68D42;
             }
-
         }
-                    
     }
 
+`;
+
+export const ButtonLink = styled.a.attrs(() => ({
+    href: '#!'
+}))`
+    text-decoration: none;
 `;
 
 export const SubItem = styled.ul`
@@ -202,5 +232,29 @@ export const SubItem = styled.ul`
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
+
+    @media screen and (max-width:900px){
+
+            position: static;
+            background-color: #fff;
+
+            & a {
+                justify-content: flex-start;
+                padding: 15px 10px;
+                font-size: 0.9em;
+                color: #000;
+                border-bottom: solid thin #f1f1f1;
+    
+                & i {
+                    margin-right: 10px;
+                    font-size: 1.3em;
+                }
+    
+                &:hover {
+                    color: #F68D42;
+                }
+            }
+
+        }
 `;
 
