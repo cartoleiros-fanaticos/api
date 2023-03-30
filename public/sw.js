@@ -7,6 +7,13 @@ const contentToCache = [
     '/css/app.css',
     '/css/material.icon.css',
     '/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
+    '/images/baixe-aplicativo.png',
+    '/images/up.png',
+    '/images/down.png',
+    '/images/favicon.png',
+    '/images/fundo.jpg',
+    '/images/logo_laranja.png',
+    '/images/nao_escalado.png',
 ];
 
 self.addEventListener('install', (e) => {
@@ -18,7 +25,7 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('fetch', (e) => {
 
-    if (!e.request.url.includes('/api/') && !e.request.url.includes('/upload/')) {
+    if (!e.request.url.includes('/api/')) {
         e.respondWith((async () => {
             const r = await caches.match(e.request);
             // console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
@@ -36,7 +43,7 @@ self.addEventListener('fetch', (e) => {
 self.addEventListener('activate', (e) => {
     e.waitUntil(caches.keys().then((keyList) => {
         return Promise.all(keyList.map((key) => {
-            if(key !== cacheName) return caches.delete(key);
+            if (key !== cacheName) return caches.delete(key);
         }))
     }));
 });
