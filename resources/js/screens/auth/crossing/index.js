@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { message } from '../../../utils/helpers';
+import { message, download } from '../../../utils/helpers';
 import api from '../../../utils/api';
 
 import {
@@ -132,7 +132,7 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Cedidos</Text1>
           <Text2>FORA</Text2>
-          <Download>Download</Download>
+          <Download onClick={() => download(data, 'conquistados_cedidos')}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -140,12 +140,18 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>0</Value>
+                  <Value>{data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
                   <Versus>x</Versus>
-                  <Value>0</Value>
+                  <Value>{data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
-                <Total>0</Total>
+                <Total>
+                  {
+                    (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0)
+                    +
+                    (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                  }
+                </Total>
               </Teams>
             )
           }
@@ -157,7 +163,7 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Conquistados</Text1>
           <Text2>FORA</Text2>
-          <Download>Download</Download>
+          <Download onClick={() => download(data, 'cedidas_conquistados')}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -165,12 +171,18 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>0</Value>
+                  <Value>{data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
                   <Versus>x</Versus>
-                  <Value>0</Value>
+                  <Value>{data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
-                <Total>0</Total>
+                <Total>
+                  {
+                    (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0)
+                    +
+                    (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0)
+                  }
+                </Total>
               </Teams>
             )
           }
