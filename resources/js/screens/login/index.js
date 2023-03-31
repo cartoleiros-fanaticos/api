@@ -41,9 +41,11 @@ function login() {
 
         try {
 
-            let { data: { access_token } } = await api.post('login', user);
+            let { data: { auth: { access_token }, user:usr } } = await api.post('login', user);
 
             localStorage.setItem('token', access_token);
+            localStorage.setItem('user', JSON.stringify(usr));
+            
             navigate('/auth/atletas');
 
         } catch (e) {

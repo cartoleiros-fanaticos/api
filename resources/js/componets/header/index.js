@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
+
 import { NavLink } from "react-router-dom";
 import backButton from 'browser-back-button';
 
+import { amount, message, swal_success } from '../../utils/helpers';
+import api from '../../utils/api';
+
+import { useNavigate } from "react-router-dom";
+    
 import {
     Container,
     Screen,
@@ -17,6 +23,8 @@ import {
 } from './styles';
 
 function header() {
+
+    let navigate = useNavigate();
 
     const body = document.querySelector('body');
     const container = document.querySelector('.container');
@@ -69,6 +77,22 @@ function header() {
         screen.current.style.visibility = 'hidden';
 
         menu.current.style.left = '-70%';
+    }
+
+    async function logout() {
+
+        try {
+
+            await api.post('logout', {});
+            
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+
+            navigate('/');
+
+        } catch (e) {
+            message(e);
+        };
     }
 
     return (
@@ -162,6 +186,12 @@ function header() {
                             <Icon>mail_outline</Icon>
                             CONTATO
                         </NavLink>
+                    </Item>
+                    <Item>
+                        <ButtonLink onClick={logout}>
+                            <Icon>logout</Icon>
+                            SAIR
+                        </ButtonLink>
                     </Item>
                     <Item>
                         <NavLink className="planos" to="/auth/planos">

@@ -16,6 +16,7 @@ import Crossing from './screens/auth/crossing';
 import Plans from './screens/auth/plans';
 import Partials from './screens/auth/partials/container';
 import Videos from './screens/auth/videos';
+import Contact from './screens/auth/contact';
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
         element: <Player />,
     },
     {
+        path: "/auth/cruzamento-scouts",
+        element: <Crossing />,
+    },
+    {
         path: "/auth/destaques",
         element: <Emphasis />,
     },
@@ -47,12 +52,12 @@ const router = createBrowserRouter([
         element: <Videos />,
     },
     {
-        path: "/auth/cruzamento-scouts",
-        element: <Crossing />,
-    },
-    {
         path: "/auth/planos",
         element: <Plans />,
+    },
+    {
+        path: "/auth/contato",
+        element: <Contact />,
     },
 ]);
 

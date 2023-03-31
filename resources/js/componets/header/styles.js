@@ -138,7 +138,10 @@ export const Item = styled.li`
         }
 
         &:hover {
-            background-color: #000;
+            background-color: transparent;
+            & > i {
+                color: #F68D42;
+            }
         }
 
     }
@@ -185,11 +188,6 @@ export const Item = styled.li`
             i {
                 color: #F68D42;
             }
-
-            &:hover {
-                background-color: none;
-            }
-
         }
         
         & > a {
@@ -205,7 +203,7 @@ export const Item = styled.li`
             }           
 
             &:hover {
-                color: #F68D42;
+                color: #F68D42 !important;
             }
         }
     }

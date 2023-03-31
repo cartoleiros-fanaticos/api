@@ -103,7 +103,7 @@ export const Shield = styled.img`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: '../images/logo.png'
+    src: '../images/logo_preta.png'
 }))`
     width: 180px;
     margin-top: 10px;

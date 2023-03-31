@@ -36,7 +36,10 @@ class AuthController extends Controller
             return response()->json(['message' => 'Usuário ou senha não correspondem.'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json([
+            'auth' => $this->respondWithToken($token)->original,
+            'user' => auth('api')->user(),
+        ]);
     }
 
     /**
@@ -57,8 +60,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth('api')->logout();
-
-        return response()->json(['message' => 'Logout realizado com sucesso.'], 401);
+        return response()->json(['message' => 'Logout realizado com sucesso.'], 200);
     }
 
     /**
