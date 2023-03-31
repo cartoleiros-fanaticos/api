@@ -15,6 +15,7 @@ import Emphasis from './screens/auth/emphasis';
 import Crossing from './screens/auth/crossing';
 import Plans from './screens/auth/plans';
 import Partials from './screens/auth/partials/container';
+import Videos from './screens/auth/videos';
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
     {
         path: "/auth/parciais",
         element: <Partials />,
+    },
+    {
+        path: "/auth/videos",
+        element: <Videos />,
     },
     {
         path: "/auth/cruzamento-scouts",

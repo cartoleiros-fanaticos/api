@@ -4,6 +4,7 @@ use App\Http\Controllers\AtletasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\VideosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,25 +20,26 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group([
-    
+
     'middleware' => 'api',
-    
+
 ], function ($router) {
-    
+
     Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
-    Route::post('login', [ AuthController::class, 'login' ]);
-    Route::post('logout', [ AuthController::class, 'logout' ]);
-    Route::post('refresh', [ AuthController::class, 'refresh' ]);
-    Route::post('me', [ AuthController::class, 'me' ]);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
 
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('cruzamento', CruzamentoController::class);
 
     Route::resource('atletas', AtletasController::class);
 
-    Route::get('compare/atletas', [ AtletasController::class, 'compare' ]);
-    Route::get('pontos-cedidos/atletas', [ AtletasController::class, 'pontos_cedidos' ]);
-    Route::get('destaques/atletas', [ AtletasController::class, 'destaques' ]);
-    Route::get('parciais-atletas/atletas', [ AtletasController::class, 'parciais_atletas' ]);
+    Route::get('compare/atletas', [AtletasController::class, 'compare']);
+    Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);
+    Route::get('destaques/atletas', [AtletasController::class, 'destaques']);
+    Route::get('parciais-atletas/atletas', [AtletasController::class, 'parciais_atletas']);
 
+    Route::resource('videos', VideosController::class);
 });
