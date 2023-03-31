@@ -15,7 +15,7 @@ export const Container = styled.div`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: 'images/logo.png'
+    src: 'images/logo_laranja.png'
 }))`
     width: 180px;
 `;

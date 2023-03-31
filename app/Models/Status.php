@@ -11,9 +11,9 @@ class Status extends Model
     use HasFactory;
     protected $fillable = [ 'id', 'nome' ];
 
-    public function newQuery()
-    {
-        return parent::newQuery()
-            ->where('temporada', Carbon::now()->format('Y'));
-    }
+    // public function newQuery()
+    // {
+    //     return parent::newQuery()
+    //         ->where('temporada', Carbon::now()->format('Y'));
+    // }
 }

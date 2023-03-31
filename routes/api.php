@@ -38,5 +38,6 @@ Route::group([
     Route::get('compare/atletas', [ AtletasController::class, 'compare' ]);
     Route::get('pontos-cedidos/atletas', [ AtletasController::class, 'pontos_cedidos' ]);
     Route::get('destaques/atletas', [ AtletasController::class, 'destaques' ]);
+    Route::get('parciais-atletas/atletas', [ AtletasController::class, 'parciais_atletas' ]);
 
 });

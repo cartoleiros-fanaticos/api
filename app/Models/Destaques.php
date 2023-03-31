@@ -11,9 +11,9 @@ class Destaques extends Model
     use HasFactory;
     protected $fillable = [ 'atleta_id', 'rodada', 'apelido', 'posicao', 'foto', 'escalacoes', 'tipo' ];
 
-    public function newQuery()
-    {
-        return parent::newQuery()
-            ->where('temporada', Carbon::now()->format('Y'));
-    }
+    // public function newQuery()
+    // {
+    //     return parent::newQuery()
+    //         ->where('temporada', Carbon::now()->format('Y'));
+    // }
 }

@@ -11,9 +11,9 @@ class Posicoes extends Model
     use HasFactory;
     protected $fillable = [ 'id', 'nome', 'abreviacao' ];
 
-    public function newQuery()
-    {
-        return parent::newQuery()
-            ->where('temporada', Carbon::now()->format('Y'));
-    }
+    // public function newQuery()
+    // {
+    //     return parent::newQuery()
+    //         ->where('temporada', Carbon::now()->format('Y'));
+    // }
 }

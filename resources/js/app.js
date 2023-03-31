@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import {
     createBrowserRouter,
     RouterProvider,
-    Redirect
 } from "react-router-dom";
 import "./index.css";
 
@@ -15,6 +14,7 @@ import Player from './screens/auth/player';
 import Emphasis from './screens/auth/emphasis';
 import Crossing from './screens/auth/crossing';
 import Plans from './screens/auth/plans';
+import Partials from './screens/auth/partials/container';
 
 const router = createBrowserRouter([
     {
@@ -36,6 +36,10 @@ const router = createBrowserRouter([
     {
         path: "/auth/destaques",
         element: <Emphasis />,
+    },
+    {
+        path: "/auth/parciais",
+        element: <Partials />,
     },
     {
         path: "/auth/cruzamento-scouts",

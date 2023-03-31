@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Parciais extends Model
 {
     use HasFactory;
+
+    // public function newQuery()
+    // {
+    //     return parent::newQuery()
+    //         ->where('temporada', Carbon::now()->format('Y'));
+    // }
 }

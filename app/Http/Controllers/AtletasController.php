@@ -48,7 +48,8 @@ class AtletasController extends Controller
             ->get()
             ->keyBy('id');
 
-        $scouts = Scouts::select('sigla', 'nome')
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
             ->get();
 
         return response()->json([
@@ -442,5 +443,51 @@ class AtletasController extends Controller
             ->groupBy('tipo');
 
         return response()->json($response);
+    }
+
+    public function parciais_atletas(Request $request)
+    {
+        $game = Game::first();
+
+        $atletas = Atletas::select(
+            'atletas.foto',
+            'atletas.apelido',
+            'posicoes.nome as posicao',
+            'parciais.clube_id',
+            'parciais.valorizacao',
+            'parciais.pontuacao',
+            'parciais.A',
+            'parciais.G',
+            'parciais.CA',
+            'parciais.CV',
+            'parciais.DP',
+            'parciais.FC',
+            'parciais.FD',
+            'parciais.FF',
+            'parciais.FS',
+            'parciais.FT',
+            'parciais.GC',
+            'parciais.GS',
+            'parciais.I',
+            'parciais.PP',
+            'parciais.DS',
+            'parciais.GS',
+            'parciais.PS',
+            'parciais.PC',
+            'parciais.DE'
+        )
+            ->join('parciais', 'parciais.atleta_id', 'atletas.atleta_id')
+            ->join('posicoes', 'posicoes.id', 'atletas.posicao_id')
+            ->where('rodada', $game->rodada_atual)
+            ->get();
+
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
+            ->get();
+
+        return response()->json([
+            'atletas' => $atletas,
+            'scouts' => $scouts
+        ]);
     }
 }
