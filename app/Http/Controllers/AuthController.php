@@ -28,12 +28,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request)
     {
 
         $regras = [
             'email' => 'required',
-            'password_confirm' => 'required',
+            'password' => 'required',
         ];
 
         $mensagens = [
