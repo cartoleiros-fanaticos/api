@@ -30,6 +30,22 @@ class AuthController extends Controller
      */
     public function login()
     {
+
+        $regras = [
+            'email' => 'required',
+            'password_confirm' => 'required',
+        ];
+
+        $mensagens = [
+            'email.required' => 'O campo email é obrigatório.',
+            'password.required' => 'O campo password é obrigatório.',
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $mensagens);
+
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
+
         $credentials = request(['email', 'password']);
 
         if (!$token = auth('api')->attempt($credentials)) {

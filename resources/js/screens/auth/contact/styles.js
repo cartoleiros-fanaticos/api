@@ -6,7 +6,11 @@ export const Content = styled.div`
 
 export const Form = styled.form`
     width: 60%;
-    margin: auto;
+    margin: auto;    
+
+    @media screen and (max-width:900px){
+        width: 90%;
+    }
 `;
 
 export const Label = styled.label`

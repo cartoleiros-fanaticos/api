@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AtletasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
@@ -33,6 +34,7 @@ Route::group([
 
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('cruzamento', CruzamentoController::class);
+    Route::post('enviar-email/contato', [ContatoController::class, 'enviar_email']);
 
     Route::resource('atletas', AtletasController::class);
 

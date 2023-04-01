@@ -21,6 +21,7 @@ function contact() {
 
     const [user, suser] = useState({
         nome: '',
+        assunto: '',
         celular: '',
         email: '',
         mensagem: '',
@@ -29,29 +30,48 @@ function contact() {
     useEffect(() => {
         const usr = JSON.parse(localStorage.getItem('user'));
 
-        console.log(usr);
-
         suser({
             ...user,
             nome: usr.nome,
-            celular: usr.celular,
+            celular: format_phone(usr.celular),
             email: usr.email
         });
-        
+
     }, [])
 
+    function format_phone(phone) {
+        const ddd = phone.substr(0, 2);
+        const first = phone.substr(2, 5);
+        const second = phone.substr(7, 4);
+
+        return `(${ddd}) ${first}-${second}`;
+    }
+
     const [loading, sloading] = useState(false);
+
+    const form = new FormData();
 
     async function enter(e) {
 
         e.preventDefault();
 
+        for (let x in user)
+            form.append(x, user[x]);
+
         sloading(true);
 
         try {
 
-            await api.post('login', user);
+            await api.post('enviar-email/contato', form);
             swal_success('Email enviado com sucesso em breve entraremos em contato.')
+
+            suser({
+                ...user,
+                assunto: '',
+                mensagem: '',
+            })
+
+            sloading(false);
 
         } catch (e) {
             message(e);
@@ -67,8 +87,16 @@ function contact() {
                     <Input required placeholder="Nome" onChange={(e) => suser({ ...user, nome: e.target.value })} value={user.nome} />
                 </Label>
                 <Label>
+                    <Icon>subject</Icon>
+                    <Input required placeholder="Assunto" onChange={(e) => suser({ ...user, assunto: e.target.value })} value={user.assunto} />
+                </Label>
+                <Label>
                     <Icon>stay_current_portrait</Icon>
                     <InputMask mask="(99) 99999-9999" required placeholder="WhatsApp" onChange={(e) => suser({ ...user, celular: e.target.value })} value={user.celular} />
+                </Label>
+                <Label>
+                    <Icon>attach_file</Icon>
+                    <Input onChange={(e) => { form.append('image', e.target.files[0]); }} accept="image/png, image/jpeg, image/jpg" type="file" required />
                 </Label>
                 <Label>
                     <Icon>mail_outline</Icon>

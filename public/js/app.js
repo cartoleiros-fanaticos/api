@@ -18005,6 +18005,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function contact() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       nome: '',
+      assunto: '',
       celular: '',
       email: '',
       mensagem: ''
@@ -18014,46 +18015,59 @@ function contact() {
     suser = _useState2[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     var usr = JSON.parse(localStorage.getItem('user'));
-    console.log(usr);
     suser(_objectSpread(_objectSpread({}, user), {}, {
       nome: usr.nome,
-      celular: usr.celular,
+      celular: format_phone(usr.celular),
       email: usr.email
     }));
   }, []);
+  function format_phone(phone) {
+    var ddd = phone.substr(0, 2);
+    var first = phone.substr(2, 5);
+    var second = phone.substr(7, 4);
+    return "(".concat(ddd, ") ").concat(first, "-").concat(second);
+  }
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
     loading = _useState4[0],
     sloading = _useState4[1];
+  var form = new FormData();
   function enter(_x2) {
     return _enter.apply(this, arguments);
   }
   function _enter() {
     _enter = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(e) {
+      var x;
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             e.preventDefault();
+            for (x in user) form.append(x, user[x]);
             sloading(true);
-            _context.prev = 2;
-            _context.next = 5;
-            return _utils_api__WEBPACK_IMPORTED_MODULE_4__["default"].post('login', user);
-          case 5:
+            _context.prev = 3;
+            _context.next = 6;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_4__["default"].post('enviar-email/contato', form);
+          case 6:
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_3__.swal_success)('Email enviado com sucesso em breve entraremos em contato.');
-            _context.next = 12;
+            suser(_objectSpread(_objectSpread({}, user), {}, {
+              assunto: '',
+              mensagem: ''
+            }));
+            sloading(false);
+            _context.next = 15;
             break;
-          case 8:
-            _context.prev = 8;
-            _context.t0 = _context["catch"](2);
+          case 11:
+            _context.prev = 11;
+            _context.t0 = _context["catch"](3);
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_3__.message)(_context.t0);
             sloading(false);
-          case 12:
+          case 15:
             ;
-          case 13:
+          case 16:
           case "end":
             return _context.stop();
         }
-      }, _callee, null, [[2, 8]]);
+      }, _callee, null, [[3, 11]]);
     }));
     return _enter.apply(this, arguments);
   }
@@ -18076,6 +18090,19 @@ function contact() {
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
+            children: "subject"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Input, {
+            required: true,
+            placeholder: "Assunto",
+            onChange: function onChange(e) {
+              return suser(_objectSpread(_objectSpread({}, user), {}, {
+                assunto: e.target.value
+              }));
+            },
+            value: user.assunto
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
             children: "stay_current_portrait"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)((react_input_mask__WEBPACK_IMPORTED_MODULE_2___default()), {
             mask: "(99) 99999-9999",
@@ -18087,6 +18114,17 @@ function contact() {
               }));
             },
             value: user.celular
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
+            children: "attach_file"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Input, {
+            onChange: function onChange(e) {
+              form.append('image', e.target.files[0]);
+            },
+            accept: "image/png, image/jpeg, image/jpg",
+            type: "file",
+            required: true
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_6__.Label, {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_6__.Icon, {
@@ -18155,7 +18193,7 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4, _temp
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    margin: 30px 0;\n"])));
-var Form = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].form(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    width: 60%;\n    margin: auto;\n"])));
+var Form = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].form(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    width: 60%;\n    margin: auto;    \n\n    @media screen and (max-width:900px){\n        width: 90%;\n    }\n"])));
 var Label = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].label(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    width: 100%;\n    display: flex;\n    justify-content: space-between;\n    padding: 15px;\n    border: solid 2px #ccc;\n    background-color: #f1f1f1;\n    border-radius: 10px;\n    text-align: right;\n    margin-bottom: 10px;\n    color: #666;\n\n    input {\n        width: 100%;\n        border: none;\n        font-size: 15px;\n        outline: none;\n        background-color: #f1f1f1;\n    }\n"])));
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].input(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    background-color: transparent;\n"])));
 var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
