@@ -213,9 +213,9 @@ export const download = async (data, text_left, text_right, filter) => {
         let span = document.createElement('span');
 
         if (text_left === 'CONQUISTADOS')
-            span.innerText = data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0;
+            span.innerText = data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0;
         else
-            span.innerText = data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0
+            span.innerText = data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0
 
         span.style.cssText = `
         font-weight: bold;
@@ -238,9 +238,9 @@ export const download = async (data, text_left, text_right, filter) => {
         span = document.createElement('span');
 
         if (text_left === 'CONQUISTADOS')
-            span.innerText = data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0;
+            span.innerText = data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0;
         else
-            span.innerText = data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0
+            span.innerText = data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0
 
 
         span.style.cssText = `
@@ -262,9 +262,9 @@ export const download = async (data, text_left, text_right, filter) => {
         let strong = document.createElement('strong');
 
         if (text_left === 'CONQUISTADOS')
-            strong.innerText = (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0) + (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0)
+            strong.innerText = (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
         else
-            strong.innerText = (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0);
+            strong.innerText = (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0);
 
         strong.style.cssText = `
             font-weight: bold;

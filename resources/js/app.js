@@ -12,7 +12,9 @@ import Recovery from './screens/recovery';
 
 import Player from './screens/auth/player';
 import Emphasis from './screens/auth/emphasis';
-import Crossing from './screens/auth/crossing';
+import Scouts from './screens/auth/crossing/scouts';
+import Score from './screens/auth/crossing/score';
+import Average from './screens/auth/crossing/average';
 import Plans from './screens/auth/plans';
 import Partials from './screens/auth/partials/container';
 import Videos from './screens/auth/videos';
@@ -37,7 +39,15 @@ const router = createBrowserRouter([
     },
     {
         path: "/auth/cruzamento-scouts",
-        element: <Crossing />,
+        element: <Scouts />,
+    },
+    {
+        path: "/auth/cruzamento-pontos",
+        element: <Score />,
+    },
+    {
+        path: "/auth/cruzamento-media",
+        element: <Average />,
     },
     {
         path: "/auth/destaques",

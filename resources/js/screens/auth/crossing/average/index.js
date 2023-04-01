@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { message, download } from '../../../utils/helpers';
-import api from '../../../utils/api';
+import { message, download } from '../../../../utils/helpers';
+import api from '../../../../utils/api';
 
 import {
   Content,
@@ -29,12 +29,12 @@ import {
   Text3,
 } from './styles';
 
-import Container from '../../../componets/container';
+import Container from '../../../../componets/container';
 
 function crossing() {
 
   const [filter, sfilter] = useState({
-    scout: { value: 'G', name: 'Gols' },
+    scout: { value: '', name: 'Média' },
     posicao_id: { value: '', name: undefined },
     ultimas_rodadas: { value: 38, name: 'Todas as rodadas' },
     total: { value: 'Nâo', name: 'Só casa x Só fora' },
@@ -57,7 +57,7 @@ function crossing() {
 
     try {
 
-      const { data } = await api.get(`cruzamento?scout=${filter.scout.value}&posicao_id=${filter.posicao_id.value}&ultimas_rodadas=${filter.ultimas_rodadas.value}&total=${filter.total.value}`);
+      const { data } = await api.get(`cruzamento?posicao_id=${filter.posicao_id.value}&ultimas_rodadas=${filter.ultimas_rodadas.value}&total=${filter.total.value}&tipo=media`);
 
       sdata(data);
 
@@ -73,7 +73,7 @@ function crossing() {
 
       sloadingpage(true);
 
-      const { data } = await api.get(`cruzamento?scout=G`);
+      const { data } = await api.get(`cruzamento?tipo=media`);
 
       sdata(data);
       sloadingpage(false);
@@ -88,21 +88,6 @@ function crossing() {
   const component = () => (
     <Content>
       <Picker>
-        <Box>
-          <Header>
-            <Title>{filter.scout.name}</Title>
-            <Icon>play_for_work</Icon>
-          </Header>
-          <List>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'G', name: 'Gols' } })}>Gols</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'A', name: 'Assistência' } })}>Assistência</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'DE', name: 'Defesas' } })}>Defesas</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'F', name: 'Finalização' } })}>Finalização</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'FS', name: 'Falta sofrida' } })}>Falta sofrida</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'DS', name: 'Desarmes' } })}>Desarmes</Item>
-            <Item onClick={() => sfilter({ ...filter, scout: { value: 'SG', name: 'Saldos de gols' } })}>Saldos de gols</Item>
-          </List>
-        </Box>
         <Box>
           <Header>
             <Title>{filter.posicao_id.name || 'Todas as posições'}</Title>
@@ -139,7 +124,7 @@ function crossing() {
             <Item onClick={() => sfilter({ ...filter, total: { value: 'Sim', name: 'Total x Total' } })}>Total x Total</Item>
           </List>
         </Box>
-      </Picker >
+      </Picker>
       <ContainerTeams>
         <Texts>
           <Text1>Conquistados</Text1>
@@ -154,16 +139,16 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>{data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
+                  <Value>{data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
                   <Versus>x</Versus>
-                  <Value>{data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  <Value>{data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
                 <Total>
                   {
-                    (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0)
+                    (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0)
                     +
-                    (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                    (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
                   }
                 </Total>
               </Teams>
@@ -185,16 +170,16 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>{data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
+                  <Value>{data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
                   <Versus>x</Versus>
-                  <Value>{data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  <Value>{data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
                 <Total>
                   {
-                    (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0)
+                    (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0)
                     +
-                    (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0)
+                    (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
                   }
                 </Total>
               </Teams>
@@ -203,19 +188,18 @@ function crossing() {
         </ListTeams>
       </ContainerTeams>
       <Tips>
-        <TipsTitle>Cruzada de Scouts</TipsTitle>
-        <Text3>Aqui você verá um cruzamento entre os scouts cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>
-        <Text3>Os scouts conquistados são os pontos conquistados pela equipe.</Text3>
-        <Text3>Os scouts cedidos: são quantos pontos as equipes adversárias pontuaram jogando contra.</Text3>
-        <Text3>Os scouts gols contras (GC) não são contabilizados.</Text3>
-        <Text3>Scouts apenas de jogos valido para o cartola FC.</Text3>
+        <TipsTitle>Cruzada de médias</TipsTitle>
+        <Text3>Aqui você verá um cruzamento entre os médias cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>
+        <Text3>Os médias conquistados são os médias conquistados pela equipe.</Text3>
+        <Text3>Os médias cedidos: são quantos médias as equipes adversárias pontuaram jogando contra.</Text3>
+        <Text3>Média apenas de jogos valido para o cartola FC.</Text3>
       </Tips>
     </Content>
   );
 
   return (
     <Container
-      title='Cruzamento de scouts ( Gols )'
+      title='Cruzamento de média'
       Component={component}
       loading={loading_page}
     />

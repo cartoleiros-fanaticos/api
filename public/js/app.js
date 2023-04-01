@@ -18177,10 +18177,10 @@ var Button = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].button.at
 
 /***/ }),
 
-/***/ "./resources/js/screens/auth/crossing/index.js":
-/*!*****************************************************!*\
-  !*** ./resources/js/screens/auth/crossing/index.js ***!
-  \*****************************************************/
+/***/ "./resources/js/screens/auth/crossing/average/index.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/average/index.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -18190,10 +18190,944 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/helpers */ "./resources/js/utils/helpers.js");
-/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/api */ "./resources/js/utils/api.js");
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/crossing/styles.js");
-/* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../componets/container */ "./resources/js/componets/container/index.js");
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/helpers */ "./resources/js/utils/helpers.js");
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/api */ "./resources/js/utils/api.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/crossing/average/styles.js");
+/* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../componets/container */ "./resources/js/componets/container/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+function crossing() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      scout: {
+        value: '',
+        name: 'Média'
+      },
+      posicao_id: {
+        value: '',
+        name: undefined
+      },
+      ultimas_rodadas: {
+        value: 38,
+        name: 'Todas as rodadas'
+      },
+      total: {
+        value: 'Nâo',
+        name: 'Só casa x Só fora'
+      }
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    filter = _useState2[0],
+    sfilter = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState4 = _slicedToArray(_useState3, 2),
+    data = _useState4[0],
+    sdata = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState6 = _slicedToArray(_useState5, 2),
+    loading = _useState6[0],
+    sloading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState8 = _slicedToArray(_useState7, 2),
+    loading_page = _useState8[0],
+    sloadingpage = _useState8[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getData();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    enter();
+  }, [filter]);
+  function enter() {
+    return _enter.apply(this, arguments);
+  }
+  function _enter() {
+    _enter = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$api$get, _data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?posicao_id=".concat(filter.posicao_id.value, "&ultimas_rodadas=").concat(filter.ultimas_rodadas.value, "&total=").concat(filter.total.value, "&tipo=media"));
+          case 3:
+            _yield$api$get = _context.sent;
+            _data = _yield$api$get.data;
+            sdata(_data);
+            _context.next = 11;
+            break;
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context.t0);
+          case 11:
+            ;
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 8]]);
+    }));
+    return _enter.apply(this, arguments);
+  }
+  function getData() {
+    return _getData.apply(this, arguments);
+  }
+  function _getData() {
+    _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var _yield$api$get2, _data2;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            sloadingpage(true);
+            _context2.next = 4;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?tipo=media");
+          case 4:
+            _yield$api$get2 = _context2.sent;
+            _data2 = _yield$api$get2.data;
+            sdata(_data2);
+            sloadingpage(false);
+            _context2.next = 14;
+            break;
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context2.t0);
+            sloadingpage(false);
+          case 14:
+            ;
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 10]]);
+    }));
+    return _getData.apply(this, arguments);
+  }
+  var component = function component() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Picker, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.posicao_id.name || 'Todas as posições'
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 1,
+                    name: 'Todas as posições'
+                  }
+                }));
+              },
+              children: "Todas as posi\xE7\xF5es"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 3,
+                    name: 'Zagueiros'
+                  }
+                }));
+              },
+              children: "Zagueiros"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 2,
+                    name: 'Lateral'
+                  }
+                }));
+              },
+              children: "Lateral"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 4,
+                    name: 'Meias'
+                  }
+                }));
+              },
+              children: "Meias"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 5,
+                    name: 'Atacante'
+                  }
+                }));
+              },
+              children: "Atacante"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 1,
+                    name: 'Goleiro'
+                  }
+                }));
+              },
+              children: "Goleiro"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.ultimas_rodadas.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 38,
+                    name: 'Todas as rodadas'
+                  }
+                }));
+              },
+              children: "Todas as rodadas"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 2,
+                    name: 'Últimas 2'
+                  }
+                }));
+              },
+              children: "\xDAltimas 2"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 3,
+                    name: 'Últimas 3'
+                  }
+                }));
+              },
+              children: "\xDAltimas 3"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 5,
+                    name: 'Últimas 5'
+                  }
+                }));
+              },
+              children: "\xDAltimas 5"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.total.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  total: {
+                    value: 'Não',
+                    name: 'Só casa x Só fora'
+                  }
+                }));
+              },
+              children: "S\xF3 casa x S\xF3 fora"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  total: {
+                    value: 'Sim',
+                    name: 'Total x Total'
+                  }
+                }));
+              },
+              children: "Total x Total"
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.ContainerTeams, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Texts, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Conquistados"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "EM CASA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Cedidos"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "FORA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Download, {
+            onClick: function onClick() {
+              return (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.download)(data, 'CONQUISTADOS', 'CEDIDOS', filter);
+            },
+            children: "Download"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.ListTeams, {
+          children: data.partidas.map(function (e, i) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Teams, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Values, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_casa_id].escudo
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
+                  children: "x"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_visitante_id].escudo
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
+                children: (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
+              })]
+            }, i);
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.ContainerTeams, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Texts, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Cedidos"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "EM CASA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Conquistados"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "FORA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Download, {
+            onClick: function onClick() {
+              return (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.download)(data, 'CEDIDOS', 'CONQUISTADOS', filter);
+            },
+            children: "Download"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.ListTeams, {
+          children: data.partidas.map(function (e, i) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Teams, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Values, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_casa_id].escudo
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
+                  children: "x"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_visitante_id].escudo
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
+                children: (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
+              })]
+            }, i);
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Tips, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.TipsTitle, {
+          children: "Cruzada de m\xE9dias"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Aqui voc\xEA ver\xE1 um cruzamento entre os m\xE9dias cedidos e conquistados dos confrontos da rodada atual do cartola fc."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Os m\xE9dias conquistados s\xE3o os m\xE9dias conquistados pela equipe."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Os m\xE9dias cedidos: s\xE3o quantos m\xE9dias as equipes advers\xE1rias pontuaram jogando contra."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "M\xE9dia apenas de jogos valido para o cartola FC."
+        })]
+      })]
+    });
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    title: "Cruzamento de m\xE9dia",
+    Component: component,
+    loading: loading_page
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (crossing);
+
+/***/ }),
+
+/***/ "./resources/js/screens/auth/crossing/average/styles.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/average/styles.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Box": () => (/* binding */ Box),
+/* harmony export */   "ContainerTeams": () => (/* binding */ ContainerTeams),
+/* harmony export */   "Content": () => (/* binding */ Content),
+/* harmony export */   "Download": () => (/* binding */ Download),
+/* harmony export */   "Header": () => (/* binding */ Header),
+/* harmony export */   "Icon": () => (/* binding */ Icon),
+/* harmony export */   "Item": () => (/* binding */ Item),
+/* harmony export */   "List": () => (/* binding */ List),
+/* harmony export */   "ListTeams": () => (/* binding */ ListTeams),
+/* harmony export */   "Picker": () => (/* binding */ Picker),
+/* harmony export */   "Shield": () => (/* binding */ Shield),
+/* harmony export */   "Teams": () => (/* binding */ Teams),
+/* harmony export */   "Text1": () => (/* binding */ Text1),
+/* harmony export */   "Text2": () => (/* binding */ Text2),
+/* harmony export */   "Text3": () => (/* binding */ Text3),
+/* harmony export */   "Texts": () => (/* binding */ Texts),
+/* harmony export */   "Tips": () => (/* binding */ Tips),
+/* harmony export */   "TipsTitle": () => (/* binding */ TipsTitle),
+/* harmony export */   "Title": () => (/* binding */ Title),
+/* harmony export */   "Total": () => (/* binding */ Total),
+/* harmony export */   "Value": () => (/* binding */ Value),
+/* harmony export */   "Values": () => (/* binding */ Values),
+/* harmony export */   "Versus": () => (/* binding */ Versus)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19, _templateObject20, _templateObject21, _templateObject22, _templateObject23;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: grid;\n    grid-template-columns: auto auto;\n    grid-column-gap: 40px;\n    user-select: none;\n\n    @media screen and (max-width:900px){  \n       display: flex;\n       flex-direction: column;\n    }\n"])));
+var Picker = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    margin: 25px auto;\n    grid-column: 1/3;\n    width: 100%;\n\n    @media screen and (max-width:900px){  \n        flex-direction: column;\n        margin: 25px auto 5px auto;\n    }\n"])));
+var Box = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    position: relative;\n    background: #F68D42;\n    color: #000;\n    padding: 10px;\n    width: 22%;\n    text-align: center;\n    font-weight: bold;\n    border-radius: 0.3em;\n    border: none;\n    outline: none;\n    cursor: pointer;\n\n    &:hover ul {\n        visibility: visible;\n        height: 280px;\n    }\n\n    @media screen and (max-width:900px){  \n        width: 100%;\n        margin-bottom: 10px;\n        position: static;\n    }\n"])));
+var Header = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].header(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    color: #000;\n    font-weight: 500;\n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n\n"])));
+var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
+  return {
+    className: 'material-icons'
+  };
+})(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral([" \n"])));
+var List = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    height: 0;\n    overflow: hidden;\n    visibility: hidden;\n    transition: all .3s ease-in-out;\n    box-shadow: 0 6px 12px rgba(0,0,0,0.175);\n    font-size: 15px;\n    margin-top: 5px;\n    padding: 5px;\n    text-align: left;\n    left: 0;\n    width: 100%;\n    background: #ffffff;\n    position: absolute;\n    list-style: none;\n    border: solid 2px #000;\n\n    @media screen and (max-width:900px){  \n        top: 10%;\n        width: 90%;\n        z-index: 50;\n        left: 50%;\n        margin-left: -45%;\n    }\n"])));
+var Item = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n\n    &:not(:last-child) {\n        border-bottom: solid thin #636363;\n    }\n\n    padding: 10px 5px;\n    font-weight: 500;\n    &:hover {\n        background: #f1f1f1;\n    }\n"])));
+var ContainerTeams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    width: 100%;\n"])));
+var Texts = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    text-align: center;\n    margin: 25px 0;\n"])));
+var Text1 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    color: #F68D42;\n"])));
+var Text2 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    border: solid 2px #000;\n    padding: 5px;\n    margin: 0 5px;\n"])));
+var Download = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    margin-left: 5px;\n    padding: 8px;\n    color: #f1f1f1;\n    text-decoration: none;\n    font-size: 0.9em;\n    background: #23d18b;\n    transition-duration: 0.3s;\n    cursor: pointer;\n    &:hover {\n        background: #1faf8b;\n    }\n\n    @media screen and (max-width:900px){  \n        margin: auto;\n        width: 50%;\n        margin-top: 25px;\n        display: block;\n    }\n"])));
+var ListTeams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    border: solid 2px #F68D42;\n    border-radius: 0.5em;\n    padding: 15px 15px 5px 15px;\n"])));
+var Teams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 15px;\n"])));
+var Values = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    justify-content: space-between;\n    width: 30%;\n    display: flex;\n    align-items: center;\n"])));
+var Shield = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n    width: 26px;\n"])));
+var Value = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    padding: 2px 12px;\n    margin: 0 10px;\n"])));
+var Versus = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n"])));
+var Total = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject20 || (_templateObject20 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n"])));
+var Tips = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject21 || (_templateObject21 = _taggedTemplateLiteral(["\n    margin-top: 20px;\n    border: solid 2px #F68D42;\n    padding: 15px;\n    border-radius: 0.5em;\n    width: 100%;\n    grid-column: 1/3;\n"])));
+var TipsTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h4(_templateObject22 || (_templateObject22 = _taggedTemplateLiteral(["\n    margin-bottom: 10px;\n"])));
+var Text3 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject23 || (_templateObject23 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n"])));
+
+/***/ }),
+
+/***/ "./resources/js/screens/auth/crossing/score/index.js":
+/*!***********************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/score/index.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/helpers */ "./resources/js/utils/helpers.js");
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/api */ "./resources/js/utils/api.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/crossing/score/styles.js");
+/* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../componets/container */ "./resources/js/componets/container/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _iterableToArrayLimit(arr, i) { var _i = null == arr ? null : "undefined" != typeof Symbol && arr[Symbol.iterator] || arr["@@iterator"]; if (null != _i) { var _s, _e, _x, _r, _arr = [], _n = !0, _d = !1; try { if (_x = (_i = _i.call(arr)).next, 0 === i) { if (Object(_i) !== _i) return; _n = !1; } else for (; !(_n = (_s = _x.call(_i)).done) && (_arr.push(_s.value), _arr.length !== i); _n = !0); } catch (err) { _d = !0, _e = err; } finally { try { if (!_n && null != _i["return"] && (_r = _i["return"](), Object(_r) !== _r)) return; } finally { if (_d) throw _e; } } return _arr; } }
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+function crossing() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      scout: {
+        value: '',
+        name: 'Pontos'
+      },
+      posicao_id: {
+        value: '',
+        name: undefined
+      },
+      ultimas_rodadas: {
+        value: 38,
+        name: 'Todas as rodadas'
+      },
+      total: {
+        value: 'Nâo',
+        name: 'Só casa x Só fora'
+      }
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    filter = _useState2[0],
+    sfilter = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState4 = _slicedToArray(_useState3, 2),
+    data = _useState4[0],
+    sdata = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState6 = _slicedToArray(_useState5, 2),
+    loading = _useState6[0],
+    sloading = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState8 = _slicedToArray(_useState7, 2),
+    loading_page = _useState8[0],
+    sloadingpage = _useState8[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    getData();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
+    enter();
+  }, [filter]);
+  function enter() {
+    return _enter.apply(this, arguments);
+  }
+  function _enter() {
+    _enter = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      var _yield$api$get, _data;
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?posicao_id=".concat(filter.posicao_id.value, "&ultimas_rodadas=").concat(filter.ultimas_rodadas.value, "&total=").concat(filter.total.value, "&tipo=pontos"));
+          case 3:
+            _yield$api$get = _context.sent;
+            _data = _yield$api$get.data;
+            sdata(_data);
+            _context.next = 11;
+            break;
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context.t0);
+          case 11:
+            ;
+          case 12:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee, null, [[0, 8]]);
+    }));
+    return _enter.apply(this, arguments);
+  }
+  function getData() {
+    return _getData.apply(this, arguments);
+  }
+  function _getData() {
+    _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var _yield$api$get2, _data2;
+      return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+        while (1) switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            sloadingpage(true);
+            _context2.next = 4;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?tipo=pontos");
+          case 4:
+            _yield$api$get2 = _context2.sent;
+            _data2 = _yield$api$get2.data;
+            sdata(_data2);
+            sloadingpage(false);
+            _context2.next = 14;
+            break;
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context2.t0);
+            sloadingpage(false);
+          case 14:
+            ;
+          case 15:
+          case "end":
+            return _context2.stop();
+        }
+      }, _callee2, null, [[0, 10]]);
+    }));
+    return _getData.apply(this, arguments);
+  }
+  var component = function component() {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Picker, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.posicao_id.name || 'Todas as posições'
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 1,
+                    name: 'Todas as posições'
+                  }
+                }));
+              },
+              children: "Todas as posi\xE7\xF5es"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 3,
+                    name: 'Zagueiros'
+                  }
+                }));
+              },
+              children: "Zagueiros"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 2,
+                    name: 'Lateral'
+                  }
+                }));
+              },
+              children: "Lateral"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 4,
+                    name: 'Meias'
+                  }
+                }));
+              },
+              children: "Meias"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 5,
+                    name: 'Atacante'
+                  }
+                }));
+              },
+              children: "Atacante"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  posicao_id: {
+                    value: 1,
+                    name: 'Goleiro'
+                  }
+                }));
+              },
+              children: "Goleiro"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.ultimas_rodadas.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 38,
+                    name: 'Todas as rodadas'
+                  }
+                }));
+              },
+              children: "Todas as rodadas"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 2,
+                    name: 'Últimas 2'
+                  }
+                }));
+              },
+              children: "\xDAltimas 2"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 3,
+                    name: 'Últimas 3'
+                  }
+                }));
+              },
+              children: "\xDAltimas 3"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  ultimas_rodadas: {
+                    value: 5,
+                    name: 'Últimas 5'
+                  }
+                }));
+              },
+              children: "\xDAltimas 5"
+            })]
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Box, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Header, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Title, {
+              children: filter.total.name
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Icon, {
+              children: "play_for_work"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.List, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  total: {
+                    value: 'Não',
+                    name: 'Só casa x Só fora'
+                  }
+                }));
+              },
+              children: "S\xF3 casa x S\xF3 fora"
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Item, {
+              onClick: function onClick() {
+                return sfilter(_objectSpread(_objectSpread({}, filter), {}, {
+                  total: {
+                    value: 'Sim',
+                    name: 'Total x Total'
+                  }
+                }));
+              },
+              children: "Total x Total"
+            })]
+          })]
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.ContainerTeams, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Texts, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Conquistados"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "EM CASA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Cedidos"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "FORA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Download, {
+            onClick: function onClick() {
+              return (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.download)(data, 'CONQUISTADOS', 'CEDIDOS', filter);
+            },
+            children: "Download"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.ListTeams, {
+          children: data.partidas.map(function (e, i) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Teams, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Values, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_casa_id].escudo
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
+                  children: "x"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_visitante_id].escudo
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
+                children: (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
+              })]
+            }, i);
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.ContainerTeams, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Texts, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Cedidos"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "EM CASA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text1, {
+            children: "Conquistados"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text2, {
+            children: "FORA"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Download, {
+            onClick: function onClick() {
+              return (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.download)(data, 'CEDIDOS', 'CONQUISTADOS', filter);
+            },
+            children: "Download"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.ListTeams, {
+          children: data.partidas.map(function (e, i) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Teams, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Values, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_casa_id].escudo
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
+                  children: "x"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
+                  children: data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
+                  src: data.clubes[e.clube_visitante_id].escudo
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
+                children: (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
+              })]
+            }, i);
+          })
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_3__.Tips, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.TipsTitle, {
+          children: "Cruzada de pontos"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Aqui voc\xEA ver\xE1 um cruzamento entre os pontos cedidos e conquistados dos confrontos da rodada atual do cartola fc."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Os pontos conquistados s\xE3o os pontos conquistados pela equipe."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Os pontos cedidos: s\xE3o quantos pontos as equipes advers\xE1rias pontuaram jogando contra."
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Text3, {
+          children: "Pontos apenas de jogos valido para o cartola FC."
+        })]
+      })]
+    });
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    title: "Cruzamento de pontos",
+    Component: component,
+    loading: loading_page
+  });
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (crossing);
+
+/***/ }),
+
+/***/ "./resources/js/screens/auth/crossing/score/styles.js":
+/*!************************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/score/styles.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Box": () => (/* binding */ Box),
+/* harmony export */   "ContainerTeams": () => (/* binding */ ContainerTeams),
+/* harmony export */   "Content": () => (/* binding */ Content),
+/* harmony export */   "Download": () => (/* binding */ Download),
+/* harmony export */   "Header": () => (/* binding */ Header),
+/* harmony export */   "Icon": () => (/* binding */ Icon),
+/* harmony export */   "Item": () => (/* binding */ Item),
+/* harmony export */   "List": () => (/* binding */ List),
+/* harmony export */   "ListTeams": () => (/* binding */ ListTeams),
+/* harmony export */   "Picker": () => (/* binding */ Picker),
+/* harmony export */   "Shield": () => (/* binding */ Shield),
+/* harmony export */   "Teams": () => (/* binding */ Teams),
+/* harmony export */   "Text1": () => (/* binding */ Text1),
+/* harmony export */   "Text2": () => (/* binding */ Text2),
+/* harmony export */   "Text3": () => (/* binding */ Text3),
+/* harmony export */   "Texts": () => (/* binding */ Texts),
+/* harmony export */   "Tips": () => (/* binding */ Tips),
+/* harmony export */   "TipsTitle": () => (/* binding */ TipsTitle),
+/* harmony export */   "Title": () => (/* binding */ Title),
+/* harmony export */   "Total": () => (/* binding */ Total),
+/* harmony export */   "Value": () => (/* binding */ Value),
+/* harmony export */   "Values": () => (/* binding */ Values),
+/* harmony export */   "Versus": () => (/* binding */ Versus)
+/* harmony export */ });
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18, _templateObject19, _templateObject20, _templateObject21, _templateObject22, _templateObject23;
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: grid;\n    grid-template-columns: auto auto;\n    grid-column-gap: 40px;\n    user-select: none;\n\n    @media screen and (max-width:900px){  \n       display: flex;\n       flex-direction: column;\n    }\n"])));
+var Picker = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    margin: 25px auto;\n    grid-column: 1/3;\n    width: 100%;\n\n    @media screen and (max-width:900px){  \n        flex-direction: column;\n        margin: 25px auto 5px auto;\n    }\n"])));
+var Box = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    position: relative;\n    background: #F68D42;\n    color: #000;\n    padding: 10px;\n    width: 22%;\n    text-align: center;\n    font-weight: bold;\n    border-radius: 0.3em;\n    border: none;\n    outline: none;\n    cursor: pointer;\n\n    &:hover ul {\n        visibility: visible;\n        height: 280px;\n    }\n\n    @media screen and (max-width:900px){  \n        width: 100%;\n        margin-bottom: 10px;\n        position: static;\n    }\n"])));
+var Header = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].header(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    color: #000;\n    font-weight: 500;\n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n\n"])));
+var Icon = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].i.attrs(function () {
+  return {
+    className: 'material-icons'
+  };
+})(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral([" \n"])));
+var List = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].ul(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    height: 0;\n    overflow: hidden;\n    visibility: hidden;\n    transition: all .3s ease-in-out;\n    box-shadow: 0 6px 12px rgba(0,0,0,0.175);\n    font-size: 15px;\n    margin-top: 5px;\n    padding: 5px;\n    text-align: left;\n    left: 0;\n    width: 100%;\n    background: #ffffff;\n    position: absolute;\n    list-style: none;\n    border: solid 2px #000;\n\n    @media screen and (max-width:900px){  \n        top: 10%;\n        width: 90%;\n        z-index: 50;\n        left: 50%;\n        margin-left: -45%;\n    }\n"])));
+var Item = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n\n    &:not(:last-child) {\n        border-bottom: solid thin #636363;\n    }\n\n    padding: 10px 5px;\n    font-weight: 500;\n    &:hover {\n        background: #f1f1f1;\n    }\n"])));
+var ContainerTeams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    width: 100%;\n"])));
+var Texts = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    text-align: center;\n    margin: 25px 0;\n"])));
+var Text1 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    color: #F68D42;\n"])));
+var Text2 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    border: solid 2px #000;\n    padding: 5px;\n    margin: 0 5px;\n"])));
+var Download = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    margin-left: 5px;\n    padding: 8px;\n    color: #f1f1f1;\n    text-decoration: none;\n    font-size: 0.9em;\n    background: #23d18b;\n    transition-duration: 0.3s;\n    cursor: pointer;\n    &:hover {\n        background: #1faf8b;\n    }\n\n    @media screen and (max-width:900px){  \n        margin: auto;\n        width: 50%;\n        margin-top: 25px;\n        display: block;\n    }\n"])));
+var ListTeams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    border: solid 2px #F68D42;\n    border-radius: 0.5em;\n    padding: 15px 15px 5px 15px;\n"])));
+var Teams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n    margin-bottom: 15px;\n"])));
+var Values = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    justify-content: space-between;\n    width: 30%;\n    display: flex;\n    align-items: center;\n"])));
+var Shield = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n    width: 26px;\n"])));
+var Value = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    padding: 2px 12px;\n    margin: 0 10px;\n"])));
+var Versus = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject19 || (_templateObject19 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n"])));
+var Total = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject20 || (_templateObject20 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n"])));
+var Tips = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject21 || (_templateObject21 = _taggedTemplateLiteral(["\n    margin-top: 20px;\n    border: solid 2px #F68D42;\n    padding: 15px;\n    border-radius: 0.5em;\n    width: 100%;\n    grid-column: 1/3;\n"])));
+var TipsTitle = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h4(_templateObject22 || (_templateObject22 = _taggedTemplateLiteral(["\n    margin-bottom: 10px;\n"])));
+var Text3 = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].p(_templateObject23 || (_templateObject23 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n"])));
+
+/***/ }),
+
+/***/ "./resources/js/screens/auth/crossing/scouts/index.js":
+/*!************************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/scouts/index.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../utils/helpers */ "./resources/js/utils/helpers.js");
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../utils/api */ "./resources/js/utils/api.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/crossing/scouts/styles.js");
+/* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../componets/container */ "./resources/js/componets/container/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
@@ -18268,7 +19202,7 @@ function crossing() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?scout=".concat(filter.scout.value, "&posicao_id=").concat(filter.posicao_id.value, "&ultimas_rodadas=").concat(filter.ultimas_rodadas.value, "&total=").concat(filter.total.value));
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?scout=".concat(filter.scout.value, "&posicao_id=").concat(filter.posicao_id.value, "&ultimas_rodadas=").concat(filter.ultimas_rodadas.value, "&total=").concat(filter.total.value, "&tipo=scouts"));
           case 3:
             _yield$api$get = _context.sent;
             _data = _yield$api$get.data;
@@ -18301,7 +19235,7 @@ function crossing() {
             _context2.prev = 0;
             sloadingpage(true);
             _context2.next = 4;
-            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?scout=G");
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("cruzamento?scout=G&tipo=scouts");
           case 4:
             _yield$api$get2 = _context2.sent;
             _data2 = _yield$api$get2.data;
@@ -18581,16 +19515,16 @@ function crossing() {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
                   src: data.clubes[e.clube_casa_id].escudo
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
-                  children: data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0
+                  children: data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
                   children: "x"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
-                  children: data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0
+                  children: data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
                   src: data.clubes[e.clube_visitante_id].escudo
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
-                children: (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0) + (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                children: (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
               })]
             }, i);
           })
@@ -18618,16 +19552,16 @@ function crossing() {
                 children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
                   src: data.clubes[e.clube_casa_id].escudo
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
-                  children: data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0
+                  children: data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Versus, {
                   children: "x"
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Value, {
-                  children: data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0
+                  children: data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0
                 }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Shield, {
                   src: data.clubes[e.clube_visitante_id].escudo
                 })]
               }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_3__.Total, {
-                children: (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0)
+                children: (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
               })]
             }, i);
           })
@@ -18659,10 +19593,10 @@ function crossing() {
 
 /***/ }),
 
-/***/ "./resources/js/screens/auth/crossing/styles.js":
-/*!******************************************************!*\
-  !*** ./resources/js/screens/auth/crossing/styles.js ***!
-  \******************************************************/
+/***/ "./resources/js/screens/auth/crossing/scouts/styles.js":
+/*!*************************************************************!*\
+  !*** ./resources/js/screens/auth/crossing/scouts/styles.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -21227,7 +22161,7 @@ var download = /*#__PURE__*/function () {
             img.style.cssText = "\n        width: 48px;\n    ";
             div.appendChild(img);
             span = document.createElement('span');
-            if (text_left === 'CONQUISTADOS') span.innerText = data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0;else span.innerText = data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0;
+            if (text_left === 'CONQUISTADOS') span.innerText = data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0;else span.innerText = data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0;
             span.style.cssText = "\n        font-weight: bold;\n        color: #fff;\n        font-size: 1.4em;\n    ";
             div.appendChild(span);
             span = document.createElement('span');
@@ -21235,7 +22169,7 @@ var download = /*#__PURE__*/function () {
             span.style.cssText = "\n        font-weight: bold;\n        color: #fff;\n        font-size: 1.4em;\n    ";
             div.appendChild(span);
             span = document.createElement('span');
-            if (text_left === 'CONQUISTADOS') span.innerText = data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0;else span.innerText = data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0;
+            if (text_left === 'CONQUISTADOS') span.innerText = data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0;else span.innerText = data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0;
             span.style.cssText = "\n        font-weight: bold;\n        color: #fff;\n        font-size: 1.4em;\n    ";
             div.appendChild(span);
             img = document.createElement('img');
@@ -21243,7 +22177,7 @@ var download = /*#__PURE__*/function () {
             img.style.cssText = "\n        width: 48px;\n    ";
             div.appendChild(img);
             strong = document.createElement('strong');
-            if (text_left === 'CONQUISTADOS') strong.innerText = (data.scouts.conquista_casa.length ? data.scouts.conquista_casa[e.clube_casa_id].pontos : 0) + (data.scouts.cedidas_fora.length ? data.scouts.cedidas_fora[e.clube_visitante_id].pontos : 0);else strong.innerText = (data.scouts.cedidas_casa.length ? data.scouts.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.scouts.conquista_fora.length ? data.scouts.conquista_fora[e.clube_visitante_id].pontos : 0);
+            if (text_left === 'CONQUISTADOS') strong.innerText = (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0);else strong.innerText = (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0);
             strong.style.cssText = "\n            font-weight: bold;\n            color: #fff;\n            font-size: 1.4em;\n            ";
             li.appendChild(strong);
           }
@@ -93388,20 +94322,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.css */ "./resources/js/index.css");
 /* harmony import */ var _screens_login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./screens/login */ "./resources/js/screens/login/index.js");
 /* harmony import */ var _screens_register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./screens/register */ "./resources/js/screens/register/index.js");
 /* harmony import */ var _screens_recovery__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./screens/recovery */ "./resources/js/screens/recovery/index.js");
 /* harmony import */ var _screens_auth_player__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./screens/auth/player */ "./resources/js/screens/auth/player/index.js");
 /* harmony import */ var _screens_auth_emphasis__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./screens/auth/emphasis */ "./resources/js/screens/auth/emphasis/index.js");
-/* harmony import */ var _screens_auth_crossing__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./screens/auth/crossing */ "./resources/js/screens/auth/crossing/index.js");
-/* harmony import */ var _screens_auth_plans__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./screens/auth/plans */ "./resources/js/screens/auth/plans/index.js");
-/* harmony import */ var _screens_auth_partials_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./screens/auth/partials/container */ "./resources/js/screens/auth/partials/container/index.js");
-/* harmony import */ var _screens_auth_videos__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./screens/auth/videos */ "./resources/js/screens/auth/videos/index.js");
-/* harmony import */ var _screens_auth_contact__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./screens/auth/contact */ "./resources/js/screens/auth/contact/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _screens_auth_crossing_scouts__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./screens/auth/crossing/scouts */ "./resources/js/screens/auth/crossing/scouts/index.js");
+/* harmony import */ var _screens_auth_crossing_score__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./screens/auth/crossing/score */ "./resources/js/screens/auth/crossing/score/index.js");
+/* harmony import */ var _screens_auth_crossing_average__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./screens/auth/crossing/average */ "./resources/js/screens/auth/crossing/average/index.js");
+/* harmony import */ var _screens_auth_plans__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./screens/auth/plans */ "./resources/js/screens/auth/plans/index.js");
+/* harmony import */ var _screens_auth_partials_container__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./screens/auth/partials/container */ "./resources/js/screens/auth/partials/container/index.js");
+/* harmony import */ var _screens_auth_videos__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./screens/auth/videos */ "./resources/js/screens/auth/videos/index.js");
+/* harmony import */ var _screens_auth_contact__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./screens/auth/contact */ "./resources/js/screens/auth/contact/index.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -93417,39 +94353,47 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var router = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_14__.createBrowserRouter)([{
+
+
+var router = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_16__.createBrowserRouter)([{
   path: "/",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_login__WEBPACK_IMPORTED_MODULE_3__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_login__WEBPACK_IMPORTED_MODULE_3__["default"], {})
 }, {
   path: "/cadastro",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_register__WEBPACK_IMPORTED_MODULE_4__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_register__WEBPACK_IMPORTED_MODULE_4__["default"], {})
 }, {
   path: "/recovery",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_recovery__WEBPACK_IMPORTED_MODULE_5__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_recovery__WEBPACK_IMPORTED_MODULE_5__["default"], {})
 }, {
   path: "/auth/atletas",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_player__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_player__WEBPACK_IMPORTED_MODULE_6__["default"], {})
 }, {
   path: "/auth/cruzamento-scouts",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_crossing__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_crossing_scouts__WEBPACK_IMPORTED_MODULE_8__["default"], {})
+}, {
+  path: "/auth/cruzamento-pontos",
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_crossing_score__WEBPACK_IMPORTED_MODULE_9__["default"], {})
+}, {
+  path: "/auth/cruzamento-media",
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_crossing_average__WEBPACK_IMPORTED_MODULE_10__["default"], {})
 }, {
   path: "/auth/destaques",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_emphasis__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_emphasis__WEBPACK_IMPORTED_MODULE_7__["default"], {})
 }, {
   path: "/auth/parciais",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_partials_container__WEBPACK_IMPORTED_MODULE_10__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_partials_container__WEBPACK_IMPORTED_MODULE_12__["default"], {})
 }, {
   path: "/auth/videos",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_videos__WEBPACK_IMPORTED_MODULE_11__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_videos__WEBPACK_IMPORTED_MODULE_13__["default"], {})
 }, {
   path: "/auth/planos",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_plans__WEBPACK_IMPORTED_MODULE_9__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_plans__WEBPACK_IMPORTED_MODULE_11__["default"], {})
 }, {
   path: "/auth/contato",
-  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(_screens_auth_contact__WEBPACK_IMPORTED_MODULE_12__["default"], {})
+  element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_screens_auth_contact__WEBPACK_IMPORTED_MODULE_14__["default"], {})
 }]);
-react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById('app')).render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), {
-  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_13__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.RouterProvider, {
+react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById('app')).render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)((react__WEBPACK_IMPORTED_MODULE_0___default().StrictMode), {
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_17__.RouterProvider, {
     router: router
   })
 }));
