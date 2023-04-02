@@ -4,6 +4,7 @@ use App\Http\Controllers\AtletasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\CruzamentoController;
+use App\Http\Controllers\EscalacaoController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
 use Illuminate\Http\Request;
@@ -36,6 +37,7 @@ Route::group([
     Route::resource('cruzamento', CruzamentoController::class);
     Route::post('enviar-email/contato', [ContatoController::class, 'enviar_email']);
 
+    Route::resource('escalacao', EscalacaoController::class);
     Route::resource('atletas', AtletasController::class);
 
     Route::get('compare/atletas', [AtletasController::class, 'compare']);

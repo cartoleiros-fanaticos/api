@@ -14,7 +14,6 @@ class ContatoController extends Controller
     public function enviar_email(Request $request)
     {
 
-
         $regras = [
             'nome' => 'required',
             'assunto' => 'required',
