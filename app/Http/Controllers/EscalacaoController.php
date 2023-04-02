@@ -42,7 +42,6 @@ class EscalacaoController extends Controller
     public function store(Request $request)
     {
 
-
         $regras = [
             'access_token' => 'required',
         ];
@@ -106,6 +105,21 @@ class EscalacaoController extends Controller
 
             endforeach;
 
+            if (isset($response['reservas'])) :
+
+                foreach ((array) $response['reservas'] as $key => $val) :
+
+                    EscalacaoAtletas::create([
+                        'atleta_id' => $val['atleta_id'],
+                        'rodada_time_id' => $time['rodada_time_id'],
+                        'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                        'titular' => 'Não'
+                    ]);
+
+                endforeach;
+
+            endif;
+
             return response()->json(['message' => 'Time cadastrado com sucesso.']);
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;
@@ -122,12 +136,32 @@ class EscalacaoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
+
+        $regras = [
+            'rodada' => 'required',
+        ];
+
+        $mensagens = [
+            'rodada.required' => 'O campo rodada é obrigatório.',
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $mensagens);
+
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
+
+        $rodada = $request->rodada;
+
         $response = EscalacaoTimes::with(
             [
-                'rodadas.atletas' => function ($q) {
-                    $q->where('rodada_time_id', 1);
+                'rodadas' => function ($q) use ($rodada) {
+                    $q->where('rodada_time_id', $rodada);
+                },
+
+                'rodadas.atletas' => function ($q) use ($rodada) {
+                    $q->where('rodada_time_id', $rodada);
                 }
             ]
         )

@@ -11,6 +11,7 @@ import Register from './screens/register';
 import Recovery from './screens/recovery';
 
 import Player from './screens/auth/player';
+import Lineup from './screens/auth/lineup';
 import Emphasis from './screens/auth/emphasis';
 import Scouts from './screens/auth/crossing/scouts';
 import Score from './screens/auth/crossing/score';
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
     {
         path: "/recovery",
         element: <Recovery />,
+    },
+    {
+        path: "/auth/escalacao",
+        element: <Lineup />,
     },
     {
         path: "/auth/atletas",
