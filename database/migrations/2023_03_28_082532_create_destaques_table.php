@@ -23,7 +23,7 @@ return new class extends Migration
             
             $table->integer('atleta_id')->unsigned();
 
-            $table->enum('tipo', [ 'Seleção', 'Capitães' ]);
+            $table->enum('tipo', [ 'Seleção', 'Reservas', 'Capitães' ]);
 
             $table->timestamps();
         });

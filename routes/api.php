@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\EscalacaoController;
+use App\Http\Controllers\ParciaisController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
 use Illuminate\Http\Request;
@@ -40,10 +41,12 @@ Route::group([
     Route::resource('escalacao', EscalacaoController::class);
     Route::resource('atletas', AtletasController::class);
 
+    Route::get('parciais/atletas', [ParciaisController::class, 'parciais_atletas']);
+    Route::get('parciais/rodadas', [ParciaisController::class, 'parciais_rodadas']);
+
     Route::get('compare/atletas', [AtletasController::class, 'compare']);
     Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);
     Route::get('destaques/atletas', [AtletasController::class, 'destaques']);
-    Route::get('parciais-atletas/atletas', [AtletasController::class, 'parciais_atletas']);
 
     Route::resource('videos', VideosController::class);
 });

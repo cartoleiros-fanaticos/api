@@ -5,6 +5,7 @@ import api from '../../../../utils/api';
 
 import Container from '../../../../componets/container';
 import Player from '../player';
+import Rounds from '../rounds';
 
 import {
     Content,
@@ -20,7 +21,9 @@ import {
 
 function partials() {
 
+    const [tab, stab] = useState('players');
     const [data, sdata] = useState({});
+    const [round, sround] = useState('');
 
     const [loading_page, sloadingpage] = useState(true);
 
@@ -34,7 +37,7 @@ function partials() {
 
             sloadingpage(true);
 
-            const { data } = await api.get(`parciais-atletas/atletas`);
+            const { data } = await api.get(`parciais/atletas`);
 
             sdata(data);
             sloadingpage(false);
@@ -50,10 +53,14 @@ function partials() {
         <>
             <Content>
                 <Box>
-                    <Title>Pontos dos times</Title>
+                    <Title>Pontos por clubes</Title>
                     <Label>
-                        <Select>
+                        <Select onChange={(e) => {
+                            sround(e.target.value)
+                            stab('rounds')
+                        }} value={round}>
                             <Option>Selecione a rodada</Option>
+                            {data.rodadas.map(e => e <= data.game.rodada_atual && <Option key={e}>{e}ª Rodada</Option>)}
                         </Select>
                         <Button>OK</Button>
                     </Label>
@@ -76,7 +83,8 @@ function partials() {
                     </Label>
                 </Box>
             </Content>
-            <Player data={data} />
+            {tab === 'players' && <Player data={data} />}
+            {tab === 'rounds' && <Rounds round={round} />}
         </>
     );
 

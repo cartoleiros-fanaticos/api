@@ -18,6 +18,7 @@ import Score from './screens/auth/crossing/score';
 import Average from './screens/auth/crossing/average';
 import Plans from './screens/auth/plans';
 import Partials from './screens/auth/partials/container';
+import League from './screens/auth/league';
 import Videos from './screens/auth/videos';
 import Contact from './screens/auth/contact';
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
     {
         path: "/auth/parciais",
         element: <Partials />,
+    },
+    {
+        path: "/auth/ligas",
+        element: <League />,
     },
     {
         path: "/auth/videos",

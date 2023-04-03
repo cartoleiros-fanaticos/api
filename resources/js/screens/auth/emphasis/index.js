@@ -48,27 +48,6 @@ function emphasis() {
     const component = () => (
         <Content>
             <Group>
-                <Title>Capitão Mais Escalados</Title>
-                <List>
-                    {
-                        data['Capitães'].map((e, i) =>
-                            <Item key={i}>
-                                <Position>{i + 1} º</Position>
-                                <Photo src={e.foto} />
-                                <Box>
-                                    <Text>{e.apelido}</Text>
-                                    <Text>{e.posicao}</Text>
-                                </Box>
-                                <Box>
-                                    <Text>{e.escalacoes}</Text>
-                                    <Text>Escalações</Text>
-                                </Box>
-                            </Item>
-                        )
-                    }
-                </List>
-            </Group>
-            <Group>
                 <Title>Jogadores Mais Escalados</Title>
                 <List>
                     {
@@ -89,6 +68,50 @@ function emphasis() {
                     }
                 </List>
             </Group>
+            <div>
+                <Group>
+                    <Title>Capitão Mais Escalados</Title>
+                    <List>
+                        {
+                            data['Capitães'].map((e, i) =>
+                                <Item key={i}>
+                                    <Position>{i + 1} º</Position>
+                                    <Photo src={e.foto} />
+                                    <Box>
+                                        <Text>{e.apelido}</Text>
+                                        <Text>{e.posicao}</Text>
+                                    </Box>
+                                    <Box>
+                                        <Text>{e.escalacoes}</Text>
+                                        <Text>Escalações</Text>
+                                    </Box>
+                                </Item>
+                            )
+                        }
+                    </List>
+                </Group>
+                <Group>
+                    <Title>Reservas Mais Escalados</Title>
+                    <List>
+                        {
+                            data['Reservas'].map((e, i) =>
+                                <Item key={i}>
+                                    <Position>{i + 1} º</Position>
+                                    <Photo src={e.foto} />
+                                    <Box>
+                                        <Text>{e.apelido}</Text>
+                                        <Text>{e.posicao}</Text>
+                                    </Box>
+                                    <Box>
+                                        <Text>{e.escalacoes}</Text>
+                                        <Text>Escalações</Text>
+                                    </Box>
+                                </Item>
+                            )
+                        }
+                    </List>
+                </Group>
+            </div>
         </Content>
     );
 

@@ -64,7 +64,8 @@ export const Content = styled.div`
     padding: 5px;
     min-height: 450px;
     margin: 5px;    
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &::-webkit-scrollbar-track {
         -webkit-box-shadow: inset 0 0 6px #000;

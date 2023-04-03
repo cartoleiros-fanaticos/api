@@ -3,21 +3,17 @@ import styled from 'styled-components';
 export const Content = styled.div`
     min-height: 600px;
     margin: 30px 0;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-column-gap: 35px;
 
-    @media screen and (max-width:900px){    
-        justify-content: center;
-        flex-direction: column;
+    @media screen and (max-width:900px){  
+        grid-template-columns: auto;
     }
 `;
 
 export const Group = styled.div`
-    width: 48%;
-
-    @media screen and (max-width:900px){    
-        width: 100%;
-    }
+    margin-bottom: 25px;
 `;
 
 export const Title = styled.strong`

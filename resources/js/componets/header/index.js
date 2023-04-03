@@ -169,12 +169,12 @@ function header() {
                             </NavLink>
                         </Item>
                     }
-                    <Item>
+                    {/* <Item>
                         <NavLink to="/auth/loja">
                             <Icon>shopping_cart</Icon>
                             LOJA
                         </NavLink>
-                    </Item>
+                    </Item> */}
                     <Item>
                         <NavLink to="/auth/destaques">
                             <Icon>trending_up</Icon>

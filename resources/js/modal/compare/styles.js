@@ -31,7 +31,7 @@ export const Name = styled.span`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: '../images/logo.png'
+    src: '../images/logo_preta.png'
 }))`
     width: 80px;
 `;

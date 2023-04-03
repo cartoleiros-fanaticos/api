@@ -38,8 +38,8 @@ return new class extends Migration
             $table->string('aproveitamento_fora_4')->nullable();
 
             $table->boolean('valida')->nullable();
-            $table->integer('placar_oficial_mandante')->nullable();
-            $table->integer('placar_oficial_visitante')->nullable();
+            $table->integer('placar_oficial_mandante')->default(0);
+            $table->integer('placar_oficial_visitante')->default(0);
             $table->timestamps();
         });
     }

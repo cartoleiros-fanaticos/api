@@ -4,14 +4,24 @@ export const Content = styled.div`
     margin: 25px 0;
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width:900px){  
+        flex-direction: column;
+    }
 `;
 
 export const Box = styled.div`
     width: 30%;
+
+    @media screen and (max-width:900px){ 
+        width: 100%;
+        margin-bottom: 15px;
+    }
 `;
 
 export const Title = styled.h3`
     display: block;
+    font-size: 0.9em;
 `;
 
 export const Label = styled.label`
@@ -31,6 +41,10 @@ export const Select = styled.select`
     border-bottom: solid thin #cccccc;
     color: #636363;
     background: none;
+
+    @media screen and (max-width:900px){ 
+        padding: 10px 5px;
+    }
 `;
 
 export const Option = styled.option`
@@ -45,6 +59,10 @@ export const Input = styled.input`
     border-bottom: solid thin #cccccc;
     color: #636363;
     background: none;
+
+    @media screen and (max-width:900px){ 
+        padding: 10px 5px;
+    }
 `;
 
 export const Button = styled.button`

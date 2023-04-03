@@ -131,7 +131,7 @@ export const Download = styled.a`
     color: #f1f1f1;
     text-decoration: none;
     font-size: 0.9em;
-    background: #23d18b;
+    background-color: #23d18b;
     transition-duration: 0.3s;
     cursor: pointer;
     &:hover {
