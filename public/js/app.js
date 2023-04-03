@@ -16207,7 +16207,7 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n  \n"])));
+var Container = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n"])));
 var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    width: 82%;\n    margin: 60px auto 0 auto;\n    padding: 20px 10px;\n    min-height: 600px;\n\n    @media screen and (max-width:900px){\n        width: 100%;\n    }\n"])));
 var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].header(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    padding: 10px;\n    width: 300px;\n    margin: auto;\n    border: solid 2px #F68D42;\n    border-radius: 0.3em;\n    font-size: 1.2em;\n    text-align: center;\n"])));
 
@@ -19898,9 +19898,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/helpers */ "./resources/js/utils/helpers.js");
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../utils/api */ "./resources/js/utils/api.js");
 /* harmony import */ var _componets_container__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../componets/container */ "./resources/js/componets/container/index.js");
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/lineup/styles.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _componets_loading__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../componets/loading */ "./resources/js/componets/loading/index.js");
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./styles */ "./resources/js/screens/auth/lineup/styles.js");
+/* harmony import */ var _utils_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../utils/styles */ "./resources/js/utils/styles.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return _typeof(key) === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return exports; }; var exports = {}, Op = Object.prototype, hasOwn = Op.hasOwnProperty, defineProperty = Object.defineProperty || function (obj, key, desc) { obj[key] = desc.value; }, $Symbol = "function" == typeof Symbol ? Symbol : {}, iteratorSymbol = $Symbol.iterator || "@@iterator", asyncIteratorSymbol = $Symbol.asyncIterator || "@@asyncIterator", toStringTagSymbol = $Symbol.toStringTag || "@@toStringTag"; function define(obj, key, value) { return Object.defineProperty(obj, key, { value: value, enumerable: !0, configurable: !0, writable: !0 }), obj[key]; } try { define({}, ""); } catch (err) { define = function define(obj, key, value) { return obj[key] = value; }; } function wrap(innerFn, outerFn, self, tryLocsList) { var protoGenerator = outerFn && outerFn.prototype instanceof Generator ? outerFn : Generator, generator = Object.create(protoGenerator.prototype), context = new Context(tryLocsList || []); return defineProperty(generator, "_invoke", { value: makeInvokeMethod(innerFn, self, context) }), generator; } function tryCatch(fn, obj, arg) { try { return { type: "normal", arg: fn.call(obj, arg) }; } catch (err) { return { type: "throw", arg: err }; } } exports.wrap = wrap; var ContinueSentinel = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var IteratorPrototype = {}; define(IteratorPrototype, iteratorSymbol, function () { return this; }); var getProto = Object.getPrototypeOf, NativeIteratorPrototype = getProto && getProto(getProto(values([]))); NativeIteratorPrototype && NativeIteratorPrototype !== Op && hasOwn.call(NativeIteratorPrototype, iteratorSymbol) && (IteratorPrototype = NativeIteratorPrototype); var Gp = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(IteratorPrototype); function defineIteratorMethods(prototype) { ["next", "throw", "return"].forEach(function (method) { define(prototype, method, function (arg) { return this._invoke(method, arg); }); }); } function AsyncIterator(generator, PromiseImpl) { function invoke(method, arg, resolve, reject) { var record = tryCatch(generator[method], generator, arg); if ("throw" !== record.type) { var result = record.arg, value = result.value; return value && "object" == _typeof(value) && hasOwn.call(value, "__await") ? PromiseImpl.resolve(value.__await).then(function (value) { invoke("next", value, resolve, reject); }, function (err) { invoke("throw", err, resolve, reject); }) : PromiseImpl.resolve(value).then(function (unwrapped) { result.value = unwrapped, resolve(result); }, function (error) { return invoke("throw", error, resolve, reject); }); } reject(record.arg); } var previousPromise; defineProperty(this, "_invoke", { value: function value(method, arg) { function callInvokeWithMethodAndArg() { return new PromiseImpl(function (resolve, reject) { invoke(method, arg, resolve, reject); }); } return previousPromise = previousPromise ? previousPromise.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(innerFn, self, context) { var state = "suspendedStart"; return function (method, arg) { if ("executing" === state) throw new Error("Generator is already running"); if ("completed" === state) { if ("throw" === method) throw arg; return doneResult(); } for (context.method = method, context.arg = arg;;) { var delegate = context.delegate; if (delegate) { var delegateResult = maybeInvokeDelegate(delegate, context); if (delegateResult) { if (delegateResult === ContinueSentinel) continue; return delegateResult; } } if ("next" === context.method) context.sent = context._sent = context.arg;else if ("throw" === context.method) { if ("suspendedStart" === state) throw state = "completed", context.arg; context.dispatchException(context.arg); } else "return" === context.method && context.abrupt("return", context.arg); state = "executing"; var record = tryCatch(innerFn, self, context); if ("normal" === record.type) { if (state = context.done ? "completed" : "suspendedYield", record.arg === ContinueSentinel) continue; return { value: record.arg, done: context.done }; } "throw" === record.type && (state = "completed", context.method = "throw", context.arg = record.arg); } }; } function maybeInvokeDelegate(delegate, context) { var methodName = context.method, method = delegate.iterator[methodName]; if (undefined === method) return context.delegate = null, "throw" === methodName && delegate.iterator["return"] && (context.method = "return", context.arg = undefined, maybeInvokeDelegate(delegate, context), "throw" === context.method) || "return" !== methodName && (context.method = "throw", context.arg = new TypeError("The iterator does not provide a '" + methodName + "' method")), ContinueSentinel; var record = tryCatch(method, delegate.iterator, context.arg); if ("throw" === record.type) return context.method = "throw", context.arg = record.arg, context.delegate = null, ContinueSentinel; var info = record.arg; return info ? info.done ? (context[delegate.resultName] = info.value, context.next = delegate.nextLoc, "return" !== context.method && (context.method = "next", context.arg = undefined), context.delegate = null, ContinueSentinel) : info : (context.method = "throw", context.arg = new TypeError("iterator result is not an object"), context.delegate = null, ContinueSentinel); } function pushTryEntry(locs) { var entry = { tryLoc: locs[0] }; 1 in locs && (entry.catchLoc = locs[1]), 2 in locs && (entry.finallyLoc = locs[2], entry.afterLoc = locs[3]), this.tryEntries.push(entry); } function resetTryEntry(entry) { var record = entry.completion || {}; record.type = "normal", delete record.arg, entry.completion = record; } function Context(tryLocsList) { this.tryEntries = [{ tryLoc: "root" }], tryLocsList.forEach(pushTryEntry, this), this.reset(!0); } function values(iterable) { if (iterable) { var iteratorMethod = iterable[iteratorSymbol]; if (iteratorMethod) return iteratorMethod.call(iterable); if ("function" == typeof iterable.next) return iterable; if (!isNaN(iterable.length)) { var i = -1, next = function next() { for (; ++i < iterable.length;) if (hasOwn.call(iterable, i)) return next.value = iterable[i], next.done = !1, next; return next.value = undefined, next.done = !0, next; }; return next.next = next; } } return { next: doneResult }; } function doneResult() { return { value: undefined, done: !0 }; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, defineProperty(Gp, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), defineProperty(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, toStringTagSymbol, "GeneratorFunction"), exports.isGeneratorFunction = function (genFun) { var ctor = "function" == typeof genFun && genFun.constructor; return !!ctor && (ctor === GeneratorFunction || "GeneratorFunction" === (ctor.displayName || ctor.name)); }, exports.mark = function (genFun) { return Object.setPrototypeOf ? Object.setPrototypeOf(genFun, GeneratorFunctionPrototype) : (genFun.__proto__ = GeneratorFunctionPrototype, define(genFun, toStringTagSymbol, "GeneratorFunction")), genFun.prototype = Object.create(Gp), genFun; }, exports.awrap = function (arg) { return { __await: arg }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, asyncIteratorSymbol, function () { return this; }), exports.AsyncIterator = AsyncIterator, exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) { void 0 === PromiseImpl && (PromiseImpl = Promise); var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl); return exports.isGeneratorFunction(outerFn) ? iter : iter.next().then(function (result) { return result.done ? result.value : iter.next(); }); }, defineIteratorMethods(Gp), define(Gp, toStringTagSymbol, "Generator"), define(Gp, iteratorSymbol, function () { return this; }), define(Gp, "toString", function () { return "[object Generator]"; }), exports.keys = function (val) { var object = Object(val), keys = []; for (var key in object) keys.push(key); return keys.reverse(), function next() { for (; keys.length;) { var key = keys.pop(); if (key in object) return next.value = key, next.done = !1, next; } return next.done = !0, next; }; }, exports.values = values, Context.prototype = { constructor: Context, reset: function reset(skipTempReset) { if (this.prev = 0, this.next = 0, this.sent = this._sent = undefined, this.done = !1, this.delegate = null, this.method = "next", this.arg = undefined, this.tryEntries.forEach(resetTryEntry), !skipTempReset) for (var name in this) "t" === name.charAt(0) && hasOwn.call(this, name) && !isNaN(+name.slice(1)) && (this[name] = undefined); }, stop: function stop() { this.done = !0; var rootRecord = this.tryEntries[0].completion; if ("throw" === rootRecord.type) throw rootRecord.arg; return this.rval; }, dispatchException: function dispatchException(exception) { if (this.done) throw exception; var context = this; function handle(loc, caught) { return record.type = "throw", record.arg = exception, context.next = loc, caught && (context.method = "next", context.arg = undefined), !!caught; } for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i], record = entry.completion; if ("root" === entry.tryLoc) return handle("end"); if (entry.tryLoc <= this.prev) { var hasCatch = hasOwn.call(entry, "catchLoc"), hasFinally = hasOwn.call(entry, "finallyLoc"); if (hasCatch && hasFinally) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } else if (hasCatch) { if (this.prev < entry.catchLoc) return handle(entry.catchLoc, !0); } else { if (!hasFinally) throw new Error("try statement without catch or finally"); if (this.prev < entry.finallyLoc) return handle(entry.finallyLoc); } } } }, abrupt: function abrupt(type, arg) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc <= this.prev && hasOwn.call(entry, "finallyLoc") && this.prev < entry.finallyLoc) { var finallyEntry = entry; break; } } finallyEntry && ("break" === type || "continue" === type) && finallyEntry.tryLoc <= arg && arg <= finallyEntry.finallyLoc && (finallyEntry = null); var record = finallyEntry ? finallyEntry.completion : {}; return record.type = type, record.arg = arg, finallyEntry ? (this.method = "next", this.next = finallyEntry.finallyLoc, ContinueSentinel) : this.complete(record); }, complete: function complete(record, afterLoc) { if ("throw" === record.type) throw record.arg; return "break" === record.type || "continue" === record.type ? this.next = record.arg : "return" === record.type ? (this.rval = this.arg = record.arg, this.method = "return", this.next = "end") : "normal" === record.type && afterLoc && (this.next = afterLoc), ContinueSentinel; }, finish: function finish(finallyLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.finallyLoc === finallyLoc) return this.complete(entry.completion, entry.afterLoc), resetTryEntry(entry), ContinueSentinel; } }, "catch": function _catch(tryLoc) { for (var i = this.tryEntries.length - 1; i >= 0; --i) { var entry = this.tryEntries[i]; if (entry.tryLoc === tryLoc) { var record = entry.completion; if ("throw" === record.type) { var thrown = record.arg; resetTryEntry(entry); } return thrown; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(iterable, resultName, nextLoc) { return this.delegate = { iterator: values(iterable), resultName: resultName, nextLoc: nextLoc }, "next" === this.method && (this.arg = undefined), ContinueSentinel; } }, exports; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -19918,16 +19925,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+
 function lineup() {
-  var round = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  var player = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState2 = _slicedToArray(_useState, 2),
     data = _useState2[0],
     sdata = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    loading_page = _useState4[0],
-    sloadingpage = _useState4[1];
+    loading = _useState4[0],
+    sloading = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState6 = _slicedToArray(_useState5, 2),
+    loading_page = _useState6[0],
+    sloadingpage = _useState6[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     getData();
   }, []);
@@ -19940,31 +19953,36 @@ function lineup() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            rdd = element.parentElement.querySelector('.current');
-            rodada_atual = rdd.innerText;
-            rdd.classList.remove('current');
-            box_view = 11;
-            box = 5;
-            box_min = 5;
-            box_max = 34;
-            width_box = 99.489;
-            if (window.innerWidth <= 900) {
-              box_view = 7;
-              box = 3;
-              box_min = 2;
-              box_max = 36;
-              width_box = (window.innerWidth - 20) / 7;
+            if (rodada > data.rodada_atual) {
+              (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.swal_warning)('Ainda não existe dados para essa rodada.');
+            } else {
+              rdd = element.parentElement.querySelector('.current');
+              rodada_atual = rdd.innerText;
+              rdd.classList.remove('current');
+              box_view = 11;
+              box = 5;
+              box_min = 5;
+              box_max = 34;
+              width_box = 100.398;
+              if (window.innerWidth <= 900) {
+                box_view = 7;
+                box = 3;
+                box_min = 2;
+                box_max = 36;
+                width_box = (window.innerWidth - 20) / 7;
+              }
+              if (rodada > box_min && rodada < box_max) {
+                calc = (rodada - box) * width_box - width_box;
+                element.parentElement.style.cssText = "\n                margin-left: -".concat(calc, "px;\n            ");
+              } else if (rodada_atual > box && rodada <= box) {
+                element.parentElement.style.cssText = "\n                margin-left: 0px;\n            ";
+              } else if (rodada >= box_max) {
+                element.parentElement.style.cssText = "\n                margin-left: -".concat((38 - box_view) * width_box, "px;\n            ");
+              }
+              element.classList.add('current');
+              getPlayers(rodada, data.time.time_id);
             }
-            if (rodada > box_min && rodada < box_max) {
-              calc = (rodada - box) * width_box - width_box;
-              element.parentElement.style.cssText = "\n                margin-left: -".concat(calc, "px;\n            ");
-            } else if (rodada_atual > box && rodada <= box) {
-              element.parentElement.style.cssText = "\n                margin-left: 0px;\n            ";
-            } else if (rodada >= box_max) {
-              element.parentElement.style.cssText = "\n                margin-left: -".concat((38 - box_view) * width_box, "px;\n            ");
-            }
-            element.classList.add('current');
-          case 11:
+          case 1:
           case "end":
             return _context.stop();
         }
@@ -19972,31 +19990,36 @@ function lineup() {
     }));
     return _getRound.apply(this, arguments);
   }
-  function getData() {
-    return _getData.apply(this, arguments);
+  function getPlayers(_x4, _x5) {
+    return _getPlayers.apply(this, arguments);
   }
-  function _getData() {
-    _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
-      var _yield$api$get, _data;
+  function _getPlayers() {
+    _getPlayers = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(rodada, time_id) {
+      var response;
       return _regeneratorRuntime().wrap(function _callee2$(_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            sloadingpage(true);
+            sloading(true);
             _context2.next = 4;
-            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("escalacao");
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("escalacao/".concat(time_id, "?rodada=").concat(rodada));
           case 4:
-            _yield$api$get = _context2.sent;
-            _data = _yield$api$get.data;
-            sdata(_data);
-            sloadingpage(false);
+            response = _context2.sent;
+            sdata(_objectSpread(_objectSpread({}, data), {}, {
+              time: response.data
+            }));
+            sloading(false);
+            if (window.innerWidth <= 900) window.scrollTo({
+              top: player.current.offsetTop - 56,
+              behavior: 'smooth'
+            });
             _context2.next = 14;
             break;
           case 10:
             _context2.prev = 10;
             _context2.t0 = _context2["catch"](0);
             (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context2.t0);
-            sloadingpage(false);
+            sloading(false);
           case 14:
             ;
           case 15:
@@ -20005,14 +20028,49 @@ function lineup() {
         }
       }, _callee2, null, [[0, 10]]);
     }));
+    return _getPlayers.apply(this, arguments);
+  }
+  function getData() {
+    return _getData.apply(this, arguments);
+  }
+  function _getData() {
+    _getData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+      var _yield$api$get, _data;
+      return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+        while (1) switch (_context3.prev = _context3.next) {
+          case 0:
+            _context3.prev = 0;
+            sloadingpage(true);
+            _context3.next = 4;
+            return _utils_api__WEBPACK_IMPORTED_MODULE_2__["default"].get("escalacao");
+          case 4:
+            _yield$api$get = _context3.sent;
+            _data = _yield$api$get.data;
+            sdata(_data);
+            sloadingpage(false);
+            _context3.next = 14;
+            break;
+          case 10:
+            _context3.prev = 10;
+            _context3.t0 = _context3["catch"](0);
+            (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.message)(_context3.t0);
+            sloadingpage(false);
+          case 14:
+            ;
+          case 15:
+          case "end":
+            return _context3.stop();
+        }
+      }, _callee3, null, [[0, 10]]);
+    }));
     return _getData.apply(this, arguments);
   }
   var component = function component() {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Content, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.ContainerRounds, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Rounds, {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Content, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.ContainerRounds, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Rounds, {
           children: data.rodadas.map(function (e) {
-            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Text, {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Round, {
               width: window.innerWidth,
               onClick: function onClick(event) {
                 return getRound(event.target, e);
@@ -20022,24 +20080,82 @@ function lineup() {
             }, e);
           })
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Teams, {
-        children: data.times.map(function (e) {
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Shield, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Teams, {
+        children: data.times.map(function (e, i) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Team, {
+            onClick: function onClick() {
+              return getPlayers(data.rodada_atual, e.time_id);
+            },
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Shield, {
               src: e.url_escudo_png
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Name, {
-              children: ["Nome: ", e.nome]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Patrimony, {
-              children: ["Patrim\xF4nio: ", e.patrimonio, "pts"]
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_4__.Score, {
-              children: ["Campeonato: ", e.pontos_campeonato, "pts"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Text, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Bold, {
+                children: "Nome:"
+              }), " ", e.nome]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Text, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Bold, {
+                children: "Patrim\xF4nio:"
+              }), " ", e.patrimonio, " pts"]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Text, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Bold, {
+                children: "Campeonato:"
+              }), " ", e.pontos_campeonato]
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Text, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Bold, {
+                children: "S\xF3cio:"
+              }), " ", e.socio]
             })]
-          });
+          }, i);
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_4__.Players, {})]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Players, {
+        ref: player,
+        children: loading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_componets_loading__WEBPACK_IMPORTED_MODULE_4__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+          children: [data.time ? data.time.rodadas.atletas.map(function (e, i) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Player, {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Captain, {
+                captain: data.time.rodadas.capitao_id === e.atleta_id,
+                children: "C"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Photo, {
+                src: e.foto
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.ContainerNamePosition, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Name, {
+                  children: "".concat(e.apelido, " ( ").concat(e.abreviacao_clube, " )")
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Position, {
+                  children: e.posicao
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Price, {
+                children: ["C$ ", (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(e.preco_num)]
+              })]
+            }, i);
+          }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_utils_styles__WEBPACK_IMPORTED_MODULE_6__.Message, {
+            children: "Selecione um time"
+          }), data.time && data.time.rodadas.reservas && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.Fragment, {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Title, {
+              children: "RESERVAS"
+            }), data.time.rodadas.reservas.map(function (e, i) {
+              return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Player, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Captain, {
+                  captain: data.time.rodadas.capitao_id === e.atleta_id,
+                  children: "C"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Photo, {
+                  src: e.foto
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.ContainerNamePosition, {
+                  children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Name, {
+                    children: "".concat(e.apelido, " ( ").concat(e.abreviacao_clube, " )")
+                  }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_styles__WEBPACK_IMPORTED_MODULE_5__.Position, {
+                    children: e.posicao
+                  })]
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_styles__WEBPACK_IMPORTED_MODULE_5__.Price, {
+                  children: ["C$ ", (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_1__.amount)(e.preco_num)]
+                })]
+              }, i);
+            })]
+          })]
+        })
+      })]
     });
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_componets_container__WEBPACK_IMPORTED_MODULE_3__["default"], {
     title: "DICAS",
     Component: component,
     loading: loading_page
@@ -20058,34 +20174,53 @@ function lineup() {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Bold": () => (/* binding */ Bold),
+/* harmony export */   "Captain": () => (/* binding */ Captain),
+/* harmony export */   "ContainerNamePosition": () => (/* binding */ ContainerNamePosition),
 /* harmony export */   "ContainerRounds": () => (/* binding */ ContainerRounds),
 /* harmony export */   "Content": () => (/* binding */ Content),
 /* harmony export */   "Name": () => (/* binding */ Name),
-/* harmony export */   "Patrimony": () => (/* binding */ Patrimony),
+/* harmony export */   "Photo": () => (/* binding */ Photo),
+/* harmony export */   "Player": () => (/* binding */ Player),
 /* harmony export */   "Players": () => (/* binding */ Players),
+/* harmony export */   "Position": () => (/* binding */ Position),
+/* harmony export */   "Price": () => (/* binding */ Price),
+/* harmony export */   "Round": () => (/* binding */ Round),
 /* harmony export */   "Rounds": () => (/* binding */ Rounds),
-/* harmony export */   "Score": () => (/* binding */ Score),
 /* harmony export */   "Shield": () => (/* binding */ Shield),
+/* harmony export */   "Team": () => (/* binding */ Team),
 /* harmony export */   "Teams": () => (/* binding */ Teams),
-/* harmony export */   "Text": () => (/* binding */ Text)
+/* harmony export */   "Text": () => (/* binding */ Text),
+/* harmony export */   "Title": () => (/* binding */ Title)
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
-var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10;
+var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5, _templateObject6, _templateObject7, _templateObject8, _templateObject9, _templateObject10, _templateObject11, _templateObject12, _templateObject13, _templateObject14, _templateObject15, _templateObject16, _templateObject17, _templateObject18;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: grid;\n    grid-template-columns: 30% 70%;\n    grid-gap: 10px;\n"])));
-var ContainerRounds = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    width: 100%;\n    overflow: hidden;\n    position: relative;\n    height: 60px;\n    padding: 10px 0;\n    grid-column: 1/3; \n"])));
+var Content = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: grid;\n    grid-template-columns: 30% 70%;\n    grid-gap: 10px;\n    user-select: none;\n\n    @media screen and (max-width:900px){  \n        grid-template-columns: auto;\n    } \n"])));
+var ContainerRounds = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    width: 100%;\n    overflow: hidden;\n    position: relative;\n    height: 60px;\n    padding: 10px 0;\n    grid-column: 1/3; \n\n    @media screen and (max-width:900px){ \n        grid-column: 1/1;\n    } \n"])));
 var Rounds = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    display: flex;\n    justify-content: space-between;\n    position: absolute;\n    transition-duration: 0.5s;\n"])));
-var Text = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    width: 99.489px;\n    height: 40px;\n    font-size: 0.9em;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: solid thin #f1f1f1;\n    color: #ccc;\n    font-weight: bold;\n    cursor: pointer;\n    transition-duration: 0.3s;\n    background-color: #fff;\n\n    &.current {\n        color: #fff;\n        background-color: #F68D42;\n        border: solid thin #F68D42;\n    }\n\n    &:hover {\n        transform: scale(1.2);\n        color: #fff;\n        background-color: #F68D42;\n        border: solid thin #F68D42;\n    }\n\n    @media screen and (max-width:900px){\n        width: ", "px;\n    }\n"])), function (_ref) {
+var Round = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    width: 100.398px;\n    height: 40px;\n    font-size: 0.9em;\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    border: solid thin #f1f1f1;\n    color: #ccc;\n    font-weight: bold;\n    cursor: pointer;\n    transition-duration: 0.3s;\n    background-color: #fff;\n\n    &.current {\n        color: #fff;\n        background-color: #F68D42;\n        border: solid thin #F68D42;\n    }\n\n    &:hover {\n        transform: scale(1.2);\n        color: #fff;\n        background-color: #F68D42;\n        border: solid thin #F68D42;\n    }\n\n    @media screen and (max-width:900px){\n        width: ", "px;\n    }\n"])), function (_ref) {
   var width = _ref.width;
   return (width - 20) / 7;
 });
-var Teams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["  \n    display: grid;\n    grid-template-columns: 35% 65%;\n    border: solid thin #f1f1f1;\n"])));
-var Shield = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["\n    width: 100px;\n    grid-row: 1/4; \n"])));
-var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n\n\n"])));
-var Patrimony = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n\n\n"])));
-var Score = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n\n\n"])));
-var Players = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["\n    \n    padding: 10px;\n"])));
+var Teams = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["  \n    display: flex;\n    flex-direction: column;\n"])));
+var Team = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject6 || (_templateObject6 = _taggedTemplateLiteral(["  \n    display: grid;\n    grid-template-columns: 25% auto;\n    border: solid thin #f1f1f1;    \n    padding: 10px;\n    cursor: pointer;\n    transition-duration: 0.3s;\n\n    @media screen and (max-width:900px){ \n        grid-template-columns: 30% auto;\n    } \n\n    &:hover {\n        box-shadow: 0 0 10px 5px #f1f1f1;\n    }\n\n    .active {\n        box-shadow: 0 0 10px 5px #f1f1f1;\n    }\n"])));
+var Shield = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject7 || (_templateObject7 = _taggedTemplateLiteral(["\n    width: 60px;\n    grid-row: 1/5; \n    display: block;\n    margin: auto;\n"])));
+var Text = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject8 || (_templateObject8 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n    margin-left: 5px;\n"])));
+var Bold = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject9 || (_templateObject9 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n"])));
+var Players = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject10 || (_templateObject10 = _taggedTemplateLiteral(["    \n    padding: 0 10px;\n    min-height: 400px;\n    width: 100%;\n    position: relative;\n"])));
+var Player = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject11 || (_templateObject11 = _taggedTemplateLiteral(["\n    display: flex;\n    align-items: center;\n    display: flex;\n    padding: 7px;\n    border-bottom: solid thin #cccccc;\n    display: grid;\n    grid-template-columns: 35px 35px 200px auto;\n"])));
+var Captain = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].a(_templateObject12 || (_templateObject12 = _taggedTemplateLiteral(["\n    font-weight: bold;\n    width: 20px;\n    height: 20px;\n    text-align: center;\n    padding: 3px 0;\n    border-radius: 50%;\n    color: #ffffff;\n    font-size: 0.8em;\n    margin-right: 15px;\n    background-color: ", ";\n"])), function (_ref2) {
+  var captain = _ref2.captain;
+  return captain ? '#F68D42' : '#CCC';
+});
+var Photo = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].img(_templateObject13 || (_templateObject13 = _taggedTemplateLiteral(["\n    width: 35px;\n"])));
+var ContainerNamePosition = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject14 || (_templateObject14 = _taggedTemplateLiteral(["\n    display: flex;\n    flex-direction: column;\n"])));
+var Name = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject15 || (_templateObject15 = _taggedTemplateLiteral(["\n    font-size: 0.9em;\n    margin: 0 10px;\n"])));
+var Position = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].span(_templateObject16 || (_templateObject16 = _taggedTemplateLiteral(["\n    color: #F68D42;\n    margin: 0 10px;\n    font-size: 0.9em;\n"])));
+var Price = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].strong(_templateObject17 || (_templateObject17 = _taggedTemplateLiteral(["\n    font-size: 0.8em;\n    margin: 0 10px;\n    text-align: right;\n"])));
+var Title = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].h3(_templateObject18 || (_templateObject18 = _taggedTemplateLiteral(["\n    padding: 5px;\n    margin: 15px auto 10px auto;\n    border-radius: 0.3em;\n    border: solid 2px #000000;\n    text-align: center;\n    font-size: 0.8em;\n    display: block;\n    width: 100%;\n    font-weight: 500;\n"])));
 
 /***/ }),
 

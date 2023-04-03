@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Atletas;
 use App\Models\EscalacaoAtletas;
 use App\Models\EscalacaoRodadas;
 use App\Models\EscalacaoTimes;
@@ -99,6 +100,7 @@ class EscalacaoController extends Controller
 
                 EscalacaoAtletas::create([
                     'atleta_id' => $val['atleta_id'],
+                    'preco_num' => $val['preco_num'],
                     'rodada_time_id' => $time['rodada_time_id'],
                     'escalacao_rodadas_id' => $escalacao_rodadas->id,
                 ]);
@@ -111,6 +113,7 @@ class EscalacaoController extends Controller
 
                     EscalacaoAtletas::create([
                         'atleta_id' => $val['atleta_id'],
+                        'preco_num' => $val['preco_num'],
                         'rodada_time_id' => $time['rodada_time_id'],
                         'escalacao_rodadas_id' => $escalacao_rodadas->id,
                         'titular' => 'Não'
@@ -162,10 +165,15 @@ class EscalacaoController extends Controller
 
                 'rodadas.atletas' => function ($q) use ($rodada) {
                     $q->where('rodada_time_id', $rodada);
+                },
+
+                'rodadas.reservas' => function ($q) use ($rodada) {
+                    $q->where('rodada_time_id', $rodada);
                 }
             ]
         )
-            ->find($id);
+            ->where('time_id', $id)
+            ->first();
 
         return response()->json($response);
     }
