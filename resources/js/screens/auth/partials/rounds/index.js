@@ -18,7 +18,7 @@ import {
 
 import Loading from '../../../../componets/loading';
 
-function rounds({ round }) {
+function rounds({ data: { rodada } }) {
 
     const [modal, smodal] = useState(false);
 

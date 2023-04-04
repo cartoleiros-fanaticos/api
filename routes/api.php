@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\EscalacaoController;
+use App\Http\Controllers\EstatisticasController;
 use App\Http\Controllers\ParciaisController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
@@ -43,6 +44,9 @@ Route::group([
 
     Route::get('parciais/atletas', [ParciaisController::class, 'parciais_atletas']);
     Route::get('parciais/rodadas', [ParciaisController::class, 'parciais_rodadas']);
+
+    Route::get('estatisticas/time/{id}', [EstatisticasController::class, 'time']);
+    Route::get('estatisticas/times', [EstatisticasController::class, 'times']);
 
     Route::get('compare/atletas', [AtletasController::class, 'compare']);
     Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);

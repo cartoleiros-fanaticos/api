@@ -21,7 +21,7 @@ return new class extends Migration
             $table->float('pontos_campeonato')->default(0);
             $table->integer('time_id')->unique();
             $table->string('url_escudo_png');
-            $table->enum('socio', [ 'Sim', 'Não' ])->default('Não');
+            $table->boolean('assinante')->default(false);
             $table->timestamps();
         });
     }

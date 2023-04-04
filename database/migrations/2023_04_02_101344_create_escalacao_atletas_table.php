@@ -24,7 +24,6 @@ return new class extends Migration
                 ->constrained('escalacao_rodadas')
                 ->onDelete('cascade');
 
-
             $table->timestamps();
         });
 

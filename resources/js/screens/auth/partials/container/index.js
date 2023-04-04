@@ -6,6 +6,11 @@ import api from '../../../../utils/api';
 import Container from '../../../../componets/container';
 import Player from '../player';
 import Rounds from '../rounds';
+import Statistics from '../statistics';
+
+import Modal from '../../../../componets/modal';
+import ModalTeams from '../../../../modal/teams';
+
 
 import {
     Content,
@@ -23,7 +28,12 @@ function partials() {
 
     const [tab, stab] = useState('players');
     const [data, sdata] = useState({});
+
     const [round, sround] = useState('');
+    const [teams_id, steamid] = useState();
+    const [name_team, snameteam] = useState('');
+
+    const [modal, smodal] = useState(false);
 
     const [loading_page, sloadingpage] = useState(true);
 
@@ -68,8 +78,17 @@ function partials() {
                 <Box>
                     <Title>Estatística do time</Title>
                     <Label>
-                        <Input placeholder="Nome do time" />
-                        <Button onClick={() => { }}>OK</Button>
+                        <Input placeholder="Nome do time" type="search" onKeyUp={(e) => {
+
+                            if (e.target.value && e.key === 'Enter') {
+                                smodal(true);
+                                snameteam(e.target.value);
+                            }
+
+                        }} onChange={(e) => snameteam(e.target.value)} value={name_team} />
+                        <Button onClick={() => {
+                            smodal(true)
+                        }}>OK</Button>
                         <Teams>
 
                         </Teams>
@@ -84,16 +103,35 @@ function partials() {
                 </Box>
             </Content>
             {tab === 'players' && <Player data={data} />}
-            {tab === 'rounds' && <Rounds round={round} />}
+            {tab === 'rounds' && <Rounds data={data} />}
+            {tab === 'statistics' && <Statistics data={{ teams_id }} />}
         </>
     );
 
     return (
-        <Container
-            title='PARCIAIS AO VIVO'
-            Component={component}
-            loading={loading_page}
-        />
+        <>
+            <Container
+                title='PARCIAIS AO VIVO'
+                Component={component}
+                loading={loading_page}
+            />
+            {
+                modal &&
+                <Modal
+                    icon="list"
+                    title="Lista times do cartola"
+                    modal={modal}
+                    smodal={smodal}
+                    data={{ name_team }}
+                    Component={ModalTeams}
+                    fnc={(teams_id) => {
+                        stab('statistics');
+                        steamid(teams_id);
+                    }}
+                    height='400px'
+                />
+            }
+        </>
     );
 }
 

@@ -13,7 +13,7 @@ import {
     Content,
 } from './styles';
 
-function modal({ title, icon, Component, modal, smodal, data, loading, fun = () => {}, width = '40%', height = 'auto', marginLeft = '-20%' }) {
+function modal({ title, icon, Component, modal, smodal, data, loading, fnc = () => {}, width = '40%', height = 'auto', marginLeft = '-20%' }) {
         
     const { innerWidth } = window;
 
@@ -81,7 +81,7 @@ function modal({ title, icon, Component, modal, smodal, data, loading, fun = () 
                             <Component
                                 data={data}
                                 smodal={smodal}
-                                compare={fun}
+                                fnc={fnc}
                             />
                     }
                 </Content>

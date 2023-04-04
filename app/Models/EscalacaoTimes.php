@@ -9,7 +9,7 @@ class EscalacaoTimes extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'id', 'temporada', 'nome', 'slug', 'patrimonio', 'time_id', 'pontos_campeonato', 'url_escudo_png', 'socio' ];
+    protected $fillable = [ 'id', 'temporada', 'nome', 'slug', 'patrimonio', 'time_id', 'pontos_campeonato', 'url_escudo_png', 'assinante' ];
 
     // public function newQuery()
     // {
