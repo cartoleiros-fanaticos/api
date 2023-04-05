@@ -1,14 +1,147 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-    position: relative;
-    min-height: 500px;
+export const Label = styled.label`
     display: flex;
     justify-content: space-between;
+    padding: 10px;
+    border: solid thin #F68D42;
+    border-radius: 0.3em;
+    position: relative;
+    grid-column: 1/3;
+    width: 50%;
+    margin: 20px auto;    
+
+    @media screen and (max-width:900px){
+		width: 100%;
+        padding: 5px;
+    }
+`;
+
+export const Input = styled.input`
+    width: 80%;
+    outline: none;
+    padding: 5px;
+    border: none;
+    border-bottom: solid thin #cccccc;
+    color: #636363;
+    background: none;
+
+    @media screen and (max-width:900px){ 
+        padding: 10px 5px;
+    }
+`;
+
+export const Button = styled.button`
+    width: 15%;
+    border: none;
+    background: #F68D42;
+    color: #f1f1f1;
+    cursor: pointer;
+    outline: none;
+`;
+
+export const Teams = styled.div`
+    position: absolute;
+    visibility: hidden;
+    width: 97%;
+    background-color: #ffffff;
+    top: 40px;
+    height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 25;
+    transition-duration: 0.5s;
+    border: solid thin #ccc;
+
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #000;
+        background-color: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar {
+        width: 7px;
+        background-color: #000;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #000;
+    }
+`;
+
+
+export const Team = styled.div`
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    border-bottom: solid thin #f1f1f1;
+    padding: 10px 5px; 
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+
+    &:hover {
+        background-color: #f1f1f1;
+    }
+`;
+
+export const Description = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+
+    display: grid;
+    grid-template-columns: 26px 95%;
+    grid-column-gap: 10px;
+`;
+
+export const Shield = styled.img`
+    width: 26px;
+    grid-row: 1/3;
+`;
+
+export const NameTeam = styled.strong`
+    color: #666666;
+    font-size: 0.9em;
+    text-align: left;
+`;
+
+export const NamePlayer = styled.span`
+    color: #666666;
+    font-size: 0.7em;
+    text-align: left;
+`;
+
+export const Remove = styled.span`
+    color: red;
+    width: 20%;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-size: 0.8em;
+    z-index: 50;
 `;
 
 export const Content = styled.div`
-    width: 49%;
+    display: flex;
+    justify-content: space-between;  
+    position: relative;
+    min-height: 500px; 
+
+    @media screen and (max-width:900px){
+        flex-direction: column;
+        margin-bottom: 25px;
+        min-height: 300px; 
+    }
+`;
+
+export const Box = styled.div`
+    width: 49%;  
+
+    @media screen and (max-width:900px){
+        width: 100%;
+    }
 `;
 
 export const Fieldset = styled.fieldset`
@@ -53,7 +186,7 @@ export const Value = styled.span`
     margin: 5px auto;
 `;
 
-export const Label = styled.small`
+export const Text = styled.small`
     color: #636363;
     font-size: 0.8em;
 `;
@@ -69,7 +202,7 @@ export const Table = styled.table.attrs(() => ({
 
 }))`
     width: 100%;
-              font-size: 0.8em;
+    font-size: 0.8em;
 `;
 
 export const Thead = styled.thead`

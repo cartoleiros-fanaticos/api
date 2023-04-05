@@ -36,7 +36,7 @@ export const Screen = styled.div`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: '../images/favicon.png'
+    src: '../../images/favicon.png'
 }))`
     height: 33px;     
 
@@ -121,9 +121,15 @@ export const Item = styled.li`
     position: relative;
     padding: 5px 0;
 
-    &:hover ul {
+    &:hover ul.cruzamento {
         visibility: visible;
         height: 110px;
+        opacity: 1;
+    }
+
+    &:hover ul.parciais {
+        visibility: visible;
+        height: 150px;
         opacity: 1;
     }
 

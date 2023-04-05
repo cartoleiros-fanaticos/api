@@ -31,6 +31,7 @@ export const Label = styled.label`
     border: solid thin #F68D42;
     border-radius: 0.3em;
     margin-top: 5px;
+    position: relative;
 `;
 
 export const Select = styled.select`
@@ -76,18 +77,85 @@ export const Button = styled.button`
 
 export const Teams = styled.div`
     position: absolute;
-    border: solid thin #f1f1f1;
-    background: #ffffff;
-    padding: 5px;
-    left: 50%;
-    margin-left: -20%;
-    width: 40%;
-    max-height: 350px;
-    z-index: 100;
-    top: -500px;
-    transition-duration: 0.3s;
-    opacity: 0;
+    visibility: hidden;
+    width: 97%;
+    background-color: #ffffff;
+    top: 40px;
+    height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 25;
+    transition-duration: 0.5s;
+    border: solid thin #ccc;
 
+    &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #000;
+        background-color: #f1f1f1;
+    }
+
+    &::-webkit-scrollbar {
+        width: 7px;
+        background-color: #000;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: #000;
+    }
+`;
+
+
+export const Team = styled.div`
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    border-bottom: solid thin #f1f1f1;
+    padding: 10px 5px; 
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+
+    &:hover {
+        background-color: #f1f1f1;
+    }
+`;
+
+export const Description = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+
+    display: grid;
+    grid-template-columns: 26px 95%;
+    grid-column-gap: 10px;
+`;
+
+export const Shield = styled.img`
+    width: 26px;
+    grid-row: 1/3;
+`;
+
+export const NameTeam = styled.strong`
+    color: #666666;
+    font-size: 0.9em;
+    text-align: left;
+`;
+
+export const Name = styled.span`
+    color: #666666;
+    font-size: 0.7em;
+    text-align: left;
+`;
+
+export const Remove = styled.span`
+    color: red;
+    width: 20%;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    font-size: 0.8em;
+    z-index: 50;
 `;
 
 

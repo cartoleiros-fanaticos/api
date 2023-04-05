@@ -7,7 +7,7 @@ import { amount, message, swal_success } from '../../utils/helpers';
 import api from '../../utils/api';
 
 import { useNavigate } from "react-router-dom";
-    
+
 import {
     Container,
     Screen,
@@ -84,7 +84,7 @@ function header() {
         try {
 
             await api.post('logout', {});
-            
+
             localStorage.removeItem('token');
             localStorage.removeItem('user');
 
@@ -121,7 +121,7 @@ function header() {
                             <Icon>assessment</Icon>
                             CRUZAMENTOS
                         </ButtonLink>
-                        <SubItem>
+                        <SubItem className='cruzamento'>
                             <Item>
                                 <NavLink to="/auth/cruzamento-scouts">
                                     <Icon>assessment</Icon>
@@ -143,10 +143,36 @@ function header() {
                         </SubItem>
                     </Item>
                     <Item>
-                        <NavLink to="/auth/parciais">
+                        <ButtonLink>
                             <Icon>directions_run</Icon>
                             PARCIAIS
-                        </NavLink>
+                        </ButtonLink>
+                        <SubItem className='parciais'>
+                            <Item>
+                                <NavLink to="/auth/parciais/jogadores">
+                                    <Icon>directions_run</Icon>
+                                    PARCIAIS JOGADORES
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/parciais/clubes">
+                                    <Icon>security</Icon>
+                                    PARCIAIS CLUBES
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/parciais/times">
+                                    <Icon>person</Icon>
+                                    PARCIAIS TIMES
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/parciais/ligas">
+                                    <Icon>groups</Icon>
+                                    PARCIAIS LIGAS
+                                </NavLink>
+                            </Item>
+                        </SubItem>
                     </Item>
                     <Item>
                         <NavLink to="/auth/atletas">

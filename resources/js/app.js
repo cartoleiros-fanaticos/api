@@ -17,10 +17,12 @@ import Scouts from './screens/auth/crossing/scouts';
 import Score from './screens/auth/crossing/score';
 import Average from './screens/auth/crossing/average';
 import Plans from './screens/auth/plans';
-import Partials from './screens/auth/partials/container';
 import League from './screens/auth/league';
 import Videos from './screens/auth/videos';
 import Contact from './screens/auth/contact';
+import Players from './screens/auth/partials/player';
+import Rounds from './screens/auth/partials/rounds';
+import Statistics from './screens/auth/partials/statistics';
 
 const router = createBrowserRouter([
     {
@@ -60,8 +62,16 @@ const router = createBrowserRouter([
         element: <Emphasis />,
     },
     {
-        path: "/auth/parciais",
-        element: <Partials />,
+        path: "/auth/parciais/jogadores",
+        element: <Players />,
+    },
+    {
+        path: "/auth/parciais/clubes",
+        element: <Rounds />,
+    },
+    {
+        path: "/auth/parciais/times",
+        element: <Statistics />,
     },
     {
         path: "/auth/ligas",

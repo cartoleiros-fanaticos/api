@@ -43,13 +43,13 @@ function footer() {
         </Item>
         <Item>
           <Items>
-            <Image src="../images/baixe-aplicativo.png" />
+            <Image src="../../images/baixe-aplicativo.png" />
             <Label>BAIXE O APLICATIVO</Label>
             <Description>O Cartoleiro com você onde estiver</Description>
             <Link href="javascript:void(0)">Play Store</Link> <Link href="javascript:void(0)">Apple Store</Link>
           </Items>
           <Items>
-            <Image src="../images/tornar-socio.png" />
+            <Image src="../../images/tornar-socio.png" />
             <Label>TORNE-SE SÓCIO</Label>
             <Description>O Cartoleiro com você onde estiver</Description>
             <Link href="javascript:void(0)">Ver Planos</Link>

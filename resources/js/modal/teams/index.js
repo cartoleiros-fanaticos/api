@@ -9,15 +9,13 @@ import Loading from '../../componets/loading';
 
 import {
     Container,
-    Title,
     Team,
     Shield,
     NameTeam,
-    Name,
-    Remove
+    Name
 } from './styles';
 
-function teams({ data: { name_team }, fnc, smodal }) {
+function teams({ data: { value }, fnc, smodal }) {
 
     let teams = localStorage.getItem('favorite_teams');
     teams = teams ? JSON.parse(teams) : [];
@@ -35,7 +33,7 @@ function teams({ data: { name_team }, fnc, smodal }) {
 
             sloading(true);
 
-            const { data } = await api.get(`estatisticas/times?nome_time=${name_team}`);
+            const { data } = await api.get(`estatisticas/times?nome_time=${value}`);
 
             sdata(data);
             sloading(false);
@@ -47,15 +45,6 @@ function teams({ data: { name_team }, fnc, smodal }) {
 
     }
 
-    function remove_favorite(item) {
-        // let team = teams.find(e => item.nome === e.nome );
-        // console.log(team);
-
-        teams.splice(teams.indexOf(item));
-
-        console.log(teams, teams.indexOf(item));
-    }
-
     return (
         <Container>
             {
@@ -64,65 +53,35 @@ function teams({ data: { name_team }, fnc, smodal }) {
                     :
                     <>
                         {
-                            teams.length ?
-                                <>
-                                    <Title>Times favoritos</Title>
-                                    {
-                                        teams.map((e, i) =>
-                                            <Team onClick={() => {
-
-                                                smodal(false);
-                                                fnc(e.time_id)
-
-                                            }} key={i}>
-                                                <Shield src={e.url_escudo_png} />
-                                                <NameTeam>{e.nome}</NameTeam>
-                                                <Name>{e.nome_cartola}</Name>
-                                                <Remove onClick={() => remove_favorite(e)}>x</Remove>
-                                            </Team>
-                                        )
-                                    }
-                                </>
-                                :
-                                <></>
-                        }
-                        {
                             data.length
                                 ?
-                                <>
-                                    <Title>Times pesquisados</Title>
-                                    {
-                                        data.map((e, i) =>
-                                            <Team onClick={() => {
+                                data.map((e, i) =>
+                                    <Team onClick={() => {
 
-                                                const team = teams.find(i => i.nome === e.nome);
+                                        const team = teams.find(i => i.nome === e.nome);
 
-                                                console.log(team);
+                                        if (!team) {
 
-                                                if (!team) {
+                                            teams.push({
+                                                time_id: e.time_id,
+                                                url_escudo_png: e.url_escudo_png,
+                                                nome: e.nome,
+                                                nome_cartola: e.nome_cartola
+                                            });
 
-                                                    teams.push({
-                                                        time_id: e.time_id,
-                                                        url_escudo_png: e.url_escudo_png,
-                                                        nome: e.nome,
-                                                        nome_cartola: e.nome_cartola
-                                                    });
+                                            localStorage.setItem('favorite_teams', JSON.stringify(teams));
 
-                                                    localStorage.setItem('favorite_teams', JSON.stringify(teams));
+                                        }
 
-                                                }
+                                        smodal(false);
+                                        fnc(e.time_id)
 
-                                                smodal(false);
-                                                fnc(e.time_id)
-
-                                            }} key={i}>
-                                                <Shield src={e.url_escudo_png} />
-                                                <NameTeam>{e.nome}</NameTeam>
-                                                <Name>{e.nome_cartola}</Name>
-                                            </Team>
-                                        )
-                                    }
-                                </>
+                                    }} key={i}>
+                                        <Shield src={e.url_escudo_png} />
+                                        <NameTeam>{e.nome}</NameTeam>
+                                        <Name>{e.nome_cartola}</Name>
+                                    </Team>
+                                )
                                 :
                                 <Message>Nenhum time encontrado.</Message>
                         }

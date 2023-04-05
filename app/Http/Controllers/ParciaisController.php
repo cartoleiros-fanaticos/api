@@ -65,18 +65,21 @@ class ParciaisController extends Controller
 
     public function parciais_rodadas(Request $request)
     {
+        $rodadas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38];
+
         $game = Game::first();
 
-        $rodadas = Partidas::select('clube_casa_id', 'clube_visitante_id', 'placar_oficial_mandante', 'placar_oficial_visitante')
+        $partidas = Partidas::select('clube_casa_id', 'clube_visitante_id', 'placar_oficial_mandante', 'placar_oficial_visitante')
             ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
             ->get();
 
         $clubes = Clubes::get()->keyBy('id');
 
         return response()->json([
-            'game' => $game,
-            'rodadas' => $rodadas,
+            'rodada_atual' => $game->rodada_atual,
+            'partidas' => $partidas,
             'clubes' => $clubes,
+            'rodadas' => $rodadas
         ]);
     }
 }

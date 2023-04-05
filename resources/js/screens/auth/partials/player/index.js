@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { amount } from '../../../../utils/helpers';
+import { amount, message } from '../../../../utils/helpers';
+import api from '../../../../utils/api';
+
+import Container from '../../../../componets/container';
 
 import {
-    Container,
+    Content,
     List,
     Item,
     Photo,
@@ -17,9 +20,35 @@ import {
 
 import { Message } from '../../../../utils/styles';
 
-function player({ data }) {
-    return (
-        <Container>
+function player() {
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+    const [data, sdata] = useState(data);
+    const [loading_page, sloadingpage] = useState(true);
+
+    async function getData() {
+
+        try {
+
+            sloadingpage(true);
+
+            const { data } = await api.get(`parciais/atletas`);
+
+            sdata(data);
+            sloadingpage(false);
+
+        } catch (e) {
+            message(e);
+            sloadingpage(false);
+        };
+
+    }
+    
+    const component = () => (
+        <Content>
             {
                 data.atletas.length
                     ?
@@ -53,7 +82,15 @@ function player({ data }) {
                     <Message>Nenhum registro encontrado.</Message>
             }
 
-        </Container>
+        </Content>
+    );    
+
+    return (
+        <Container
+            title='Parciais jogadores'
+            Component={component}
+            loading={loading_page}
+        />
     );
 }
 
