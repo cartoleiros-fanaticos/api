@@ -171,102 +171,109 @@ class EstatisticasController extends Controller
                 ->where('times_cartolas_id', $time_cartola->id)
                 ->get();
 
-            $geral = [
-                'pontos_campeonato' => $time_cartola->pontos_campeonato,
-                'media' => $time_cartola->pontos_campeonato / $times_cartola->count(),
-                'patrimonio' => $time_cartola->patrimonio,
-            ];
-
-            $maior_pontuacao = $times_cartola->max('pontos');
-            $menor_pontuacao = $times_cartola->min('pontos');
-
-            $destaques = [
-                'maior_pontuacao' => $maior_pontuacao,
-                'rodada_maior_pontuacao' => $times_cartola->where('pontos', $maior_pontuacao)->first()->rodada_time_id,
-                'menor_pontuacao' => $menor_pontuacao,
-                'rodada_menor_pontuacao' => $times_cartola->where('pontos', $menor_pontuacao)->first()->rodada_time_id,
-            ];
-
-            $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'pontos_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
-                ->join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
-                ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
-                ->join('posicoes', 'posicao_id', 'posicoes.id')
-                ->where('times_cartolas_id', $time_cartola->id)
-                ->where('titular', 'Sim')
-                ->get();
-
-            $maior_pontuacao = $times_cartola->max('pontos_num');
-            $menor_pontuacao = $times_cartola->min('pontos_num');
-
-            $maior_e_menor = [
-                'maior_pontuacao' => $atletas->where('pontos_num', $maior_pontuacao)->first() ?? 0,
-                'menor_pontuacao' => $atletas->where('pontos_num', $menor_pontuacao)->first() ?? 0,
-            ];
-
+            $geral = COLLECT([]);
+            $maior_e_menor = COLLECT([]);
+            $destaques = COLLECT([]);
             $variacao = COLLECT([]);
-
-            $atletas = COLLECT([
-                [
-                    'rodada_time_id' => 1,
-                    'apelido' => 'Wedson',
-                    'foto' => 'image.jpg',
-                    'atleta_id' => 1,
-                    'pontos_num' => 1,
-                    'variacao_num' => 1,
-                    'capitao_id' => 2,
-                    'posicao_id' => 5,
-                    'clube_id' => 262,
-                ],
-                [
-                    'rodada_time_id' => 1,
-                    'apelido' => 'Cândido',
-                    'foto' => 'image.jpg',
-                    'atleta_id' => 2,
-                    'pontos_num' => 5,
-                    'variacao_num' => 4,
-                    'capitao_id' => 2,
-                    'posicao_id' => 5,
-                    'clube_id' => 262,
-                ],
-                [
-                    'rodada_time_id' => 2,
-                    'apelido' => 'Wedson',
-                    'foto' => 'image.jpg',
-                    'atleta_id' => 1,
-                    'pontos_num' => 1,
-                    'variacao_num' => 1,
-                    'capitao_id' => 2,
-                    'posicao_id' => 3,
-                    'clube_id' => 263,
-                ],
-                [
-                    'rodada_time_id' => 2,
-                    'apelido' => 'Cândido',
-                    'foto' => 'image.jpg',
-                    'atleta_id' => 2,
-                    'pontos_num' => 3,
-                    'variacao_num' => 2,
-                    'capitao_id' => 2,
-                    'posicao_id' => 3,
-                    'clube_id' => 264,
-                ],
-                [
-                    'rodada_time_id' => 2,
-                    'apelido' => 'Ailson',
-                    'foto' => 'image.jpg',
-                    'atleta_id' => 3,
-                    'pontos_num' => 2,
-                    'variacao_num' => 1,
-                    'capitao_id' => 2,
-                    'posicao_id' => 3,
-                    'clube_id' => 264,
-                ]
-            ]);
-
             $variacao = COLLECT([]);
-            $capitoes = COLLECT([]);
+            $capitao = COLLECT([]);
 
-            if ($atletas) :
+            $posicao = COLLECT([]);
+            $mais_escalados = COLLECT([]);
+            $clubes_mais_escalados = COLLECT([]);
+
+            if ($times_cartola->count()) :
+
+                $geral = [
+                    'pontos_campeonato' => $time_cartola->pontos_campeonato,
+                    'media' => $time_cartola->pontos_campeonato / $times_cartola->count(),
+                    'patrimonio' => $time_cartola->patrimonio,
+                ];
+
+                $maior_pontuacao = $times_cartola->max('pontos');
+                $menor_pontuacao = $times_cartola->min('pontos');
+
+                $destaques = [
+                    'maior_pontuacao' => $maior_pontuacao,
+                    'rodada_maior_pontuacao' => $times_cartola->where('pontos', $maior_pontuacao)->first()->rodada_time_id,
+                    'menor_pontuacao' => $menor_pontuacao,
+                    'rodada_menor_pontuacao' => $times_cartola->where('pontos', $menor_pontuacao)->first()->rodada_time_id,
+                ];
+
+                $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'pontos_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
+                    ->join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
+                    ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
+                    ->join('posicoes', 'posicao_id', 'posicoes.id')
+                    ->where('times_cartolas_id', $time_cartola->id)
+                    ->where('titular', 'Sim')
+                    ->get();
+
+                $maior_pontuacao = $times_cartola->max('pontos_num');
+                $menor_pontuacao = $times_cartola->min('pontos_num');
+
+                $maior_e_menor = [
+                    'maior_pontuacao' => $atletas->where('pontos_num', $maior_pontuacao)->first() ?? 0,
+                    'menor_pontuacao' => $atletas->where('pontos_num', $menor_pontuacao)->first() ?? 0,
+                ];
+
+
+                // $atletas = COLLECT([
+                //     [
+                //         'rodada_time_id' => 1,
+                //         'apelido' => 'Wedson',
+                //         'foto' => 'image.jpg',
+                //         'atleta_id' => 1,
+                //         'pontos_num' => 1,
+                //         'variacao_num' => 1,
+                //         'capitao_id' => 2,
+                //         'posicao_id' => 5,
+                //         'clube_id' => 262,
+                //     ],
+                //     [
+                //         'rodada_time_id' => 1,
+                //         'apelido' => 'Cândido',
+                //         'foto' => 'image.jpg',
+                //         'atleta_id' => 2,
+                //         'pontos_num' => 5,
+                //         'variacao_num' => 4,
+                //         'capitao_id' => 2,
+                //         'posicao_id' => 5,
+                //         'clube_id' => 262,
+                //     ],
+                //     [
+                //         'rodada_time_id' => 2,
+                //         'apelido' => 'Wedson',
+                //         'foto' => 'image.jpg',
+                //         'atleta_id' => 1,
+                //         'pontos_num' => 1,
+                //         'variacao_num' => 1,
+                //         'capitao_id' => 2,
+                //         'posicao_id' => 3,
+                //         'clube_id' => 263,
+                //     ],
+                //     [
+                //         'rodada_time_id' => 2,
+                //         'apelido' => 'Cândido',
+                //         'foto' => 'image.jpg',
+                //         'atleta_id' => 2,
+                //         'pontos_num' => 3,
+                //         'variacao_num' => 2,
+                //         'capitao_id' => 2,
+                //         'posicao_id' => 3,
+                //         'clube_id' => 264,
+                //     ],
+                //     [
+                //         'rodada_time_id' => 2,
+                //         'apelido' => 'Ailson',
+                //         'foto' => 'image.jpg',
+                //         'atleta_id' => 3,
+                //         'pontos_num' => 2,
+                //         'variacao_num' => 1,
+                //         'capitao_id' => 2,
+                //         'posicao_id' => 3,
+                //         'clube_id' => 264,
+                //     ]
+                // ]);
 
                 foreach ($atletas->groupBy('rodada_time_id')->toArray() as $rodada => $val) :
 
@@ -276,7 +283,7 @@ class EstatisticasController extends Controller
 
                             $val[$key]['pontos_num'] = $value['pontos_num'] * 1.5;
                             $value['pontos_num'] = $value['pontos_num'] * 1.5;
-                            $capitoes->push($value);
+                            $capitao->push($value);
 
                         endif;
 
@@ -290,24 +297,18 @@ class EstatisticasController extends Controller
 
                 endforeach;
 
-            endif;
+                $maior_pontuacao = $capitao->max('pontos_num');
+                $menor_pontuacao = $capitao->min('pontos_num');
 
-            $maior_pontuacao = $capitoes->max('pontos_num');
-            $menor_pontuacao = $capitoes->min('pontos_num');
-
-            $capitao = [
-                'lista' => $capitoes,
-                'maior_pontuador' => $capitoes->where('pontos_num', $maior_pontuacao)->first() ?? 0,
-                'menor_pontuador' => $capitoes->where('pontos_num', $menor_pontuacao)->first() ?? 0,
-                'capitao_geral' => [
-                    'pontos' => $capitoes->sum('pontos_num'),
-                    'media' => $capitoes->sum('pontos_num') / $capitoes->count(),
-                ],
-            ];
-
-            $posicao = COLLECT([]);
-
-            if ($atletas) :
+                $capitao = [
+                    'lista' => $capitao,
+                    'maior_pontuador' => $capitao->where('pontos_num', $maior_pontuacao)->first() ?? 0,
+                    'menor_pontuador' => $capitao->where('pontos_num', $menor_pontuacao)->first() ?? 0,
+                    'capitao_geral' => [
+                        'pontos' => $capitao->sum('pontos_num'),
+                        'media' => $capitao->sum('pontos_num') / $capitao->count(),
+                    ],
+                ];
 
                 foreach ($atletas->groupBy('posicao_id')->toArray() as $key => $val) :
 
@@ -318,12 +319,6 @@ class EstatisticasController extends Controller
                     ]);
 
                 endforeach;
-
-            endif;
-
-            $mais_escalados = COLLECT([]);
-
-            if ($atletas) :
 
                 foreach ($atletas->groupBy('atleta_id')->toArray() as $key => $val) :
 
@@ -341,12 +336,6 @@ class EstatisticasController extends Controller
                     ]);
 
                 endforeach;
-
-            endif;
-
-            $clubes_mais_escalados = COLLECT([]);
-
-            if ($atletas) :
 
                 foreach ($atletas->groupBy('clube_id')->toArray() as $key => $val) :
 

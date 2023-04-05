@@ -26,11 +26,11 @@ import {
 
 function partials() {
 
-    const [tab, stab] = useState('players');
+    const [tab, stab] = useState('statistics');
     const [data, sdata] = useState({});
 
     const [round, sround] = useState('');
-    const [teams_id, steamid] = useState();
+    const [teams_id, steamid] = useState(13989630);
     const [name_team, snameteam] = useState('');
 
     const [modal, smodal] = useState(false);
