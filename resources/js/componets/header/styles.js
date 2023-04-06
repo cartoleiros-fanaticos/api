@@ -8,7 +8,7 @@ export const Container = styled.div`
     align-items: center;
     width: 100%;
     position: fixed;
-    z-index: 25;
+    z-index: 100;
     top: 0;
 
     & > i {
@@ -181,9 +181,13 @@ export const Item = styled.li`
 
         padding: 0;
 
-        &:hover ul {
-            height: 150px;
-        } 
+        &:hover ul.cruzamento {
+            height: 144px;
+        }
+
+        &:hover ul.parciais {
+            height: 192px;
+        }
 
         a.planos {
             border: none;

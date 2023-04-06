@@ -245,7 +245,7 @@ function Player() {
           Component={ModalPlayer}
           data={data_player}
           loading={loading_data_player}
-          fun={compare}
+          fnc={compare}
           width="60%"
           height='620px'
           marginLeft="-30%"

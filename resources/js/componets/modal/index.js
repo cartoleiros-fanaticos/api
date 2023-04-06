@@ -17,8 +17,8 @@ function modal({ title, icon, Component, modal, smodal, data, loading, fnc = () 
         
     const { innerWidth } = window;
 
-    const container = useRef(null);
-    const screen = useRef(null);
+    const container = useRef();
+    const screen = useRef();
 
     useEffect(() => {
         if (modal) open();

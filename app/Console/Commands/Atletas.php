@@ -37,13 +37,13 @@ class Atletas extends Command
     {
         try {
 
-            echo PHP_EOL . 'Carregando dados.' . PHP_EOL;
+            echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
             $client = new Client();
             $response = $client->get('https://api.cartolafc.globo.com/atletas/mercado');
             $response = json_decode($response->getBody(), true);
 
-            echo 'Atualizando tabela clubes.' . PHP_EOL;
+            echo '- Atualizando tabela clubes.' . PHP_EOL;
 
             foreach ((array) $response['clubes'] as $key => $val) :
 
@@ -63,7 +63,7 @@ class Atletas extends Command
 
             endforeach;
 
-            echo 'Atualizando tabela posicoes.' . PHP_EOL;
+            echo '- Atualizando tabela posicoes.' . PHP_EOL;
 
             foreach ((array) $response['posicoes'] as $key => $val) :
 
@@ -78,7 +78,7 @@ class Atletas extends Command
                 );
             endforeach;
 
-            echo 'Atualizando tabela status.' . PHP_EOL;
+            echo '- Atualizando tabela status.' . PHP_EOL;
 
             foreach ((array) $response['status'] as $key => $val) :
 
@@ -93,7 +93,7 @@ class Atletas extends Command
 
             endforeach;
 
-            echo 'Atualizando tabela atletas.' . PHP_EOL;
+            echo '- Atualizando tabela atletas.' . PHP_EOL;
 
             foreach ((array) $response['atletas'] as $key => $val) :
 
@@ -141,7 +141,7 @@ class Atletas extends Command
                 endif;
             endforeach;
 
-            echo 'Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+            echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
 
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;

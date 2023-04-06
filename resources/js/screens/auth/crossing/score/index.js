@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { message, download } from '../../../../utils/helpers';
+import { message, download, swal_warning  } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
 import {
@@ -20,7 +20,8 @@ import {
   ListTeams,
   Teams,
   Values,
-  Shield,
+  Shield,  
+  Private,
   Value,
   Versus,
   Total,
@@ -32,6 +33,8 @@ import {
 import Container from '../../../../componets/container';
 
 function crossing() {
+
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const [filter, sfilter] = useState({
     scout: { value: '', name: 'Pontos' },
@@ -131,7 +134,15 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Cedidos</Text1>
           <Text2>FORA</Text2>
-          <Download onClick={() => download(data, 'CONQUISTADOS', 'CEDIDOS', filter)}>Download</Download>
+          <Download onClick={() => {
+
+            if (user.plano === 'Free Cartoleiro') {
+              swal_warning('Opção exclusiva para SÓCIO CARTOLEIRO');
+            } else {
+              download(data, 'CONQUISTADOS', 'CEDIDOS', filter)
+            }
+
+          }}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -139,16 +150,37 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>{data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
+                  {
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <Value>{data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
+                  }
                   <Versus>x</Versus>
-                  <Value>{data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  {
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <Value>{data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  }
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
                 <Total>
                   {
-                    (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0)
-                    +
-                    (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <>
+                        {
+                          (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0)
+                          +
+                          (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                        }
+                        {filter.posicao_id.value && <Icon title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                      </>
                   }
                 </Total>
               </Teams>
@@ -162,7 +194,14 @@ function crossing() {
           <Text2>EM CASA</Text2>
           <Text1>Conquistados</Text1>
           <Text2>FORA</Text2>
-          <Download onClick={() => download(data, 'CEDIDOS', 'CONQUISTADOS', filter)}>Download</Download>
+          <Download onClick={() => {
+            if (user.plano === 'Free Cartoleiro') {
+              swal_warning('Opção exclusiva para SÓCIO CARTOLEIRO');
+            } else {
+              download(data, 'CEDIDOS', 'CONQUISTADOS', filter)
+            }
+
+          }}>Download</Download>
         </Texts>
         <ListTeams>
           {
@@ -170,16 +209,37 @@ function crossing() {
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
-                  <Value>{data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
+                  {
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <Value>{data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
+                  }
                   <Versus>x</Versus>
-                  <Value>{data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  {
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <Value>{data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
+                  }
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
                 <Total>
                   {
-                    (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0)
-                    +
-                    (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
+                    i >= 4 && user.plano === 'Free Cartoleiro'
+                      ?
+                      <Private to="/auth/planos">Sócio</Private>
+                      :
+                      <>
+                        {
+                          (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0)
+                          +
+                          (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
+                        }
+                        {filter.posicao_id.value && <Icon title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                      </>
                   }
                 </Total>
               </Teams>

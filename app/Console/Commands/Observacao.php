@@ -36,13 +36,13 @@ class Observacao extends Command
     {
         try {
 
-            echo PHP_EOL . 'Carregando dados.' . PHP_EOL;
+            echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
             $client = new Client();
             $response = $client->get('https://api.cartolafc.globo.com/atletas/mercado');
             $response = json_decode($response->getBody(), true);
 
-            echo 'Gerando observação dos atletas.' . PHP_EOL;
+            echo '- Gerando observação dos atletas.' . PHP_EOL;
 
             $clubes = Clubes::get()
                 ->keyBy('id');
@@ -188,7 +188,8 @@ class Observacao extends Command
             DB::statement('DROP TEMPORARY TABLE partidas_mandante_temporary;');
             DB::statement('DROP TEMPORARY TABLE partidas_visitante_temporary;');
 
-            echo 'Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+            echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+            
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;
             Log::error('Game: ' . $e->getMessage());

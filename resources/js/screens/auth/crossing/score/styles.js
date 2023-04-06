@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 export const Content = styled.div`
     display: grid;
@@ -161,13 +162,32 @@ export const Teams = styled.div`
 
 export const Values = styled.div`
     justify-content: space-between;
-    width: 30%;
+    width: 40%;
     display: flex;
     align-items: center;
 `;
 
 export const Shield = styled.img`
     width: 26px;
+`;
+
+export const Private = styled(Link).attrs(() => ({
+    title: 'Clique e seja sócio e tenha acesso a todas opção'
+}))`
+    width: 35px;
+    padding: 2px 5px;
+    background-color: #f0cc12;
+    color: #fff;
+    font-size: 0.6em;
+    margin: 0 10px;
+    cursor: pointer;
+    text-align: center;
+    transition-duration: 0.3s;
+    text-decoration: none;
+
+    &:hover {
+        transform: scale(1.2);
+    }
 `;
 
 export const Value = styled.span`
@@ -183,6 +203,17 @@ export const Versus = styled.span`
 export const Total = styled.span`
     display: flex;
     align-items: center;
+
+    i {
+        margin-left: 7px;
+        font-size: 20px;
+        color: green;
+        cursor: pointer;
+    };
+
+    a {
+        margin: auto;
+    }
 `;
 
 export const Tips = styled.div`

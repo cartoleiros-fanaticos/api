@@ -42,8 +42,8 @@ function rounds() {
 
             sloadingpage(true);
 
-            if (window.innerWidth <= 900)
-                window.scrollTo({ top: 350, behavior: 'smooth' });
+            // if (window.innerWidth <= 900)
+            //     window.scrollTo({ top: 350, behavior: 'smooth' });
 
             const { data } = await api.get(`parciais/rodadas`);
 
@@ -190,4 +190,4 @@ function rounds() {
     );
 }
 
-export default clubs;
+export default rounds;

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import { NavLink } from "react-router-dom";
 import backButton from 'browser-back-button';
@@ -41,9 +41,9 @@ function header() {
             position: static;
         `;
 
-        body.style.cssText = `
-            overflow: hidden;
-        `;
+        // body.style.cssText = `
+        //     overflow: hidden;
+        // `;
 
         content.style.cssText = `
             margin: 4px auto 0 auto;

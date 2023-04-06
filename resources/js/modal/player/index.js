@@ -39,7 +39,7 @@ import {
     Item7,
 } from './styles';
 
-function player({ data, compare }) {
+function player({ data, fnc }) {
 
     const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(false);
@@ -100,7 +100,7 @@ function player({ data, compare }) {
         <>
             <Container>
                 <Item1>
-                    <Button onClick={() => compare(data.atleta.atleta_id)}>
+                    <Button onClick={() => fnc(data.atleta.atleta_id)}>
                         <Icon>directions_run</Icon>
                         <Text1>Comparar</Text1>
                     </Button>

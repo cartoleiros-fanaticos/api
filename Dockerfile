@@ -4,6 +4,4 @@ WORKDIR /home/deploy
 
 COPY . .
 
-RUN apt-get install -y supervisor
-
-RUN /usr/bin/supervisord
+CMD ['/usr/bin/supervisord -c /etc/supervisor/supervisord.conf']
