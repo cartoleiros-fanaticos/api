@@ -11,9 +11,9 @@ services:
         - 33060:3306
     environment:
       MYSQL_DATABASE: cartoleiro
-      MYSQL_ROOT_PASSWORD: 1fglzem6a2
+      MYSQL_ROOT_PASSWORD: zqkj34e13ih3bEf
   app:
-    image: cartoleiro/app
+    build: .
     container_name: app
     restart: always
     command: "tail -f /dev/null"

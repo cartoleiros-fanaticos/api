@@ -4,4 +4,6 @@ WORKDIR /home/deploy
 
 COPY . .
 
-RUN chmod +x init.sh
+RUN apt-get install -y supervisor
+
+RUN /usr/bin/supervisord

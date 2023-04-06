@@ -14,4 +14,14 @@ class Parciais extends Model
     //     return parent::newQuery()
     //         ->where('temporada', Carbon::now()->format('Y'));
     // }
+
+    public function clubes()
+    {
+        return $this->hasOne(Clubes::class, 'id', 'clube_id');
+    }
+
+    public function posicoes()
+    {
+        return $this->hasOne(Posicoes::class, 'id', 'posicao_id');
+    }
 }

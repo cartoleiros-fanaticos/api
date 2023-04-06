@@ -88,8 +88,8 @@ class Game extends Command
                         'aproveitamento_fora_3' => $val['aproveitamento_visitante'][3],
                         'aproveitamento_fora_4' => $val['aproveitamento_visitante'][4],
                         'valida' => $val['valida'],
-                        'placar_oficial_mandante' => $val['placar_oficial_mandante'],
-                        'placar_oficial_visitante' => $val['placar_oficial_visitante'],
+                        'placar_oficial_mandante' => $val['placar_oficial_mandante'] ?? 0,
+                        'placar_oficial_visitante' => $val['placar_oficial_visitante'] ?? 0,
                     ]
                 );
             endforeach;

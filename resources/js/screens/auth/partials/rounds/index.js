@@ -190,4 +190,4 @@ function rounds() {
     );
 }
 
-export default rounds;
+export default clubs;

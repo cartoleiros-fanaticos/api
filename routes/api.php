@@ -44,6 +44,7 @@ Route::group([
 
     Route::get('parciais/atletas', [ParciaisController::class, 'parciais_atletas']);
     Route::get('parciais/rodadas', [ParciaisController::class, 'parciais_rodadas']);
+    Route::get('parciais/partida', [ParciaisController::class, 'parciais_partida']);
 
     Route::get('estatisticas/time/{id}', [EstatisticasController::class, 'time']);
     Route::get('estatisticas/times', [EstatisticasController::class, 'times']);

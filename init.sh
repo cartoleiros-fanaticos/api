@@ -2,4 +2,14 @@
 
 service php8.1-fpm start
 service nginx restart
+chown -R $USER:www-data storage
+chown -R $USER:www-data bootstrap/cache
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+
+if [ ! -f .env ]
+then
+    cp .env.example .env
+fi
+
 php artisan migrate --seed
