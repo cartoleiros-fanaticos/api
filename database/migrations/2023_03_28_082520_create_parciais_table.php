@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('posicao_id')->constrained('posicoes');
             
             $table->float('pontuacao');
-            $table->float('valorizacao')->nullable();
+            $table->float('variacao_num')->default(0);
 
             $table->integer('DS')->default(0);
             $table->integer('FC')->default(0);

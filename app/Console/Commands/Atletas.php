@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Atletas as ModelsAtletas;
 use App\Models\Clubes;
+use App\Models\Game;
+use App\Models\Parciais;
 use App\Models\Posicoes;
 use App\Models\Status;
 use Illuminate\Console\Command;
@@ -36,6 +38,8 @@ class Atletas extends Command
     public function handle(): void
     {
         try {
+
+            $game = Game::first();
 
             echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
@@ -99,6 +103,14 @@ class Atletas extends Command
 
                 if ($val['clube_id'] != 1) :
 
+                    $rodada = $game->game_over ? 38 : ($val['rodada_id'] - 1);
+
+                    Parciais::where('atleta_id', $val['atleta_id'])
+                        ->where('rodada', $rodada)
+                        ->update([
+                            'variacao_num' => $val['variacao_num']
+                        ]);
+
                     ModelsAtletas::updateOrCreate(
                         [
                             'atleta_id' => $val['atleta_id']
@@ -142,7 +154,6 @@ class Atletas extends Command
             endforeach;
 
             echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
-
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;
             Log::error('Game: ' . $e->getMessage());
