@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import { amount, message } from '../../utils/helpers';
 import api from '../../utils/api';
+
 import { Message } from '../../utils/styles';
 
 import Loading from '../../componets/loading';
-
 
 import {
     Container,

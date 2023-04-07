@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { amount, message } from '../../../utils/helpers';
+import { amount, message, swal_success } from '../../../utils/helpers';
 import api from '../../../utils/api';
 
+import Modal from '../../../componets/modal';
+import ModalPix from '../../../modal/pix';
+
 import Container from '../../../componets/container';
+
+import { useNavigate } from "react-router-dom";
 
 import {
     Content,
@@ -31,29 +36,53 @@ import {
 
 function plans() {
 
+    let navigate = useNavigate();
+
+    const [modal, smodal] = useState(false);
+
+    const [id, sid] = useState('');
     const [data, sdata] = useState({});
 
-    const [loading_page, sloadingpage] = useState(false);
+    const [loading_page, sloadingpage] = useState(true);
+
+    useEffect(() => {
+        getData();
+    }, [])
+
+    async function getData() {
+
+        try {
+
+            const { data } = await api.get(`planos`);
+
+            sdata(data);
+            sloadingpage(false);
+
+        } catch (e) {
+            message(e);
+            sloadingpage(false);
+        };
+    }
 
     const component = () => (
         <Content>
             <Box>
                 <Title>IMPERDÍVEL</Title>
                 <Plans>
-                    <Plan>
-                        <Name>PLANO CARTOLEIRO</Name>
-                        <Values>
-                            <Value>R$79,99</Value>
-                        </Values>
-                        <Pay>PAGAR</Pay>
-                    </Plan>
-                    <Plan>
-                        <Name>PLANO <Text>CARTOLEIRO VIP</Text></Name>
-                        <Values>
-                            <Value>R$79,99</Value>
-                        </Values>
-                        <Pay>PAGAR</Pay>
-                    </Plan>
+                    {
+                        data.map((e, i) =>
+                            <Plan key={i}>
+                                <Name>{e.nome}</Name>
+                                <Values>
+                                    <Value>R${amount(e.valor)}</Value>
+                                </Values>
+                                <Pay onClick={() => {
+                                    sid(e.id);
+                                    smodal(true);
+                                }}>PAGAR</Pay>
+                            </Plan>
+                        )
+                    }
                 </Plans>
             </Box>
             <Bonus>
@@ -215,11 +244,33 @@ function plans() {
     );
 
     return (
-        <Container
-            title='PLANOS'
-            Component={component}
-            loading={loading_page}
-        />
+        <>
+            <Container
+                title='PLANOS'
+                Component={component}
+                loading={loading_page}
+            />
+            {
+
+                modal &&
+                <Modal
+                    icon="qr_code_scanner"
+                    title="Pagamento PIX"
+                    modal={modal}
+                    smodal={smodal}
+                    Component={ModalPix}
+                    data={{ id }}
+                    fnc={(user) => {
+
+                        swal_success('Plano contratado com SUCESSO!');
+                        navigate('/auth/cruzamento-scouts');                        
+                        localStorage.setItem('user', JSON.stringify(user));
+
+
+                    }}
+                />
+            }
+        </>
     );
 }
 

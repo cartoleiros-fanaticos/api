@@ -7,6 +7,7 @@ use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\EscalacaoController;
 use App\Http\Controllers\EstatisticasController;
 use App\Http\Controllers\ParciaisController;
+use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
 use Illuminate\Http\Request;
@@ -45,6 +46,9 @@ Route::group([
     Route::get('parciais/atletas', [ParciaisController::class, 'parciais_atletas']);
     Route::get('parciais/rodadas', [ParciaisController::class, 'parciais_rodadas']);
     Route::get('parciais/partida', [ParciaisController::class, 'parciais_partida']);
+
+    Route::get('planos', [PlanosController::class, 'index']);
+    Route::get('cobranca-pix/{id}', [PlanosController::class, 'cobrancaPix']);
 
     Route::get('estatisticas/time/{id}', [EstatisticasController::class, 'time']);
     Route::get('estatisticas/times', [EstatisticasController::class, 'times']);
