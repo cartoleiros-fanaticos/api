@@ -13,6 +13,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
 
+        $schedule->command('app:parciais')
+            ->everyMinute();
+
         $schedule->command('app:game')
             ->everyTenMinutes();
 
