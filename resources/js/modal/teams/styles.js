@@ -6,7 +6,7 @@ export const Container = styled.div`
     overflow-x: hidden;
 
     @media screen and (max-width:900px){
-        height: 100vh; 
+        height: calc(100vh - 150px); 
     }
 `;
 

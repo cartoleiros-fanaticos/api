@@ -266,13 +266,13 @@ function statistics() {
                 />
             </Label>
             {
-                data?.rodada_atual ?
-                    <Content>
+                loading ?
+                    <Loading />
+                    :
+                    <>
                         {
-                            loading ?
-                                <Loading />
-                                :
-                                <>
+                            data?.rodada_atual ?
+                                <Content>
                                     <Box>
                                         <Rounds
                                             fnc={() => console.log('Funcionando')}
@@ -565,12 +565,11 @@ function statistics() {
                                             </Table>
                                         </Fieldset>
                                     </Box>
-                                </>
+                                </Content>
+                                :
+                                <Message>Pesquise por um time</Message>
                         }
-
-                    </Content>
-                    :
-                    <Message>Pesquise por um time</Message>
+                    </>
             }
         </>
     );

@@ -12,7 +12,7 @@ export const Container = styled.div`
     flex-direction: column;
 
     position: fixed;
-    z-index: 50;
+    z-index: 150;
     left: 50%;
     top: 60%;
     opacity: 0;
@@ -30,7 +30,7 @@ export const Screen = styled.div`
     position: fixed;
     width: 100%;
     height: 100vh;
-    z-index: 25;
+    z-index: 125;
     background: rgba(0, 0, 0, 0.8);
     top: 0;
     left: 0;

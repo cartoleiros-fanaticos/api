@@ -11,6 +11,10 @@ export const Label = styled.label`
     text-align: right;
     margin: 25px auto;
     color: #666;
+
+    @media screen and (max-width:900px){
+        width: 90%;
+    }
 `;
 
 export const Input = styled.input.attrs(() => ({
@@ -98,8 +102,6 @@ export const Icon = styled.i.attrs(() => ({
 `;
 
 export const Content = styled.div`
-    /* display: flex;
-    justify-content: space-between;   */
     position: relative;
     min-height: 500px; 
 
@@ -108,7 +110,7 @@ export const Content = styled.div`
     grid-gap: 25px;
 
     @media screen and (max-width:900px){
-        flex-direction: column;
+        grid-template-columns: 100%;
         margin-bottom: 25px;
         min-height: 300px; 
     }
@@ -119,10 +121,10 @@ export const Box = styled.div`
 
     &:nth-child(1) {
         grid-column: 1/3;
-    } 
 
-    @media screen and (max-width:900px){
-        width: 100%;
+        @media screen and (max-width:900px){
+            grid-column: 1/1;
+        }
     }
 `;
 
@@ -207,7 +209,7 @@ export const Td = styled.td`
     border-bottom: solid thin #cccccc;
     padding: 5px;
     text-align: center;
-    color: ${({ color }) => color ? color : '#636363' };
+    color: ${({ color }) => color ? color : '#636363'};
 `;
 
 export const PhotoName = styled.div`

@@ -91,93 +91,12 @@ function plans() {
             </Bonus>
             <Header>
                 <Text3></Text3>
-                <Text4>PLANO <Text>CARTOLEIRO</Text></Text4>
-                <Text4>PLANO <Text>CARTOLEIRO VIP</Text></Text4>
+                <Text4>PLANO <Text>STATS</Text></Text4>
+                <Text4>PLANO <Text>FANÁTICO</Text></Text4>
             </Header>
             <List>
                 <Item>
-                    <Label>ACESSO AO APP (COM ESTATÍSTICAS) E WHATS APP</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>TIMES EXCLUSIVOS DE ASSINANTES</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>AÚDIO ANALISE DETALHADA POR POSIÇÃO</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>TABELA (CHANCE DE VITÓRIA, PONTOS CONQUISTADOS E CEDIDOS SALDO DE GOLS E OUTRAS)</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>ANÁLISE DOS MAPAS DE CALOR</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>TABELA DE CONDIÇÕES CLIMATICAS DOS JOGOS DA RODADA</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>LIVE DE ASSINANTES</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>ANÁLISE INDIVIDUAL DOS JOGADORES</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>NOTÍCIAS NO TELEGRAM E WHATSAPP</Label>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>TABELA DOS COBRADORES DE FALTA, ESCANTEIOS E PÊNALTIS, E PERCENTUAL DE ACERTOS</Label>
+                    <Label>COMPARATIVOS DO JOGADORES NO APP, SITE E ACESSO TOTAL A PLATAFORMA</Label>
                     <BoxIcon>
                         <Icon color="green">check_circle</Icon>
                     </BoxIcon>
@@ -187,6 +106,105 @@ function plans() {
                 </Item>
                 <Item>
                     <Label>FAZER DOWNLOAD DA TABELA ATRÁVES DO SITE / APP</Label>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>ACESSO AO APP (COM ESTATÍSTICAS)</Label>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>ACESSO AO APP (COM ESTATÍSTICAS) E WHATS APP</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>TIMES EXCLUSIVOS DE ASSINANTES</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>AÚDIO ANALISE DETALHADA POR POSIÇÃO</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>TABELA (CHANCE DE VITÓRIA, PONTOS CONQUISTADOS E CEDIDOS SALDO DE GOLS E OUTRAS)</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>ANÁLISE DOS MAPAS DE CALOR</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>TABELA DE CONDIÇÕES CLIMATICAS DOS JOGOS DA RODADA</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>LIVE DE ASSINANTES</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>ANÁLISE INDIVIDUAL DOS JOGADORES</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>NOTÍCIAS NO TELEGRAM E WHATSAPP</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item>
+                <Item>
+                    <Label>TABELA DOS COBRADORES DE FALTA, ESCANTEIOS E PÊNALTIS, E PERCENTUAL DE ACERTOS</Label>
                     <BoxIcon>
                         <Icon color="red">cancel</Icon>
                     </BoxIcon>
@@ -204,25 +222,7 @@ function plans() {
                     </BoxIcon>
                 </Item>
                 <Item>
-                    <Label>COMPARATIVOS DO JOGADORES NO APP, SITE E ACESSO TOTAL A PLATAFORMA</Label>
-                    <BoxIcon>
-                        <Icon color="red">cancel</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
                     <Label>SUPORTE PERSONALIZADO COM CONTEÚDO DE ESTRATÉGIA POR TIPO DE COMPETIÇÃO.</Label>
-                    <BoxIcon>
-                        <Icon color="red">cancel</Icon>
-                    </BoxIcon>
-                    <BoxIcon>
-                        <Icon color="green">check_circle</Icon>
-                    </BoxIcon>
-                </Item>
-                <Item>
-                    <Label>MÓDULO BÁSICO DO NOVO CURSO DE ROBERVAL COELHO</Label>
                     <BoxIcon>
                         <Icon color="red">cancel</Icon>
                     </BoxIcon>
@@ -239,6 +239,15 @@ function plans() {
                         <Icon color="green">check_circle</Icon>
                     </BoxIcon>
                 </Item>
+                {/* <Item>
+                    <Label>MÓDULO BÁSICO DO NOVO CURSO DE ROBERVAL COELHO</Label>
+                    <BoxIcon>
+                        <Icon color="red">cancel</Icon>
+                    </BoxIcon>
+                    <BoxIcon>
+                        <Icon color="green">check_circle</Icon>
+                    </BoxIcon>
+                </Item> */}
             </List>
         </Content>
     );
