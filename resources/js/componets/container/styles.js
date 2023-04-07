@@ -4,7 +4,7 @@ export const Container = styled.div`
 `;
 
 export const Content = styled.div`
-    width: 82%;
+    width: 1100px;
     margin: 60px auto 0 auto;
     padding: 20px 10px;
     min-height: 600px;

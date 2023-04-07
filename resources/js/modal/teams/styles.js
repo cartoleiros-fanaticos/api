@@ -1,7 +1,45 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  
+    height: 360px;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    @media screen and (max-width:900px){
+        height: 100vh; 
+    }
+`;
+
+export const Label = styled.label`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border: solid 2px #ccc;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    text-align: right;
+    margin-bottom: 10px;
+    color: #666;
+`;
+
+export const Input = styled.input.attrs(() => ({
+    type: 'search',
+    placeholder: 'Digite nome do time'
+}))`
+    background-color: transparent;
+    width: 100%;
+    border: none;
+    font-size: 15px;
+    outline: none;
+    background-color: #f1f1f1;
+`;
+
+export const Icon = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))` 
+   color: #666; 
+   margin-right: 10px;
 `;
 
 export const Title = styled.i`
@@ -41,24 +79,9 @@ export const NameTeam = styled.strong`
     text-align: left;
 `;
 
-export const Name = styled.span`
+export const NamePlayer = styled.span`
     color: #666666;
     font-size: 0.7em;
     text-align: left;
-`;
-
-export const Remove = styled.span`
-    color: red;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
-    position: absolute;
-    right: 15px;
-    top: 7px;
-    font-size: 0.8em;
-    border: solid thin red;
 `;
 

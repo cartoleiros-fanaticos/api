@@ -9,25 +9,30 @@ import Loading from '../../componets/loading';
 
 import {
     Container,
+    Label,
+    List,
+    Icon,
+    Input,
     Team,
+    Title,
     Shield,
     NameTeam,
-    Name
+    NamePlayer
 } from './styles';
 
-function teams({ data: { value }, fnc, smodal }) {
-
-    let teams = localStorage.getItem('favorite_teams');
-    teams = teams ? JSON.parse(teams) : [];
+function teams({ fnc, smodal }) {
 
     const [data, sdata] = useState([]);
     const [loading, sloading] = useState(false);
 
+    const [teams, steams] = useState([]);
+
     useEffect(() => {
-        getData();
+        const favorite_teams = localStorage.getItem('favorite_teams') ? JSON.parse(localStorage.getItem('favorite_teams')) : [];
+        steams(favorite_teams);
     }, [])
 
-    async function getData() {
+    async function getData(value) {
 
         try {
 
@@ -45,49 +50,91 @@ function teams({ data: { value }, fnc, smodal }) {
 
     }
 
-    return (
-        <Container>
-            {
-                loading ?
-                    <Loading />
-                    :
-                    <>
-                        {
-                            data.length
-                                ?
-                                data.map((e, i) =>
-                                    <Team onClick={() => {
+    function enter(e) {
+        {
 
-                                        const team = teams.find(i => i.nome === e.nome);
+            const team = teams.find(i => i.nome === e.nome);
 
-                                        if (!team) {
+            if (!team) {
 
-                                            teams.push({
-                                                time_id: e.time_id,
-                                                url_escudo_png: e.url_escudo_png,
-                                                nome: e.nome,
-                                                nome_cartola: e.nome_cartola
-                                            });
+                if (teams.length === 3) teams.shift();
 
-                                            localStorage.setItem('favorite_teams', JSON.stringify(teams));
+                teams.push({
+                    time_id: e.time_id,
+                    url_escudo_png: e.url_escudo_png,
+                    nome: e.nome,
+                    nome_cartola: e.nome_cartola
+                });
 
-                                        }
+                localStorage.setItem('favorite_teams', JSON.stringify(teams));
 
-                                        smodal(false);
-                                        fnc(e.time_id)
-
-                                    }} key={i}>
-                                        <Shield src={e.url_escudo_png} />
-                                        <NameTeam>{e.nome}</NameTeam>
-                                        <Name>{e.nome_cartola}</Name>
-                                    </Team>
-                                )
-                                :
-                                <Message>Nenhum time encontrado.</Message>
-                        }
-                    </>
             }
-        </Container>
+
+            smodal(false);
+            fnc(e.time_id)
+
+        }
+    }
+
+    return (
+        <>
+            <Label>
+                <Icon>security</Icon>
+                <Input
+                    onKeyUp={(e) => {
+                        if (e.target.value && e.key === 'Enter') getData(e.target.value);
+                    }}
+                />
+            </Label>
+            <Container>
+                {
+                    loading ?
+                        <Loading />
+                        :
+                        <>
+                            {
+                                teams.length
+                                    ?
+                                    <>
+                                        <Title>Times favoritos</Title>
+                                        {
+                                            teams.map((e, i) =>
+                                                <Team onClick={() => {
+                                                    smodal(false);
+                                                    fnc(e.time_id)  
+                                                }} key={i}>
+                                                    <Shield src={e.url_escudo_png} />
+                                                    <NameTeam>{e.nome}</NameTeam>
+                                                    <NamePlayer>{e.nome_cartola}</NamePlayer>
+                                                </Team>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <></>
+                            }
+                            {
+                                data.length
+                                    ?
+                                    <>
+                                        <Title>Times pesquisados</Title>
+                                        {
+                                            data.map((e, i) =>
+                                                <Team onClick={() => enter(e)} key={i}>
+                                                    <Shield src={e.url_escudo_png} />
+                                                    <NameTeam>{e.nome}</NameTeam>
+                                                    <NamePlayer>{e.nome_cartola}</NamePlayer>
+                                                </Team>
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <Message>Nenhum time encontrado.</Message>
+                            }
+                        </>
+                }
+            </Container>
+        </>
     );
 }
 

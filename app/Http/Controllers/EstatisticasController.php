@@ -351,6 +351,8 @@ class EstatisticasController extends Controller
             endif;
 
             $response = [
+                'time_id' => $id,
+                'rodada_atual' => $game->rodada_atual,
                 'geral' => $geral,
                 'destaques' => $destaques,
                 'maior_e_menor' => $maior_e_menor,

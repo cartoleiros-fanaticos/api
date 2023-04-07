@@ -268,6 +268,7 @@ function plans() {
 
 
                     }}
+                    height='440px'
                 />
             }
         </>

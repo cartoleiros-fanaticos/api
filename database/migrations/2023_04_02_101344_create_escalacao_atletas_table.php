@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
 
             $table->integer('atleta_id');
+            $table->float('preco_num');
             $table->integer('rodada_time_id');
             $table->enum('titular', ['Sim', 'Não'])->default('Sim');
 

@@ -1,133 +1,111 @@
 import styled from 'styled-components';
 
 export const Label = styled.label`
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border: solid thin #F68D42;
-    border-radius: 0.3em;
-    position: relative;
-    grid-column: 1/3;
     width: 50%;
-    margin: 20px auto;    
-
-    @media screen and (max-width:900px){
-		width: 100%;
-        padding: 5px;
-    }
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border: solid 2px #ccc;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    text-align: right;
+    margin: 25px auto;
+    color: #666;
 `;
 
-export const Input = styled.input`
-    width: 80%;
-    outline: none;
-    padding: 5px;
-    border: none;
-    border-bottom: solid thin #cccccc;
-    color: #636363;
-    background: none;
-
-    @media screen and (max-width:900px){ 
-        padding: 10px 5px;
-    }
-`;
-
-export const Button = styled.button`
-    width: 15%;
-    border: none;
-    background: #F68D42;
-    color: #f1f1f1;
-    cursor: pointer;
-    outline: none;
-`;
-
-export const Teams = styled.div`
-    position: absolute;
-    visibility: hidden;
-    width: 97%;
-    background-color: #ffffff;
-    top: 40px;
-    height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 25;
-    transition-duration: 0.5s;
-    border: solid thin #ccc;
-
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px #000;
-        background-color: #f1f1f1;
-    }
-
-    &::-webkit-scrollbar {
-        width: 7px;
-        background-color: #000;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: #000;
-    }
-`;
-
-
-export const Team = styled.div`
+export const Input = styled.input.attrs(() => ({
+    type: 'search',
+    placeholder: 'Digite nome do time'
+}))`
+    background-color: transparent;
     width: 100%;
-    position: relative;
-    cursor: pointer;
-    border-bottom: solid thin #f1f1f1;
-    padding: 10px 5px; 
-    display: flex;
-    justify-content: space-between;
-    user-select: none;
-
-    &:hover {
-        background-color: #f1f1f1;
-    }
+    border: none;
+    font-size: 15px;
+    outline: none;
+    background-color: #f1f1f1;
+`;
+export const Players = styled.div`
+    width: 100%;
 `;
 
-export const Description = styled.div`
+export const Player = styled.div`
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 80%;
-
+    display: flex;
+    padding: 7px;
+    border-bottom: solid thin #cccccc;
     display: grid;
-    grid-template-columns: 26px 95%;
-    grid-column-gap: 10px;
+    grid-template-columns: 35px 35px 200px auto;
 `;
 
-export const Shield = styled.img`
-    width: 26px;
-    grid-row: 1/3;
-`;
-
-export const NameTeam = styled.strong`
-    color: #666666;
-    font-size: 0.9em;
-    text-align: left;
-`;
-
-export const NamePlayer = styled.span`
-    color: #666666;
-    font-size: 0.7em;
-    text-align: left;
-`;
-
-export const Remove = styled.span`
-    color: red;
-    width: 20%;
-    height: 31px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
+export const Captain = styled.a`
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 3px 0;
+    border-radius: 50%;
+    color: #ffffff;
     font-size: 0.8em;
-    z-index: 50;
+    margin-right: 15px;
+    background-color: ${({ captain }) => captain ? '#F68D42' : '#CCC'};
+`;
+
+export const PlayerPhoto = styled.img`
+    width: 35px;
+`;
+
+export const ContainerNamePosition = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+
+export const PlayerName = styled.strong`
+    font-size: 0.9em;
+    margin: 0 10px;
+`;
+
+export const Position = styled.span`
+    color: #F68D42;
+    margin: 0 10px;
+    font-size: 0.9em;
+`;
+
+export const Price = styled.strong`
+    font-size: 0.8em;
+    margin: 0 10px;
+    text-align: right;
+`;
+
+export const PlayerTitle = styled.h3`
+    padding: 5px;
+    margin: 15px auto 10px auto;
+    border-radius: 0.3em;
+    border: solid 2px #000000;
+    text-align: center;
+    font-size: 0.8em;
+    display: block;
+    width: 100%;
+    font-weight: 500;
+`;
+
+export const Icon = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))` 
+   color: #666; 
+   margin-right: 10px;
 `;
 
 export const Content = styled.div`
-    display: flex;
-    justify-content: space-between;  
+    /* display: flex;
+    justify-content: space-between;   */
     position: relative;
     min-height: 500px; 
+
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-gap: 25px;
 
     @media screen and (max-width:900px){
         flex-direction: column;
@@ -137,7 +115,11 @@ export const Content = styled.div`
 `;
 
 export const Box = styled.div`
-    width: 49%;  
+    width: 100%; 
+
+    &:nth-child(1) {
+        grid-column: 1/3;
+    } 
 
     @media screen and (max-width:900px){
         width: 100%;

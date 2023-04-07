@@ -43,7 +43,7 @@ function pix({ data: { id }, smodal, fnc }) {
 
             const { data: { transacao, qrcode, code_pix } } = await api.get(`cobranca-pix/${id}`);
 
-            spix({ transacao, qrcode, code_pix });
+           // spix({ transacao, qrcode, code_pix });
 
             const loop = setInterval(async () => {
 

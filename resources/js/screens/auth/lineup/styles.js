@@ -162,7 +162,6 @@ export const Price = styled.strong`
     text-align: right;
 `;
 
-
 export const Title = styled.h3`
     padding: 5px;
     margin: 15px auto 10px auto;
