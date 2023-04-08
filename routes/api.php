@@ -24,16 +24,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('login', [AuthController::class, 'login']);
+Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
+Route::post('refresh', [AuthController::class, 'refresh']);
+
 Route::group([
-
-    'middleware' => 'api',
-
+    
+    'middleware' => 'jwt',
+    
 ], function ($router) {
-
-    Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
-    Route::post('login', [AuthController::class, 'login']);
+    
     Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 
     Route::resource('usuarios', UsuariosController::class);

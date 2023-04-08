@@ -20,7 +20,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'recuperar_senha']]);
+        //
     }
 
     /**
@@ -86,7 +86,11 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth('api')->refresh());
+        try {
+            return $this->respondWithToken(auth('api')->refresh());
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Seu token não está autorizado.'], 401);
+        }
     }
 
     /**

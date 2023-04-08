@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const api = axios.create({
     baseURL: `${location.origin}/api/`,
-    timeout: 60000
+    timeout: 120000
 });
 
 api.interceptors.request.use(async (config) => {
@@ -23,19 +23,17 @@ api.interceptors.response.use(async (response) => {
 
     const { data, config } = e.response;
 
-    if (data.message == 'Você não pode acessar essa área.') location.href = '/adm/dashboard';
+    // if (data.message == 'Você não pode acessar essa área.') location.href = '/';
 
     if (data.message === 'Seu token foi expirado.') {
 
         try {
 
-            const conf = JSON.parse(atob(localStorage.getItem('config')));
-            const user = conf.user;
-
-            const { data: { access_token } } = await api.post('refresh', { funcao: user.funcao });
+            const { data: { access_token } } = await api.post('refresh', {});
 
             localStorage.setItem('token', access_token);
             config.headers['Authorization'] = `Bearer ${access_token}`;
+
             return api.request(config);
 
         } catch (e) {
@@ -44,14 +42,14 @@ api.interceptors.response.use(async (response) => {
 
         }
 
-    } else if (data.message === 'Seu token não é valido.' || data.message === 'Seu token não está autorizado.' || data.message === 'O token expirou e não pode mais ser atualizado.') {
+    } else if (data.message === 'Seu token não está autorizado.') {
 
         e.response.data.message = 'Sua sessão expirou faça login novamente.';
 
         setTimeout(() => {
 
             localStorage.removeItem('token');
-            localStorage.removeItem('config');
+            localStorage.removeItem('user');
 
             window.location.href = '/';
 

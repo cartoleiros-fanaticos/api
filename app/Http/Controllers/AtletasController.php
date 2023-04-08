@@ -198,10 +198,10 @@ class AtletasController extends Controller
                 SELECT 
                     partidas.rodada,
                     ROUND(IFNULL(pontuacao, 0), 2) as pontuacao,
-                    ROUND(IFNULL(valorizacao, 0), 2) as valorizacao
+                    ROUND(IFNULL(variacao_num, 0), 2) as variacao_num
                 FROM partidas
                 LEFT JOIN parciais ON partidas.rodada = parciais.rodada AND atleta_id = ?
-                GROUP BY partidas.rodada, pontuacao, valorizacao
+                GROUP BY partidas.rodada, pontuacao, variacao_num
                 LIMIT ?
                 OFFSET ?
             ', [$id, $qtde_rodada, $rodada])
@@ -214,7 +214,7 @@ class AtletasController extends Controller
             'grafico' => [
                 'rodadas' => $rodadas->all(),
                 'pontuacao' => $rodada ? $parciais->pluck('pontuacao') : [],
-                'valorizacao' => $rodada ? $parciais->pluck('valorizacao') : [],
+                'variacao_num' => $rodada ? $parciais->pluck('variacao_num') : [],
             ]
         ]);
     }

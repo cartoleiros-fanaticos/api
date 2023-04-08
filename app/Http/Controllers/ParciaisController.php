@@ -26,7 +26,7 @@ class ParciaisController extends Controller
             'atletas.apelido',
             'posicoes.nome as posicao',
             'parciais.clube_id',
-            'parciais.valorizacao',
+            'parciais.variacao_num',
             'parciais.pontuacao',
             'parciais.A',
             'parciais.G',

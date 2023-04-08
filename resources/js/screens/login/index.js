@@ -33,6 +33,15 @@ function login() {
 
     const [loading, sloading] = useState(false);
 
+    useEffect(() => {
+        
+        const token = localStorage.getItem('token');
+
+        if (token)
+            navigate('/auth/atletas');
+
+    }, [])
+
     async function enter(e) {
 
         e.preventDefault();
@@ -41,11 +50,11 @@ function login() {
 
         try {
 
-            let { data: { auth: { access_token }, user:usr } } = await api.post('login', user);
+            let { data: { auth: { access_token }, user: usr } } = await api.post('login', user);
 
             localStorage.setItem('token', access_token);
             localStorage.setItem('user', JSON.stringify(usr));
-            
+
             navigate('/auth/atletas');
 
         } catch (e) {

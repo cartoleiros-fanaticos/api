@@ -69,7 +69,7 @@ function player({ data, fnc }) {
                     enabled: true,
                 },
                 negativeColor: '#da0303',
-                data: data.grafico.valorizacao,
+                data: data.grafico.variacao_num,
                 type: 'column',
                 name: 'Cartoletas',
                 color: '#000000'
