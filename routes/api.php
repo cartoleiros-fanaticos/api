@@ -10,6 +10,7 @@ use App\Http\Controllers\ParciaisController;
 use App\Http\Controllers\PlanosController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\VideosController;
+use App\Models\Planos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,13 +28,14 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', [AuthController::class, 'login']);
 Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
 Route::post('refresh', [AuthController::class, 'refresh']);
+Route::post('notificacao-pix', [PlanosController::class, 'notificacaoPix']);
 
 Route::group([
-    
+
     'middleware' => 'jwt',
-    
+
 ], function ($router) {
-    
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
 
@@ -50,9 +52,11 @@ Route::group([
 
     Route::get('planos', [PlanosController::class, 'index']);
     Route::get('cobranca-pix/{id}', [PlanosController::class, 'cobrancaPix']);
+    Route::get('verificar-pix', [PlanosController::class, 'verificarPix']);
 
     Route::get('estatisticas/time/{id}', [EstatisticasController::class, 'time']);
     Route::get('estatisticas/times', [EstatisticasController::class, 'times']);
+    Route::get('estatisticas/time-rodada/{id}', [EstatisticasController::class, 'time_rodada']);
 
     Route::get('compare/atletas', [AtletasController::class, 'compare']);
     Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);

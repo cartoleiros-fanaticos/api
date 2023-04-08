@@ -167,9 +167,9 @@ export const Description = styled.p`
 `;
 
 export const Name = styled.strong`
-    font-size: 0.8em;
+    font-size: 0.9em;
 `;
 
 export const Position = styled.small`
-    font-size: 0.7em;
+    font-size: 0.8em;
 `;

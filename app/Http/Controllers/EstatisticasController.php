@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Clubes;
 use App\Models\Game;
+use App\Models\Parciais;
 use App\Models\Posicoes;
 use App\Models\TimesCartola;
 use App\Models\TimesCartolaAtletas;
@@ -350,9 +351,33 @@ class EstatisticasController extends Controller
 
             endif;
 
+            $time = TimesCartola::with(
+                [
+                    'rodadas' => function ($q) use ($rodada_atual) {
+                        $q->where('rodada_time_id', $rodada_atual);
+                    },
+
+                    'rodadas.atletas' => function ($q) use ($rodada_atual) {
+                        $q->where('rodada_time_id', $rodada_atual);
+                    },
+
+                    'rodadas.reservas' => function ($q) use ($rodada_atual) {
+                        $q->where('rodada_time_id', $rodada_atual);
+                    }
+                ]
+            )
+                ->where('time_id', $id)
+                ->first();
+
+            $pontuacao = Parciais::where('rodada', $rodada_atual)
+                ->get()
+                ->keyBy('atleta_id');
+
             $response = [
                 'time_id' => $id,
-                'rodada_atual' => $game->rodada_atual,
+                'rodada_atual' => $rodada_atual,
+                'time' => $time,
+                'pontuacao' => $pontuacao,
                 'geral' => $geral,
                 'destaques' => $destaques,
                 'maior_e_menor' => $maior_e_menor,
@@ -376,5 +401,40 @@ class EstatisticasController extends Controller
             Log::error($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 400);
         }
+    }
+
+    public function time_rodada(Request $request, $id)
+    {
+
+        $rodada_atual = $request->rodada;
+
+        $time = TimesCartola::with(
+            [
+                'rodadas' => function ($q) use ($rodada_atual) {
+                    $q->where('rodada_time_id', $rodada_atual);
+                },
+
+                'rodadas.atletas' => function ($q) use ($rodada_atual) {
+                    $q->where('rodada_time_id', $rodada_atual);
+                },
+
+                'rodadas.reservas' => function ($q) use ($rodada_atual) {
+                    $q->where('rodada_time_id', $rodada_atual);
+                }
+            ]
+        )
+            ->where('time_id', $id)
+            ->first();
+
+        $pontuacao = Parciais::where('rodada', $rodada_atual)
+            ->get()
+            ->keyBy('atleta_id');
+
+        return response()->json([
+            'time_id' => $id,
+            'rodada_atual' => $rodada_atual,
+            'time' => $time,
+            'pontuacao' => $pontuacao
+        ]);
     }
 }
