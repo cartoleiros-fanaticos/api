@@ -6,6 +6,7 @@ import api from '../../../utils/api';
 import Container from '../../../componets/container';
 import Loading from '../../../componets/loading';
 import Rounds from '../../../componets/rounds';
+import Player from '../../../componets/player';
 
 import {
     Content,
@@ -15,13 +16,13 @@ import {
     Bold,
     Text,
     Players,
-    Player,
-    Captain,
-    Photo,
-    ContainerNamePosition,
-    Name,
-    Position,
-    Price,
+    // Player,
+    // Captain,
+    // Photo,
+    // ContainerNamePosition,
+    // Name,
+    // Position,
+    // Price,
     Title,
 } from './styles';
 
@@ -50,7 +51,8 @@ function lineup() {
 
             sdata({
                 ...data,
-                time: response.data,
+                time: response.data.time,
+                scouts: response.data.scouts
             });
 
             sloading(false);
@@ -112,15 +114,21 @@ function lineup() {
                             {
                                 data.time ?
                                     data.time.rodadas.atletas.map((e, i) =>
-                                        <Player key={i}>
-                                            <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
-                                            <Photo src={e.foto} />
-                                            <ContainerNamePosition>
-                                                <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
-                                                <Position>{e.posicao}</Position>
-                                            </ContainerNamePosition>
-                                            <Price>C$ {amount(e.preco_num)}</Price>
-                                        </Player>
+
+                                        <Player
+                                            data={e}
+                                            scouts={data.scouts}
+                                            capitao_id={data.time.rodadas.capitao_id}
+                                        />
+                                        // <Player key={i}>
+                                        //     <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
+                                        //     <Photo src={e.foto} />
+                                        //     <ContainerNamePosition>
+                                        //         <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
+                                        //         <Position>{e.posicao}</Position>
+                                        //     </ContainerNamePosition>
+                                        //     <Price>C$ {amount(e.preco_num)}</Price>
+                                        // </Player>
                                     )
                                     :
                                     <Message>Selecione um time</Message>
@@ -131,15 +139,16 @@ function lineup() {
                                     <Title>RESERVAS</Title>
                                     {
                                         data.time.rodadas.reservas.map((e, i) =>
-                                            <Player key={i}>
-                                                <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
-                                                <Photo src={e.foto} />
-                                                <ContainerNamePosition>
-                                                    <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
-                                                    <Position>{e.posicao}</Position>
-                                                </ContainerNamePosition>
-                                                <Price>C$ {amount(e.preco_num)}</Price>
-                                            </Player>
+                                            <></>
+                                            // <Player key={i}>
+                                            //     <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
+                                            //     <Photo src={e.foto} />
+                                            //     <ContainerNamePosition>
+                                            //         <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
+                                            //         <Position>{e.posicao}</Position>
+                                            //     </ContainerNamePosition>
+                                            //     <Price>C$ {amount(e.preco_num)}</Price>
+                                            // </Player>
                                         )
                                     }
                                 </>

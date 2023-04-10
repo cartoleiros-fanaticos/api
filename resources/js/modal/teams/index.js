@@ -10,7 +10,6 @@ import Loading from '../../componets/loading';
 import {
     Container,
     Label,
-    List,
     Icon,
     Input,
     Team,
@@ -38,7 +37,7 @@ function teams({ fnc, smodal }) {
 
             sloading(true);
 
-            const { data } = await api.get(`estatisticas/times?nome_time=${value}`);
+            const { data } = await api.get(`parciais/times?nome_time=${value}`);
 
             sdata(data);
             sloading(false);

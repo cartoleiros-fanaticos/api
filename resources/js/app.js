@@ -10,19 +10,23 @@ import Login from './screens/login';
 import Register from './screens/register';
 import Recovery from './screens/recovery';
 
-import Player from './screens/auth/player';
 import Lineup from './screens/auth/lineup';
-import Emphasis from './screens/auth/emphasis';
+
 import Scouts from './screens/auth/crossing/scouts';
 import Score from './screens/auth/crossing/score';
 import Average from './screens/auth/crossing/average';
-import Plans from './screens/auth/plans';
-import League from './screens/auth/league';
+
+import Players from './screens/auth/partials/players';
+import Clubs from './screens/auth/partials/clubs';
+import Teams from './screens/auth/partials/teams';
+import Leagues from './screens/auth/partials/leagues';
+
+import Player from './screens/auth/player';
 import Videos from './screens/auth/videos';
+import League from './screens/auth/league';
+import Emphasis from './screens/auth/emphasis';
 import Contact from './screens/auth/contact';
-import Players from './screens/auth/partials/player';
-import Rounds from './screens/auth/partials/rounds';
-import Statistics from './screens/auth/partials/statistics';
+import Plans from './screens/auth/plans';
 
 const router = createBrowserRouter([
     {
@@ -36,14 +40,10 @@ const router = createBrowserRouter([
     {
         path: "/recovery",
         element: <Recovery />,
-    },
+    },    
     {
         path: "/auth/escalacao",
         element: <Lineup />,
-    },
-    {
-        path: "/auth/atletas",
-        element: <Player />,
     },
     {
         path: "/auth/cruzamento-scouts",
@@ -58,36 +58,44 @@ const router = createBrowserRouter([
         element: <Average />,
     },
     {
-        path: "/auth/destaques",
-        element: <Emphasis />,
-    },
-    {
-        path: "/auth/parciais/jogadores",
+        path: "/auth/parciais/atletas",
         element: <Players />,
     },
     {
         path: "/auth/parciais/clubes",
-        element: <Rounds />,
+        element: <Clubs />,
     },
     {
         path: "/auth/parciais/times",
-        element: <Statistics />,
+        element: <Teams />,
     },
     {
-        path: "/auth/ligas",
-        element: <League />,
+        path: "/auth/parciais/ligas",
+        element: <Leagues />,
+    },
+    {
+        path: "/auth/atletas",
+        element: <Player />,
     },
     {
         path: "/auth/videos",
         element: <Videos />,
     },
     {
-        path: "/auth/planos",
-        element: <Plans />,
+        path: "/auth/ligas",
+        element: <League />,
+    },
+    {
+        path: "/auth/destaques",
+        element: <Emphasis />,
     },
     {
         path: "/auth/contato",
         element: <Contact />,
+    },
+    {
+        path: "/auth/planos",
+        element: <Plans />,
     },
 ]);
 

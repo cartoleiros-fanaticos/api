@@ -144,14 +144,13 @@ export const ContainerNamePosition = styled.div`
     flex-direction: column;
 `;
 
-
 export const Name = styled.strong`
     font-size: 0.9em;
     margin: 0 10px;
 `;
 
 export const Position = styled.span`
-    color: #F68D42;
+    color: #999;
     margin: 0 10px;
     font-size: 0.9em;
 `;

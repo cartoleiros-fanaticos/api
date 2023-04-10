@@ -21,7 +21,7 @@ class PlanosSeeder extends Seeder
             ],
             [
                 'nome' => 'PLANO FANÁTICO',
-                'valor' => '19.90',
+                'valor' => '119.90',
             ],
 
         ];

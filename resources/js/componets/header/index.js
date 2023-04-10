@@ -149,9 +149,9 @@ function header() {
                         </ButtonLink>
                         <SubItem className='parciais'>
                             <Item>
-                                <NavLink to="/auth/parciais/jogadores">
+                                <NavLink to="/auth/parciais/atletas">
                                     <Icon>directions_run</Icon>
-                                    PARCIAIS JOGADORES
+                                    PARCIAIS ATLETAS
                                 </NavLink>
                             </Item>
                             <Item>

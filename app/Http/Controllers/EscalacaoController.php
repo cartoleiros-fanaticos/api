@@ -7,6 +7,7 @@ use App\Models\EscalacaoAtletas;
 use App\Models\EscalacaoRodadas;
 use App\Models\EscalacaoTimes;
 use App\Models\Game;
+use App\Models\Scouts;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -19,6 +20,12 @@ use Validator;
 
 class EscalacaoController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('jwt', ['except' => ['store']]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -155,7 +162,7 @@ class EscalacaoController extends Controller
 
         $rodada = $request->rodada;
 
-        $response = EscalacaoTimes::with(
+        $time = EscalacaoTimes::with(
             [
                 'rodadas' => function ($q) use ($rodada) {
                     $q->where('rodada_time_id', $rodada);
@@ -173,7 +180,14 @@ class EscalacaoController extends Controller
             ->where('time_id', $id)
             ->first();
 
-        return response()->json($response);
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
+            ->get();
+
+        return response()->json([
+            'time' => $time,
+            'scouts' => $scouts
+        ]);
     }
 
     /**

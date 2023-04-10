@@ -30,37 +30,43 @@ Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
 Route::post('refresh', [AuthController::class, 'refresh']);
 Route::post('notificacao-pix', [PlanosController::class, 'notificacaoPix']);
 
+Route::resource('escalacao', EscalacaoController::class);
+
 Route::group([
-
+    
     'middleware' => 'jwt',
-
+    
 ], function ($router) {
-
+    
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
+    
 
     Route::resource('usuarios', UsuariosController::class);
     Route::resource('cruzamento', CruzamentoController::class);
+    
+
     Route::post('enviar-email/contato', [ContatoController::class, 'enviar_email']);
 
-    Route::resource('escalacao', EscalacaoController::class);
     Route::resource('atletas', AtletasController::class);
+    Route::get('compare/atletas', [AtletasController::class, 'compare']);
+    Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);
+    Route::get('destaques/atletas', [AtletasController::class, 'destaques']);
 
     Route::get('parciais/atletas', [ParciaisController::class, 'parciais_atletas']);
-    Route::get('parciais/rodadas', [ParciaisController::class, 'parciais_rodadas']);
-    Route::get('parciais/partida', [ParciaisController::class, 'parciais_partida']);
+    Route::get('parciais/clubes/{id}', [ParciaisController::class, 'parciais_clubes']);
+    Route::get('parciais/time/{id}', [ParciaisController::class, 'parciais_time']);
+    Route::get('parciais/liga/{slug}', [ParciaisController::class, 'parciais_liga']);
+
+    Route::get('parciais/partidas', [ParciaisController::class, 'partidas']);
+    Route::get('parciais/ligas', [ParciaisController::class, 'ligas']);
+    Route::get('parciais/times', [ParciaisController::class, 'times']);
+
+    Route::get('parciais/time/rodada/{id}', [ParciaisController::class, 'time_rodada']);
 
     Route::get('planos', [PlanosController::class, 'index']);
     Route::get('cobranca-pix/{id}', [PlanosController::class, 'cobrancaPix']);
     Route::get('verificar-pix', [PlanosController::class, 'verificarPix']);
-
-    Route::get('estatisticas/time/{id}', [EstatisticasController::class, 'time']);
-    Route::get('estatisticas/times', [EstatisticasController::class, 'times']);
-    Route::get('estatisticas/time-rodada/{id}', [EstatisticasController::class, 'time_rodada']);
-
-    Route::get('compare/atletas', [AtletasController::class, 'compare']);
-    Route::get('pontos-cedidos/atletas', [AtletasController::class, 'pontos_cedidos']);
-    Route::get('destaques/atletas', [AtletasController::class, 'destaques']);
 
     Route::resource('videos', VideosController::class);
 });
