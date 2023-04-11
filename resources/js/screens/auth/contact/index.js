@@ -79,7 +79,7 @@ function contact() {
         };
     }
 
-    const component = () => (
+    const component = (
         <Content>
             <Form onSubmit={enter}>
                 <Label>
@@ -113,7 +113,7 @@ function contact() {
     return (
         <Container
             title='Fale Conosco'
-            Component={component}
+            component={component}
         />
     );
 }

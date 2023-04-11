@@ -85,7 +85,7 @@ function lineup() {
 
     }
 
-    const component = () => (
+    const component = (
         <Content>
             <Rounds
                 fnc={getPlayers}
@@ -94,7 +94,7 @@ function lineup() {
             />
             <Teams>
                 {
-                    data.times.map((e, i) =>
+                    data.times?.map((e, i) =>
                         <Team onClick={() => getPlayers(data.rodada_atual, e.time_id)} key={i}>
                             <Shield src={e.url_escudo_png} />
                             <Text><Bold>Nome:</Bold> {e.nome}</Text>
@@ -162,7 +162,7 @@ function lineup() {
     return (
         <Container
             title='DICAS'
-            Component={component}
+            component={component}
             loading={loading_page}
         />
     );

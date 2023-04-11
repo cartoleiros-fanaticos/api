@@ -49,10 +49,10 @@ function players() {
 
   }
 
-  const component = () => (
+  const component = (
     <Content>
       {
-        data.atletas.length
+        data.atletas?.length
           ?
           <>
             <List>
@@ -62,24 +62,6 @@ function players() {
                     data={e}
                     scouts={data.scouts}
                   />
-                  // <Item key={i}>
-                  //   <Photo src={e.foto} />
-                  //   <Name>
-                  //     <Text1>{e.apelido}</Text1>
-                  //     <Text2>{e.posicao}</Text2>
-                  //   </Name>
-                  //   <Score>
-                  //     <Text1>{amount(e.pontuacao)}</Text1>
-                  //     <Text2>C$ {amount(e.variacao_num)}</Text2>
-                  //     <Scouts>
-                  //       {
-                  //         data.scouts.map(item =>
-                  //           <Scout value={e[item.sigla]} type={item.tipo}>{`${e[item.sigla]}${item.sigla}`}</Scout>
-                  //         )
-                  //       }
-                  //     </Scouts>
-                  //   </Score>
-                  // </Item>
                 )
               }
             </List>
@@ -94,7 +76,7 @@ function players() {
   return (
     <Container
       title='Parciais jogadores'
-      Component={component}
+      component={component}
       loading={loading_page}
     />
   );

@@ -14,6 +14,8 @@ import {
     Title,
 } from './styles';
 
+import { Message } from '../../../utils/styles';
+
 function videos() {
 
     const [data, sdata] = useState({});
@@ -45,19 +47,22 @@ function videos() {
 
     }
 
-    const component = () => (
+    const component = (
         <>
             <Content>
                 {
-                    data.map((e, i) =>
-                        <Thumbnails key={i} onClick={() => {
-                            surl(`https://www.youtube.com/embed/${e.video_id}`);
-                            smodal(true)
-                        }}>
-                            <Image src={e.thumbnails} />
-                            <Title>{e.title}</Title>
-                        </Thumbnails>
-                    )
+                    data.length ?
+                        data.map((e, i) =>
+                            <Thumbnails key={i} onClick={() => {
+                                surl(`https://www.youtube.com/embed/${e.video_id}`);
+                                smodal(true)
+                            }}>
+                                <Image src={e.thumbnails} />
+                                <Title>{e.title}</Title>
+                            </Thumbnails>
+                        )
+                        :
+                        <Message>Nenhum registro encontrado.</Message>
                 }
             </Content>
 
@@ -68,7 +73,7 @@ function videos() {
         <>
             <Container
                 title='VÍDEOS DICAS'
-                Component={component}
+                component={component}
                 loading={loading_page}
             />
             {

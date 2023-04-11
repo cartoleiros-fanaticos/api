@@ -54,7 +54,7 @@ function clubs() {
 
     }
 
-    const component = () => (
+    const component = (
         <Content>
             {
                 loading ?
@@ -95,7 +95,7 @@ function clubs() {
         <>
             <Container
                 title='Parciais clubes'
-                Component={component}
+                component={component}
                 loading={loading_page}
             />
             {

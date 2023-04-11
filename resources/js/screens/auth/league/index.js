@@ -15,7 +15,7 @@ function league() {
 
     const [data, sdata] = useState({});
 
-    const [loading_page, sloadingpage] = useState(true);
+    const [loading_page, sloadingpage] = useState(false);
 
     useEffect(() => {
         getData();
@@ -23,23 +23,23 @@ function league() {
 
     async function getData() {
 
-        try {
+        // try {
 
-            sloadingpage(true);
+        //     sloadingpage(true);
 
-            const { data } = await api.get(`destaques/atletas`);
+        //     const { data } = await api.get(`destaques/atletas`);
 
-            sdata(data);
-            sloadingpage(false);
+        //     sdata(data);
+        //     sloadingpage(false);
 
-        } catch (e) {
-            message(e);
-            sloadingpage(false);
-        };
+        // } catch (e) {
+        //     message(e);
+        //     sloadingpage(false);
+        // };
 
     }
 
-    const component = () => (
+    const component = (
         <Content>
             <Message>Em construção.</Message>
         </Content>
@@ -48,7 +48,7 @@ function league() {
     return (
         <Container
             title='Ligas'
-            Component={component}
+            component={component}
             loading={loading_page}
         />
     );

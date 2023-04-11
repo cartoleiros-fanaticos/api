@@ -20,7 +20,7 @@ class AtletasController extends Controller
     public function index(Request $request)
     {
 
-        $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'clube_id', 'posicao_id', 'status_id', 'rodada_id')
+        $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'clube_id', 'posicao_id', 'status_id', 'rodada_id', 'A','G','CA','CV','DP','FC','FD','FF','FS','FT','GC','GS','I','PP','DS','SG','PS','PC','DE')
             ->selectRaw('(SELECT CONCAT(clube_casa_id, \'x\',  clube_visitante_id) FROM partidas WHERE rodada = rodada_id AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS confronto')
             ->where(function ($q) use ($request) {
 

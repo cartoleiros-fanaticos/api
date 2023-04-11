@@ -45,13 +45,13 @@ function emphasis() {
 
     }
 
-    const component = () => (
+    const component = (
         <Content>
             <Group>
                 <Title>Jogadores Mais Escalados</Title>
                 <List>
                     {
-                        data['Seleção'].map((e, i) =>
+                        data['Seleção']?.map((e, i) =>
                             <Item key={i}>
                                 <Position>{i + 1} º</Position>
                                 <Photo src={e.foto} />
@@ -73,7 +73,7 @@ function emphasis() {
                     <Title>Capitão Mais Escalados</Title>
                     <List>
                         {
-                            data['Capitães'].map((e, i) =>
+                            data['Capitães']?.map((e, i) =>
                                 <Item key={i}>
                                     <Position>{i + 1} º</Position>
                                     <Photo src={e.foto} />
@@ -94,7 +94,7 @@ function emphasis() {
                     <Title>Reservas Mais Escalados</Title>
                     <List>
                         {
-                            data['Reservas'].map((e, i) =>
+                            data['Reservas']?.map((e, i) =>
                                 <Item key={i}>
                                     <Position>{i + 1} º</Position>
                                     <Photo src={e.foto} />
@@ -118,7 +118,7 @@ function emphasis() {
     return (
         <Container
             title='Mais Escalado'
-            Component={component}
+            component={component}
             loading={loading_page}
         />
     );

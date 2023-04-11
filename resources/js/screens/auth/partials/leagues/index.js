@@ -82,7 +82,7 @@ function leagues() {
 
     }
 
-    const component = () => (
+    const component = (
         <>
             <Label>
                 <Icon>groups</Icon>
@@ -191,7 +191,7 @@ function leagues() {
         <>
             <Container
                 title='Parciais ligas'
-                Component={component}
+                component={component}
             />
             {
                 modal &&

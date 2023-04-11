@@ -90,7 +90,7 @@ function crossing() {
 
   }
 
-  const component = () => (
+  const component = (
     <Content>
       <Picker>
         <Box>
@@ -163,7 +163,7 @@ function crossing() {
         </Texts>
         <ListTeams>
           {
-            data.partidas.map((e, i) =>
+            data.partidas?.map((e, i) =>
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
@@ -222,7 +222,7 @@ function crossing() {
         </Texts>
         <ListTeams>
           {
-            data.partidas.map((e, i) =>
+            data.partidas?.map((e, i) =>
               <Teams key={i}>
                 <Values>
                   <Shield src={data.clubes[e.clube_casa_id].escudo} />
@@ -278,7 +278,7 @@ function crossing() {
   return (
     <Container
       title='Cruzamento de scouts ( Gols )'
-      Component={component}
+      component={component}
       loading={loading_page}
     />
   );

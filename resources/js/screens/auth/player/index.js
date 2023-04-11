@@ -48,6 +48,8 @@ function Player() {
     scout: '',
   });
 
+  const [players, splayers] = useState([]);
+
   const [data, sdata] = useState({
     atletas: [],
     clubes: [],
@@ -81,6 +83,8 @@ function Player() {
       const { data } = await api.get(`atletas?clube_id=${filter.clube_id}&posicao_id=${filter.posicao_id}&status_id=${filter.status_id}&scout=${filter.scout}`);
 
       sdata(data);
+      splayers(data.atletas);
+
       sloadingpage(false);
       sloadingdata(false);
 
@@ -137,13 +141,15 @@ function Player() {
 
     const value = event.target.value.toLowerCase();
 
-    if (value.length >= 3) {
-      let atletas = data.atletas.filter(e => e.apelido.toLowerCase().indexOf(value) != -1);
-      sdata({ ...data, atletas: atletas });
+    if (value && value.length >= 3) {
+      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1);
+      sdata({ ...data, atletas });
+    } else if (value === '') {
+      sdata({ ...data, atletas: players });
     }
   }
 
-  const component = () => (
+  const component = (
     <Content>
       <Filter>
         <Select onChange={e => sfilter({ ...filter, clube_id: e.target.value })} value={filter.clube_id}>
@@ -188,6 +194,7 @@ function Player() {
               <Th>Última</Th>
               <Th>Média</Th>
               <Th>Jogos</Th>
+              <Th>{filter.scout || 'G'}</Th>
               <Th>Confronto</Th>
             </Tr>
           </Thead>
@@ -210,6 +217,7 @@ function Player() {
                     <Td>{amount(e.pontos_num)}</Td>
                     <Td>{amount(e.media_num)}</Td>
                     <Td>{e.jogos_num}</Td>
+                    <Td>{e[filter.scout] || e.G}</Td>
                     <Td>
                       <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />
                       x
@@ -231,7 +239,7 @@ function Player() {
     <>
       <Container
         title='Mercado'
-        Component={component}
+        component={component}
         loading={loading_page}
       />
       {

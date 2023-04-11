@@ -244,7 +244,7 @@ function teams() {
     const [loading, sloading] = useState(false);
 
     useEffect(() => {
-        if (location.state.time_id) getData(location.state.time_id);
+        if (location.state?.time_id) getData(location.state.time_id);
     }, [])
 
     async function getData(teams_id) {
@@ -267,7 +267,7 @@ function teams() {
 
     }
 
-    const component = () => (
+    const component = (
         <>
             <Label>
                 <Icon>security</Icon>
@@ -588,7 +588,7 @@ function teams() {
         <>
             <Container
                 title='Parciais times'
-                Component={component}
+                component={component}
             />
             {
                 modal &&

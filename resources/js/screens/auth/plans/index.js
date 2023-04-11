@@ -64,24 +64,27 @@ function plans() {
         };
     }
 
-    const component = () => (
+    const component = (
         <Content>
             <Box>
                 <Title>IMPERDÍVEL</Title>
                 <Plans>
                     {
-                        data.map((e, i) =>
-                            <Plan key={i}>
-                                <Name>{e.nome}</Name>
-                                <Values>
-                                    <Value>R${amount(e.valor)}</Value>
-                                </Values>
-                                <Pay onClick={() => {
-                                    sid(e.id);
-                                    smodal(true);
-                                }}>PAGAR</Pay>
-                            </Plan>
-                        )
+                        data.length ?
+                            data.map((e, i) =>
+                                <Plan key={i}>
+                                    <Name>{e.nome}</Name>
+                                    <Values>
+                                        <Value>R${amount(e.valor)}</Value>
+                                    </Values>
+                                    <Pay onClick={() => {
+                                        sid(e.id);
+                                        smodal(true);
+                                    }}>PAGAR</Pay>
+                                </Plan>
+                            )
+                            :
+                            <></>
                     }
                 </Plans>
             </Box>
@@ -256,7 +259,7 @@ function plans() {
         <>
             <Container
                 title='PLANOS'
-                Component={component}
+                component={component}
                 loading={loading_page}
             />
             {
@@ -272,7 +275,7 @@ function plans() {
                     fnc={(user) => {
 
                         swal_success('Plano contratado com SUCESSO!');
-                        navigate('/auth/cruzamento-scouts');                        
+                        navigate('/auth/cruzamento-scouts');
                         localStorage.setItem('user', JSON.stringify(user));
 
 
