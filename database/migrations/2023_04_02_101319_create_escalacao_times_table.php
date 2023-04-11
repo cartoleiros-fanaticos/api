@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('time_id')->unique();
             $table->string('url_escudo_png');
             $table->boolean('assinante')->default(false);
+            $table->text('access_token')->nullable();
             $table->timestamps();
         });
     }

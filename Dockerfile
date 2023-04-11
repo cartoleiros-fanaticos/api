@@ -4,4 +4,6 @@ WORKDIR /home/deploy
 
 COPY . .
 
-#CMD ['/usr/bin/supervisord -c /etc/supervisor/supervisord.conf']
+RUN chmod +x init.sh
+
+CMD ['/usr/bin/supervisord -c /etc/supervisor/supervisord.conf']
