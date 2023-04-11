@@ -10,6 +10,8 @@ import Rounds from '../../../../componets/rounds';
 import Modal from '../../../../componets/modal';
 import ModalTeams from '../../../../modal/teams';
 
+import { useLocation } from "react-router-dom";
+
 import {
     Content,
     Label,
@@ -48,6 +50,8 @@ import {
 import { Message } from '../../../../utils/styles';
 
 function teams() {
+
+    const location = useLocation();
 
     const team = {
         "id": 1,
@@ -239,7 +243,13 @@ function teams() {
 
     const [loading, sloading] = useState(false);
 
+    useEffect(() => {
+        if (location.state.time_id) getData(location.state.time_id);
+    }, [])
+
     async function getData(teams_id) {
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         try {
 

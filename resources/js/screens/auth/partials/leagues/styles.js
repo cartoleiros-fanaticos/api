@@ -4,13 +4,14 @@ export const Label = styled.label`
     width: 50%;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 5px 15px;
     border: solid 2px #ccc;
     background-color: #f1f1f1;
     border-radius: 10px;
     text-align: right;
-    margin: 25px auto;
+    margin: 15px auto;
     color: #666;
+    align-items: center;
 
     @media screen and (max-width:900px){
         width: 90%;
@@ -31,8 +32,9 @@ export const Input = styled.input.attrs(() => ({
     background-color: transparent;
     width: 100%;
     border: none;
-    font-size: 15px;
+    font-size: 0.9em;
     outline: none;
+    padding: 10px 5px;
     background-color: #f1f1f1;
 `;
 
@@ -40,9 +42,66 @@ export const Content = styled.div`
 
 `;
 
+export const Header = styled.div`
+    display: flex;
+    width: 60%;
+    align-items: center;
+    flex-direction: column;
+    margin: 25px auto;
+    position: relative;
+
+    @media screen and (max-width:900px){
+        width: 90%;
+    }
+`;
+
+export const Share = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))` 
+    font-size: 28px;
+    padding: 15px;
+    border-radius: 50%;
+    border: solid 2px #25D366;
+    top: 15px;
+    right: 0;
+    position: absolute;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    color: #25D366;
+
+    &:hover {
+        color: #fff;
+        background-color: #25D366;
+    }
+`;
+
+export const HeaderShield = styled.img`
+    width: 150px;
+    margin: 25px auto;
+`;
+
+export const HeaderTitle = styled.h3`
+    font-size: 2em;
+    font-weight: bold;
+
+    @media screen and (max-width:900px){
+        font-size: 1.5em;
+    }
+`;
+
+export const HeaderText = styled.span`
+    font-size: 0.9em;
+    margin-bottom: 10px;
+`;
+
+
 export const Emphasis = styled.div`
     display: flex;
     justify-content: space-between;
+
+    @media screen and (max-width:900px){
+        flex-direction: column;
+    }
 `;
 
 export const Box = styled.div`
@@ -55,6 +114,11 @@ export const Box = styled.div`
     border: solid 2px #F68D42;
     padding: 15px;
     border-radius: 0.5em;
+
+    @media screen and (max-width:900px){
+        width: 100%;
+        margin-bottom: 15px;
+    }
 `;
 
 export const Title = styled.h3`
@@ -73,6 +137,17 @@ export const Score = styled.strong`
 export const Text = styled.span`
     font-size: 0.8em;
 `;
+
+export const Select = styled.select`
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    background-color: transparent;
+`;
+
+export const Option = styled.option``;
+
 
 export const Table = styled.table.attrs(() => ({
     border: 1
@@ -112,6 +187,10 @@ export const Tr = styled.tr`
 export const Th = styled.th`
     font-size: 0.9em;
     width: ${({ width }) => width ? `${width}%` : 'auto' };
+
+    @media screen and (max-width:900px){
+        font-size: 0.8em;
+    }
 `;
 
 export const Tbody = styled.tbody`
