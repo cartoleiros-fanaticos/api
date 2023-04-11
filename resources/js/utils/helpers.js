@@ -3,6 +3,34 @@ import 'sweetalert2/src/sweetalert2.scss';
 
 import html2canvas from 'html2canvas';
 
+// export const space = (position, team, score, rest, status_mercado) => {
+//     let players = status_mercado === 2 ? (rest.length === 1 ? ('  ' + rest) : rest) + '/12' : '';
+//     return `*${position}* ${position < 10 ? '  -' : '-'} *${score} pts* ${players} | ${team}`;
+// }
+
+export const team = (team, orderBy) => {
+    return `*${team.ranking[orderBy] || 1}º* ${(team.ranking[orderBy] || 1) < 10 ? ' -' : '-'} *${(team.pontos[orderBy] || 0).toFixed(2)} pts* ${team.nome.substr(0, 11).toLowerCase()}`
+}
+
+export const share = (data, orderBy) => {
+
+    let br = '\n';
+    let text = `🏆 *${data.nome.substr(0, 22).toUpperCase()}* 🏆` + br + br;
+
+    text += `*_RANKING ${orderBy.toUpperCase()}_*` + br + br;
+
+    for (let x in data.times)
+        text += team(data.times[x], orderBy) + br;
+
+    text += br + '_Última atualização: ' + new Date().toLocaleTimeString('pt-BR') + '_' + br;
+
+    text += br + '_Acompanhe:_ cartoleirofanatico.com.br';
+
+    text = window.encodeURIComponent(text);
+    window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
+
+}
+
 export const amount = (value) => {
     return parseFloat(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }

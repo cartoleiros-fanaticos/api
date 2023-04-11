@@ -91,7 +91,7 @@ export const HeaderTitle = styled.h3`
 
 export const HeaderText = styled.span`
     font-size: 0.9em;
-    margin-bottom: 10px;
+    margin: 10px auto;
 `;
 
 
@@ -186,7 +186,7 @@ export const Tr = styled.tr`
 
 export const Th = styled.th`
     font-size: 0.9em;
-    width: ${({ width }) => width ? `${width}%` : 'auto' };
+    width: ${({ width }) => width ? `${width}%` : 'auto'};
 
     @media screen and (max-width:900px){
         font-size: 0.8em;
@@ -199,11 +199,19 @@ export const Tbody = styled.tbody`
 
 export const Td = styled.td`
     cursor: pointer;
-    width: ${({ width }) => width ? `${width}%` : 'auto' };
+    width: ${({ width }) => width ? `${width}%` : 'auto'};
     font-size: 0.9em;
     text-align: center;
     align-items: center;
 `;
+
+export const Variations = styled.span`
+    margin-left: 5px;
+    font-size: 0.7em;
+    color: ${({ value }) => value > 0 ? 'green' : (value < 0 ? 'red' : 'gray')};
+    display: ${({ value }) => value ? 'block' : 'none'};
+`;
+
 
 export const Shield = styled.img`
     width: 35px;

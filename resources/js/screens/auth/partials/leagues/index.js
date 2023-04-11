@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { amount, message } from '../../../../utils/helpers';
+import { amount, message, share } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
 import Container from '../../../../componets/container';
@@ -35,6 +35,7 @@ import {
     Th,
     Tbody,
     Td,
+    Variations,
     Shield,
     Description,
     NameTeam,
@@ -47,13 +48,22 @@ function leagues() {
 
     let navigate = useNavigate();
 
+
+    const [slug, sslug] = useState('');
     const [orderBy, sorderBy] = useState('campeonato');
+
     const [data, sdata] = useState({});
     const [modal, smodal] = useState(false);
 
     const [loading, sloading] = useState(false);
 
+    useEffect(() => {
+        getData(slug)
+    }, [orderBy])
+
     async function getData(slug) {
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 
         try {
 
@@ -61,6 +71,7 @@ function leagues() {
 
             const { data } = await api.get(`parciais/liga/${slug}?orderBy=${orderBy}`);
 
+            sslug(slug);
             sdata(data);
             sloading(false);
 
@@ -89,7 +100,7 @@ function leagues() {
                             data?.destaques ?
                                 <Content>
                                     <Header>
-                                        <Share>share</Share>
+                                        <Share onClick={() => share(data, orderBy) }>share</Share>
                                         <HeaderShield src={data.escudo} />
                                         <HeaderTitle>{data.nome}</HeaderTitle>
                                         <HeaderText>{data.descricao}</HeaderText>
@@ -151,7 +162,13 @@ function leagues() {
                                                                 </Description>
                                                             </Td>
                                                             <Td width={15}>{amount(e.pontos[orderBy === 'patrimonio' ? 'campeonato' : orderBy] || 0)}</Td>
-                                                            <Td width={15}>{e.ranking[orderBy] || 1}º</Td>
+                                                            <Td style={{ display: 'flex', justifyContent: 'center' }} width={15}>
+                                                                {e.ranking[orderBy] || 1}º
+                                                                {
+                                                                    orderBy != 'rodada' &&
+                                                                    <Variations value={e.variacao[orderBy] || 0}>{e.variacao[orderBy] || 0}</Variations>
+                                                                }
+                                                            </Td>
                                                         </Tr>
                                                     )
                                                     :
