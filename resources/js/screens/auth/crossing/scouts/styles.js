@@ -216,6 +216,16 @@ export const Total = styled.span`
     }
 `;
 
+export const Obs = styled.p`
+    color: #333;
+    display: block;
+    text-align: center;
+    margin: 25px auto 15px auto;
+    font-size: 0.9em;
+    width: 100%;
+    grid-column: 1/3;
+`;
+
 export const Tips = styled.div`
     margin-top: 20px;
     border: solid 2px #F68D42;

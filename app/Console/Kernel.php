@@ -16,6 +16,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:parciais')
             ->everyMinute();
 
+        $schedule->command('app:escalacao')
+            ->everyMinute();
+
         $schedule->command('app:game')
             ->everyTenMinutes();
 

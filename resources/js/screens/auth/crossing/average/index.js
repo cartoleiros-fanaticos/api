@@ -25,6 +25,7 @@ import {
   Value,
   Versus,
   Total,
+  Obs,
   Tips,
   TipsTitle,
   Text3,
@@ -247,6 +248,7 @@ function crossing() {
           }
         </ListTeams>
       </ContainerTeams>
+      {data.rodada_atual < 3 && <Obs>Obs.: Os dados dessa área só iram aparecer a partir da terceira rodada.</Obs>}
       <Tips>
         <TipsTitle>Cruzada de médias</TipsTitle>
         <Text3>Aqui você verá um cruzamento entre os médias cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>

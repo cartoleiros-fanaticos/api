@@ -24,6 +24,8 @@ import {
 
 function header() {
 
+    const user = JSON.parse(localStorage.getItem('user'));
+
     let navigate = useNavigate();
 
     const body = document.querySelector('body');
@@ -219,12 +221,14 @@ function header() {
                             SAIR
                         </ButtonLink>
                     </Item>
-                    <Item>
-                        <NavLink className="planos" to="/auth/planos">
-                            <Icon>wysiwyg</Icon>
-                            ASSINE JÁ
-                        </NavLink>
-                    </Item>
+                    {user.plano === 'Free Cartoleiro' &&
+                        <Item>
+                            <NavLink className="planos" to="/auth/planos">
+                                <Icon>wysiwyg</Icon>
+                                ASSINE JÁ
+                            </NavLink>
+                        </Item>
+                    }
                 </Nav>
             </Container >
             <Screen onClick={close_menu} ref={screen}></Screen>

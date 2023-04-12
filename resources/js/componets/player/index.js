@@ -16,7 +16,7 @@ import {
     Scout,
 } from './styles';
 
-function player({ data, capitao_id, scouts }) {
+function player({ data, capitao_id, scouts, parciais = [] }) {
     return (
         <Container>
             {capitao_id && <Captain captain={capitao_id === data.atleta_id}>C</Captain>}
@@ -26,7 +26,7 @@ function player({ data, capitao_id, scouts }) {
                 <Position>{data.posicao}</Position>
             </Description>
             <Score>
-                <Value color={data.pontuacao}>{amount(data.pontuacao)} pts</Value>
+                {parciais.length ? <Value value={parciais[data.atleta_id]?.pontuacao}>{amount(parciais[data.atleta_id]?.pontuacao)} pts</Value> : <></>}
                 <Price>C$ {amount(data.preco_num)}</Price>
                 {
                     scouts &&

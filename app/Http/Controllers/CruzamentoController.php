@@ -35,6 +35,7 @@ class CruzamentoController extends Controller
             $data = $this->pontos(null);
 
         return response()->json([
+            'rodada_atual' => $rodada_atual,
             'data' => $data,
             'partidas' => $partidas,
             'clubes' => $clubes,

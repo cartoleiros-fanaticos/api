@@ -9,13 +9,16 @@ class EscalacaoTimes extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'id', 'temporada', 'nome', 'slug', 'patrimonio', 'time_id', 'pontos_campeonato', 'url_escudo_png', 'assinante' ];
+    protected $fillable = [ 'id', 'temporada', 'nome', 'slug', 'patrimonio', 'time_id', 'pontos_campeonato', 'url_escudo_png', 'socio', 'access_token' ];
 
     // public function newQuery()
     // {
     //     return parent::newQuery()
     //         ->where('temporada', Carbon::now()->format('Y'));
     // }
+    protected $hidden = [
+        'access_token'
+    ];
 
     public function rodadas(){
         return $this->hasOne(EscalacaoRodadas::class, 'escalacao_times_id', 'id');

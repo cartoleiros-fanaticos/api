@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { message, download, swal_warning  } from '../../../../utils/helpers';
+import { message, download, swal_warning } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
 import {
@@ -20,11 +20,12 @@ import {
   ListTeams,
   Teams,
   Values,
-  Shield,  
+  Shield,
   Private,
   Value,
   Versus,
   Total,
+  Obs,
   Tips,
   TipsTitle,
   Text3,
@@ -247,6 +248,7 @@ function crossing() {
           }
         </ListTeams>
       </ContainerTeams>
+      {data.rodada_atual < 3 && <Obs>Obs.: Os dados dessa área só iram aparecer a partir da terceira rodada.</Obs>}
       <Tips>
         <TipsTitle>Cruzada de pontos</TipsTitle>
         <Text3>Aqui você verá um cruzamento entre os pontos cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>

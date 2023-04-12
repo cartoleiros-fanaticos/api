@@ -16,13 +16,9 @@ import {
     Bold,
     Text,
     Players,
-    // Player,
-    // Captain,
-    // Photo,
-    // ContainerNamePosition,
-    // Name,
-    // Position,
-    // Price,
+    Score,
+    ScoreText,
+    ScoreValue,
     Title,
 } from './styles';
 
@@ -43,6 +39,13 @@ function lineup() {
 
     async function getPlayers(rodada, time_id) {
 
+        sdata({
+            ...data,
+            time: null,
+            parciais: null,
+            pontuacao: null
+        });
+
         try {
 
             sloading(true);
@@ -51,8 +54,7 @@ function lineup() {
 
             sdata({
                 ...data,
-                time: response.data.time,
-                scouts: response.data.scouts
+                ...response.data
             });
 
             sloading(false);
@@ -95,11 +97,11 @@ function lineup() {
             <Teams>
                 {
                     data.times?.map((e, i) =>
-                        <Team onClick={() => getPlayers(data.rodada_atual, e.time_id)} key={i}>
+                        <Team className={data.time?.time_id === e.time_id ? 'active' : ''} onClick={() => getPlayers(data.rodada_atual, e.time_id)} key={i}>
                             <Shield src={e.url_escudo_png} />
                             <Text><Bold>Nome:</Bold> {e.nome}</Text>
                             <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>
-                            <Text><Bold>Campeonato:</Bold> {e.pontos_campeonato}</Text>
+                            <Text><Bold>Campeonato:</Bold> {amount(e.pontos_campeonato)}</Text>
                             <Text><Bold>Sócio:</Bold> {e.socio}</Text>
                         </Team>
                     )
@@ -113,45 +115,42 @@ function lineup() {
                         <>
                             {
                                 data.time ?
-                                    data.time.rodadas.atletas.map((e, i) =>
-
-                                        <Player
-                                            data={e}
-                                            scouts={data.scouts}
-                                            capitao_id={data.time.rodadas.capitao_id}
-                                        />
-                                        // <Player key={i}>
-                                        //     <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
-                                        //     <Photo src={e.foto} />
-                                        //     <ContainerNamePosition>
-                                        //         <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
-                                        //         <Position>{e.posicao}</Position>
-                                        //     </ContainerNamePosition>
-                                        //     <Price>C$ {amount(e.preco_num)}</Price>
-                                        // </Player>
-                                    )
+                                    <>
+                                        <Score>
+                                            <ScoreText>Pontuação:</ScoreText>
+                                            <ScoreValue>{amount(data.pontuacao)} pts</ScoreValue>
+                                        </Score>
+                                        {
+                                            data.time.rodadas.atletas.map((e, i) =>
+                                                <Player
+                                                    data={e}
+                                                    scouts={data.scouts}
+                                                    capitao_id={data.time.rodadas.capitao_id}
+                                                    parciais={data.parciais}
+                                                />
+                                            )
+                                        }
+                                    </>
                                     :
                                     <Message>Selecione um time</Message>
                             }
                             {
-                                (data.time && data.time.rodadas.reservas) &&
-                                <>
-                                    <Title>RESERVAS</Title>
-                                    {
-                                        data.time.rodadas.reservas.map((e, i) =>
-                                            <></>
-                                            // <Player key={i}>
-                                            //     <Captain captain={data.time.rodadas.capitao_id === e.atleta_id}>C</Captain>
-                                            //     <Photo src={e.foto} />
-                                            //     <ContainerNamePosition>
-                                            //         <Name>{`${e.apelido} ( ${e.abreviacao_clube} )`}</Name>
-                                            //         <Position>{e.posicao}</Position>
-                                            //     </ContainerNamePosition>
-                                            //     <Price>C$ {amount(e.preco_num)}</Price>
-                                            // </Player>
-                                        )
-                                    }
-                                </>
+                                (data.time && data.time.rodadas.reservas.length) ?
+                                    <>
+                                        <Title>RESERVAS</Title>
+                                        {
+                                            data.time.rodadas.reservas.map((e, i) =>
+                                                <Player
+                                                    data={e}
+                                                    scouts={data.scouts}
+                                                    capitao_id={data.time.rodadas.capitao_id}
+                                                    parciais={data.parciais}
+                                                />
+                                            )
+                                        }
+                                    </>
+                                    :
+                                    <></>
                             }
                         </>
                 }

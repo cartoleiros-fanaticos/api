@@ -87,7 +87,7 @@ class AuthController extends Controller
     public function refresh()
     {
         try {
-            return $this->respondWithToken(auth('api')->refresh());
+            return $this->respondWithToken(auth('api')->setTTL(336)->refresh());
         } catch (\Exception $e) {
             return response()->json(['message' => 'Seu token não está autorizado.'], 401);
         }

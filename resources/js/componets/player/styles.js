@@ -47,9 +47,10 @@ export const Score = styled.div`
     flex: 1;
 `;
 
-export const Value = styled.strong`
+export const Value = styled.span`
+    font-weight: 500;
     font-size: 0.8em;
-    color: ${({ color }) => color >= 0 ? 'green' : 'red' };
+    color: ${({ value }) => value > 0 ? 'green' : (value < 0 ? 'red' : 'gray' ) };
 `;
 
 export const Price = styled.span`

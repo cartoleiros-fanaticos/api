@@ -25,6 +25,7 @@ import {
   Value,
   Versus,
   Total,
+  Obs,
   Tips,
   TipsTitle,
   Text3,
@@ -35,8 +36,6 @@ import Container from '../../../../componets/container';
 function crossing() {
 
   const user = JSON.parse(localStorage.getItem('user'));
-
-  console.log(user);
 
   const [filter, sfilter] = useState({
     scout: { value: 'G', name: 'Gols' },
@@ -264,6 +263,7 @@ function crossing() {
           }
         </ListTeams>
       </ContainerTeams>
+      {data.rodada_atual < 3 && <Obs>Obs.: Os dados dessa área só iram aparecer a partir da terceira rodada.</Obs>}
       <Tips>
         <TipsTitle>Cruzada de Scouts</TipsTitle>
         <Text3>Aqui você verá um cruzamento entre os scouts cedidos e conquistados dos confrontos da rodada atual do cartola fc.</Text3>

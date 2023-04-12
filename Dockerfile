@@ -1,4 +1,4 @@
-FROM cartoleiro/app:latest
+FROM cartoleiro/app
 
 WORKDIR /home/deploy
 

@@ -7,6 +7,7 @@ use App\Models\EscalacaoAtletas;
 use App\Models\EscalacaoRodadas;
 use App\Models\EscalacaoTimes;
 use App\Models\Game;
+use App\Models\Parciais;
 use App\Models\Scouts;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
@@ -15,6 +16,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
 use Exception;
 use Log;
+use DB;
 use Validator;
 
 
@@ -46,7 +48,7 @@ class EscalacaoController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $regras = [
             'access_token' => 'required',
         ];
@@ -69,75 +71,82 @@ class EscalacaoController extends Controller
             $response = $client->get('https://api.cartola.globo.com/auth/time', ['headers' => $headers]);
             $response = json_decode($response->getBody(), true);
 
+            DB::transaction(function () use ($response, $request) {
 
-            $time = $response['time'];
+                $time = $response['time'];
 
-            $escalacao_times = EscalacaoTimes::updateOrCreate(
-                [
-                    'time_id' => $time['time_id']
-                ],
-                [
-                    'nome' => $time['nome'],
-                    'slug' => $time['slug'],
-                    'patrimonio' => $response['patrimonio'],
-                    'pontos_campeonato' => $response['pontos_campeonato'] ?? 0,
-                    'url_escudo_png' => $time['url_escudo_png'],
-                ]
-            );
+                $escalacao_times = EscalacaoTimes::updateOrCreate(
+                    [
+                        'time_id' => $time['time_id']
+                    ],
+                    [
+                        'nome' => $time['nome'],
+                        'slug' => $time['slug'],
+                        'patrimonio' => $response['patrimonio'],
+                        'pontos_campeonato' => $response['pontos_campeonato'] ?? 0,
+                        'url_escudo_png' => $time['url_escudo_png'],
+                        'access_token' => $request->access_token,
+                    ]
+                );
 
-            $escalacao_rodadas = EscalacaoRodadas::updateOrCreate(
-                [
-                    'escalacao_times_id' => $escalacao_times->id,
-                    'rodada_time_id' => $time['rodada_time_id'],
-                ],
-                [
-                    'capitao_id' => $response['capitao_id'],
-                    'esquema' => '4-3-3',
-                    'valor_time' => $response['valor_time'],
-                ]
-            );
+                if (COLLECT($response['atletas'])->count()) :
 
-            EscalacaoAtletas::where('rodada_time_id', $time['rodada_time_id'])
-                ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
-                ->delete();
+                    $escalacao_rodadas = EscalacaoRodadas::updateOrCreate(
+                        [
+                            'escalacao_times_id' => $escalacao_times->id,
+                            'rodada_time_id' => $time['rodada_time_id'],
+                        ],
+                        [
+                            'capitao_id' => $response['capitao_id'],
+                            'esquema' => '4-3-3',
+                            'valor_time' => $response['valor_time'],
+                        ]
+                    );
 
-            foreach ((array) $response['atletas'] as $key => $val) :
+                    EscalacaoAtletas::where('rodada_time_id', $time['rodada_time_id'])
+                        ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
+                        ->delete();
 
-                EscalacaoAtletas::create([
-                    'atleta_id' => $val['atleta_id'],
-                    'preco_num' => $val['preco_num'],
-                    'rodada_time_id' => $time['rodada_time_id'],
-                    'escalacao_rodadas_id' => $escalacao_rodadas->id,
-                ]);
+                    foreach ((array) $response['atletas'] as $key => $val) :
 
-            endforeach;
+                        EscalacaoAtletas::create([
+                            'atleta_id' => $val['atleta_id'],
+                            'preco_num' => $val['preco_num'],
+                            'rodada_time_id' => $time['rodada_time_id'],
+                            'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                        ]);
 
-            if (isset($response['reservas'])) :
+                    endforeach;
 
-                foreach ((array) $response['reservas'] as $key => $val) :
+                    if (isset($response['reservas'])) :
 
-                    EscalacaoAtletas::create([
-                        'atleta_id' => $val['atleta_id'],
-                        'preco_num' => $val['preco_num'],
-                        'rodada_time_id' => $time['rodada_time_id'],
-                        'escalacao_rodadas_id' => $escalacao_rodadas->id,
-                        'titular' => 'Não'
-                    ]);
+                        foreach ((array) $response['reservas'] as $key => $val) :
 
-                endforeach;
+                            EscalacaoAtletas::create([
+                                'atleta_id' => $val['atleta_id'],
+                                'preco_num' => $val['preco_num'],
+                                'rodada_time_id' => $time['rodada_time_id'],
+                                'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                                'titular' => 'Não'
+                            ]);
 
-            endif;
+                        endforeach;
+
+                    endif;
+
+                endif;
+            }, 3);
 
             return response()->json(['message' => 'Time cadastrado com sucesso.']);
         } catch (QueryException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 400);
         } catch (RequestException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 400);
         } catch (Exception $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 
@@ -180,11 +189,28 @@ class EscalacaoController extends Controller
             ->where('time_id', $id)
             ->first();
 
+            $user = auth('api')->user();
+    
+            if($user->plano === 'Free Cartoleiro' && $time->socio === 'Sim')
+                return response()->json(['message' => 'Plano exclusivo para sócio cartoleiro fanático.'], 401);
+
+        if (!$time->rodadas)
+            return response()->json(['message' => 'Time não foi escalado.'], 401);
+
+        $atleta_id = $time->rodadas->atletas->pluck('atleta_id');
+
+        $parciais = Parciais::whereIn('atleta_id', $atleta_id)
+            ->where('rodada', $rodada)
+            ->get()
+            ->keyBy('atleta_id');
+
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
             ->orderBy('tipo')
             ->get();
 
         return response()->json([
+            'pontuacao' => $parciais->sum('pontuacao'),
+            'parciais' => $parciais,
             'time' => $time,
             'scouts' => $scouts
         ]);
