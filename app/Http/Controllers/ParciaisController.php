@@ -72,30 +72,19 @@ class ParciaisController extends Controller
         ]);
     }
 
-    public function parciais_clubes(Request $request)
+    public function parciais_clubes(Request $request, $id)
     {
 
-        $regras = [
-            'clube_casa_id' => 'required',
-            'clube_visitante_id' => 'required',
-        ];
-
-        $mensagens = [
-            'clube_casa_id.required' => 'O campo clube_casa_id é obrigatório.',
-            'clube_visitante_id.required' => 'O campo clube_visitante_id é obrigatório.',
-        ];
-
-        $validator = Validator::make($request->all(), $regras, $mensagens);
-
-        if ($validator->fails())
-            return response()->json(['message' => $validator->errors()->first()], 400);
+        $partida = Partidas::find($id);
 
         $clube_casa = Parciais::with(['clubes', 'posicoes'])
-            ->where('clube_id', $request->clube_casa_id)
+            ->where('rodada', $partida->rodada)
+            ->where('clube_id', $partida->clube_casa_id)
             ->get();
 
         $clube_visitante = Parciais::with(['clubes', 'posicoes'])
-            ->where('clube_id', $request->clube_visitante_id)
+            ->where('rodada', $partida->rodada)
+            ->where('clube_id', $partida->clube_visitante_id)
             ->get();
 
         $clubes = Clubes::get()->keyBy('id');
@@ -106,10 +95,20 @@ class ParciaisController extends Controller
 
         return response()->json([
             'partida' => [
-                'clube_casa' => $clube_casa,
-                'clube_visitante' => $clube_visitante,
+                'id' => $partida->id,
+                'partida_data' => $partida->partida_data,
+                'local' => $partida->local,
+                'clube_casa' => [ 
+                    'nome' => $clubes[$partida->clube_casa_id]['nome'],
+                    'escudo' => $clubes[$partida->clube_casa_id]['60x60'],
+                    'atletas' => $clube_casa
+                ],
+                'clube_visitante' => [ 
+                    'nome' => $clubes[$partida->clube_visitante_id]['nome'],
+                    'escudo' => $clubes[$partida->clube_visitante_id]['60x60'],
+                    'atletas' => $clube_visitante
+                ]
             ],
-            'clubes' => $clubes,
             'scouts' => $scouts,
         ]);
     }
@@ -185,7 +184,7 @@ class ParciaisController extends Controller
 
                         $time_cartola_rodadas->save();
 
-                        foreach ($$response['atletas'] as $val) :
+                        foreach ($response['atletas'] as $val) :
 
                             $player[] = [
                                 'rodada_time_id' => $val['rodada_id'],
@@ -284,7 +283,6 @@ class ParciaisController extends Controller
                     'maior_pontuacao' => $atletas->where('pontos_num', $maior_pontuacao)->first() ?? 0,
                     'menor_pontuacao' => $atletas->where('pontos_num', $menor_pontuacao)->first() ?? 0,
                 ];
-
 
                 // $atletas = COLLECT([
                 //     [
@@ -437,7 +435,10 @@ class ParciaisController extends Controller
                 ->where('time_id', $id)
                 ->first();
 
-            $pontuacao = Parciais::where('rodada', $rodada_atual)
+            $atleta_id = $time->rodadas->atletas->pluck('atleta_id');
+
+            $parciais = Parciais::whereIn('atleta_id', $atleta_id)
+                ->where('rodada', $rodada)
                 ->get()
                 ->keyBy('atleta_id');
 
@@ -445,7 +446,8 @@ class ParciaisController extends Controller
                 'time_id' => $id,
                 'rodada_atual' => $rodada_atual,
                 'time' => $time,
-                'pontuacao' => $pontuacao,
+                'pontuacao' => $parciais->sum('pontuacao'),
+                'parciais' => $parciais,
                 'geral' => $geral,
                 'destaques' => $destaques,
                 'maior_e_menor' => $maior_e_menor,
@@ -518,38 +520,38 @@ class ParciaisController extends Controller
 
             if (isset($response['destaques'])) :
 
-                // $lanterninha = $times->filter(function ($value, $key) use ($response) {
-                //     return $value['time_id'] === $response['destaques']['lanterninha']['time_id'];
-                // })->values();
+            // $lanterninha = $times->filter(function ($value, $key) use ($response) {
+            //     return $value['time_id'] === $response['destaques']['lanterninha']['time_id'];
+            // })->values();
 
-                // $patrimonio = $times->filter(function ($value, $key) use ($response) {
-                //     return $value['time_id'] === $response['destaques']['patrimonio']['time_id'];
-                // })->values();
+            // $patrimonio = $times->filter(function ($value, $key) use ($response) {
+            //     return $value['time_id'] === $response['destaques']['patrimonio']['time_id'];
+            // })->values();
 
-                // $rodada = $times->filter(function ($value, $key) use ($response) {
-                //     return $value['time_id'] === $response['destaques']['rodada']['time_id'];
-                // })->values();
+            // $rodada = $times->filter(function ($value, $key) use ($response) {
+            //     return $value['time_id'] === $response['destaques']['rodada']['time_id'];
+            // })->values();
 
-                // $liga['destaques'] = [
-                //     'lanterninha' => [
-                //         'nome' => $response['destaques']['lanterninha']['nome'],
-                //         'nome_cartola' => $response['destaques']['lanterninha']['nome_cartola'],
-                //         'escudo' => $response['destaques']['lanterninha']['url_escudo_png'],
-                //         'pontos' => collect($lanterninha)->count() ? $lanterninha[0]['pontos']['rodada'] : 0
-                //     ],
-                //     'patrimonio' => [
-                //         'nome' => $response['destaques']['patrimonio']['nome'],
-                //         'nome_cartola' => $response['destaques']['patrimonio']['nome_cartola'],
-                //         'escudo' => $response['destaques']['patrimonio']['url_escudo_png'],
-                //         'pontos' => collect($patrimonio)->count() ? $patrimonio[0]['patrimonio'] : 0
-                //     ],
-                //     'rodada' => [
-                //         'nome' => $response['destaques']['rodada']['nome'],
-                //         'nome_cartola' => $response['destaques']['rodada']['nome_cartola'],
-                //         'escudo' => $response['destaques']['rodada']['url_escudo_png'],
-                //         'pontos' => collect($rodada)->count() ? $rodada[0]['pontos']['rodada'] : 0
-                //     ]
-                // ];
+            // $liga['destaques'] = [
+            //     'lanterninha' => [
+            //         'nome' => $response['destaques']['lanterninha']['nome'],
+            //         'nome_cartola' => $response['destaques']['lanterninha']['nome_cartola'],
+            //         'escudo' => $response['destaques']['lanterninha']['url_escudo_png'],
+            //         'pontos' => collect($lanterninha)->count() ? $lanterninha[0]['pontos']['rodada'] : 0
+            //     ],
+            //     'patrimonio' => [
+            //         'nome' => $response['destaques']['patrimonio']['nome'],
+            //         'nome_cartola' => $response['destaques']['patrimonio']['nome_cartola'],
+            //         'escudo' => $response['destaques']['patrimonio']['url_escudo_png'],
+            //         'pontos' => collect($patrimonio)->count() ? $patrimonio[0]['patrimonio'] : 0
+            //     ],
+            //     'rodada' => [
+            //         'nome' => $response['destaques']['rodada']['nome'],
+            //         'nome_cartola' => $response['destaques']['rodada']['nome_cartola'],
+            //         'escudo' => $response['destaques']['rodada']['url_escudo_png'],
+            //         'pontos' => collect($rodada)->count() ? $rodada[0]['pontos']['rodada'] : 0
+            //     ]
+            // ];
 
             endif;
 

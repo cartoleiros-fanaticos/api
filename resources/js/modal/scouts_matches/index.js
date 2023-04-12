@@ -1,38 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import api from '../../utils/api';
+
+import { message } from '../../utils/helpers';
+
+import Loading from '../../componets/loading';
 
 import {
   Container,
-  ClubA,
-  Header,
-  Legend,
-  Value,
-  List,
-  Item,
-  Photo,
-  Name,
-  Text1,
-  Text2,
-  Score,
-  Scouts,
-  Scout,
+  Match,
+  Local,
+  Time,
+  Address,
+  Team,  
+  Shield,
+  TeamName,
+  Versus,
 } from './styles';
 
-function scouts({ id }) {
+function scouts({ data: { id } }) {
 
   const [data, sdata] = useState([]);
-  const [loading, sloading] = useState(false);
+  const [loading, sloading] = useState(true);
 
   useEffect(() => {
     getData();
   }, [])
 
-  async function getData({ data: { partida } }) {
+  async function getData() {
 
     try {
 
-      sloading(true);
-
-      const { data } = await api.get(`parciais_partida?id=${id}&clube_casa_id=${partida.clube_casa_id}&clube_visitante_id=${partida.clube_visitante_id}`);
+      const { data } = await api.get(`parciais/clubes/${id}`);
 
       sdata(data);
       sloading(false);
@@ -46,39 +45,26 @@ function scouts({ id }) {
 
   return (
     <Container>
-      <ClubA>
-        <Header>
-          {/* <Legend>Pontuação: </Legend><Value>0</Value>
-          <Legend>Atletas: </Legend><Value>0</Value>
-          <Legend>Pontuação: </Legend><Value>0</Value> */}
-        </Header>
-        <List>
-          <List>
-            {/* {
-              data.clube_casa.map((e, i) =>
-                <Item key={i}>
-                  <Photo src={e.foto} />
-                  <Name>
-                    <Text1>{e.apelido}</Text1>
-                    <Text2>{e.posicao}</Text2>
-                  </Name>
-                  <Score>
-                    <Text1>{amount(e.pontuacao)}</Text1>
-                    <Text2>C$ {amount(e.valorizacao)}</Text2>
-                    <Scouts>
-                      {
-                        data.scouts.map(item =>
-                          <Scout value={e[item.sigla]} type={item.tipo}>{`${e[item.sigla]}${item.sigla}`}</Scout>
-                        )
-                      }
-                    </Scouts>
-                  </Score>
-                </Item>
-              )
-            } */}
-          </List>
-        </List>
-      </ClubA>
+      {
+        loading ?
+          <Loading />
+          :
+          <Match>
+            <Local>
+              <Time>{data.partida.partida_data}</Time>
+              <Address>{data.partida.local}</Address>
+            </Local>
+            <Team>
+              <Shield src={data.partida.clube_casa.escudo} />
+              <TeamName>{data.partida.clube_casa.nome}</TeamName>
+            </Team>
+            <Versus>x</Versus>
+            <Team>
+              <Shield src={data.partida.clube_visitante.escudo} />
+              <TeamName>{data.partida.clube_visitante.nome}</TeamName>
+            </Team>
+          </Match>
+      }
     </Container>
   );
 }

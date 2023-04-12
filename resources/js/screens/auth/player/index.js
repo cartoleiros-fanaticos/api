@@ -107,9 +107,9 @@ function Player() {
       if (atleta_a) {
 
         smodalcompare(true);
+        delete atleta_a.compare;
         const response = await api.get(`compare/atletas?atleta_a=${atleta_a.atleta_id}&atleta_b=${atleta_id}`);
         sdataplayer(response.data);
-        delete atleta_a.compare;
         sdata(data);
 
       } else {
@@ -123,6 +123,7 @@ function Player() {
 
     } catch (e) {
       message(e);
+      smodalcompare(false);
       sloadingdataplayer(false);
     };
 

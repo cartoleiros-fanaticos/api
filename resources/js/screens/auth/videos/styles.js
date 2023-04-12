@@ -24,6 +24,8 @@ export const Thumbnails = styled.div`
     border: solid thin #f1f1f1;
     cursor: pointer;
     transition-duration: 0.5s;
+    background-color: #fff;
+    width: 100%;
 
     &:hover {
         transform: scale(1.2);

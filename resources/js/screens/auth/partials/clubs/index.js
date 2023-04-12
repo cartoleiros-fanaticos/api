@@ -69,11 +69,11 @@ function clubs() {
                             {
                                 data.partidas.map((e, i) =>
                                     <Item onClick={() => {
-                                        smodal(true)
                                         sdata({
                                             ...data,
                                             partida: e
                                         });
+                                        smodal(true)
                                     }} key={i}>
                                         <Date>{e.partida_data}</Date>
                                         <Shield src={data.clubes[e.clube_casa_id]['60x60']} />

@@ -4,74 +4,39 @@ export const Container = styled.form`
   
 `;
 
-export const List = styled.div`
-
-`;
-
-export const ClubA = styled.div`
-
-`;
-
-export const Header = styled.div`
-   display: grid;
-   grid-template-columns: 50% 50%;
-`;
-
-export const Legend = styled.strong`
-    text-align: left;
-`;
-
-export const Value = styled.span`
-    text-align: right;
-`;
-
-
-export const Item = styled.div`
-    padding: 10px;
-    border-bottom: solid thin #cccccc;
+export const Match = styled.div`
     display: grid;
-    grid-template-columns: 35px auto 60%;
-    grid-column-gap: 25px;
+    grid-template-columns: 48% auto 48%;
+    grid-gap: 5px;
+    border: solid thin red;
+`;
+
+export const Local = styled.div`
+    border: solid thin red;
+    grid-column: 1/4;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
 `;
 
-export const Photo = styled.img`
-    width: 35px;
-    height: 35px;
-`;
+export const Time = styled.small``;
 
-export const Name = styled.div`
+export const Address = styled.strong``;
+
+export const Team = styled.div`
+    border: solid thin red;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    justify-content: center;
 `;
 
-export const Text1 = styled.strong`
-    font-size: 0.8em;
+export const Shield = styled.img``;
+
+export const TeamName = styled.strong`
 `;
 
-export const Text2 = styled.span`
-    font-size: 0.8em;
+export const Versus  = styled.strong`
+border: solid thin red;
 `;
-
-export const Score = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    width: 100%;
-`;
-
-export const Scouts = styled.div`
-    display: flex;
-    justify-content: flex-end;;
-    width: 100%;
-`;
-
-export const Scout = styled.small`
-    font-size: 0.7em;
-    margin-left: 5px;
-    color: ${({ type }) => type > 'Positivo' ? 'green' : 'red'};
-    display: ${({ value }) => value > 0 ? 'block' : 'none'};
-`;
-
-
