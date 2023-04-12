@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('planos', function (Blueprint $table) {
             $table->id();
-            $table->string('nome');
+            $table->enum('nome', ['Plano Stats', 'Plano Fanático']);
             $table->float('valor');
             $table->float('desconto')->default(0);
             $table->timestamps();

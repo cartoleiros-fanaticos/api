@@ -9,6 +9,8 @@ class Config extends Model
 {
     use HasFactory;
 
+    protected $fillable = [ 'id', 'mp_access_token' ];
+
     // public function newQuery()
     // {
     //     return parent::newQuery()

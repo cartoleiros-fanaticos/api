@@ -21,9 +21,9 @@ class UsuariosSeeder extends Seeder
             [
                 'nome' => 'Roberval Coelho',
                 'celular' => '99981209872',
-                'password' => Hash::make('admin'),
+                'password' => Hash::make('bhGj4Y'),
                 'acesso' => 'Admin',
-                'plano' => 'Premium Campeão',
+                'plano' => 'Plano Fanático',
                 'ativo' => 'Sim'
             ]
         );

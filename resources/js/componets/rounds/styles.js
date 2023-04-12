@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 
 export const Container = styled.div`
-    width: 100%;
+    width: 1080px;
     overflow: hidden;
     position: relative;
     height: 60px;
@@ -22,7 +22,7 @@ export const List = styled.div`
 `;
 
 export const Item = styled.a`
-    width: 100.398px;
+    width: 98.18px;
     height: 40px;
     font-size: 0.9em;
     display: flex;

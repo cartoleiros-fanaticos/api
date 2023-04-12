@@ -29,7 +29,7 @@ function rounds({ rodada_atual, fnc }) {
             let box = 5;
             let box_min = 5;
             let box_max = 34;
-            let width_box = 100.398;
+            let width_box = 98.18;
 
             if (window.innerWidth <= 900) {
                 box_view = 7;

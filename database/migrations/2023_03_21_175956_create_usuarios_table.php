@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('recovery')->nullable();
             $table->string('password');
             $table->enum('acesso',['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
-            $table->enum('plano',['Demonstrativo', 'Premium Campeão', 'Premium Cartoleiro', 'Free Cartoleiro', 'Plano Stats'])->default('Demonstrativo');
+            $table->enum('plano',['Demonstrativo', 'Free Cartoleiro', 'Plano Stats', 'Plano Fanático'])->default('Demonstrativo');
             $table->enum('ativo',['Sim', 'Não'])->default('Sim');
             $table->timestamps();
         });

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
     display: grid;
-    grid-template-columns: 35% 70%;
+    grid-template-columns: calc(35% - 10px) 65%;
     grid-gap: 10px;
     user-select: none;
 
