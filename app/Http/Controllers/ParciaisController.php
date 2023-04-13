@@ -75,17 +75,33 @@ class ParciaisController extends Controller
     public function parciais_clubes(Request $request, $id)
     {
 
-        $partida = Partidas::find($id);
+        $partida = Partidas::select('id', 'rodada', 'local', 'clube_casa_id', 'clube_visitante_id')
+            ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
+            ->find($id);
 
-        $clube_casa = Parciais::with(['clubes', 'posicoes'])
+        $atletas_casa = Parciais::with(['clubes', 'posicoes'])
             ->where('rodada', $partida->rodada)
             ->where('clube_id', $partida->clube_casa_id)
             ->get();
 
-        $clube_visitante = Parciais::with(['clubes', 'posicoes'])
+        $atleta_id = $atletas_casa->pluck('atleta_id');
+
+        $parciais_atletas_casa = Parciais::whereIn('atleta_id', $atleta_id)
+            ->where('rodada', $partida->rodada)
+            ->get()
+            ->keyBy('atleta_id');
+
+        $atletas_visitante = Parciais::with(['clubes', 'posicoes'])
             ->where('rodada', $partida->rodada)
             ->where('clube_id', $partida->clube_visitante_id)
             ->get();
+
+        $atleta_id = $atletas_visitante->pluck('atleta_id');
+
+        $parciais_atletas_visitante = Parciais::whereIn('atleta_id', $atleta_id)
+            ->where('rodada', $partida->rodada)
+            ->get()
+            ->keyBy('atleta_id');
 
         $clubes = Clubes::get()->keyBy('id');
 
@@ -98,15 +114,19 @@ class ParciaisController extends Controller
                 'id' => $partida->id,
                 'partida_data' => $partida->partida_data,
                 'local' => $partida->local,
-                'clube_casa' => [ 
+                'clube_casa' => [
                     'nome' => $clubes[$partida->clube_casa_id]['nome'],
                     'escudo' => $clubes[$partida->clube_casa_id]['60x60'],
-                    'atletas' => $clube_casa
+                    'atletas' => $atletas_casa,
+                    'pontuacao' => $atletas_casa->sum('pontuacao'),
+                    'parciais' => $parciais_atletas_casa
                 ],
-                'clube_visitante' => [ 
+                'clube_visitante' => [
                     'nome' => $clubes[$partida->clube_visitante_id]['nome'],
                     'escudo' => $clubes[$partida->clube_visitante_id]['60x60'],
-                    'atletas' => $clube_visitante
+                    'atletas' => $atletas_visitante,
+                    'pontuacao' => $atletas_visitante->sum('pontuacao'),
+                    'parciais' => $parciais_atletas_visitante
                 ]
             ],
             'scouts' => $scouts,

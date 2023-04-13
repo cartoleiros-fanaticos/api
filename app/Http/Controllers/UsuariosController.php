@@ -9,6 +9,12 @@ use App\Models\Usuarios;
 
 class UsuariosController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('jwt', ['except' => ['store']]);
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -55,13 +61,19 @@ class UsuariosController extends Controller
         $usuario->nome = $request->nome;
         $usuario->celular = preg_replace('/[-() ]/', '', $request->celular);
         $usuario->email = $request->email;
+        $usuario->plano = 'Demonstrativo';
+        $usuario->funcao = 'Cartoleiro';
+        $usuario->ativo = 'Sim';
         $usuario->password = Hash::make($request->password);
 
-        $usuario->save();
+        $usuario->save();        
 
-        $response = auth('api')->login($usuario);
+        $access_token = auth('api')->login($usuario);
 
-        return response()->json($response);
+        return response()->json([
+            'auth' => [ 'access_token' => $access_token ],
+            'user' => $usuario
+        ]);
     }
 
     /**

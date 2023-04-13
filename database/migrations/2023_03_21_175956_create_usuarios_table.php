@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->string('celular');
-            $table->float('comissao_admin')->nullable();
+            $table->float('comissao')->nullable();
             $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->string('recovery')->nullable();
             $table->string('password');
-            $table->enum('acesso',['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
-            $table->enum('plano',['Demonstrativo', 'Free Cartoleiro', 'Plano Stats', 'Plano Fanático'])->default('Demonstrativo');
-            $table->enum('ativo',['Sim', 'Não'])->default('Sim');
+            $table->enum('funcao', ['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
+            $table->enum('plano', ['Demonstrativo', 'Free Cartoleiro', 'Plano Stats', 'Plano Fanático'])->default('Demonstrativo');
+            $table->enum('ativo', ['Sim', 'Não'])->default('Sim');
             $table->timestamps();
         });
     }

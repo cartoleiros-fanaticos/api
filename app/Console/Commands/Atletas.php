@@ -44,7 +44,7 @@ class Atletas extends Command
             echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
             $client = new Client();
-            $response = $client->get('https://api.cartolafc.globo.com/atletas/mercado');
+            $response = $client->get('https://api.cartola.globo.com/atletas/mercado');
             $response = json_decode($response->getBody(), true);
 
             echo '- Atualizando tabela clubes.' . PHP_EOL;
@@ -129,6 +129,7 @@ class Atletas extends Command
                             'variacao_num' => $val['variacao_num'],
                             'media_num' => $val['media_num'],
                             'jogos_num' => $val['jogos_num'],
+                            'minimo_para_valorizar' => $val['minimo_para_valorizar'],
                             'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                             'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
                             'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),

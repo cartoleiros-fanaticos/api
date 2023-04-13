@@ -33,7 +33,7 @@ return new class extends Migration
             $table->float('variacao_num');
             $table->float('media_num');
             $table->float('jogos_num');
-            $table->float('pontuacao_min')->default(0);
+            $table->float('minimo_para_valorizar')->default(0);
             $table->string('observacao', 500)->default('O atleta ainda não tem estatística.');
 
             $table->integer('DS')->default(0);
