@@ -9,7 +9,7 @@ export const Label = styled.label`
     background-color: #f1f1f1;
     border-radius: 10px;
     text-align: right;
-    margin: 15px auto;
+    margin: 0 auto 25px auto;
     color: #666;
     align-items: center;
 

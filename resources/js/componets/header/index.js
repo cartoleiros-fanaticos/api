@@ -26,6 +26,8 @@ function header() {
 
     const user = JSON.parse(localStorage.getItem('user'));
 
+    console.log(user);
+
     let navigate = useNavigate();
 
     const body = document.querySelector('body');
@@ -34,8 +36,6 @@ function header() {
 
     const menu = useRef();
     const screen = useRef();
-
-    const plano = '';
 
     function open_menu() {
 
@@ -109,15 +109,12 @@ function header() {
                         <Title>Menu</Title>
                         <Close onClick={close_menu}>close</Close>
                     </Header>
-                    {
-                        plano != 'Plano Stats' &&
-                        <Item>
-                            <NavLink to="/auth/escalacao">
-                                <Icon>assignment</Icon>
-                                ESCALAÇÃO
-                            </NavLink>
-                        </Item>
-                    }
+                    <Item>
+                        <NavLink to="/auth/escalacao">
+                            <Icon>assignment</Icon>
+                            ESCALAÇÃO
+                        </NavLink>
+                    </Item>
                     <Item>
                         <ButtonLink>
                             <Icon>assessment</Icon>
@@ -188,15 +185,12 @@ function header() {
                             VÍDEOS
                         </NavLink>
                     </Item>
-                    {
-                        plano != 'Plano Stats' &&
-                        <Item>
-                            <NavLink to="/auth/ligas">
-                                <Icon>verified_user</Icon>
-                                LIGAS
-                            </NavLink>
-                        </Item>
-                    }
+                    <Item>
+                        <NavLink to="/auth/ligas">
+                            <Icon>verified_user</Icon>
+                            LIGAS
+                        </NavLink>
+                    </Item>
                     {/* <Item>
                         <NavLink to="/auth/loja">
                             <Icon>shopping_cart</Icon>

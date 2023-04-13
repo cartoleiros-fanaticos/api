@@ -90,7 +90,7 @@ function plans() {
             </Box>
             <Bonus>
                 <Text1>BÔNUS PARA OS DOIS PLANOS</Text1>
-                <Text2>Liga de assinantes valendo um PS4 e mais premiações</Text2>
+                <Text2>Liga de assinantes com premiação em dinheiro.</Text2>
             </Bonus>
             <Header>
                 <Text3></Text3>

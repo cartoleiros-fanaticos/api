@@ -39,6 +39,11 @@ function lineup() {
 
     async function getPlayers(rodada, time_id) {
 
+        if (!time_id) {
+            swal_warning('Selecione um time antes de executar essa ação.');
+            return false
+        }
+
         sdata({
             ...data,
             time: null,

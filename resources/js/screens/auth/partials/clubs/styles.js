@@ -6,7 +6,7 @@ export const Content = styled.div`
 `;
 
 export const List = styled.div`
-    margin: 25px 0 0 0;
+    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

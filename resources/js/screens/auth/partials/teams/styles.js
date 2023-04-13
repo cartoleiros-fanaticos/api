@@ -4,13 +4,14 @@ export const Label = styled.label`
     width: 50%;
     display: flex;
     justify-content: space-between;
-    padding: 15px;
+    padding: 5px 15px;
     border: solid 2px #ccc;
     background-color: #f1f1f1;
     border-radius: 10px;
     text-align: right;
-    margin: 25px auto;
+    margin: 0 auto 25px auto;
     color: #666;
+    align-items: center;
 
     @media screen and (max-width:900px){
         width: 90%;
@@ -31,8 +32,9 @@ export const Input = styled.input.attrs(() => ({
     background-color: transparent;
     width: 100%;
     border: none;
-    font-size: 15px;
+    font-size: 0.9em;
     outline: none;
+    padding: 10px 5px;
     background-color: #f1f1f1;
 `;
 

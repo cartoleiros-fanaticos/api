@@ -38,10 +38,13 @@ function register({ history }) {
 
         try {
 
-            const { data: access_token } = await api.post('usuarios', user);
+            let { data: { auth: { access_token }, user: usr } } = await api.post('usuarios', user);
             swal_success('Cadastro realizado com sucesso, você será redirecionado.');
 
             localStorage.setItem('token', access_token);
+            localStorage.setItem('user', JSON.stringify(usr));
+
+            sloading(false);
 
             setTimeout(() => {
                 navigate('/auth/atletas');

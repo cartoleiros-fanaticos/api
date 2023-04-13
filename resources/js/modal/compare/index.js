@@ -55,9 +55,9 @@ function compare({ data: { atleta_a, atleta_b } }) {
                     <Value color={atleta_a.media_pontos_fora === atleta_b.media_pontos_fora ? 'gray' : (atleta_a.media_pontos_fora > atleta_b.media_pontos_fora ? '#c40808' : '#008000')}>{atleta_b.media_pontos_fora}</Value>
                 </Item>
                 <Item>
-                    <Value color={atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : (atleta_a.pontuacao_min < atleta_b.pontuacao_min ? '#008000' : '#c40808')}>{atleta_a.pontuacao_min}</Value>
+                    <Value color={atleta_a.minimo_para_valorizar === atleta_b.minimo_para_valorizar ? 'gray' : (atleta_a.minimo_para_valorizar < atleta_b.minimo_para_valorizar ? '#008000' : '#c40808')}>{atleta_a.minimo_para_valorizar}</Value>
                     <Text>MIN. P. VALORIZAR</Text>
-                    <Value color={atleta_a.pontuacao_min === atleta_b.pontuacao_min ? 'gray' : (atleta_a.pontuacao_min < atleta_b.pontuacao_min ? '#c40808' : '#008000')}>{atleta_b.pontuacao_min}</Value>
+                    <Value color={atleta_a.minimo_para_valorizar === atleta_b.minimo_para_valorizar ? 'gray' : (atleta_a.minimo_para_valorizar < atleta_b.minimo_para_valorizar ? '#c40808' : '#008000')}>{atleta_b.minimo_para_valorizar}</Value>
                 </Item>
                 <Item>
                     <Value color={atleta_a.pontuacao_minima === atleta_b.pontuacao_minima ? 'gray' : (atleta_a.pontuacao_minima > atleta_b.pontuacao_minima ? '#008000' : '#c40808')}>{atleta_a.pontuacao_minima}</Value>

@@ -16,13 +16,12 @@ export const Content = styled.div`
 export const Picker = styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 25px auto;
+    margin: 0 auto 25px auto;
     grid-column: 1/3;
     width: 100%;
 
     @media screen and (max-width:900px){  
         flex-direction: column;
-        margin: 25px auto 5px auto;
     }
 `;
 

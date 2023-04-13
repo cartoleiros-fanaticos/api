@@ -107,9 +107,9 @@ function clubs() {
                     smodal={smodal}
                     data={data.partida}
                     Component={ModalScoutMatch}
-                    width='80%'
+                    width='70%'
                     height='500px'
-                    marginLeft='-40%'
+                    marginLeft='-35%'
                 />
             }
         </>

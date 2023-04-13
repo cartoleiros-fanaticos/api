@@ -9,14 +9,6 @@ import Player from '../../../../componets/player';
 import {
   Content,
   List,
-  // Item,
-  // Photo,
-  // Name,
-  // Text1,
-  // Text2,
-  // Score,
-  // Scouts,
-  // Scout,
 } from './styles';
 
 import { Message } from '../../../../utils/styles';

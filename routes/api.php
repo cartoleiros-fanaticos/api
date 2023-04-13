@@ -31,6 +31,7 @@ Route::post('refresh', [AuthController::class, 'refresh']);
 Route::post('notificacao-pix', [PlanosController::class, 'notificacaoPix']);
 
 Route::resource('escalacao', EscalacaoController::class);
+Route::resource('usuarios', UsuariosController::class);
 
 Route::group([
     
@@ -42,9 +43,7 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
     
 
-    Route::resource('usuarios', UsuariosController::class);
-    Route::resource('cruzamento', CruzamentoController::class);
-    
+    Route::resource('cruzamento', CruzamentoController::class);   
 
     Route::post('enviar-email/contato', [ContatoController::class, 'enviar_email']);
 

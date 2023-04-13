@@ -12,11 +12,15 @@ import {
   Local,
   Time,
   Address,
-  Team,  
+  Team,
   Shield,
   TeamName,
   Versus,
+  Players,
+  List,
 } from './styles';
+
+import { Message } from '../../utils/styles';
 
 function scouts({ data: { id } }) {
 
@@ -63,6 +67,40 @@ function scouts({ data: { id } }) {
               <Shield src={data.partida.clube_visitante.escudo} />
               <TeamName>{data.partida.clube_visitante.nome}</TeamName>
             </Team>
+            <Players>
+              <List>
+                {
+                  data.partida.clube_casa.atletas.length ?
+                    data.partida.clube_casa.atletas.map((e, i) =>
+                      <Player
+                        key={i}
+                        data={e}
+                        scouts={data.scouts}
+                        capitao_id={data.time.rodadas.capitao_id}
+                        parciais={data.parciais}
+                      />
+                    )
+                    :
+                    <Message>Ainda não há dados.</Message>
+                }
+              </List>
+              <List>
+                {
+                  data.partida.clube_visitante.atletas.length ?
+                    data.partida.clube_visitante.atletas.map((e, i) =>
+                      <Player
+                        key={i}
+                        data={e}
+                        scouts={data.scouts}
+                        capitao_id={data.time.rodadas.capitao_id}
+                        parciais={data.parciais}
+                      />
+                    )
+                    :
+                    <Message>Ainda não há dados.</Message>
+                }
+              </List>
+            </Players>
           </Match>
       }
     </Container>

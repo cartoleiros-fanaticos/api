@@ -14,11 +14,11 @@ function rounds({ rodada_atual, fnc }) {
 
     async function select(element, rodada) {
 
-        if (rodada > rodada_atual) {
+        // if (rodada > rodada_atual) {
 
-            swal_warning('Ainda não existe dados para essa rodada.');
+        //     swal_warning('Ainda não existe dados para essa rodada.');
 
-        } else {
+        // } else {
 
             let rd = element.parentElement.querySelector('.active');
             let active = rd.innerText;
@@ -29,14 +29,15 @@ function rounds({ rodada_atual, fnc }) {
             let box = 5;
             let box_min = 5;
             let box_max = 34;
-            let width_box = 98.18;
+            let width_box = 102.727;
 
             if (window.innerWidth <= 900) {
                 box_view = 7;
                 box = 3;
                 box_min = 2;
                 box_max = 36;
-                width_box = (window.innerWidth - 20) / 7;
+                width_box = (window.innerWidth - 20) / box_view;
+                console.log(width_box);
             }
 
             if (rodada > box_min && rodada < box_max) {
@@ -63,9 +64,9 @@ function rounds({ rodada_atual, fnc }) {
 
             element.classList.add('active');
 
-            fnc(rodada);
+        //     fnc(rodada);
 
-        }
+        // }
 
     }
 
@@ -75,6 +76,7 @@ function rounds({ rodada_atual, fnc }) {
                 {
                     rodadas.map(rodada =>
                         <Item
+                            width={window.innerWidth}
                             onClick={(event) => select(event.target, rodada)}
                             className={rodada === rodada_atual ? 'active' : ''}
                             key={rodada}

@@ -24,6 +24,7 @@ import {
   Thead,
   Tr,
   Th,
+  OrderBy,
   Tbody,
   Td,
   Ico,
@@ -138,6 +139,56 @@ function Player() {
 
   }
 
+  function order(event) {
+
+    const order = event.target.classList.contains('desc');
+
+    if (order) event.target.setAttribute('class', 'asc');
+    else event.target.setAttribute('class', 'desc');
+
+    const value = event.target.innerText;
+
+    if (value === 'Média') {
+
+      if (order)
+        data.atletas.sort((a, b) => a.media_num < b.media_num ? -1 : 1);
+      else
+        data.atletas.sort((a, b) => a.media_num > b.media_num ? -1 : 1);
+
+    } else if (value === 'Valorização') {
+
+      if (order)
+        data.atletas.sort((a, b) => a.variacao_num < b.variacao_num ? -1 : 1);
+      else
+        data.atletas.sort((a, b) => a.variacao_num > b.variacao_num ? -1 : 1);
+
+    } else if (value === 'Preço') {
+
+      if (order)
+        data.atletas.sort((a, b) => a.preco_num < b.preco_num ? -1 : 1);
+      else
+        data.atletas.sort((a, b) => a.preco_num > b.preco_num ? -1 : 1);
+
+      } else if (value === 'P. mínima') {
+  
+        if (order)
+          data.atletas.sort((a, b) => a.minimo_para_valorizar < b.minimo_para_valorizar ? -1 : 1);
+        else
+          data.atletas.sort((a, b) => a.minimo_para_valorizar > b.minimo_para_valorizar ? -1 : 1);
+
+    } else {
+
+      if (order)
+        data.atletas.sort((a, b) => a.pontos_num < b.pontos_num ? -1 : 1);
+      else
+        data.atletas.sort((a, b) => a.pontos_num > b.pontos_num ? -1 : 1);
+
+    }
+
+    sdata({ ...data });
+
+  }
+
   function search(event) {
 
     const value = event.target.value.toLowerCase();
@@ -189,12 +240,23 @@ function Player() {
             <Tr>
               <Th>Time</Th>
               <Th>Jogador</Th>
-              <Th>Preço</Th>
+              <Th>
+                <OrderBy onClick={order}>Preço</OrderBy>
+              </Th>
               <Th>Status</Th>
-              <Th>Valorização</Th>
-              <Th>Última</Th>
-              <Th>Média</Th>
+              <Th>
+                <OrderBy onClick={order}>Valorização</OrderBy>
+              </Th>
+              <Th>
+                <OrderBy onClick={order}>Última</OrderBy>
+              </Th>
+              <Th>
+                <OrderBy onClick={order}>Média</OrderBy>
+              </Th>
               <Th>Jogos</Th>
+              <Th>
+                <OrderBy onClick={order}>P. mínima</OrderBy>
+              </Th>
               <Th>{filter.scout || 'G'}</Th>
               <Th>Confronto</Th>
             </Tr>
@@ -218,6 +280,7 @@ function Player() {
                     <Td>{amount(e.pontos_num)}</Td>
                     <Td>{amount(e.media_num)}</Td>
                     <Td>{e.jogos_num}</Td>
+                    <Td>{e.minimo_para_valorizar}</Td>
                     <Td>{e[filter.scout] || e.G}</Td>
                     <Td>
                       <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />

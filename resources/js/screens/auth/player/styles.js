@@ -5,7 +5,6 @@ export const Content = styled.div`
 
 export const Filter = styled.div`
     display: flex;
-    margin-top: 25px;
     justify-content: space-between;
     width: 100%;
 
@@ -109,6 +108,7 @@ export const Thead = styled.thead`
     font-size: 0.9em;
     border-radius: 0.5em;
     cursor: default;
+    user-select: none;
 `;
 
 export const Tr = styled.tr`
@@ -123,19 +123,33 @@ export const Tr = styled.tr`
     transition-duration: 0.3s;
     cursor: pointer;
     opacity: ${({ compare }) => compare ? 0.2 : 1};
-    &:hover  {              
-        background: #fafafa;
-        transform: scale(1.05);
-        box-shadow: 0 5px 10px #cccccc;
-    }
 `;
 
 export const Th = styled.th`
     font-size: 0.8em;
-    width: 107.234px;
+    width: 100px;
+`;
+
+export const OrderBy = styled.a`
+
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+
 `;
 
 export const Tbody = styled.tbody`
+
+    tr {
+
+        &:hover{          
+            background: #fafafa;
+            transform: scale(1.05);
+            box-shadow: 0 5px 10px #cccccc;
+        }
+    }
 
 `;
 
@@ -143,7 +157,7 @@ export const Td = styled.td`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 107.234px;
+    width: 98.18px;
     text-align: center;
     cursor: pointer;
     font-size: 0.8em;

@@ -67,16 +67,21 @@ export const Content = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
 
-    &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px #000;
-        background-color: #f1f1f1;
-    }
+    @media screen and (min-width:900px){        
 
-    &::-webkit-scrollbar {
-        width: 7px;
-        background-color: #000;
-    }
-    &::-webkit-scrollbar-thumb {
-        background-color: #000;
+        &::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px #000;
+            background-color: #f1f1f1;
+        }
+
+        &::-webkit-scrollbar {
+            width: 7px;
+            background-color: #000;
+            margin-left: 5px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #000;
+        }
+
     }
 `;

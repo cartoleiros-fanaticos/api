@@ -1,4 +1,4 @@
-const cacheName = '1.0.5';
+const cacheName = '1.0.6';
 
 const contentToCache = [
     '/',
@@ -8,12 +8,12 @@ const contentToCache = [
     '/css/material.icon.css',
     '/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
     '/images/baixe-aplicativo.png',
-    '/images/up.png',
-    '/images/down.png',
     '/images/favicon.png',
     '/images/fundo.jpg',
+    '/images/escudo.png',
     '/images/logo_laranja.png',
-    '/images/nao_escalado.png',
+    '/images/logo_preta.png',
+    '/images/pix.png',
 ];
 
 self.addEventListener('install', (e) => {

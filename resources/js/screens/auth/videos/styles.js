@@ -4,7 +4,7 @@ export const Content = styled.div`
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 15px;
-    margin-top: 25px;
+    align-items: center;
 
     @media screen and (max-width:900px){
         grid-template-columns: auto auto auto;
@@ -26,6 +26,8 @@ export const Thumbnails = styled.div`
     transition-duration: 0.5s;
     background-color: #fff;
     width: 100%;
+
+    max-width: 300px;
 
     &:hover {
         transform: scale(1.2);

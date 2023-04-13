@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
     min-height: 600px;
-    margin: 30px 0;
     display: grid;
     grid-template-columns: auto auto;
     grid-column-gap: 35px;
 
     @media screen and (max-width:900px){  
+        font-size: 0.9em;
         grid-template-columns: auto;
     }
 `;
