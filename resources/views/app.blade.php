@@ -6,28 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
-    <!-- place this in a head section -->
-    <link rel="apple-touch-icon" href="/images/icons/touch-icon-iphone.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/images/icons/touch-icon-ipad.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/touch-icon-iphone-retina.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="/images/icons/touch-icon-ipad-retina.png">
-
-    <!-- place this in a head section -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <link sizes="2048x2732" rel="apple-touch-startup-image" href="/images/splash/apple_splash_2048.png">
-    <link sizes="1668x2224" rel="apple-touch-startup-image" href="/images/splash/apple_splash_1668.png">
-    <link sizes="1536x2048" rel="apple-touch-startup-image" href="/images/splash/apple_splash_1536.png">
-    <link sizes="1125x2436" rel="apple-touch-startup-image" href="/images/splash/apple_splash_1125.png">
-    <link sizes="1242x2208" rel="apple-touch-startup-image" href="/images/splash/apple_splash_1242.png">
-    <link sizes="750x1334" rel="apple-touch-startup-image" href="/images/splash/apple_splash_750.png">
-    <link sizes="640x1136" rel="apple-touch-startup-image" href="/images/splash/apple_splash_640.png">
-
-    <meta name="theme-color" content="#F68D42">
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Cartoleiro Fanático">
+    <meta name="apple-mobile-web-app-title" content="Cartoleiro Fanático">
+    <meta name="msapplication-starturl" content="/">
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#F68D42">
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Cartoleiro Fanático</title>
     <link href="/css/material.icon.css" rel="stylesheet">
+    <script async src="https://cdn.jsdelivr.net/npm/pwacompat@2.0.8/pwacompat.min.js" integrity="sha384-uONtBTCBzHKF84F6XvyC8S0gL8HTkAPeCyBNvfLfsqHh+Kd6s/kaS4BdmNQ5ktp1" crossorigin="anonymous"></script>
 </head>
 
 <body>
