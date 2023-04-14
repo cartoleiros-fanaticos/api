@@ -253,6 +253,7 @@ class AtletasController extends Controller
                     apelido,
                     clubes.nome,
                     clubes.60x60 as escudo,
+                    preco_num,
                     pontos_num,
                     media_num,
                     jogos_num,

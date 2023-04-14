@@ -100,7 +100,7 @@ function teams({ fnc, smodal }) {
                                             teams.map((e, i) =>
                                                 <Team onClick={() => {
                                                     smodal(false);
-                                                    fnc(e.time_id)  
+                                                    fnc(e.time_id)
                                                 }} key={i}>
                                                     <Shield src={e.url_escudo_png} />
                                                     <NameTeam>{e.nome}</NameTeam>

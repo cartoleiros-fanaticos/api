@@ -280,7 +280,7 @@ function Player() {
                     <Td>{amount(e.pontos_num)}</Td>
                     <Td>{amount(e.media_num)}</Td>
                     <Td>{e.jogos_num}</Td>
-                    <Td>{e.minimo_para_valorizar}</Td>
+                    <Td>{amount(e.minimo_para_valorizar)}</Td>
                     <Td>{e[filter.scout] || e.G}</Td>
                     <Td>
                       <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import Loader from 'react-loader-spinner';
 import { NavLink } from "react-router-dom";
 import backButton from 'browser-back-button';
 
@@ -26,9 +27,11 @@ function header() {
 
     const user = JSON.parse(localStorage.getItem('user'));
 
-    console.log(user);
-
     let navigate = useNavigate();
+
+    const { innerWidth: width } = window;
+
+    const [loading, sloading] = useState(false);
 
     const body = document.querySelector('body');
     const container = document.querySelector('.container');
@@ -85,14 +88,19 @@ function header() {
 
         try {
 
+            sloading(true);
+
             await api.post('logout', {});
 
             localStorage.removeItem('token');
             localStorage.removeItem('user');
 
+            sloading(false)
+
             navigate('/');
 
         } catch (e) {
+            sloading(false);
             message(e);
         };
     }
@@ -211,7 +219,7 @@ function header() {
                     </Item>
                     <Item>
                         <ButtonLink onClick={logout}>
-                            <Icon>logout</Icon>
+                            {loading ? <Loader style={{ marginRight: width < 900 ? '10px' : '5px' }} visible={true} type="TailSpin" color="#F68D42" height={width < 900 ? 17 : 15} width={width < 900 ? 18.720 : 17.720} /> : <Icon>logout</Icon>}
                             SAIR
                         </ButtonLink>
                     </Item>

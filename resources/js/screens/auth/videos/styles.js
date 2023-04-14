@@ -32,6 +32,14 @@ export const Thumbnails = styled.div`
     &:hover {
         transform: scale(1.2);
     }
+
+    @media screen and (max-width:600px){
+        max-width: 100%;
+    }
+
+    @media screen and (max-width:400px){
+        max-width: 100%;
+    }
 `;
 
 export const Image = styled.img`

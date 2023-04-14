@@ -482,13 +482,11 @@ class ParciaisController extends Controller
 
             return response()->json($response);
         } catch (QueryException $e) {
-            Log::error($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 400);
         } catch (RequestException $e) {
-            Log::error($e->getMessage());
-            return response()->json(['message' => $e->getMessage()], 400);
+            $e = json_decode($e->getResponse()->getBody()->getContents(), true);
+            return response()->json(['message' => $e['mensagem']], 401);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
@@ -577,8 +575,8 @@ class ParciaisController extends Controller
 
             return response()->json($liga);
         } catch (RequestException $e) {
-            //$e = json_decode($e->getResponse()->getBody()->getContents(), true);
-            return response()->json(['message' => $e->getMessage()], 400);
+            $e = json_decode($e->getResponse()->getBody()->getContents(), true);
+            return response()->json(['message' => $e['mensagem']], 401);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }

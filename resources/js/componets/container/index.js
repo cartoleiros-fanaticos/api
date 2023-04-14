@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
     Container,
@@ -11,6 +11,13 @@ import Footer from '../../componets/footer';
 import Loading from '../../componets/loading';
 
 function container({ title, component, loading }) {
+
+    useEffect(() => {
+
+        if (window.innerWidth <= 900)
+            window.scrollTo({ top: 0 });
+
+    }, [])
 
     return (
         <Container>

@@ -14,11 +14,11 @@ function rounds({ rodada_atual, fnc }) {
 
     async function select(element, rodada) {
 
-        // if (rodada > rodada_atual) {
+        if (rodada > rodada_atual) {
 
-        //     swal_warning('Ainda não existe dados para essa rodada.');
+            swal_warning('Ainda não existe dados para essa rodada.');
 
-        // } else {
+        } else {
 
             let rd = element.parentElement.querySelector('.active');
             let active = rd.innerText;
@@ -64,9 +64,9 @@ function rounds({ rodada_atual, fnc }) {
 
             element.classList.add('active');
 
-        //     fnc(rodada);
+            fnc(rodada);
 
-        // }
+        }
 
     }
 

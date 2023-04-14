@@ -71,7 +71,7 @@ function leagues({ fnc, smodal }) {
             }
 
             smodal(false);
-            fnc(e.liga_id)
+            fnc(e.slug)
 
         }
     }

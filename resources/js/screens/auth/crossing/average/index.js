@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { message, download, swal_warning } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
+import Modal from '../../../../componets/modal';
+import ModalMatches from '../../../../modal/matches';
+
 import {
   Content,
   Picker,
@@ -36,6 +39,10 @@ import Container from '../../../../componets/container';
 function crossing() {
 
   const user = JSON.parse(localStorage.getItem('user'));
+
+  const [modal, smodal] = useState(false);
+  const [loading_matches, sloadingmatches] = useState(false);
+  const [data_matches, sdatamatches] = useState({});
 
   const [filter, sfilter] = useState({
     scout: { value: '', name: 'Média' },
@@ -89,6 +96,38 @@ function crossing() {
 
   }
 
+  async function pontos_cedidos(atleta) {
+
+    try {
+
+      smodal(true);
+      sloadingmatches(true);
+
+      const { data } = await api.get(`pontos-cedidos/atletas?time_id=${atleta.clube_id}&posicao_id=${atleta.posicao_id}`);
+
+      sdatamatches(data);
+      sloadingmatches(false);
+
+    } catch (e) {
+      message(e);
+      sloadingmatches(false);
+    };
+
+  }
+
+  function close(e) {
+
+    if (window.innerWidth < 900) {
+
+      e.target.parentElement.style.cssText = `
+          height: 0;
+          visibility: hidden;
+      `;
+
+    }
+
+  }
+
   const component = (
     <Content>
       <Picker>
@@ -98,12 +137,12 @@ function crossing() {
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 1, name: 'Todas as posições' } })}>Todas as posições</Item>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 3, name: 'Zagueiros' } })}>Zagueiros</Item>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 2, name: 'Lateral' } })}>Lateral</Item>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 4, name: 'Meias' } })}>Meias</Item>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 5, name: 'Atacante' } })}>Atacante</Item>
-            <Item onClick={() => sfilter({ ...filter, posicao_id: { value: 1, name: 'Goleiro' } })}>Goleiro</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 1, name: 'Todas as posições' } }) }}>Todas as posições</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 3, name: 'Zagueiros' } }) }}>Zagueiros</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 2, name: 'Lateral' } }) }}>Lateral</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 4, name: 'Meias' } }) }}>Meias</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 5, name: 'Atacante' } }) }}>Atacante</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 1, name: 'Goleiro' } }) }}>Goleiro</Item>
           </List>
         </Box>
         <Box>
@@ -112,10 +151,10 @@ function crossing() {
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 38, name: 'Todas as rodadas' } })}>Todas as rodadas</Item>
-            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 2, name: 'Últimas 2' } })}>Últimas 2</Item>
-            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 3, name: 'Últimas 3' } })}>Últimas 3</Item>
-            <Item onClick={() => sfilter({ ...filter, ultimas_rodadas: { value: 5, name: 'Últimas 5' } })}>Últimas 5</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, ultimas_rodadas: { value: 38, name: 'Todas as rodadas' } }) }}>Todas as rodadas</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, ultimas_rodadas: { value: 2, name: 'Últimas 2' } }) }}>Últimas 2</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, ultimas_rodadas: { value: 3, name: 'Últimas 3' } }) }}>Últimas 3</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, ultimas_rodadas: { value: 5, name: 'Últimas 5' } }) }}>Últimas 5</Item>
           </List>
         </Box>
         <Box>
@@ -124,8 +163,8 @@ function crossing() {
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={() => sfilter({ ...filter, total: { value: 'Não', name: 'Só casa x Só fora' } })}>Só casa x Só fora</Item>
-            <Item onClick={() => sfilter({ ...filter, total: { value: 'Sim', name: 'Total x Total' } })}>Total x Total</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, total: { value: 'Não', name: 'Só casa x Só fora' } }) }}>Só casa x Só fora</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, total: { value: 'Sim', name: 'Total x Total' } }) }}>Total x Total</Item>
           </List>
         </Box>
       </Picker>
@@ -180,7 +219,7 @@ function crossing() {
                           +
                           (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
                         }
-                        {filter.posicao_id.value && <Icon title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_casa_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>
                   }
                 </Total>
@@ -239,7 +278,7 @@ function crossing() {
                           +
                           (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
                         }
-                        {filter.posicao_id.value && <Icon title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_visitante_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>
                   }
                 </Total>
@@ -260,11 +299,26 @@ function crossing() {
   );
 
   return (
-    <Container
-      title='Cruzamento de média'
-      component={component}
-      loading={loading_page}
-    />
+    <>
+      <Container
+        title='Cruzamento de média'
+        component={component}
+        loading={loading_page}
+      />
+      {
+        modal &&
+        <Modal
+          icon="security"
+          title="Pontos cedidos por time e posição"
+          modal={modal}
+          smodal={smodal}
+          Component={ModalMatches}
+          data={data_matches}
+          loading={loading_matches}
+          height="500px"
+        />
+      }
+    </>
   );
 }
 

@@ -25,7 +25,7 @@ export const Label = styled.label`
 
 export const Input = styled.input.attrs(() => ({
     type: 'search',
-    placeholder: 'Digite nome do time'
+    placeholder: 'Digite nome do time',  
 }))`
     background-color: transparent;
     width: 100%;

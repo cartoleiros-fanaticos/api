@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
+    font-size: 0.9em;
 `;
 
 export const Form = styled.form`

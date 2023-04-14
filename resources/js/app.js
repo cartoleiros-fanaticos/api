@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import {
-    createBrowserRouter,
-    RouterProvider
+    BrowserRouter,
+    Routes,
+    Route,
+    Navigate
 } from "react-router-dom";
+
 import "./index.css";
 
 import Login from './screens/login';
@@ -28,79 +31,35 @@ import Emphasis from './screens/auth/emphasis';
 import Contact from './screens/auth/contact';
 import Plans from './screens/auth/plans';
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Login />,
-    },
-    {
-        path: "/cadastro",
-        element: <Register />,
-    },
-    {
-        path: "/recovery",
-        element: <Recovery />,
-    },    
-    {
-        path: "/auth/escalacao",
-        element: <Lineup />,
-    },
-    {
-        path: "/auth/cruzamento-scouts",
-        element: <Scouts />,
-    },
-    {
-        path: "/auth/cruzamento-pontos",
-        element: <Score />,
-    },
-    {
-        path: "/auth/cruzamento-media",
-        element: <Average />,
-    },
-    {
-        path: "/auth/parciais/atletas",
-        element: <Players />,
-    },
-    {
-        path: "/auth/parciais/clubes",
-        element: <Clubs />,
-    },
-    {
-        path: "/auth/parciais/times",
-        element: <Teams />,
-    },
-    {
-        path: "/auth/parciais/ligas",
-        element: <Leagues />,
-    },
-    {
-        path: "/auth/atletas",
-        element: <Player />,
-    },
-    {
-        path: "/auth/videos",
-        element: <Videos />,
-    },
-    {
-        path: "/auth/ligas",
-        element: <League />,
-    },
-    {
-        path: "/auth/destaques",
-        element: <Emphasis />,
-    },
-    {
-        path: "/auth/contato",
-        element: <Contact />,
-    },
-    {
-        path: "/auth/planos",
-        element: <Plans />,
-    },
-]);
+const PrivateRoute = ({ component: Component }) => localStorage.getItem('token') ? <Component /> : <Navigate to="/" />;
 
 ReactDOM.createRoot(document.getElementById('app')).render(
     // <React.StrictMode>
-        <RouterProvider router={router} />
+    <BrowserRouter>
+        <Routes>
+            <Route index element={<Login />} />
+            <Route path="/cadastro" element={<Register />} />
+            <Route path="/recovery" element={<Recovery />} />
+
+            <Route path="/auth/escalacao" element={<PrivateRoute component={Lineup} />} />
+
+            <Route path="/auth/cruzamento-scouts" element={<PrivateRoute component={Scouts} />} />
+            <Route path="/auth/cruzamento-pontos" element={<PrivateRoute component={Score} />} />
+            <Route path="/auth/cruzamento-media" element={<PrivateRoute component={Average} />} />
+
+            <Route path="/auth/parciais/atletas" element={<PrivateRoute component={Players} />} />
+            <Route path="/auth/parciais/clubes" element={<PrivateRoute component={Clubs} />} />
+            <Route path="/auth/parciais/times" element={<PrivateRoute component={Teams} />} />
+            <Route path="/auth/parciais/ligas" element={<PrivateRoute component={Leagues} />} />
+
+            <Route path="/auth/atletas" element={<PrivateRoute component={Player} />} />
+
+            <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
+            <Route path="/auth/ligas" element={<PrivateRoute component={League} />} />
+            <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
+            <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
+            <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
+        </Routes>
+    </BrowserRouter>
     // </React.StrictMode>
 );

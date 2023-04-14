@@ -73,6 +73,11 @@ export const Share = styled.i.attrs(() => ({
         color: #fff;
         background-color: #25D366;
     }
+
+    @media screen and (max-width:900px){
+        font-size: 22px;
+        padding: 10px;
+    }
 `;
 
 export const HeaderShield = styled.img`

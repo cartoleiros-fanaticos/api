@@ -43,6 +43,9 @@ function modal({ title, icon, Component, modal, smodal, data, loading, fnc = () 
                 transition-duration: 0.5s;
                 `;
 
+                console.log(screen);
+                console.log(container);
+
         }, 150)
 
         backButton.on(() => close());

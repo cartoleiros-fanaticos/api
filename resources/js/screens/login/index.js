@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+
 import Loader from 'react-loader-spinner';
 import { message } from '../../utils/helpers';
 import api from '../../utils/api';
@@ -54,6 +55,8 @@ function login() {
 
             localStorage.setItem('token', access_token);
             localStorage.setItem('user', JSON.stringify(usr));
+            
+            sloading(false);
 
             navigate('/auth/atletas');
 
@@ -69,7 +72,7 @@ function login() {
                 <Logo />
                 <Form onSubmit={enter}>
                     <Label>
-                        <Input type="email" required placeholder="Email" onChange={(e) => suser({ email: e.target.value })} value={user.email} />
+                        <Input type="email" required placeholder="Email" onChange={(e) => suser({ ...user, email: e.target.value })} value={user.email} />
                         <Icon>person</Icon>
                     </Label>
                     <Label>

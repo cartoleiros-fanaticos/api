@@ -24,7 +24,7 @@ export const Title = styled.header`
     text-align: center;
 
     @media screen and (max-width:900px){
-        width: 60%;
+        width: 65%;
         font-size: 0.9em;
     }
 
