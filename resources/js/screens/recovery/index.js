@@ -36,12 +36,14 @@ function recovery() {
 
         try {
 
-            const { data: access_token } = await api.post(`recuperar-senha?recovery=${params.get('recovery')}`, user);
+            let { data: { auth: { access_token }, user: usr } } = await api.post(`recuperar-senha?recovery=${params.get('hash')}`, user);
             swal_success('Senha alterada com sucesso, você será redirecionado.');
 
             localStorage.setItem('token', access_token);
+            localStorage.setItem('user', JSON.stringify(usr));
 
             setTimeout(() => {
+                sloading(false);                
                 navigate('/auth/atletas');
             }, 2000);
 

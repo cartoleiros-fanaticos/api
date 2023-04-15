@@ -129,7 +129,7 @@ class Atletas extends Command
                             'variacao_num' => $val['variacao_num'],
                             'media_num' => $val['media_num'],
                             'jogos_num' => $val['jogos_num'],
-                            'minimo_para_valorizar' => $val['minimo_para_valorizar'],
+                            'minimo_para_valorizar' => $val['minimo_para_valorizar'] ?? 0,
                             'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                             'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
                             'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),

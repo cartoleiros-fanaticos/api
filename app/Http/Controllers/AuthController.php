@@ -145,7 +145,12 @@ class AuthController extends Controller
                     'recovery' => null
                 ]);
 
-            $response = auth('api')->login($usuario);
+            $access_token = auth('api')->login($usuario);
+
+            $response = [
+                'auth' => ['access_token' => $access_token],
+                'user' => $usuario
+            ];
 
         else :
 

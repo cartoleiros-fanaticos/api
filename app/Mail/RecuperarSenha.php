@@ -20,8 +20,8 @@ class RecuperarSenha extends Mailable
     public function __construct($recovery)
     {
         $this->data = [
-            'logo' =>  env('APP_URL') . '/images/logo.png',
-            'confirm_link' => env('APP_URL') . '/api/recuperar-senha?recovery=' . $recovery
+            'logo' =>  'https://cartoleirofanatico.com.br/images/logo_preta.png',
+            'confirm_link' => 'https://cartoleirofanatico.com.br/recovery?hash=' . $recovery
         ];
     }
 

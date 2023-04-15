@@ -117,14 +117,14 @@ function crossing() {
 
   function close(e) {
 
-    if (window.innerWidth < 900) {
+    // if (window.innerWidth < 900) {
 
-      e.target.parentElement.style.cssText = `
-          height: 0;
-          visibility: hidden;
-      `;
+    //   e.target.parentElement.style.cssText = `
+    //       height: 0;
+    //       visibility: hidden;
+    //   `;
 
-    }
+    // }
 
   }
 

@@ -22,7 +22,7 @@ class Contato extends Mailable
     public function __construct($user)
     {
         $this->data = [
-            'logo' =>  env('APP_URL') . '/images/logo_preta.png',
+            'logo' =>  'https://cartoleirofanatico.com.br/images/logo_preta.png',
             'user' => $user
         ];
     }

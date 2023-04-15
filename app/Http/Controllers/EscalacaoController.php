@@ -35,7 +35,8 @@ class EscalacaoController extends Controller
     {
 
         $game = Game::first();
-        $times = EscalacaoTimes::get();
+        $times = EscalacaoTimes::orderBy('socio', 'ASC')
+            ->get();
 
         return response()->json([
             'rodada_atual' => $game->rodada_atual,
@@ -48,7 +49,7 @@ class EscalacaoController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $regras = [
             'access_token' => 'required',
         ];
@@ -189,10 +190,10 @@ class EscalacaoController extends Controller
             ->where('time_id', $id)
             ->first();
 
-            $user = auth('api')->user();
-    
-            if($user->plano === 'Free Cartoleiro' && $time->socio === 'Sim')
-                return response()->json(['message' => 'Plano exclusivo para sócio cartoleiro fanático.'], 401);
+        $user = auth('api')->user();
+
+        if (($user->plano === 'Free Cartoleiro' or $user->plano === 'Demonstrativo') && $time->socio === 'Sim')
+            return response()->json(['message' => 'Plano exclusivo para sócio cartoleiro fanático.'], 401);
 
         if (!$time->rodadas)
             return response()->json(['message' => 'Time não foi escalado.'], 401);
