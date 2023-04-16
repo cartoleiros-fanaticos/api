@@ -9,6 +9,8 @@ class Parciais extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['rodada', 'clube_id', 'atleta_id', 'posicao_id', 'pontuacao', 'variacao_num', 'DS', 'FC', 'GC', 'CA', 'CV', 'SG', 'DP', 'GS', 'FS', 'A', 'FT', 'FD', 'FF', 'G', 'I', 'PP', 'PS', 'PC', 'DE', 'V'];
+
     // public function newQuery()
     // {
     //     return parent::newQuery()

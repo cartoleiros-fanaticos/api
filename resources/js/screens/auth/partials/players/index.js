@@ -5,23 +5,28 @@ import api from '../../../../utils/api';
 
 import Container from '../../../../componets/container';
 import Player from '../../../../componets/player';
+import Live from '../../../../componets/live';
 
 import {
   Content,
   List,
+  Label,
+  Icon,
+  Input,
 } from './styles';
 
 import { Message } from '../../../../utils/styles';
 
 function players() {
 
+  const [data, sdata] = useState({});
+  const [players, splayers] = useState([]);
+
+  const [loading_page, sloadingpage] = useState(true);
+
   useEffect(() => {
     getData();
   }, [])
-
-  const [data, sdata] = useState({});
-
-  const [loading_page, sloadingpage] = useState(true);
 
   async function getData() {
 
@@ -32,6 +37,7 @@ function players() {
       const { data } = await api.get(`parciais/atletas`);
 
       sdata(data);
+      splayers(data.atletas);
       sloadingpage(false);
 
     } catch (e) {
@@ -41,6 +47,21 @@ function players() {
 
   }
 
+  function search(event) {
+
+    const value = event.target.value.toLowerCase();
+
+    if (value && value.length >= 3) {
+      sloop(null);
+      clearInterval(loop);
+      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1);
+      sdata({ ...data, atletas });
+    } else if (value === '') {
+      sdata({ ...data, atletas: players });
+      inplay();
+    }
+  }
+
   const component = (
     <Content>
       {
@@ -48,11 +69,26 @@ function players() {
           ?
           <>
             <List>
+              <Label>
+                <Icon>directions_run</Icon>
+                <Input onChange={search} />
+              </Label>
+
+              <Live
+                uri="parciais/atletas"
+                fnc={(data) => {
+                  sdata(data);
+                  splayers(data.atletas);
+                }}
+              />
+
               {
                 data.atletas.map((e, i) =>
                   <Player
+                    key={i}
                     data={e}
                     scouts={data.scouts}
+                    parciais={data.parciais}
                   />
                 )
               }

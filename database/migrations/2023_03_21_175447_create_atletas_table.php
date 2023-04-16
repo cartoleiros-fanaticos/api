@@ -56,7 +56,9 @@ return new class extends Migration
 
             $table->integer('PS')->default(0);
             $table->integer('PC')->default(0);
-            $table->integer('DE')->default(0);            
+            $table->integer('DE')->default(0);   
+            $table->integer('V')->default(0);
+                     
             $table->timestamps();
         });
     }

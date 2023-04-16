@@ -129,6 +129,12 @@ class ScoutsSeeder extends Seeder
                 'tipo' => 'Positivo',
                 'valor' => 1,
             ],
+            [
+                'sigla' => 'V',
+                'nome' => 'Vitória',
+                'tipo' => 'Positivo',
+                'valor' => 1,
+            ],
 
         ];
 

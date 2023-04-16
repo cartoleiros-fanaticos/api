@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Game;
+use App\Models\Atletas;
 use App\Models\Parciais as ModelsParciais;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
@@ -87,6 +88,7 @@ class Parciais extends Command
                                 'PS' => (isset($val['scout']['PS']) ? $val['scout']['PS'] : 0),
                                 'PC' => (isset($val['scout']['PC']) ? $val['scout']['PC'] : 0),
                                 'DE' => (isset($val['scout']['DE']) ? $val['scout']['DE'] : 0),
+                                'V' => (isset($val['scout']['V']) ? $val['scout']['V'] : 0),
                             ]
                         );
 

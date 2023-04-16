@@ -26,14 +26,14 @@ function player({ data, capitao_id, scouts, parciais = [] }) {
                 <Position>{data.posicao}</Position>
             </Description>
             <Score>
-                {parciais.length ? <Value value={parciais[data.atleta_id]?.pontuacao}>{amount(parciais[data.atleta_id]?.pontuacao)} pts</Value> : <></>}
-                <Price>C$ {amount(data.preco_num)}</Price>
+                {Object.keys(parciais).length ? <Value value={parciais[data.atleta_id]?.pontuacao}>{amount(parciais[data.atleta_id]?.pontuacao)} pts</Value> : <></>}
+                {!Object.keys(parciais).length && <Price>C$ {amount(data.preco_num)}</Price>}
                 {
-                    scouts &&
+                    scouts.length &&
                     <Scouts>
                         {
-                            scouts.map(e =>
-                                <Scout value={data[e.sigla]} type={e.tipo}>{`${data[e.sigla]}${e.sigla}`}</Scout>
+                            scouts.map((e, i) =>
+                                <Scout key={i} value={parciais[data.atleta_id]?.[e.sigla]} type={e.tipo}>{`${parciais[data.atleta_id]?.[e.sigla]}${e.sigla}`}</Scout>
                             )
                         }
                     </Scouts>

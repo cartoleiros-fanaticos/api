@@ -27,5 +27,19 @@ class UsuariosSeeder extends Seeder
                 'ativo' => 'Sim'
             ]
         );
+
+        Usuarios::updateOrCreate(
+            [
+                'email' => 'wedson_cross@hotmail.com',
+            ],
+            [
+                'nome' => 'Wedson Santos',
+                'celular' => '82981761793',
+                'password' => Hash::make('bhGj4Y'),
+                'funcao' => 'Admin',
+                'plano' => 'Plano Fanático',
+                'ativo' => 'Sim'
+            ]
+        );
     }
 }

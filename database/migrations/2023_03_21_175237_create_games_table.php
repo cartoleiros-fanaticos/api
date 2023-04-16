@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('rodada_atual');
 
             // 1 - Mercado Aberto
+            // 2 - Parciais
 
             $table->integer('status_mercado');
             $table->boolean('game_over');

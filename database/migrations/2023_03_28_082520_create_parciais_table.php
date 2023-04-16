@@ -16,13 +16,14 @@ return new class extends Migration
             $table->id();            
 
             $table->integer('rodada');
+            $table->integer('atleta_id');
 
             $table->foreignId('clube_id')->constrained('clubes');
-            $table->foreignId('atleta_id')->constrained('atletas');
             $table->foreignId('posicao_id')->constrained('posicoes');
             
             $table->float('pontuacao');
             $table->float('variacao_num')->default(0);
+            $table->boolean('entrou_em_campo')->default(false);
 
             $table->integer('DS')->default(0);
             $table->integer('FC')->default(0);
@@ -45,6 +46,7 @@ return new class extends Migration
             $table->integer('PS')->default(0);
             $table->integer('PC')->default(0);
             $table->integer('DE')->default(0);
+            $table->integer('V')->default(0);
 
             $table->unique([ 'rodada', 'atleta_id' ]);
 

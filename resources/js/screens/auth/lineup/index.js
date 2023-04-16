@@ -33,6 +33,17 @@ function lineup() {
     const [loading, sloading] = useState(false);
     const [loading_page, sloadingpage] = useState(true);
 
+    const [loop, sloop] = useState();
+    const [time, stime] = useState('10s');
+  
+    useEffect(() => {
+  
+      return () => {
+        clearInterval(loop);
+      }
+  
+    }, [loop])
+
     useEffect(() => {
         getData();
     }, [])
@@ -128,6 +139,7 @@ function lineup() {
                                         {
                                             data.time.rodadas.atletas.map((e, i) =>
                                                 <Player
+                                                    key={i}
                                                     data={e}
                                                     scouts={data.scouts}
                                                     capitao_id={data.time.rodadas.capitao_id}
@@ -146,6 +158,7 @@ function lineup() {
                                         {
                                             data.time.rodadas.reservas.map((e, i) =>
                                                 <Player
+                                                    key={i}
                                                     data={e}
                                                     scouts={data.scouts}
                                                     capitao_id={data.time.rodadas.capitao_id}
