@@ -5,6 +5,8 @@ import api from '../../utils/api';
 import { message } from '../../utils/helpers';
 
 import Loading from '../../componets/loading';
+import Player from '../../componets/player';
+import Live from '../../componets/live';
 
 import {
   Container,
@@ -17,12 +19,15 @@ import {
   TeamName,
   Versus,
   Players,
+  ContainerLive,
   List,
 } from './styles';
 
 import { Message } from '../../utils/styles';
 
 function scouts({ data: { id } }) {
+
+  const [uri, suri] = useState('');
 
   const [data, sdata] = useState([]);
   const [loading, sloading] = useState(true);
@@ -39,6 +44,8 @@ function scouts({ data: { id } }) {
 
       sdata(data);
       sloading(false);
+
+      suri(`parciais/clubes/${id}`);
 
     } catch (e) {
       message(e);
@@ -68,6 +75,17 @@ function scouts({ data: { id } }) {
               <TeamName>{data.partida.clube_visitante.nome}</TeamName>
             </Team>
             <Players>
+              {data.game.status_mercado != 1 &&
+                <ContainerLive>
+                  <Live
+                    uri={uri}
+                    fnc={(data) => {
+                      sdata(data);
+                    }}
+                  />
+
+                </ContainerLive>
+              }
               <List>
                 {
                   data.partida.clube_casa.atletas.length ?
@@ -76,8 +94,7 @@ function scouts({ data: { id } }) {
                         key={i}
                         data={e}
                         scouts={data.scouts}
-                        capitao_id={data.time.rodadas.capitao_id}
-                        parciais={data.parciais}
+                        parciais={data.partida.clube_casa.parciais}
                       />
                     )
                     :
@@ -92,8 +109,7 @@ function scouts({ data: { id } }) {
                         key={i}
                         data={e}
                         scouts={data.scouts}
-                        capitao_id={data.time.rodadas.capitao_id}
-                        parciais={data.parciais}
+                        parciais={data.partida.clube_visitante.parciais}
                       />
                     )
                     :

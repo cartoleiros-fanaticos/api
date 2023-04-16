@@ -102,12 +102,12 @@ function lineup() {
             <Rounds
                 fnc={getPlayers}
                 time_id={data.time?.time_id}
-                rodada_atual={data.rodada_atual}
+                rodada_atual={data.game?.rodada_atual}
             />
             <Teams>
                 {
                     data.times?.map((e, i) =>
-                        <Team className={data.time?.time_id === e.time_id ? 'active' : ''} onClick={() => getPlayers(data.rodada_atual, e.time_id)} key={i}>
+                        <Team className={data.time?.time_id === e.time_id ? 'active' : ''} onClick={() => getPlayers(data.game.rodada_atual, e.time_id)} key={i}>
                             <Shield src={e.url_escudo_png} />
                             <Text><Bold>Nome:</Bold> {e.nome}</Text>
                             <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>
@@ -126,12 +126,14 @@ function lineup() {
                             {
                                 data.time ?
                                     <>
-                                        <Live
-                                            uri={uri}
-                                            fnc={(response) => {                                                
-                                                sdata({ ...data, ...response });
-                                            }}
-                                        />
+                                        {data.game.status_mercado != 1 &&
+                                            <Live
+                                                uri={uri}
+                                                fnc={(response) => {
+                                                    sdata({ ...data, ...response });
+                                                }}
+                                            />
+                                        }
                                         <Score>
                                             <ScoreText>Pontuação:</ScoreText>
                                             <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>

@@ -39,7 +39,7 @@ class EscalacaoController extends Controller
             ->get();
 
         return response()->json([
-            'rodada_atual' => $game->rodada_atual,
+            'game' => $game,
             'times' => $times
         ]);
     }
@@ -128,7 +128,8 @@ class EscalacaoController extends Controller
                                 'preco_num' => $val['preco_num'],
                                 'rodada_time_id' => $time['rodada_time_id'],
                                 'escalacao_rodadas_id' => $escalacao_rodadas->id,
-                                'titular' => 'Não'
+                                'titular' => 'Não',
+                                'entrou_em_campo' => 'Não'
                             ]);
 
                         endforeach;
@@ -200,17 +201,48 @@ class EscalacaoController extends Controller
 
         $atleta_id = $time->rodadas->atletas->pluck('atleta_id')->merge($time->rodadas->reservas->pluck('atleta_id'));
 
-        $parciais = Parciais::whereIn('atleta_id', $atleta_id)
+        $parciais = Parciais::select(
+            'atleta_id',
+            'G',
+            'A',
+            'DS',
+            'FD',
+            'FF',
+            'FT',
+            'FS',
+            'GS',
+            'SG',
+            'DP',
+            'GC',
+            'CA',
+            'CV',
+            'FC',
+            'I',
+            'PP',
+            'PS',
+            'PC',
+            'DE',
+            'V',
+        )
+            ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
+            ->whereIn('atleta_id', $atleta_id)
             ->where('rodada', $rodada)
             ->get()
             ->keyBy('atleta_id');
+
+        $atleta_id = $time->rodadas->atletas->where('entrou_em_campo', 'Sim')->pluck('atleta_id')->merge($time->rodadas->reservas->where('entrou_em_campo', 'Sim')->pluck('atleta_id'));
+
+        $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
+            ->whereIn('atleta_id', $atleta_id)
+            ->where('rodada', $rodada)
+            ->first();
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
             ->orderBy('tipo')
             ->get();
 
         return response()->json([
-            'pontuacao' => $parciais->sum('pontuacao'),
+            'pontuacao' => $pontos->total,
             'parciais' => $parciais,
             'time' => $time,
             'scouts' => $scouts

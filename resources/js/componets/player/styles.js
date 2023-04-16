@@ -6,6 +6,7 @@ export const Container = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    opacity: ${({ active }) => active === 'Sim' ? 1 : 0.3 };
 `;
 
 export const Captain = styled.a`

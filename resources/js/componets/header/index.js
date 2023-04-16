@@ -109,7 +109,7 @@ function header() {
         <>
             <Container className='container'>
                 <Icon onClick={open_menu}>menu</Icon>
-                <NavLink to="/auth/">
+                <NavLink to="/auth/atletas">
                     <Logo />
                 </NavLink>
                 <Nav ref={menu}>
@@ -223,7 +223,7 @@ function header() {
                             SAIR
                         </ButtonLink>
                     </Item>
-                    {user.plano === 'Free Cartoleiro' &&
+                    {(user.plano === 'Free Cartoleiro' && user.plano === 'Demonstrativo') &&
                         <Item>
                             <NavLink className="planos" to="/auth/planos">
                                 <Icon>wysiwyg</Icon>

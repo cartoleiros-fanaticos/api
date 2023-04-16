@@ -5,7 +5,7 @@ export const Container = styled.div`
 
 export const Match = styled.div`
     display: grid;
-    grid-template-columns: 48.5% auto 48.5%;
+    grid-template-columns: 48% auto 48%;
     grid-gap: 5px;
     font-size: 0.9em;
 `;
@@ -50,19 +50,23 @@ export const Versus = styled.strong`
 
 export const Players = styled.div`
     grid-column: 1/4;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 50% 50%;
 
     @media screen and (max-width:900px){
-        flex-direction: column;
+        grid-template-columns: 100%;
     }
 `;
 
+export const ContainerLive = styled.div`
+    grid-column: 1/3;
+`;
+
 export const List = styled.div`
-    width: 48.5%;
+    width: 100%;
     padding: 10px;
     border: solid thin #ccc;
-    height: 100vh;
+    min-height: 300px;
 
     @media screen and (max-width:900px){
         width: 100%;

@@ -63,14 +63,19 @@ class ParciaisController extends Controller
 
     public function parciais_clubes(Request $request, $id)
     {
+        $game = Game::first();
 
         $partida = Partidas::select('id', 'rodada', 'local', 'clube_casa_id', 'clube_visitante_id')
             ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
             ->find($id);
 
-        $atletas_casa = Parciais::with(['clubes', 'posicoes'])
-            ->where('rodada', $partida->rodada)
-            ->where('clube_id', $partida->clube_casa_id)
+        $atletas_casa = Parciais::select('posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'foto', 'entrou_em_campo')
+            ->join('atletas', 'atletas.atleta_id', 'parciais.atleta_id')
+            ->join('clubes', 'clubes.id', 'parciais.clube_id')
+            ->join('posicoes', 'posicoes.id', 'parciais.posicao_id')
+            ->where('parciais.rodada', $partida->rodada)
+            ->where('parciais.clube_id', $partida->clube_casa_id)
+            ->orderBy('parciais.posicao_id')
             ->get();
 
         $atleta_id = $atletas_casa->pluck('atleta_id');
@@ -80,9 +85,13 @@ class ParciaisController extends Controller
             ->get()
             ->keyBy('atleta_id');
 
-        $atletas_visitante = Parciais::with(['clubes', 'posicoes'])
-            ->where('rodada', $partida->rodada)
-            ->where('clube_id', $partida->clube_visitante_id)
+        $atletas_visitante = Parciais::select('posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'foto', 'entrou_em_campo')
+            ->join('atletas', 'atletas.atleta_id', 'parciais.atleta_id')
+            ->join('clubes', 'clubes.id', 'parciais.clube_id')
+            ->join('posicoes', 'posicoes.id', 'parciais.posicao_id')
+            ->where('parciais.rodada', $partida->rodada)
+            ->where('parciais.clube_id', $partida->clube_visitante_id)
+            ->orderBy('parciais.posicao_id')
             ->get();
 
         $atleta_id = $atletas_visitante->pluck('atleta_id');
@@ -99,6 +108,7 @@ class ParciaisController extends Controller
             ->get();
 
         return response()->json([
+            'game' => $game,
             'partida' => [
                 'id' => $partida->id,
                 'partida_data' => $partida->partida_data,
@@ -569,8 +579,6 @@ class ParciaisController extends Controller
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 400);
         }
-
-        return response()->json([]);
     }
 
     public function partidas(Request $request)

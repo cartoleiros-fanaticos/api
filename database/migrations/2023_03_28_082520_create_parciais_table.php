@@ -23,7 +23,7 @@ return new class extends Migration
             
             $table->float('pontuacao');
             $table->float('variacao_num')->default(0);
-            $table->boolean('entrou_em_campo')->default(false);
+            $table->enum('entrou_em_campo', [ 'Sim', 'Não' ])->default('Sim');
 
             $table->integer('DS')->default(0);
             $table->integer('FC')->default(0);

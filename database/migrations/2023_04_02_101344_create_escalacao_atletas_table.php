@@ -19,6 +19,7 @@ return new class extends Migration
             $table->float('preco_num');
             $table->integer('rodada_time_id');
             $table->enum('titular', ['Sim', 'Não'])->default('Sim');
+            $table->enum('entrou_em_campo', [ 'Sim', 'Não' ])->default('Sim');
 
             $table->foreignId('escalacao_rodadas_id')
                 ->constrained('escalacao_rodadas')

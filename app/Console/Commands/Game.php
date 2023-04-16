@@ -63,6 +63,7 @@ class Game extends Command
 
             $response = $client->get('https://api.cartolafc.globo.com/partidas');
             $response = json_decode($response->getBody(), true);
+
             foreach ((array) $response['partidas'] as $key => $val) :
 
                 Partidas::updateOrCreate(
@@ -162,16 +163,15 @@ class Game extends Command
             endforeach;
 
             echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
-
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
         } catch (RequestException $e) {
             echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
         } catch (Exception $e) {
             echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+            Log::error($e->getMessage());
         }
     }
 }

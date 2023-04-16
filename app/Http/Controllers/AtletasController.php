@@ -99,6 +99,7 @@ class AtletasController extends Controller
                 PS,
                 PC,
                 DE,
+                V,
 
                 clube_casa_id,
                 clube_visitante_id,

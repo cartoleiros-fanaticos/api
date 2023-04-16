@@ -18,7 +18,7 @@ import {
 
 function player({ data, capitao_id, scouts, parciais = [] }) {
     return (
-        <Container>
+        <Container active={data.entrou_em_campo}>
             {capitao_id && <Captain captain={capitao_id === data.atleta_id}>C</Captain>}
             <Photo src={data.foto} />
             <Description>

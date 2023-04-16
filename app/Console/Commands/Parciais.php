@@ -69,6 +69,7 @@ class Parciais extends Command
                                 'clube_id' => $val['clube_id'],
                                 'posicao_id' => $atletas[$id]->posicao_id,
                                 'variacao_num' => 0,
+                                'entrou_em_campo' => $val['entrou_em_campo'] ? 'Sim' : 'Não',
                                 'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                                 'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
                                 'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),
