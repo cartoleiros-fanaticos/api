@@ -5,6 +5,7 @@ import api from '../../../../utils/api';
 
 import Container from '../../../../componets/container';
 import Loading from '../../../../componets/loading';
+import Live from '../../../../componets/live';
 
 import Modal from '../../../../componets/modal';
 import ModalLeague from '../../../../modal/leagues';
@@ -48,6 +49,7 @@ function leagues() {
 
     let navigate = useNavigate();
 
+    const [uri, suri] = useState('');
 
     const [slug, sslug] = useState('');
     const [orderBy, sorderBy] = useState('campeonato');
@@ -75,6 +77,8 @@ function leagues() {
             sdata(data);
             sloading(false);
 
+            suri(`parciais/liga/${slug}?orderBy=${orderBy}`);
+
         } catch (e) {
             message(e);
             sloading(false);
@@ -100,7 +104,7 @@ function leagues() {
                             data?.destaques ?
                                 <Content>
                                     <Header>
-                                        <Share onClick={() => share(data, orderBy) }>share</Share>
+                                        <Share onClick={() => share(data, orderBy)}>share</Share>
                                         <HeaderShield src={data.escudo} />
                                         <HeaderTitle>{data.nome}</HeaderTitle>
                                         <HeaderText>{data.descricao}</HeaderText>
@@ -139,6 +143,14 @@ function leagues() {
                                             <Option value="patrimonio">Patrimônio</Option>
                                         </Select>
                                     </Label>
+                                    {(data.game.status_mercado != 1 && orderBy === 'rodada') &&
+                                        <Live
+                                            uri={uri}
+                                            fnc={(response) => {
+                                                sdata({ ...data, ...response });
+                                            }}
+                                        />
+                                    }
                                     <Table>
                                         <Thead>
                                             <Tr>

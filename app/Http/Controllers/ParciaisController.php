@@ -493,6 +493,8 @@ class ParciaisController extends Controller
     public function parciais_liga(Request $request, $slug)
     {
 
+        $game = Game::first();
+
         $page = $request->input('page', 1);
         $orderBy = $request->input('orderBy', 'campeonato');
 
@@ -505,7 +507,41 @@ class ParciaisController extends Controller
             $response = $client->get("https://api.cartola.globo.com/auth/liga/$slug?orderBy=$orderBy&page=$page", ['headers' => $headers]);
             $response = json_decode($response->getBody(), true);
 
+            if ($game->status_mercado != 1) :
+
+                $parciais = Parciais::where('rodada', $game->rodada_atual)
+                    ->get()
+                    ->keyBy('atleta_id');
+
+                $times = $client->get("https://api.cartola.globo.com/liga/" . $response['liga']['liga_id'] . "/times");
+                $times = json_decode($times->getBody(), true);
+
+                $novo_times = [];
+
+                foreach ($times as $time_id => $val) :
+
+                    $novo_times[$time_id]['pontuacao'] = 0;
+
+                    foreach ($val['atletas'] as $value) :
+
+                        $novo_times[$time_id]['pontuacao'] += isset($parciais[$value]) ? ($val['capitao'] === $value ? ($parciais[$value]->pontuacao * 1.5) : $parciais[$value]->pontuacao) : 0;
+
+                    endforeach;
+
+                endforeach;
+
+                foreach ($response['times'] as $key => $val) :
+                    $response['times'][$key]['pontos']['rodada'] = $novo_times[$val['time_id']]['pontuacao'];
+                endforeach;
+
+                usort($response['times'], function ($a, $b) {
+                    return $b['pontos']['rodada'] - $a['pontos']['rodada'];
+                });
+
+            endif;
+
             $liga = [
+                'game' => $game,
                 'nome' => $response['liga']['nome'],
                 'descricao' => $response['liga']['descricao'],
                 'total_times_liga' => $response['liga']['total_times_liga'],
