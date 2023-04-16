@@ -198,7 +198,7 @@ class EscalacaoController extends Controller
         if (!$time->rodadas)
             return response()->json(['message' => 'Time não foi escalado.'], 401);
 
-        $atleta_id = $time->rodadas->atletas->pluck('atleta_id');
+        $atleta_id = $time->rodadas->atletas->pluck('atleta_id')->merge($time->rodadas->reservas->pluck('atleta_id'));
 
         $parciais = Parciais::whereIn('atleta_id', $atleta_id)
             ->where('rodada', $rodada)

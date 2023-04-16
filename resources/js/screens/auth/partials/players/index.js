@@ -19,6 +19,8 @@ import { Message } from '../../../../utils/styles';
 
 function players() {
 
+  const [control, scontrol] = useState('start');
+
   const [data, sdata] = useState({});
   const [players, splayers] = useState([]);
 
@@ -52,13 +54,12 @@ function players() {
     const value = event.target.value.toLowerCase();
 
     if (value && value.length >= 3) {
-      sloop(null);
-      clearInterval(loop);
+      scontrol('clean');
       const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1);
       sdata({ ...data, atletas });
     } else if (value === '') {
       sdata({ ...data, atletas: players });
-      inplay();
+      scontrol('start');
     }
   }
 
@@ -75,11 +76,13 @@ function players() {
               </Label>
 
               <Live
+                control={control}
                 uri="parciais/atletas"
                 fnc={(data) => {
                   sdata(data);
                   splayers(data.atletas);
                 }}
+
               />
 
               {

@@ -7,6 +7,7 @@ import Container from '../../../componets/container';
 import Loading from '../../../componets/loading';
 import Rounds from '../../../componets/rounds';
 import Player from '../../../componets/player';
+import Live from '../../../componets/live';
 
 import {
     Content,
@@ -28,21 +29,12 @@ function lineup() {
 
     const player = useRef();
 
+    const [uri, suri] = useState('');
+
     const [data, sdata] = useState({});
 
     const [loading, sloading] = useState(false);
     const [loading_page, sloadingpage] = useState(true);
-
-    const [loop, sloop] = useState();
-    const [time, stime] = useState('10s');
-  
-    useEffect(() => {
-  
-      return () => {
-        clearInterval(loop);
-      }
-  
-    }, [loop])
 
     useEffect(() => {
         getData();
@@ -77,6 +69,8 @@ function lineup() {
 
             if (window.innerWidth <= 900)
                 window.scrollTo({ top: player.current.offsetTop - 56, behavior: 'smooth' });
+
+            suri(`escalacao/${time_id}?rodada=${rodada}`);
 
         } catch (e) {
             message(e);
@@ -132,9 +126,15 @@ function lineup() {
                             {
                                 data.time ?
                                     <>
+                                        <Live
+                                            uri={uri}
+                                            fnc={(response) => {                                                
+                                                sdata({ ...data, ...response });
+                                            }}
+                                        />
                                         <Score>
                                             <ScoreText>Pontuação:</ScoreText>
-                                            <ScoreValue>{amount(data.pontuacao)} pts</ScoreValue>
+                                            <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>
                                         </Score>
                                         {
                                             data.time.rodadas.atletas.map((e, i) =>
