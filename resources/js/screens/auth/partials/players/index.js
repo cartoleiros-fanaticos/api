@@ -6,13 +6,11 @@ import api from '../../../../utils/api';
 import Container from '../../../../componets/container';
 import Player from '../../../../componets/player';
 import Live from '../../../../componets/live';
+import Search from '../../../../componets/search';
 
 import {
   Content,
   List,
-  Label,
-  Icon,
-  Input,
 } from './styles';
 
 import { Message } from '../../../../utils/styles';
@@ -70,20 +68,22 @@ function players() {
           ?
           <>
             <List>
-              <Label>
-                <Icon>directions_run</Icon>
-                <Input onChange={search} />
-              </Label>
-
-              <Live
-                control={control}
-                uri="parciais/atletas"
-                fnc={(data) => {
-                  sdata(data);
-                  splayers(data.atletas);
-                }}
-
+              <Search
+                placeholder="Digite nome do atleta"
+                icon="directions_run"
+                onChange={search}
               />
+              {data.game.status_mercado === 2 &&
+                <Live
+                  control={control}
+                  uri="parciais/atletas"
+                  fnc={(data) => {
+                    sdata(data);
+                    splayers(data.atletas);
+                  }}
+
+                />
+              }
 
               {
                 data.atletas.map((e, i) =>

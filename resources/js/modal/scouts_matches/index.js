@@ -75,7 +75,7 @@ function scouts({ data: { id } }) {
               <TeamName>{data.partida.clube_visitante.nome}</TeamName>
             </Team>
             <Players>
-              {data.game.status_mercado != 1 &&
+              {data.game.status_mercado === 2 &&
                 <ContainerLive>
                   <Live
                     uri={uri}

@@ -37,6 +37,7 @@ class ParciaisController extends Controller
             'clubes.abreviacao as abreviacao_clube',
             'posicoes.nome as posicao',
             'parciais.clube_id',
+            'entrou_em_campo'
         )
             ->join('parciais', 'parciais.atleta_id', 'atletas.atleta_id')
             ->join('posicoes', 'posicoes.id', 'atletas.posicao_id')
@@ -537,6 +538,12 @@ class ParciaisController extends Controller
                 usort($response['times'], function ($a, $b) {
                     return $b['pontos']['rodada'] - $a['pontos']['rodada'];
                 });
+
+                /* paramos aqui */
+
+                foreach ($response['times'] as $key => $val) :
+                    $response['times'][$key]['ranking']['rodada'] = array_search($val['time_id'], array_column($response['times'], 'time_id'));//array_search($val['time_id'], $response['times']);
+                endforeach;
 
             endif;
 

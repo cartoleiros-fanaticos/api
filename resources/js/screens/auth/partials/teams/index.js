@@ -6,6 +6,7 @@ import api from '../../../../utils/api';
 import Container from '../../../../componets/container';
 import Loading from '../../../../componets/loading';
 import Rounds from '../../../../componets/rounds';
+import Search from '../../../../componets/search';
 
 import Modal from '../../../../componets/modal';
 import ModalTeams from '../../../../modal/teams';
@@ -14,10 +15,6 @@ import { useLocation } from "react-router-dom";
 
 import {
     Content,
-    Label,
-    Icon,
-    Input,
-
     Players,
     Player,
     Captain,
@@ -268,13 +265,12 @@ function teams() {
     }
 
     const component = (
-        <>
-            <Label>
-                <Icon>security</Icon>
-                <Input
-                    onFocus={() => smodal(true)}
-                />
-            </Label>
+        <>            
+            <Search
+                placeholder="Digite nome do time"
+                icon="security"
+                onFocus={() => smodal(true)}
+            />
             {
                 loading ?
                     <Loading />

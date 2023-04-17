@@ -223,7 +223,7 @@ function header() {
                             SAIR
                         </ButtonLink>
                     </Item>
-                    {(user.plano === 'Free Cartoleiro' && user.plano === 'Demonstrativo') &&
+                    {(user.plano === 'Free Cartoleiro' || user.plano === 'Demonstrativo') &&
                         <Item>
                             <NavLink className="planos" to="/auth/planos">
                                 <Icon>wysiwyg</Icon>

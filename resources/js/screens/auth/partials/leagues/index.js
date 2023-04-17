@@ -6,6 +6,7 @@ import api from '../../../../utils/api';
 import Container from '../../../../componets/container';
 import Loading from '../../../../componets/loading';
 import Live from '../../../../componets/live';
+import Search from '../../../../componets/search';
 
 import Modal from '../../../../componets/modal';
 import ModalLeague from '../../../../modal/leagues';
@@ -15,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import {
     Label,
     Icon,
-    Input,
     Content,
     Header,
     Share,
@@ -52,7 +52,7 @@ function leagues() {
     const [uri, suri] = useState('');
 
     const [slug, sslug] = useState('');
-    const [orderBy, sorderBy] = useState('campeonato');
+    const [orderBy, sorderBy] = useState('rodada');
 
     const [data, sdata] = useState({});
     const [modal, smodal] = useState(false);
@@ -88,12 +88,13 @@ function leagues() {
 
     const component = (
         <>
-            <Label>
-                <Icon>groups</Icon>
-                <Input
-                    onFocus={() => smodal(true)}
-                />
-            </Label>
+            <Search
+                placeholder="Digite nome da liga"
+                icon="groups"
+                onFocus={() => {
+                    smodal(true);
+                }}
+            />
             {
                 loading ?
                     <Loading />

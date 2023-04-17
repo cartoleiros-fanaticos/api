@@ -5,7 +5,7 @@ export const Container = styled.div`
 
 export const Match = styled.div`
     display: grid;
-    grid-template-columns: 48% auto 48%;
+    grid-template-columns: auto 2% auto;
     grid-gap: 5px;
     font-size: 0.9em;
 `;
@@ -60,6 +60,10 @@ export const Players = styled.div`
 
 export const ContainerLive = styled.div`
     grid-column: 1/3;
+
+    @media screen and (max-width:900px){
+        grid-column: 1/1;
+    }
 `;
 
 export const List = styled.div`

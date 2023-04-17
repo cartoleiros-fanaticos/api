@@ -126,7 +126,7 @@ function lineup() {
                             {
                                 data.time ?
                                     <>
-                                        {data.game.status_mercado != 1 &&
+                                        {data.game.status_mercado === 2 &&
                                             <Live
                                                 uri={uri}
                                                 fnc={(response) => {

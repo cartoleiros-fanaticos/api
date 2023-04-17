@@ -6,12 +6,10 @@ import api from '../../utils/api';
 import { Message } from '../../utils/styles';
 
 import Loading from '../../componets/loading';
+import Search from '../../componets/search';
 
 import {
     Container,
-    Label,
-    Icon,
-    Input,
     Item,
     Title,
     Shield,
@@ -78,14 +76,13 @@ function leagues({ fnc, smodal }) {
 
     return (
         <>
-            <Label>
-                <Icon>groups</Icon>
-                <Input
-                    onKeyUp={(e) => {
-                        if (e.target.value && e.key === 'Enter') getData(e.target.value);
-                    }}
-                />
-            </Label>
+            <Search
+                placeholder="Digite nome da liga"
+                icon="groups"
+                onKeyUp={(e) => {
+                    if (e.target.value && e.key === 'Enter') getData(e.target.value);
+                }}
+            />
             <Container>
                 {
                     loading ?

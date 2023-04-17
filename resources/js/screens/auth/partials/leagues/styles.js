@@ -9,7 +9,7 @@ export const Label = styled.label`
     background-color: #f1f1f1;
     border-radius: 10px;
     text-align: right;
-    margin: 0 auto 15px auto;
+    margin: 25px auto 15px auto;
     color: #666;
     align-items: center;
 
@@ -23,19 +23,6 @@ export const Icon = styled.i.attrs(() => ({
 }))` 
    color: #666; 
    margin-right: 10px;
-`;
-
-export const Input = styled.input.attrs(() => ({
-    type: 'search',
-    placeholder: 'Digite nome da liga'
-}))`
-    background-color: transparent;
-    width: 100%;
-    border: none;
-    font-size: 0.9em;
-    outline: none;
-    padding: 10px 5px;
-    background-color: #f1f1f1;
 `;
 
 export const Content = styled.div`

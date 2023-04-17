@@ -10,38 +10,6 @@ export const Container = styled.div`
     }
 `;
 
-export const Label = styled.label`
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    border: solid 2px #ccc;
-    background-color: #f1f1f1;
-    border-radius: 10px;
-    text-align: right;
-    margin-bottom: 10px;
-    color: #666;
-`;
-
-export const Input = styled.input.attrs(() => ({
-    type: 'search',
-    placeholder: 'Digite nome do time',  
-}))`
-    background-color: transparent;
-    width: 100%;
-    border: none;
-    font-size: 15px;
-    outline: none;
-    background-color: #f1f1f1;
-`;
-
-export const Icon = styled.i.attrs(() => ({
-    className: 'material-icons'
-}))` 
-   color: #666; 
-   margin-right: 10px;
-`;
-
 export const Title = styled.i`
   font-size: 0.8em;
   color: #999;

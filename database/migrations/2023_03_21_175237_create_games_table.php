@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('temporada');
             $table->integer('rodada_atual');
+            $table->integer('status_mercado');
 
             // 1 - Mercado Aberto
             // 2 - Parciais
-
-            $table->integer('status_mercado');
+            // 3 - Manutenção
+            
             $table->boolean('game_over');
             $table->integer('times_escalados');
             $table->datetime('fechamento');
