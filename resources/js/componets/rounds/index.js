@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import { swal_warning } from '../../utils/helpers';
 
@@ -8,11 +8,16 @@ import {
     Item,
 } from './styles';
 
-function rounds({ rodada_atual, fnc }) {
+function rounds({ rodada_atual, time_id, fnc }) {
 
     const rodadas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38];
 
     async function select(element, rodada) {
+
+        if (!time_id) {
+            swal_warning('Selecione um time antes de executar essa ação.');
+            return false
+        }
 
         if (rodada > rodada_atual) {
 
@@ -37,7 +42,6 @@ function rounds({ rodada_atual, fnc }) {
                 box_min = 2;
                 box_max = 36;
                 width_box = (window.innerWidth - 20) / box_view;
-                console.log(width_box);
             }
 
             if (rodada > box_min && rodada < box_max) {
@@ -64,7 +68,7 @@ function rounds({ rodada_atual, fnc }) {
 
             element.classList.add('active');
 
-            fnc(rodada);
+            fnc(rodada, time_id);
 
         }
 

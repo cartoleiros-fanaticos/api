@@ -33,6 +33,11 @@ function lineup() {
 
     const [data, sdata] = useState({});
 
+    const [active, sactive] = useState({
+        time_id: null,
+        rodada: null
+    });
+
     const [loading, sloading] = useState(false);
     const [loading_page, sloadingpage] = useState(true);
 
@@ -40,19 +45,7 @@ function lineup() {
         getData();
     }, [])
 
-    async function getPlayers(rodada, time_id) {
-
-        if (!time_id) {
-            swal_warning('Selecione um time antes de executar essa ação.');
-            return false
-        }
-
-        sdata({
-            ...data,
-            time: null,
-            parciais: null,
-            pontuacao: null
-        });
+    async function team(rodada, time_id) {
 
         try {
 
@@ -65,6 +58,8 @@ function lineup() {
                 ...response.data
             });
 
+            sactive({ rodada, time_id });
+
             sloading(false);
 
             if (window.innerWidth <= 900)
@@ -73,8 +68,22 @@ function lineup() {
             suri(`escalacao/${time_id}?rodada=${rodada}`);
 
         } catch (e) {
+
+            if (e.response.data.message === `Time não foi escalado para a rodada ${rodada}.`) {
+
+                sdata({
+                    ...data,
+                    time: null,
+                    parciais: null,
+                    pontuacao: null
+                });
+
+                sactive({ rodada, time_id });
+            }
+
             message(e);
             sloading(false);
+            sactive({ rodada, time_id });
         };
 
     }
@@ -88,6 +97,8 @@ function lineup() {
             const { data } = await api.get(`escalacao`);
 
             sdata(data);
+            sactive({ ...active, rodada: data.game.rodada_atual });
+
             sloadingpage(false);
 
         } catch (e) {
@@ -100,14 +111,14 @@ function lineup() {
     const component = (
         <Content>
             <Rounds
-                fnc={getPlayers}
-                time_id={data.time?.time_id}
+                fnc={team}
+                time_id={active.time_id}
                 rodada_atual={data.game?.rodada_atual}
             />
             <Teams>
                 {
                     data.times?.map((e, i) =>
-                        <Team className={data.time?.time_id === e.time_id ? 'active' : ''} onClick={() => getPlayers(data.game.rodada_atual, e.time_id)} key={i}>
+                        <Team className={active.time_id === e.time_id ? 'active' : ''} onClick={() => team(active.rodada, e.time_id)} key={i}>
                             <Shield src={e.url_escudo_png} />
                             <Text><Bold>Nome:</Bold> {e.nome}</Text>
                             <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>

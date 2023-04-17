@@ -2,6 +2,7 @@
 
 service php8.1-fpm start
 service nginx start
+service cron start
 chown -R $USER:www-data storage
 chown -R $USER:www-data bootstrap/cache
 chmod -R 775 storage
@@ -16,4 +17,4 @@ fi
 
 composer clean
 
-php artisan migrate --seed
+php artisan migrate --seed --force

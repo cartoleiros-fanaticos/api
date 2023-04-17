@@ -28,7 +28,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/app:${{ github.sha }}
 
       - name: Executando comando via SSH
         uses: appleboy/ssh-action@master
@@ -38,8 +38,8 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            docker pull cartoleiro/app
+            docker pull cartoleiro/app:${{ github.sha }}
             docker stop app
             docker rm app
-            docker run -d -p 8080:80 --name app cartoleiro/app
-            docker exec -it app ./init.sh
+            docker run -d -p 8080:80 --name app cartoleiro/app:${{ github.sha }}
+            docker exec app ./init.sh

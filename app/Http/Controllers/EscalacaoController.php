@@ -197,7 +197,7 @@ class EscalacaoController extends Controller
             return response()->json(['message' => 'Plano exclusivo para sócio cartoleiro fanático.'], 401);
 
         if (!$time->rodadas)
-            return response()->json(['message' => 'Time não foi escalado.'], 401);
+            return response()->json(['message' => "Time não foi escalado para a rodada $rodada."], 401);
 
         $atleta_id = $time->rodadas->atletas->pluck('atleta_id')->merge($time->rodadas->reservas->pluck('atleta_id'));
 
