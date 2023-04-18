@@ -21,6 +21,7 @@ use Validator;
 use Exception;
 use Log;
 use DB;
+use Illuminate\Support\Str;
 
 class ParciaisController extends Controller
 {
@@ -192,17 +193,23 @@ class ParciaisController extends Controller
 
                     DB::transaction(function () use ($response, $rodada_atual_time, $time_cartola) {
 
-                        $time_cartola_rodadas = new TimesCartolaRodadas;
+                        $time_cartola_rodadas = TimesCartolaRodadas::updateOrCreate(
+                            [
+                                'rodada_time_id' => $rodada_atual_time,
+                                'times_cartolas_id' => $time_cartola->id,
+                            ],
+                            [
 
-                        $time_cartola_rodadas->capitao_id = $response['capitao_id'];
-                        $time_cartola_rodadas->esquema_id = $response['esquema_id'];
-                        $time_cartola_rodadas->rodada_time_id = $rodada_atual_time;
-                        $time_cartola_rodadas->patrimonio = $response['patrimonio'];
-                        $time_cartola_rodadas->pontos = $response['pontos'] ?? 0;
-                        $time_cartola_rodadas->valor_time = $response['valor_time'];
-                        $time_cartola_rodadas->times_cartolas_id = $time_cartola->id;
+                                'capitao_id' => $response['capitao_id'],
+                                'esquema_id' => $response['esquema_id'],
+                                'pontos' => $response['pontos'] ?? 0,
+                                'valor_time' => $response['valor_time'],
+                            ]
+                        );
 
-                        $time_cartola_rodadas->save();
+                        TimesCartolaAtletas::where('rodada_time_id', $rodada_atual_time)
+                            ->where('times_cartola_rodadas_id', $time_cartola_rodadas->id)
+                            ->delete();
 
                         foreach ($response['atletas'] as $val) :
 
@@ -215,9 +222,12 @@ class ParciaisController extends Controller
                                 'jogos_num' => $val['jogos_num'],
                                 'times_cartola_rodadas_id' => $time_cartola_rodadas->id,
                                 'atleta_id' => $val['atleta_id'],
-                                'foto' => $val['foto'],
+                                'foto' => Str::replace('FORMATO', '220x220', $val['foto']),
                                 'apelido' => $val['apelido'],
                                 'posicao_id' => $val['posicao_id'],
+                                'clube_id' => $val['clube_id'],
+                                'titular' => 'Sim',
+                                'entrou_em_campo' => 'Sim',
                             ];
 
                         endforeach;
@@ -234,11 +244,12 @@ class ParciaisController extends Controller
                                     'jogos_num' => $val['jogos_num'],
                                     'times_cartola_rodadas_id' => $time_cartola_rodadas->id,
                                     'atleta_id' => $val['atleta_id'],
-                                    'foto' => $val['foto'],
+                                    'foto' => Str::replace('FORMATO', '220x220', $val['foto']),
                                     'apelido' => $val['apelido'],
                                     'posicao_id' => $val['posicao_id'],
-                                    'tipo' => 'Reserva',
-                                    'valido' => 'Não'
+                                    'clube_id' => $val['clube_id'],
+                                    'titular' => 'Nâo',
+                                    'entrou_em_campo' => 'Nâo',
                                 ];
 
                             endforeach;
@@ -260,7 +271,8 @@ class ParciaisController extends Controller
                 ->get();
 
             $geral = COLLECT([]);
-            $maior_e_menor = COLLECT([]);
+            $maior_e_menor_pontuador = COLLECT([]);
+            $maior_e_menor_preco = COLLECT([]);
             $destaques = COLLECT([]);
             $variacao = COLLECT([]);
             $variacao = COLLECT([]);
@@ -288,7 +300,7 @@ class ParciaisController extends Controller
                     'rodada_menor_pontuacao' => $times_cartola->where('pontos', $menor_pontuacao)->first()->rodada_time_id,
                 ];
 
-                $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'pontos_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
+                $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'posicao_id', 'clube_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
                     ->join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
                     ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
                     ->join('posicoes', 'posicao_id', 'posicoes.id')
@@ -296,71 +308,21 @@ class ParciaisController extends Controller
                     ->where('titular', 'Sim')
                     ->get();
 
-                $maior_pontuacao = $times_cartola->max('pontos_num');
-                $menor_pontuacao = $times_cartola->min('pontos_num');
+                $maior_pontuador = $atletas->max('pontos_num');
+                $menor_pontuador = $atletas->min('pontos_num');
 
-                $maior_e_menor = [
-                    'maior_pontuacao' => $atletas->where('pontos_num', $maior_pontuacao)->first() ?? 0,
-                    'menor_pontuacao' => $atletas->where('pontos_num', $menor_pontuacao)->first() ?? 0,
+                $maior_e_menor_pontuador = [
+                    'maior_pontuador' => $atletas->where('pontos_num', $maior_pontuador)->first() ?? 0,
+                    'menor_pontuador' => $atletas->where('pontos_num', $menor_pontuador)->first() ?? 0,
                 ];
 
-                // $atletas = COLLECT([
-                //     [
-                //         'rodada_time_id' => 1,
-                //         'apelido' => 'Wedson',
-                //         'foto' => 'image.jpg',
-                //         'atleta_id' => 1,
-                //         'pontos_num' => 1,
-                //         'variacao_num' => 1,
-                //         'capitao_id' => 2,
-                //         'posicao_id' => 5,
-                //         'clube_id' => 262,
-                //     ],
-                //     [
-                //         'rodada_time_id' => 1,
-                //         'apelido' => 'Cândido',
-                //         'foto' => 'image.jpg',
-                //         'atleta_id' => 2,
-                //         'pontos_num' => 5,
-                //         'variacao_num' => 4,
-                //         'capitao_id' => 2,
-                //         'posicao_id' => 5,
-                //         'clube_id' => 262,
-                //     ],
-                //     [
-                //         'rodada_time_id' => 2,
-                //         'apelido' => 'Wedson',
-                //         'foto' => 'image.jpg',
-                //         'atleta_id' => 1,
-                //         'pontos_num' => 1,
-                //         'variacao_num' => 1,
-                //         'capitao_id' => 2,
-                //         'posicao_id' => 3,
-                //         'clube_id' => 263,
-                //     ],
-                //     [
-                //         'rodada_time_id' => 2,
-                //         'apelido' => 'Cândido',
-                //         'foto' => 'image.jpg',
-                //         'atleta_id' => 2,
-                //         'pontos_num' => 3,
-                //         'variacao_num' => 2,
-                //         'capitao_id' => 2,
-                //         'posicao_id' => 3,
-                //         'clube_id' => 264,
-                //     ],
-                //     [
-                //         'rodada_time_id' => 2,
-                //         'apelido' => 'Ailson',
-                //         'foto' => 'image.jpg',
-                //         'atleta_id' => 3,
-                //         'pontos_num' => 2,
-                //         'variacao_num' => 1,
-                //         'capitao_id' => 2,
-                //         'posicao_id' => 3,
-                //         'clube_id' => 264,
-                //     ]
-                // ]);
+                $maior_preco = $atletas->max('preco_num');
+                $menor_preco = $atletas->min('preco_num');
+
+                $maior_e_menor_preco = [
+                    'maior_preco' => $atletas->where('preco_num', $maior_preco)->first() ?? 0,
+                    'menor_preco' => $atletas->where('preco_num', $menor_preco)->first() ?? 0,
+                ];
 
                 foreach ($atletas->groupBy('rodada_time_id')->toArray() as $rodada => $val) :
 
@@ -368,8 +330,8 @@ class ParciaisController extends Controller
 
                         if ($value['capitao_id'] === $value['atleta_id']) :
 
-                            $val[$key]['pontos_num'] = $value['pontos_num'] * 1.5;
-                            $value['pontos_num'] = $value['pontos_num'] * 1.5;
+                            // $val[$key]['pontos_num'] = $value['pontos_num'] * 1.5;
+                            // $value['pontos_num'] = $value['pontos_num'] * 1.5;
                             $capitao->push($value);
 
                         endif;
@@ -398,7 +360,6 @@ class ParciaisController extends Controller
                 ];
 
                 foreach ($atletas->groupBy('posicao_id')->toArray() as $key => $val) :
-
                     $posicao->push([
                         'nome' => $posicoes[$key]->nome,
                         'pontos' => COLLECT($val)->sum('pontos_num'),
@@ -455,28 +416,67 @@ class ParciaisController extends Controller
                 ->where('time_id', $id)
                 ->first();
 
-            $atleta_id = $time->rodadas->atletas->pluck('atleta_id');
+            $atleta_id = $time->rodadas->atletas->pluck('atleta_id')->merge($time->rodadas->reservas->pluck('atleta_id'));
 
-            $parciais = Parciais::whereIn('atleta_id', $atleta_id)
-                ->where('rodada', $rodada)
+            $parciais = Parciais::select(
+                'atleta_id',
+                'G',
+                'A',
+                'DS',
+                'FD',
+                'FF',
+                'FT',
+                'FS',
+                'GS',
+                'SG',
+                'DP',
+                'GC',
+                'CA',
+                'CV',
+                'FC',
+                'I',
+                'PP',
+                'PS',
+                'PC',
+                'DE',
+                'V',
+            )
+                ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
+                ->whereIn('atleta_id', $atleta_id)
+                ->where('rodada', 1)
                 ->get()
                 ->keyBy('atleta_id');
 
+            $atleta_id = $time->rodadas->atletas->where('entrou_em_campo', 'Sim')->pluck('atleta_id')->merge($time->rodadas->reservas->where('entrou_em_campo', 'Sim')->pluck('atleta_id'));
+
+            $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
+                ->whereIn('atleta_id', $atleta_id)
+                ->where('rodada', 1)
+                ->first();
+
+            $scouts = Scouts::select('sigla', 'nome', 'tipo')
+                ->orderBy('tipo')
+                ->get();
+
             $response = [
+                'game' => $game,
+                'pontuacao' => $pontos->total,
+                'parciais' => $parciais,
+                'scouts' => $scouts,
                 'time_id' => $id,
-                'rodada_atual' => $rodada_atual,
                 'time' => $time,
                 'pontuacao' => $parciais->sum('pontuacao'),
                 'parciais' => $parciais,
                 'geral' => $geral,
                 'destaques' => $destaques,
-                'maior_e_menor' => $maior_e_menor,
+                'maior_e_menor_pontuador' => $maior_e_menor_pontuador,
+                'maior_e_menor_preco' => $maior_e_menor_preco,
                 'variacao' => $variacao,
                 'capitao' => $capitao,
                 'posicao' => $posicao,
                 'escalados' => [
-                    'atletas' => $mais_escalados,
-                    'clubes' => $clubes_mais_escalados
+                    'atletas' => $mais_escalados->splice(0, 6),
+                    'clubes' => $clubes_mais_escalados->splice(0, 6),
                 ]
             ];
 
@@ -542,7 +542,7 @@ class ParciaisController extends Controller
                 /* paramos aqui */
 
                 foreach ($response['times'] as $key => $val) :
-                    $response['times'][$key]['ranking']['rodada'] = array_search($val['time_id'], array_column($response['times'], 'time_id'));//array_search($val['time_id'], $response['times']);
+                    $response['times'][$key]['ranking']['rodada'] = array_search($val['time_id'], array_column($response['times'], 'time_id')); //array_search($val['time_id'], $response['times']);
                 endforeach;
 
             endif;
@@ -556,7 +556,43 @@ class ParciaisController extends Controller
                 'escudo' => $response['liga']['url_flamula_png'],
                 'dono' => $response['time_dono']['nome_cartola'],
                 'times' => $response['times'],
-                'destaques' => [
+            ];
+
+            if ($orderBy === 'rodada' && $game->rodada_atual > 1) :
+
+                $lanterna = end($response['times']);
+                $rodada = reset($response['times']);
+
+                $patrimonio = array_filter($response['times'], function ($var) {
+                    return ($var['ranking']['patrimonio'] === 1);
+                });
+
+                $patrimonio = reset($patrimonio);
+
+                $liga['destaques'] = [
+                    'lanterninha' => [
+                        'nome' => $lanterna['nome'],
+                        'nome_cartola' => $lanterna['nome_cartola'],
+                        'escudo' => $lanterna['url_escudo_png'],
+                        'pontos' => $lanterna['pontos']['rodada'],
+                    ],
+                    'patrimonio' => [
+                        'nome' => $patrimonio['nome'],
+                        'nome_cartola' => $patrimonio['nome_cartola'],
+                        'escudo' => $patrimonio['url_escudo_png'],
+                        'pontos' => $patrimonio['patrimonio'],
+                    ],
+                    'rodada' => [
+                        'nome' => $rodada['nome'],
+                        'nome_cartola' => $rodada['nome_cartola'],
+                        'escudo' => $rodada['url_escudo_png'],
+                        'pontos' => $rodada['pontos']['rodada'],
+                    ]
+                ];
+
+            elseif ($orderBy === 'rodada') :
+
+                $liga['destaques'] = [
                     'lanterninha' => [
                         'nome' => null,
                         'nome_cartola' => null,
@@ -575,43 +611,7 @@ class ParciaisController extends Controller
                         'escudo' => null,
                         'pontos' => null
                     ]
-                ]
-            ];
-
-            if (isset($response['destaques'])) :
-
-            // $lanterninha = $times->filter(function ($value, $key) use ($response) {
-            //     return $value['time_id'] === $response['destaques']['lanterninha']['time_id'];
-            // })->values();
-
-            // $patrimonio = $times->filter(function ($value, $key) use ($response) {
-            //     return $value['time_id'] === $response['destaques']['patrimonio']['time_id'];
-            // })->values();
-
-            // $rodada = $times->filter(function ($value, $key) use ($response) {
-            //     return $value['time_id'] === $response['destaques']['rodada']['time_id'];
-            // })->values();
-
-            // $liga['destaques'] = [
-            //     'lanterninha' => [
-            //         'nome' => $response['destaques']['lanterninha']['nome'],
-            //         'nome_cartola' => $response['destaques']['lanterninha']['nome_cartola'],
-            //         'escudo' => $response['destaques']['lanterninha']['url_escudo_png'],
-            //         'pontos' => collect($lanterninha)->count() ? $lanterninha[0]['pontos']['rodada'] : 0
-            //     ],
-            //     'patrimonio' => [
-            //         'nome' => $response['destaques']['patrimonio']['nome'],
-            //         'nome_cartola' => $response['destaques']['patrimonio']['nome_cartola'],
-            //         'escudo' => $response['destaques']['patrimonio']['url_escudo_png'],
-            //         'pontos' => collect($patrimonio)->count() ? $patrimonio[0]['patrimonio'] : 0
-            //     ],
-            //     'rodada' => [
-            //         'nome' => $response['destaques']['rodada']['nome'],
-            //         'nome_cartola' => $response['destaques']['rodada']['nome_cartola'],
-            //         'escudo' => $response['destaques']['rodada']['url_escudo_png'],
-            //         'pontos' => collect($rodada)->count() ? $rodada[0]['pontos']['rodada'] : 0
-            //     ]
-            // ];
+                ];
 
             endif;
 

@@ -526,6 +526,7 @@ class ComposerStaticInit590faa7739dfd85f885dc40531e9bc53
 
     public static $classMap = array (
         'App\\Console\\Commands\\Atletas' => __DIR__ . '/../..' . '/app/Console/Commands/Atletas.php',
+        'App\\Console\\Commands\\Escalacao' => __DIR__ . '/../..' . '/app/Console/Commands/Escalacao.php',
         'App\\Console\\Commands\\Game' => __DIR__ . '/../..' . '/app/Console/Commands/Game.php',
         'App\\Console\\Commands\\Observacao' => __DIR__ . '/../..' . '/app/Console/Commands/Observacao.php',
         'App\\Console\\Commands\\Parciais' => __DIR__ . '/../..' . '/app/Console/Commands/Parciais.php',
@@ -541,7 +542,6 @@ class ComposerStaticInit590faa7739dfd85f885dc40531e9bc53
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\CruzamentoController' => __DIR__ . '/../..' . '/app/Http/Controllers/CruzamentoController.php',
         'App\\Http\\Controllers\\EscalacaoController' => __DIR__ . '/../..' . '/app/Http/Controllers/EscalacaoController.php',
-        'App\\Http\\Controllers\\EstatisticasController' => __DIR__ . '/../..' . '/app/Http/Controllers/EstatisticasController.php',
         'App\\Http\\Controllers\\ParciaisController' => __DIR__ . '/../..' . '/app/Http/Controllers/ParciaisController.php',
         'App\\Http\\Controllers\\PlanosController' => __DIR__ . '/../..' . '/app/Http/Controllers/PlanosController.php',
         'App\\Http\\Controllers\\UsuariosController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuariosController.php',
@@ -693,6 +693,7 @@ class ComposerStaticInit590faa7739dfd85f885dc40531e9bc53
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+        'Database\\Seeders\\ConfigSeeder' => __DIR__ . '/../..' . '/database/seeders/ConfigSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\PlanosSeeder' => __DIR__ . '/../..' . '/database/seeders/PlanosSeeder.php',
         'Database\\Seeders\\ScoutsSeeder' => __DIR__ . '/../..' . '/database/seeders/ScoutsSeeder.php',

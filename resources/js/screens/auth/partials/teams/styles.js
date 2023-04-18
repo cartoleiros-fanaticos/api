@@ -4,54 +4,20 @@ export const Players = styled.div`
     width: 100%;
 `;
 
-export const Player = styled.div`
-    display: flex;
-    align-items: center;
-    display: flex;
-    padding: 7px;
+export const Score = styled.div`
+    padding: 10px;
     border-bottom: solid thin #cccccc;
-    display: grid;
-    grid-template-columns: 35px 35px 200px auto;
-`;
-
-export const Captain = styled.a`
-    font-weight: bold;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    padding: 3px 0;
-    border-radius: 50%;
-    color: #ffffff;
-    font-size: 0.8em;
-    margin-right: 15px;
-    background-color: ${({ captain }) => captain ? '#F68D42' : '#CCC'};
-`;
-
-export const PlayerPhoto = styled.img`
-    width: 35px;
-`;
-
-export const ContainerNamePosition = styled.div`
     display: flex;
-    flex-direction: column;
-`;
-
-
-export const PlayerName = styled.strong`
-    font-size: 0.9em;
-    margin: 0 10px;
-`;
-
-export const Position = styled.span`
-    color: #F68D42;
-    margin: 0 10px;
+    font-weight: 500;
+    justify-content: space-between;
     font-size: 0.9em;
 `;
 
-export const Price = styled.strong`
-    font-size: 0.8em;
-    margin: 0 10px;
-    text-align: right;
+export const ScoreText = styled.strong``;
+
+export const ScoreValue = styled.span`
+    font-weight: 500;
+    color: ${({ value }) => value > 0 ? 'green' : (value < 0 ? 'red' : 'gray' ) };
 `;
 
 export const PlayerTitle = styled.h3`
@@ -126,6 +92,7 @@ export const Title = styled.strong`
     display: block;
     text-align: center;
     font-size: 0.9em;
+    text-transform: capitalize;
 `;
 
 export const Value = styled.span`

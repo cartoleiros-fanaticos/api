@@ -77,6 +77,7 @@ function leagues({ fnc, smodal }) {
     return (
         <>
             <Search
+                width='100%'
                 placeholder="Digite nome da liga"
                 icon="groups"
                 onKeyUp={(e) => {

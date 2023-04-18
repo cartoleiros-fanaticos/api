@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->integer('rodada_time_id');
             $table->integer('capitao_id')->nullable();
-            $table->enum('esquema', ['3-4-3', '3-5-2', '4-3-3', '4-4-2', '4-5-1', '5-3-2', '5-4-1']);
+            $table->integer('esquema_id');
             $table->float('valor_time');
             $table->float('pontos')->default(0);
 

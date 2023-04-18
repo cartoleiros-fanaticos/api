@@ -132,6 +132,8 @@ function Player() {
 
   async function compare(atleta_id) {
 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     let atleta = data.atletas.find(e => e.atleta_id === atleta_id);
     atleta.compare = true;
     sdata(data);

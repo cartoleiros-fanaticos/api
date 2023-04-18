@@ -76,6 +76,7 @@ function teams({ fnc, smodal }) {
     return (
         <>
             <Search
+                width='100%'
                 placeholder="Digite nome do time"
                 icon="security"
                 onKeyUp={(e) => {

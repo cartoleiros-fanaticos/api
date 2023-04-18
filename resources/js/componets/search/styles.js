@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.label`
-    width: 50%;
+    width: ${({ width }) => width };
     display: flex;
     justify-content: space-between;
     padding: 5px 15px;
@@ -9,7 +9,7 @@ export const Container = styled.label`
     background-color: #f1f1f1;
     border-radius: 10px;
     text-align: right;
-    margin: 25px auto 15px auto;
+    margin: auto;
     color: #666;
     align-items: center;
 

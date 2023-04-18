@@ -6,9 +6,9 @@ import {
     Input,
 } from './styles';
 
-function search({ icon, placeholder, onFocus = () => {}, onKeyUp = () => {}, onChange = () => {} }) {
+function search({ width = '50%', icon, placeholder, onFocus = () => {}, onKeyUp = () => {}, onChange = () => {} }) {
     return (
-        <Container>
+        <Container width={width}>
             <Icon>{icon}</Icon>
             <Input
                 placeholder={placeholder}

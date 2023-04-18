@@ -99,7 +99,7 @@ class EscalacaoController extends Controller
                         ],
                         [
                             'capitao_id' => $response['capitao_id'],
-                            'esquema' => '4-3-3',
+                            'esquema_id' => $response['esquema_id'],
                             'valor_time' => $response['valor_time'],
                         ]
                     );

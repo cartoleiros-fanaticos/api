@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Console\\Commands\\Atletas' => $baseDir . '/app/Console/Commands/Atletas.php',
+    'App\\Console\\Commands\\Escalacao' => $baseDir . '/app/Console/Commands/Escalacao.php',
     'App\\Console\\Commands\\Game' => $baseDir . '/app/Console/Commands/Game.php',
     'App\\Console\\Commands\\Observacao' => $baseDir . '/app/Console/Commands/Observacao.php',
     'App\\Console\\Commands\\Parciais' => $baseDir . '/app/Console/Commands/Parciais.php',
@@ -22,7 +23,6 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\CruzamentoController' => $baseDir . '/app/Http/Controllers/CruzamentoController.php',
     'App\\Http\\Controllers\\EscalacaoController' => $baseDir . '/app/Http/Controllers/EscalacaoController.php',
-    'App\\Http\\Controllers\\EstatisticasController' => $baseDir . '/app/Http/Controllers/EstatisticasController.php',
     'App\\Http\\Controllers\\ParciaisController' => $baseDir . '/app/Http/Controllers/ParciaisController.php',
     'App\\Http\\Controllers\\PlanosController' => $baseDir . '/app/Http/Controllers/PlanosController.php',
     'App\\Http\\Controllers\\UsuariosController' => $baseDir . '/app/Http/Controllers/UsuariosController.php',
@@ -174,6 +174,7 @@ return array(
     'Cron\\HoursField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
     'Cron\\MinutesField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
     'Cron\\MonthField' => $vendorDir . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+    'Database\\Seeders\\ConfigSeeder' => $baseDir . '/database/seeders/ConfigSeeder.php',
     'Database\\Seeders\\DatabaseSeeder' => $baseDir . '/database/seeders/DatabaseSeeder.php',
     'Database\\Seeders\\PlanosSeeder' => $baseDir . '/database/seeders/PlanosSeeder.php',
     'Database\\Seeders\\ScoutsSeeder' => $baseDir . '/database/seeders/ScoutsSeeder.php',

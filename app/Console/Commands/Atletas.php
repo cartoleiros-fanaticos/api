@@ -15,6 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
 use Exception;
 use Log;
+use Illuminate\Support\Str;
 
 class Atletas extends Command
 {
@@ -103,7 +104,7 @@ class Atletas extends Command
 
                 if ($val['clube_id'] != 1) :
 
-                    $rodada = $game->game_over ? 38 : ($val['rodada_id'] - 1);
+                    $rodada = $game->game_over ? 38 : $val['rodada_id'];
 
                     Parciais::where('atleta_id', $val['atleta_id'])
                         ->where('rodada', $rodada)
@@ -119,7 +120,7 @@ class Atletas extends Command
                             'nome' => $val['nome'],
                             'slug' => $val['slug'],
                             'apelido' => $val['apelido'],
-                            'foto' => str_replace('FORMATO', '220x220', $val['foto']),
+                            'foto' => Str::replace('FORMATO', '220x220', $val['foto']),
                             'rodada_id' => $val['rodada_id'],
                             'clube_id' => $val['clube_id'],
                             'posicao_id' => $val['posicao_id'],

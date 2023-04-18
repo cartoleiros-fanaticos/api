@@ -17,7 +17,7 @@ class PlanosSeeder extends Seeder
         $planos = [
             [
                 'nome' => 'Plano Stats',
-                'valor' => '29.90',
+                'valor' => '39.90',
             ],
             [
                 'nome' => 'Plano Fanático',

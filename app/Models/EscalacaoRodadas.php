@@ -9,7 +9,7 @@ class EscalacaoRodadas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'rodada_time_id', 'capitao_id', 'esquema', 'valor_time', 'pontos', 'escalacao_times_id'];
+    protected $fillable = ['id', 'rodada_time_id', 'capitao_id', 'esquema_id', 'valor_time', 'pontos', 'escalacao_times_id'];
 
     // public function newQuery()
     // {

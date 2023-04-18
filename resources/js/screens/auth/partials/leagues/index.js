@@ -60,7 +60,7 @@ function leagues() {
     const [loading, sloading] = useState(false);
 
     useEffect(() => {
-        getData(slug)
+        if (slug) getData(slug)
     }, [orderBy])
 
     async function getData(slug) {
@@ -102,7 +102,7 @@ function leagues() {
 
                     <>
                         {
-                            data?.destaques ?
+                            data?.nome ?
                                 <Content>
                                     <Header>
                                         <Share onClick={() => share(data, orderBy)}>share</Share>
@@ -111,29 +111,32 @@ function leagues() {
                                         <HeaderText>{data.descricao}</HeaderText>
                                         <HeaderText>{data.total_times_liga} PARTICIPANTES</HeaderText>
                                     </Header>
-                                    <Emphasis>
-                                        <Box>
-                                            <Title>LÍDER DA RODADA</Title>
-                                            <Image src={`${data.destaques.rodada.escudo || `../../images/escudo.png`}`} />
-                                            <Title>{data.destaques.rodada.nome || 'Aguardando'}</Title>
-                                            <Score>{data.destaques.rodada.pontos}</Score>
-                                            <Text>Pontos</Text>
-                                        </Box>
-                                        <Box>
-                                            <Title>MAIS RÍCO</Title>
-                                            <Image src={`${data.destaques.patrimonio.escudo || `../../images/escudo.png`}`} />
-                                            <Title>{data.destaques.patrimonio.nome || 'Aguardando'}</Title>
-                                            <Score>{data.destaques.patrimonio.pontos}</Score>
-                                            <Text>Pontos</Text>
-                                        </Box>
-                                        <Box>
-                                            <Title>LANTERNINHA</Title>
-                                            <Image src={`${data.destaques.lanterninha.escudo || `../../images/escudo.png`}`} />
-                                            <Title>{data.destaques.lanterninha.nome || 'Aguardando'}</Title>
-                                            <Score>{data.destaques.lanterninha.pontos}</Score>
-                                            <Text>Pontos</Text>
-                                        </Box>
-                                    </Emphasis>
+                                    {
+                                        data?.destaques &&
+                                        <Emphasis>
+                                            <Box>
+                                                <Title>LÍDER DA RODADA</Title>
+                                                <Image src={`${data.destaques.rodada.escudo || `../../images/escudo.png`}`} />
+                                                <Title>{data.destaques.rodada.nome || 'Aguardando'}</Title>
+                                                <Score>{amount(data.destaques.rodada.pontos)}</Score>
+                                                <Text>Pontos</Text>
+                                            </Box>
+                                            <Box>
+                                                <Title>MAIS RÍCO</Title>
+                                                <Image src={`${data.destaques.patrimonio.escudo || `../../images/escudo.png`}`} />
+                                                <Title>{data.destaques.patrimonio.nome || 'Aguardando'}</Title>
+                                                <Score>{amount(data.destaques.patrimonio.pontos)}</Score>
+                                                <Text>Cartoleta</Text>
+                                            </Box>
+                                            <Box>
+                                                <Title>LANTERNINHA</Title>
+                                                <Image src={`${data.destaques.lanterninha.escudo || `../../images/escudo.png`}`} />
+                                                <Title>{data.destaques.lanterninha.nome || 'Aguardando'}</Title>
+                                                <Score>{amount(data.destaques.lanterninha.pontos)}</Score>
+                                                <Text>Pontos</Text>
+                                            </Box>
+                                        </Emphasis>
+                                    }
                                     <Label>
                                         <Icon>reorder</Icon>
                                         <Select value={orderBy} onChange={(e) => { sorderBy(e.target.value) }}>
@@ -174,7 +177,7 @@ function leagues() {
                                                                     <NamePlayer>{e.nome_cartola}</NamePlayer>
                                                                 </Description>
                                                             </Td>
-                                                            <Td width={15}>{amount(e.pontos[orderBy === 'patrimonio' ? 'campeonato' : orderBy] || 0)}</Td>
+                                                            <Td width={15}>{amount(orderBy === 'patrimonio' ? e.patrimonio : (e.pontos[orderBy] || 0))}</Td>
                                                             <Td style={{ display: 'flex', justifyContent: 'center' }} width={15}>
                                                                 {e.ranking[orderBy] || 1}º
                                                                 {
@@ -215,7 +218,7 @@ function leagues() {
                     smodal={smodal}
                     Component={ModalLeague}
                     fnc={getData}
-                    height='500px'
+                    height='520px'
                 />
             }
         </>

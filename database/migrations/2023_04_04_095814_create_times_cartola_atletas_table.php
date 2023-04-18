@@ -24,8 +24,10 @@ return new class extends Migration
             $table->float('media_num');
             $table->integer('jogos_num');
             $table->integer('posicao_id');       
+            $table->integer('clube_id');       
             
             $table->enum('titular', ['Sim', 'Não'])->default('Sim');
+            $table->enum('entrou_em_campo', [ 'Sim', 'Não' ])->default('Sim');
 
             $table->integer('rodada_time_id');
 
