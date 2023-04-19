@@ -77,6 +77,26 @@ function teams() {
 
     }
 
+    async function team(rodada, time_id) {
+
+        try {
+
+            const response = await api.get(`parciais/time/rodada/${time_id}?rodada=${rodada}`);
+
+            sdata({
+                ...data,
+                ...response.data
+            });
+
+        } catch (e) {
+            message(e);
+            sloading(false);
+        };
+
+    }
+
+
+
     const component = (
         <>
             <Search
@@ -94,10 +114,9 @@ function teams() {
                                 <Content>
                                     <Box>
                                         <Rounds
-                                            style={{ marginTop: '15px' }}
-                                            fnc={() => console.log('Funcionando')}
+                                            fnc={team}
                                             time_id={data.time_id}
-                                            rodada_atual={data.game.rodada_atual}
+                                            rodada_atual={data.game.game_over ? 38 : (data.game.status_mercado != 1 ? data.game.rodada_atual : (data.game.rodada_atual - 1))}
                                         />
                                         <Fieldset>
                                             <Legend>Escalação</Legend>
@@ -264,14 +283,14 @@ function teams() {
                                                 <Title>Maior pontuador</Title>
                                                 <Photo src={data.maior_e_menor_pontuador.maior_pontuador.foto} />
                                                 <Value>{data.maior_e_menor_pontuador.maior_pontuador.apelido} | {data.maior_e_menor_pontuador.maior_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.maior_e_menor_pontuador.maior_pontuador.preco_num)}</Value>
+                                                <Value>{amount(data.maior_e_menor_pontuador.maior_pontuador.pontos_num)} pts</Value>
                                                 <Text>Rodada {data.maior_e_menor_pontuador.maior_pontuador.rodada_time_id}</Text>
                                             </Item>
                                             <Item>
                                                 <Title>Menor pontuador</Title>
                                                 <Photo src={data.maior_e_menor_pontuador.menor_pontuador.foto} />
                                                 <Value>{data.maior_e_menor_pontuador.menor_pontuador.apelido} | {data.maior_e_menor_pontuador.menor_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.maior_e_menor_pontuador.menor_pontuador.preco_num)}</Value>
+                                                <Value>{amount(data.maior_e_menor_pontuador.menor_pontuador.pontos_num)} pts</Value>
                                                 <Text>Rodada {data.maior_e_menor_pontuador.menor_pontuador.rodada_time_id}</Text>
                                             </Item>
                                         </Fieldset>
@@ -282,7 +301,7 @@ function teams() {
                                                 <Title>Maior pontuador</Title>
                                                 <Photo src={data.capitao.maior_pontuador.foto} />
                                                 <Value>{data.capitao.maior_pontuador.apelido} | {data.capitao.maior_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.capitao.maior_pontuador.preco_num)}</Value>
+                                                <Value>{amount(data.capitao.maior_pontuador.pontos_num)} pts</Value>
                                                 <Text>Rodada {data.capitao.maior_pontuador.rodada_time_id}</Text>
                                             </Item>
                                             <Item>
@@ -293,7 +312,7 @@ function teams() {
                                                 <Title>Menor pontuador</Title>
                                                 <Photo src={data.capitao.menor_pontuador.foto} />
                                                 <Value>{data.capitao.menor_pontuador.apelido} | {data.capitao.menor_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.capitao.menor_pontuador.preco_num)}</Value>
+                                                <Value>{amount(data.capitao.menor_pontuador.pontos_num)} pts</Value>
                                                 <Text>Rodada {data.capitao.menor_pontuador.rodada_time_id}</Text>
                                             </Item>
                                         </Fieldset>
@@ -309,7 +328,7 @@ function teams() {
                                                 </Thead>
                                                 <Tbody>
                                                     {data.capitao.lista.map((e, i) =>
-                                                        <Tr>
+                                                        <Tr key={i}>
                                                             <Td>{e.rodada_time_id}</Td>
                                                             <Td>
                                                                 <PhotoName>

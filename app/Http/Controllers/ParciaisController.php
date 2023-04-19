@@ -306,6 +306,7 @@ class ParciaisController extends Controller
                     ->join('posicoes', 'posicao_id', 'posicoes.id')
                     ->where('times_cartolas_id', $time_cartola->id)
                     ->where('titular', 'Sim')
+                    ->where('entrou_em_campo', 'Sim')
                     ->get();
 
                 $maior_pontuador = $atletas->max('pontos_num');
@@ -330,9 +331,9 @@ class ParciaisController extends Controller
 
                         if ($value['capitao_id'] === $value['atleta_id']) :
 
-                            // $val[$key]['pontos_num'] = $value['pontos_num'] * 1.5;
-                            // $value['pontos_num'] = $value['pontos_num'] * 1.5;
                             $capitao->push($value);
+                            $val[$key]['pontos_num'] = $value['pontos_num'] * 1.5;
+                        // $value['pontos_num'] = $value['pontos_num'] * 1.5;
 
                         endif;
 
@@ -465,7 +466,6 @@ class ParciaisController extends Controller
                 'scouts' => $scouts,
                 'time_id' => $id,
                 'time' => $time,
-                'pontuacao' => $parciais->sum('pontuacao'),
                 'parciais' => $parciais,
                 'geral' => $geral,
                 'destaques' => $destaques,
@@ -705,6 +705,7 @@ class ParciaisController extends Controller
 
     public function time_rodada(Request $request, $id)
     {
+        $game = Game::first();
 
         $rodada_atual = $request->rodada;
 
@@ -726,15 +727,57 @@ class ParciaisController extends Controller
             ->where('time_id', $id)
             ->first();
 
-        $pontuacao = Parciais::where('rodada', $rodada_atual)
+        if (!$time->rodadas)
+            return response()->json(['message' => "Time não foi escalado para a rodada $rodada_atual."], 401);
+
+        $atleta_id = $time->rodadas->atletas->pluck('atleta_id')->merge($time->rodadas->reservas->pluck('atleta_id'));
+
+        $parciais = Parciais::select(
+            'atleta_id',
+            'G',
+            'A',
+            'DS',
+            'FD',
+            'FF',
+            'FT',
+            'FS',
+            'GS',
+            'SG',
+            'DP',
+            'GC',
+            'CA',
+            'CV',
+            'FC',
+            'I',
+            'PP',
+            'PS',
+            'PC',
+            'DE',
+            'V',
+        )
+            ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
+            ->whereIn('atleta_id', $atleta_id)
+            ->where('rodada', 1)
             ->get()
             ->keyBy('atleta_id');
 
+        $atleta_id = $time->rodadas->atletas->where('entrou_em_campo', 'Sim')->pluck('atleta_id')->merge($time->rodadas->reservas->where('entrou_em_campo', 'Sim')->pluck('atleta_id'));
+
+        $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
+            ->whereIn('atleta_id', $atleta_id)
+            ->where('rodada', 1)
+            ->first();
+
+        $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->orderBy('tipo')
+            ->get();
+
         return response()->json([
-            'time_id' => $id,
-            'rodada_atual' => $rodada_atual,
+            'pontuacao' => $pontos->total,
+            'parciais' => $parciais,
+            'scouts' => $scouts,
             'time' => $time,
-            'pontuacao' => $pontuacao
+            'parciais' => $parciais,
         ]);
     }
 }

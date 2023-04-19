@@ -9,7 +9,7 @@ import html2canvas from 'html2canvas';
 // }
 
 export const team = (team, orderBy) => {
-    return `*${team.ranking[orderBy] || 1}º* ${(team.ranking[orderBy] || 1) < 10 ? ' -' : '-'} *${(orderBy === 'patrimonio' ? team.patrimonio : team.pontos[orderBy] || 0).toFixed(2)} pts* ${team.nome.substr(0, 11).toLowerCase()}`
+    return `*${team.ranking[orderBy] || 1}º* ${(team.ranking[orderBy] || 1) < 10 ? ' -' : '-'} *${(orderBy === 'patrimonio' ? (team.patrimonio + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + 'pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
 }
 
 export const share = (data, orderBy) => {

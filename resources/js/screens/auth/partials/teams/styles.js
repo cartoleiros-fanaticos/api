@@ -34,11 +34,12 @@ export const PlayerTitle = styled.h3`
 
 export const Content = styled.div`
     position: relative;
-    min-height: 500px; 
+    min-height: 500px;     
+    margin-top: 25px;
 
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-gap: 25px;
+    grid-template-columns: calc(50% -25px) calc(50% -25px);
+    grid-column-gap: 25px;
 
     @media screen and (max-width:900px){
         grid-template-columns: 100%;
