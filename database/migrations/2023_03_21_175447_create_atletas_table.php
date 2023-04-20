@@ -14,7 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('atletas', function (Blueprint $table) {
-            $table->id(); 
+            $table->id();
             $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->integer('atleta_id')->unsigned()->unique();
             $table->string('nome');
@@ -34,6 +34,7 @@ return new class extends Migration
             $table->float('media_num');
             $table->float('jogos_num');
             $table->float('minimo_para_valorizar')->default(0);
+            $table->enum('fora_do_cartola', ['Sim', 'Não'])->default('Não');
             $table->string('observacao', 500)->default('O atleta ainda não tem estatística.');
 
             $table->integer('DS')->default(0);
@@ -56,9 +57,9 @@ return new class extends Migration
 
             $table->integer('PS')->default(0);
             $table->integer('PC')->default(0);
-            $table->integer('DE')->default(0);   
+            $table->integer('DE')->default(0);
             $table->integer('V')->default(0);
-                     
+
             $table->timestamps();
         });
     }

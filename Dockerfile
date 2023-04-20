@@ -1,4 +1,4 @@
-FROM cartoleiro/app
+FROM cartoleiro/app:77af674b842b594e891dd89df3f952e9afb2fc7c
 
 WORKDIR /home/deploy
 

@@ -8,18 +8,18 @@ import {
     Item,
 } from './styles';
 
-function rounds({ rodada_atual, time_id, fnc }) {
+function rounds({ data, type = 'teams', fnc }) {
 
     const rodadas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38];
 
     async function select(element, rodada) {
 
-        if (!time_id) {
+        if (type === 'teams' && !data.time_id) {
             swal_warning('Selecione um time antes de executar essa ação.');
             return false
         }
 
-        if (rodada > rodada_atual) {
+        if (rodada > data.rodada_atual) {
 
             swal_warning('Ainda não existe dados para essa rodada.');
 
@@ -68,7 +68,9 @@ function rounds({ rodada_atual, time_id, fnc }) {
 
             element.classList.add('active');
 
-            fnc(rodada, time_id);
+            data.rodada = rodada;
+
+            fnc(data);
 
         }
 
@@ -82,7 +84,7 @@ function rounds({ rodada_atual, time_id, fnc }) {
                         <Item
                             width={window.innerWidth}
                             onClick={(event) => select(event.target, rodada)}
-                            className={rodada === rodada_atual ? 'active' : ''}
+                            className={rodada === data.rodada_atual ? 'active' : ''}
                             key={rodada}
                         >
                             {rodada}

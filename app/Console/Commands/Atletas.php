@@ -16,6 +16,7 @@ use Illuminate\Database\QueryException;
 use Exception;
 use Log;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Atletas extends Command
 {
@@ -100,6 +101,11 @@ class Atletas extends Command
 
             echo '- Atualizando tabela atletas.' . PHP_EOL;
 
+            ModelsAtletas::where('temporada', Carbon::now()->format('Y'))
+                ->update([
+                    'fora_do_cartola' => 'Sim'
+                ]);
+
             foreach ((array) $response['atletas'] as $key => $val) :
 
                 if ($val['clube_id'] != 1) :
@@ -131,6 +137,7 @@ class Atletas extends Command
                             'media_num' => $val['media_num'],
                             'jogos_num' => $val['jogos_num'],
                             'minimo_para_valorizar' => $val['minimo_para_valorizar'] ?? 0,
+                            'fora_do_cartola' => 'Não',
                             'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                             'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
                             'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),

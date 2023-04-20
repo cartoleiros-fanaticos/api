@@ -14,8 +14,12 @@ class CruzamentoController extends Controller
     public function index(Request $request)
     {
 
-        $tipo = $request->tipo;
         $game = Game::first();
+
+        $tipo = $request->input('tipo', 'scouts');
+        $posicao_id = $request->input('posicao_id', null);
+        $ultimas_rodadas = $request->input('ultimas_rodadas', 38);
+        $total = $request->input('total', 'Não');
 
         $rodada_atual = $game->rodada_atual;
 
@@ -28,11 +32,11 @@ class CruzamentoController extends Controller
             ->keyBy('id');
 
         if ($tipo === 'scouts')
-            $data = $this->scouts('G', null);
+            $data = $this->scouts('G', $posicao_id, $ultimas_rodadas, $total, $rodada_atual);
         else if ($tipo === 'pontos')
-            $data = $this->pontos(null);
+            $data = $this->pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
         else if ($tipo === 'media')
-            $data = $this->pontos(null);
+            $data = $this->pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
 
         return response()->json([
             'rodada_atual' => $rodada_atual,
@@ -42,7 +46,190 @@ class CruzamentoController extends Controller
         ]);
     }
 
-    public function scouts($scout, $posicao_id, $ultimas_rodadas = 38, $total = 'Nâo')
+    public function scouts($scout, $posicao_id, $ultimas_rodadas, $total, $rodada_atual)
+    {
+
+        DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
+            ( 
+                SELECT
+                    p1.rodada,
+                    p1.clube_casa_id
+                FROM partidas p1
+                INNER JOIN ( 
+                    SELECT 
+                        clube_casa_id,
+                        GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
+                    FROM partidas
+                    GROUP BY clube_casa_id
+                ) p2 ON p2.clube_casa_id = p1.clube_casa_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= ?
+                ORDER BY 
+	                p1.clube_casa_id
+            );
+        ', [$ultimas_rodadas]);
+
+        if ($total === 'Não') :
+
+            $conquista_casa = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_casa_id id,
+                    IFNULL(SUM(?), 0) pontos
+                FROM partidas
+                INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
+                WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
+                GROUP BY clube_casa_id
+                ORDER BY clube_casa_id
+            ', [$scout]))->keyBy('id');
+
+            $cedidas_casa = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_casa_id id,
+                    IFNULL(SUM(?), 0) pontos
+                FROM partidas
+                INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
+                WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
+                GROUP BY clube_casa_id
+                ORDER BY clube_casa_id
+            ', [$scout]))->keyBy('id');
+
+        else :
+
+            $rodada = ($rodada_atual - $ultimas_rodadas) > 0 ? ($rodada_atual - $ultimas_rodadas) : 1;
+
+            $conquista_casa = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_id id,
+                    IFNULL(SUM(' . $scout . '), 0) pontos
+                FROM parciais
+                WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND rodada >= ?
+                GROUP BY clube_id
+            ', [$rodada]))->keyBy('id');
+
+            $cedidas_casa = COLLECT(DB::SELECT('
+                SELECT
+                    clube_casa_id AS id,
+                    (
+                        (
+                            SELECT 
+                                IFNULL(SUM(' . $scout . '), 0)
+                            FROM partidas
+                            INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                            WHERE clube_visitante_id = clubes.id
+                        )
+                        +
+                        (
+                            SELECT 
+                                IFNULL(SUM(' . $scout . '), 0)
+                            FROM partidas
+                            INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                            WHERE clube_casa_id = clubes.id
+                        )
+                    ) pontos
+                FROM partidas
+                INNER JOIN clubes ON clube_casa_id = clubes.id
+                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.rodada >= ?
+                GROUP BY clube_casa_id
+            ', [$rodada]))->keyBy('id');
+
+        endif;
+
+        DB::statement('DROP TEMPORARY TABLE partidas_temporary;');
+
+        DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
+            ( 
+                SELECT
+                    p1.rodada,
+                    p1.clube_visitante_id
+                FROM partidas p1
+                INNER JOIN ( 
+                SELECT 
+                    clube_visitante_id,
+                    GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
+                FROM partidas
+                GROUP BY clube_visitante_id
+                ) p2 ON p2.clube_visitante_id = p1.clube_visitante_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= ?
+                ORDER BY 
+                    p1.clube_visitante_id
+            );
+        ', [$ultimas_rodadas]);
+
+        if ($total === 'Não') :
+
+            $conquista_fora = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_visitante_id id,
+                    IFNULL(SUM(?), 0) pontos
+                FROM partidas
+                INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
+                WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
+                GROUP BY clube_visitante_id
+                ORDER BY clube_visitante_id
+            ', [$scout]))->keyBy('id');
+
+            $cedidas_fora = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_visitante_id id,
+                    IFNULL(SUM(?), 0) pontos
+                FROM partidas
+                INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) 
+                WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
+                GROUP BY clube_visitante_id
+                ORDER BY clube_visitante_id
+            ', [$scout]))->keyBy('id');
+
+        else :
+
+            $rodada = ($rodada_atual - $ultimas_rodadas) > 0 ? ($rodada_atual - $ultimas_rodadas) : 1;
+
+            $conquista_fora = COLLECT(DB::SELECT('
+                SELECT 
+                    clube_id id,
+                    IFNULL(SUM(' . $scout . '), 0) pontos
+                FROM parciais
+                WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND rodada >= ?
+                GROUP BY clube_id
+            ', [$rodada]))->keyBy('id');
+
+            $cedidas_fora = COLLECT(DB::SELECT('
+                SELECT
+                    clube_visitante_id AS id,
+                    (
+                        (
+                            SELECT 
+                                IFNULL(SUM(' . $scout . '), 0)
+                            FROM partidas
+                            INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                            WHERE clube_visitante_id = clubes.id
+                        )
+                        +
+                        (
+                            SELECT 
+                                IFNULL(SUM(' . $scout . '), 0)
+                            FROM partidas
+                            INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                            WHERE clube_casa_id = clubes.id
+                        )
+                    ) pontos
+                FROM partidas
+                INNER JOIN clubes ON clube_visitante_id = clubes.id
+                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.rodada >= ?
+                GROUP BY clube_visitante_id
+            ', [$rodada]))->keyBy('id');
+
+        endif;
+
+        DB::statement('DROP TEMPORARY TABLE partidas_temporary;');
+
+        return [
+            'conquista_casa' => $conquista_casa,
+            'cedidas_casa' => $cedidas_casa,
+            'conquista_fora' => $conquista_fora,
+            'cedidas_fora' => $cedidas_fora,
+        ];
+    }
+
+    public function pontos($posicao_id, $ultimas_rodadas = 38, $total = 'Sim', $rodada_atual)
     {
 
         DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
@@ -66,24 +253,24 @@ class CruzamentoController extends Controller
         $conquista_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(SUM(?), 0) pontos
+                IFNULL(SUM(pontuacao), 0) pontos
             FROM partidas
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_casa_id
             ORDER BY clube_casa_id
-        ', [$scout]))->keyBy('id');
+        '))->keyBy('id');
 
         $cedidas_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(SUM(?), 0) pontos
+                IFNULL(SUM(pontuacao), 0) pontos
             FROM partidas
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_casa_id
             ORDER BY clube_casa_id
-        ', [$scout]))->keyBy('id');
+        '))->keyBy('id');
 
         DB::statement('DROP TEMPORARY TABLE partidas_temporary;');
 
@@ -108,101 +295,6 @@ class CruzamentoController extends Controller
         $conquista_fora = COLLECT(DB::SELECT('
             SELECT 
                 clube_visitante_id id,
-                IFNULL(SUM(?), 0) pontos
-            FROM partidas
-            INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
-            WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
-            GROUP BY clube_visitante_id
-            ORDER BY clube_visitante_id
-        ', [$scout]))->keyBy('id');
-
-        $cedidas_fora = COLLECT(DB::SELECT('
-            SELECT 
-                clube_visitante_id id,
-                IFNULL(SUM(?), 0) pontos
-            FROM partidas
-            INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) 
-            WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
-            GROUP BY clube_visitante_id
-            ORDER BY clube_visitante_id
-        ', [$scout]))->keyBy('id');
-
-        DB::statement('DROP TEMPORARY TABLE partidas_temporary;');
-
-        return [
-            'conquista_casa' => $conquista_casa,
-            'cedidas_casa' => $cedidas_casa,
-            'conquista_fora' => $conquista_fora,
-            'cedidas_fora' => $cedidas_fora,
-        ];
-    }
-
-    public function pontos($posicao_id, $ultimas_rodadas = 38, $total = 'Sim')
-    {
-
-        DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
-            ( 
-                SELECT
-                    p1.rodada,
-                    p1.clube_casa_id
-                FROM partidas p1
-                INNER JOIN ( 
-                    SELECT 
-                        clube_casa_id,
-                        GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
-                    FROM partidas
-                    GROUP BY clube_casa_id
-                ) p2 ON p2.clube_casa_id = p1.clube_casa_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= ?
-                ORDER BY 
-	                p1.clube_casa_id
-            );
-        ', [$ultimas_rodadas]);
-
-        $conquista_casa = COLLECT(DB::SELECT('
-            SELECT 
-                clube_casa_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
-            FROM partidas
-            INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
-            WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
-            GROUP BY clube_casa_id
-            ORDER BY clube_casa_id
-        '))->keyBy('id');
-
-        $cedidas_casa = COLLECT(DB::SELECT('
-            SELECT 
-                clube_casa_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
-            FROM partidas
-            INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
-            WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
-            GROUP BY clube_casa_id
-            ORDER BY clube_casa_id
-        '))->keyBy('id');
-
-        DB::statement('DROP TEMPORARY TABLE partidas_temporary;');
-
-        DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
-            ( 
-                SELECT
-                    p1.rodada,
-                    p1.clube_visitante_id
-                FROM partidas p1
-                INNER JOIN ( 
-                SELECT 
-                    clube_visitante_id,
-                    GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
-                FROM partidas
-                GROUP BY clube_visitante_id
-                ) p2 ON p2.clube_visitante_id = p1.clube_visitante_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= ?
-                ORDER BY 
-                    p1.clube_visitante_id
-            );
-        ', [$ultimas_rodadas]);
-
-        $conquista_fora = COLLECT(DB::SELECT('
-            SELECT 
-                clube_visitante_id id,
                 IFNULL(SUM(pontuacao), 0) pontos
             FROM partidas
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
@@ -232,7 +324,7 @@ class CruzamentoController extends Controller
         ];
     }
 
-    public function media($posicao_id, $ultimas_rodadas = 38, $total = 'Sim')
+    public function media($posicao_id, $ultimas_rodadas = 38, $total = 'Sim', $rodada_atual)
     {
 
         DB::statement('CREATE TEMPORARY TABLE partidas_temporary  

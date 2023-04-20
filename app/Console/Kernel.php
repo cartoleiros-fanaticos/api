@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('app:observacao')
             ->dailyAt('7:00');
+
+        $schedule->command('app:parciais-rodadas')
+            ->dailyAt('8:00');
     }
 
     /**

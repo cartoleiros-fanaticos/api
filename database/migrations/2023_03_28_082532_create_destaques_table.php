@@ -25,6 +25,8 @@ return new class extends Migration
 
             $table->enum('tipo', [ 'Seleção', 'Reservas', 'Capitães' ]);
 
+            $table->unique(['atleta_id', 'rodada', 'tipo']);
+
             $table->timestamps();
         });
     }

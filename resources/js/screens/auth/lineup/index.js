@@ -45,7 +45,7 @@ function lineup() {
         getData();
     }, [])
 
-    async function team(rodada, time_id) {
+    async function team({ rodada, time_id }) {
 
         try {
 
@@ -112,13 +112,12 @@ function lineup() {
         <Content>
             <Rounds
                 fnc={team}
-                time_id={active.time_id}
-                rodada_atual={data.game?.rodada_atual}
+                data={{ rodada_atual: data.game?.rodada_atual, time_id: active.time_id }}
             />
             <Teams>
                 {
                     data.times?.map((e, i) =>
-                        <Team className={active.time_id === e.time_id ? 'active' : ''} onClick={() => team(active.rodada, e.time_id)} key={i}>
+                        <Team className={active.time_id === e.time_id ? 'active' : ''} onClick={() => team({ rodada: active.rodada, time_id: e.time_id })} key={i}>
                             <Shield src={e.url_escudo_png} />
                             <Text><Bold>Nome:</Bold> {e.nome}</Text>
                             <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>

@@ -101,17 +101,18 @@ class Game extends Command
             $response = json_decode($response->getBody(), true);
 
             foreach ((array) $response as $key => $val) :
+                
                 Destaques::updateOrCreate(
                     [
-                        'atleta_id' => $val['Atleta']['atleta_id']
+                        'atleta_id' => $val['Atleta']['atleta_id'],
+                        'rodada' => $rodada_atual,
+                        'tipo' => 'Seleção',
                     ],
                     [
-                        'rodada' => $rodada_atual,
                         'apelido' => $val['Atleta']['apelido'],
                         'posicao' => $val['posicao'],
                         'foto' => str_replace('FORMATO', '220x220', $val['Atleta']['foto']),
                         'escalacoes' => $val['escalacoes'],
-                        'tipo' => 'Seleção'
                     ]
                 );
 
@@ -125,15 +126,15 @@ class Game extends Command
             foreach ((array) $response as $key => $val) :
                 Destaques::updateOrCreate(
                     [
-                        'atleta_id' => $val['Atleta']['atleta_id']
+                        'atleta_id' => $val['Atleta']['atleta_id'],
+                        'rodada' => $rodada_atual,
+                        'tipo' => 'Reservas',
                     ],
                     [
-                        'rodada' => $rodada_atual,
                         'apelido' => $val['Atleta']['apelido'],
                         'posicao' => $val['posicao'],
                         'foto' => str_replace('FORMATO', '220x220', $val['Atleta']['foto']),
                         'escalacoes' => $val['escalacoes'],
-                        'tipo' => 'Reservas'
                     ]
                 );
 
@@ -148,15 +149,15 @@ class Game extends Command
 
                 Destaques::updateOrCreate(
                     [
-                        'atleta_id' => $val['Atleta']['atleta_id']
+                        'atleta_id' => $val['Atleta']['atleta_id'],
+                        'rodada' => $rodada_atual,
+                        'tipo' => 'Capitães',
                     ],
                     [
-                        'rodada' => $rodada_atual,
                         'apelido' => $val['Atleta']['apelido'],
                         'posicao' => $val['posicao'],
                         'foto' => str_replace('FORMATO', '220x220', $val['Atleta']['foto']),
                         'escalacoes' => $val['escalacoes'],
-                        'tipo' => 'Capitães'
                     ]
                 );
 

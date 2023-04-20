@@ -77,7 +77,7 @@ function teams() {
 
     }
 
-    async function team(rodada, time_id) {
+    async function team({ rodada, time_id }) {
 
         try {
 
@@ -116,7 +116,7 @@ function teams() {
                                         <Rounds
                                             fnc={team}
                                             time_id={data.time_id}
-                                            rodada_atual={data.game.game_over ? 38 : (data.game.status_mercado != 1 ? data.game.rodada_atual : (data.game.rodada_atual - 1))}
+                                            data={{ time_id: data.time_id, rodada_atual: data.game.game_over ? 38 : (data.game.status_mercado != 1 ? data.game.rodada_atual : (data.game.rodada_atual - 1)) }}
                                         />
                                         <Fieldset>
                                             <Legend>Escalação</Legend>

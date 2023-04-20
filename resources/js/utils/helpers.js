@@ -3,13 +3,8 @@ import 'sweetalert2/src/sweetalert2.scss';
 
 import html2canvas from 'html2canvas';
 
-// export const space = (position, team, score, rest, status_mercado) => {
-//     let players = status_mercado === 2 ? (rest.length === 1 ? ('  ' + rest) : rest) + '/12' : '';
-//     return `*${position}* ${position < 10 ? '  -' : '-'} *${score} pts* ${players} | ${team}`;
-// }
-
 export const team = (team, orderBy) => {
-    return `*${team.ranking[orderBy] || 1}º* ${(team.ranking[orderBy] || 1) < 10 ? ' -' : '-'} *${(orderBy === 'patrimonio' ? (team.patrimonio + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + 'pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
+    return `*${team.ranking[orderBy] || 1}º* ${(team.ranking[orderBy] || 1) < 10 ? ' -' : '-'} *${(orderBy === 'patrimonio' ? (team.patrimonio.toFixed(2) + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + 'pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
 }
 
 export const share = (data, orderBy) => {

@@ -54,6 +54,18 @@ function clubs() {
 
     }
 
+    async function rounds(round = 1) {
+
+        try {
+            const { data } = await api.get(`parciais/partidas?rodada=${round}`);
+            sdata(data);
+        } catch (e) {
+            message(e);
+        }
+
+    }
+
+
     const component = (
         <Content>
             {
@@ -62,8 +74,9 @@ function clubs() {
                     :
                     <>
                         <Rounds
-                            fnc={() => console.log('Funcionando')}
-                            rodada_atual={data.rodada_atual}
+                            type="rounds"
+                            fnc={({ rodada }) => rounds(rodada)}
+                            data={{ rodada_atual: data.rodada_atual }}
                         />
                         <List>
                             {

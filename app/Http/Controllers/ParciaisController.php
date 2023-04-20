@@ -508,6 +508,9 @@ class ParciaisController extends Controller
             $response = $client->get("https://api.cartola.globo.com/auth/liga/$slug?orderBy=$orderBy&page=$page", ['headers' => $headers]);
             $response = json_decode($response->getBody(), true);
 
+            if ($response['liga']['total_times_liga'] > 200)
+                return response()->json(['message' => 'Só é possível carregar ligas de até 200 times.'], 401);
+
             if ($game->status_mercado != 1) :
 
                 $parciais = Parciais::where('rodada', $game->rodada_atual)
@@ -628,8 +631,11 @@ class ParciaisController extends Controller
     {
         $game = Game::first();
 
+        $rodada = $request->input('rodada', $game->rodada_atual);
+
         $partidas = Partidas::select('id', 'clube_casa_id', 'clube_visitante_id', 'placar_oficial_mandante', 'placar_oficial_visitante')
             ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
+            ->where('rodada', $rodada)
             ->get();
 
         $clubes = Clubes::get()->keyBy('id');
