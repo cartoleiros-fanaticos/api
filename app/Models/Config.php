@@ -9,7 +9,7 @@ class Config extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 'id', 'mp_access_token' ];
+    protected $fillable = [ 'id', 'cartola_access_token', 'mp_access_token' ];
 
     // public function newQuery()
     // {

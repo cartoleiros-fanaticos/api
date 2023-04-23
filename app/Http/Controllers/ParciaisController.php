@@ -178,14 +178,16 @@ class ParciaisController extends Controller
                 ]
             );
 
-            $rodada_atual = $game->game_over ? 38 : ($rodada_atual - 1);
+            $rodada_atual = $game->game_over ? 38 : ($game->status_mercado != 1 ? $rodada_atual : ($rodada_atual - 1));
 
-            $rodada = TimesCartolaRodadas::selectRaw('MAX(rodada_time_id) as rodada_atual_time')->first();
+            $rodada = TimesCartolaRodadas::selectRaw('MAX(rodada_time_id) as rodada_atual_time')
+                ->where('times_cartolas_id', $time_cartola->id)
+                ->first();
 
-            $rodada_atual_time = is_null($rodada->rodada_atual_time) ? 1 : $rodada->rodada_atual_time;
+            $rodada_atual_time = is_null($rodada->rodada_atual_time) ? 1 : ($rodada->rodada_atual_time + 1);
 
             while ($rodada_atual_time <= $rodada_atual) :
-
+                
                 $response = $client->get("https://api.cartolafc.globo.com/time/id/$id/$rodada_atual_time");
                 $response = json_decode($response->getBody(), true);
 
@@ -214,7 +216,7 @@ class ParciaisController extends Controller
                         foreach ($response['atletas'] as $val) :
 
                             $player[] = [
-                                'rodada_time_id' => $val['rodada_id'],
+                                'rodada_time_id' => $rodada_atual_time,
                                 'pontos_num' => $val['pontos_num'],
                                 'preco_num' => $val['preco_num'],
                                 'variacao_num' => $val['variacao_num'],
@@ -236,7 +238,7 @@ class ParciaisController extends Controller
                             foreach ($response['reservas'] as $val) :
 
                                 $player[] = [
-                                    'rodada_time_id' => $val['rodada_id'],
+                                    'rodada_time_id' => $rodada_atual_time,
                                     'pontos_num' => $val['pontos_num'],
                                     'preco_num' => $val['preco_num'],
                                     'variacao_num' => $val['variacao_num'],
@@ -444,7 +446,7 @@ class ParciaisController extends Controller
             )
                 ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
                 ->whereIn('atleta_id', $atleta_id)
-                ->where('rodada', 1)
+                ->where('rodada', $rodada_atual)
                 ->get()
                 ->keyBy('atleta_id');
 
@@ -452,7 +454,7 @@ class ParciaisController extends Controller
 
             $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
                 ->whereIn('atleta_id', $atleta_id)
-                ->where('rodada', 1)
+                ->where('rodada', $rodada_atual)
                 ->first();
 
             $scouts = Scouts::select('sigla', 'nome', 'tipo')
@@ -535,17 +537,21 @@ class ParciaisController extends Controller
                 endforeach;
 
                 foreach ($response['times'] as $key => $val) :
-                    $response['times'][$key]['pontos']['rodada'] = $novo_times[$val['time_id']]['pontuacao'];
+
+                    $pontos = isset($novo_times[$val['time_id']]) ? $novo_times[$val['time_id']]['pontuacao'] : 0;
+                    $response['times'][$key]['pontuacao'] = $pontos * 100;
+                    $response['times'][$key]['pontos']['rodada'] = $pontos;
+
                 endforeach;
 
                 usort($response['times'], function ($a, $b) {
-                    return $b['pontos']['rodada'] - $a['pontos']['rodada'];
+                    return $b['pontuacao'] - $a['pontuacao'];
                 });
 
                 /* paramos aqui */
 
                 foreach ($response['times'] as $key => $val) :
-                    $response['times'][$key]['ranking']['rodada'] = array_search($val['time_id'], array_column($response['times'], 'time_id')); //array_search($val['time_id'], $response['times']);
+                    $response['times'][$key]['ranking']['rodada'] = $key + 1;
                 endforeach;
 
             endif;
@@ -711,7 +717,6 @@ class ParciaisController extends Controller
 
     public function time_rodada(Request $request, $id)
     {
-        $game = Game::first();
 
         $rodada_atual = $request->rodada;
 
@@ -731,7 +736,7 @@ class ParciaisController extends Controller
             ]
         )
             ->where('time_id', $id)
-            ->first();
+            ->first();   
 
         if (!$time->rodadas)
             return response()->json(['message' => "Time não foi escalado para a rodada $rodada_atual."], 401);
@@ -763,7 +768,7 @@ class ParciaisController extends Controller
         )
             ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
             ->whereIn('atleta_id', $atleta_id)
-            ->where('rodada', 1)
+            ->where('rodada', $rodada_atual)
             ->get()
             ->keyBy('atleta_id');
 
@@ -771,7 +776,7 @@ class ParciaisController extends Controller
 
         $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
             ->whereIn('atleta_id', $atleta_id)
-            ->where('rodada', 1)
+            ->where('rodada', $rodada_atual)
             ->first();
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
@@ -783,7 +788,6 @@ class ParciaisController extends Controller
             'parciais' => $parciais,
             'scouts' => $scouts,
             'time' => $time,
-            'parciais' => $parciais,
         ]);
     }
 }

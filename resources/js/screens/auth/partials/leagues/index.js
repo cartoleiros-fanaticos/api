@@ -112,7 +112,7 @@ function leagues() {
                                         <HeaderText>{data.total_times_liga} PARTICIPANTES</HeaderText>
                                     </Header>
                                     {
-                                        data?.destaques &&
+                                        (data?.game.status_mercado === 1 && data?.destaques) &&
                                         <Emphasis>
                                             <Box>
                                                 <Title>LÍDER DA RODADA</Title>

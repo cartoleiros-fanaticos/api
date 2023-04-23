@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
+            $table->string('cartola_access_token')->nullable();
             $table->string('mp_access_token')->nullable();
             $table->timestamps();
         });

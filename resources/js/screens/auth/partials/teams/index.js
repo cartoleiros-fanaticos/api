@@ -48,6 +48,9 @@ function teams() {
 
     const location = useLocation();
 
+    const [uri, suri] = useState('');
+    const [control, scontrol] = useState('start');
+
     const [data, sdata] = useState({});
     const [modal, smodal] = useState(false);
 
@@ -70,6 +73,9 @@ function teams() {
             sdata(data);
             sloading(false);
 
+            if (data.game.statu_mercado != 1)
+                suri(`parciais/time/rodada/${teams_id}?rodada=${data.game.rodada_atual}`);
+
         } catch (e) {
             message(e);
             sloading(false);
@@ -79,6 +85,8 @@ function teams() {
 
     async function team({ rodada, time_id }) {
 
+        scontrol('clean');
+
         try {
 
             const response = await api.get(`parciais/time/rodada/${time_id}?rodada=${rodada}`);
@@ -87,6 +95,10 @@ function teams() {
                 ...data,
                 ...response.data
             });
+
+            scontrol('start');
+
+            suri(`parciais/time/rodada/${time_id}?rodada=${rodada}`);
 
         } catch (e) {
             message(e);
@@ -123,6 +135,7 @@ function teams() {
                                             <Players>
                                                 {data.game.status_mercado === 2 &&
                                                     <Live
+                                                        control={control}
                                                         uri={uri}
                                                         fnc={(response) => {
                                                             sdata({ ...data, ...response });
