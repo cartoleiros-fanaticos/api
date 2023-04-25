@@ -184,7 +184,7 @@ class ParciaisController extends Controller
                 ->where('times_cartolas_id', $time_cartola->id)
                 ->first();
 
-            $rodada_atual_time = is_null($rodada->rodada_atual_time) ? 1 : ($rodada->rodada_atual_time + 1);
+            $rodada_atual_time = is_null($rodada->rodada_atual_time) ? 1 : $rodada->rodada_atual_time;
 
             while ($rodada_atual_time <= $rodada_atual) :
                 
