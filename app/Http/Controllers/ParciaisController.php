@@ -119,14 +119,14 @@ class ParciaisController extends Controller
                     'nome' => $clubes[$partida->clube_casa_id]['nome'],
                     'escudo' => $clubes[$partida->clube_casa_id]['60x60'],
                     'atletas' => $atletas_casa,
-                    'pontuacao' => $atletas_casa->sum('pontuacao'),
+                    'pontuacao' => $parciais_atletas_casa->sum('pontuacao'),
                     'parciais' => $parciais_atletas_casa
                 ],
                 'clube_visitante' => [
                     'nome' => $clubes[$partida->clube_visitante_id]['nome'],
                     'escudo' => $clubes[$partida->clube_visitante_id]['60x60'],
                     'atletas' => $atletas_visitante,
-                    'pontuacao' => $atletas_visitante->sum('pontuacao'),
+                    'pontuacao' => $parciais_atletas_visitante->sum('pontuacao'),
                     'parciais' => $parciais_atletas_visitante
                 ]
             ],

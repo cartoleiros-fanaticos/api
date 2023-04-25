@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import api from '../../utils/api';
 
-import { message } from '../../utils/helpers';
+import { message, amount } from '../../utils/helpers';
 
 import Loading from '../../componets/loading';
 import Player from '../../componets/player';
@@ -21,6 +21,9 @@ import {
   Players,
   ContainerLive,
   List,
+  Score,
+  ScoreText,
+  ScoreValue,
 } from './styles';
 
 import { Message } from '../../utils/styles';
@@ -89,14 +92,22 @@ function scouts({ data: { id } }) {
               <List>
                 {
                   data.partida.clube_casa.atletas.length ?
-                    data.partida.clube_casa.atletas.map((e, i) =>
-                      <Player
-                        key={i}
-                        data={e}
-                        scouts={data.scouts}
-                        parciais={data.partida.clube_casa.parciais}
-                      />
-                    )
+                    <>
+                      <Score>
+                        <ScoreText>Pontuação:</ScoreText>
+                        <ScoreValue value={data.partida.clube_casa.pontuacao}>{amount(data.partida.clube_casa.pontuacao)} pts</ScoreValue>
+                      </Score>
+                      {
+                        data.partida.clube_casa.atletas.map((e, i) =>
+                          <Player
+                            key={i}
+                            data={e}
+                            scouts={data.scouts}
+                            parciais={data.partida.clube_casa.parciais}
+                          />
+                        )
+                      }
+                    </>
                     :
                     <Message>Ainda não há dados.</Message>
                 }
@@ -104,14 +115,22 @@ function scouts({ data: { id } }) {
               <List>
                 {
                   data.partida.clube_visitante.atletas.length ?
-                    data.partida.clube_visitante.atletas.map((e, i) =>
-                      <Player
-                        key={i}
-                        data={e}
-                        scouts={data.scouts}
-                        parciais={data.partida.clube_visitante.parciais}
-                      />
-                    )
+                    <>
+                      <Score>
+                        <ScoreText>Pontuação:</ScoreText>
+                        <ScoreValue value={data.partida.clube_visitante.pontuacao}>{amount(data.partida.clube_visitante.pontuacao)} pts</ScoreValue>
+                      </Score>
+                      {
+                        data.partida.clube_visitante.atletas.map((e, i) =>
+                          <Player
+                            key={i}
+                            data={e}
+                            scouts={data.scouts}
+                            parciais={data.partida.clube_visitante.parciais}
+                          />
+                        )
+                      }
+                    </>
                     :
                     <Message>Ainda não há dados.</Message>
                 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { message, download, swal_warning } from '../../../../utils/helpers';
+import { message, download, swal_warning, amount } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
 import Modal from '../../../../componets/modal';
@@ -195,7 +195,7 @@ function crossing() {
                       ?
                       <Private to="/auth/planos">Sócio</Private>
                       :
-                      <Value>{data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0}</Value>
+                      <Value>{amount(data.data.conquista_casa[e.clube_casa_id]?.pontos || 0)}</Value>
                   }
                   <Versus>x</Versus>
                   {
@@ -203,7 +203,7 @@ function crossing() {
                       ?
                       <Private to="/auth/planos">Sócio</Private>
                       :
-                      <Value>{data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0}</Value>
+                      <Value>{amount(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0)}</Value>
                   }
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
@@ -215,9 +215,11 @@ function crossing() {
                       :
                       <>
                         {
-                          (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0)
-                          +
-                          (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
+                          amount(
+                            parseInt(data.data.conquista_casa[e.clube_casa_id]?.pontos || 0)
+                            +
+                            parseInt(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0)
+                          )
                         }
                         {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_casa_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>
@@ -254,7 +256,7 @@ function crossing() {
                       ?
                       <Private to="/auth/planos">Sócio</Private>
                       :
-                      <Value>{data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0}</Value>
+                      <Value>{amount(data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0)}</Value>
                   }
                   <Versus>x</Versus>
                   {
@@ -262,7 +264,7 @@ function crossing() {
                       ?
                       <Private to="/auth/planos">Sócio</Private>
                       :
-                      <Value>{data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0}</Value>
+                      <Value>{amount(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0)}</Value>
                   }
                   <Shield src={data.clubes[e.clube_visitante_id].escudo} />
                 </Values>
@@ -274,9 +276,11 @@ function crossing() {
                       :
                       <>
                         {
-                          (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0)
-                          +
-                          (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0)
+                          amount(
+                            parseInt(data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0)
+                            +
+                            parseInt(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0)
+                          )
                         }
                         {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_visitante_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>

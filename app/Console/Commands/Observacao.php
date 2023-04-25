@@ -135,14 +135,14 @@ class Observacao extends Command
                         SELECT 
                             ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                         FROM parciais
-                        WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
+                        WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
                     $min_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                         FROM parciais
-                        WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
+                        WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
                 else :
@@ -158,14 +158,14 @@ class Observacao extends Command
                         SELECT 
                             ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                         FROM parciais
-                        WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
+                        WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
                     $min_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                         FROM parciais
-                        WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
+                        WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
                 endif;

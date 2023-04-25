@@ -78,3 +78,19 @@ export const List = styled.div`
     }
 `;
 
+export const Score = styled.div`
+    padding: 10px;
+    border-bottom: solid thin #cccccc;
+    display: flex;
+    font-weight: 500;
+    justify-content: space-between;
+    font-size: 0.9em;
+`;
+
+export const ScoreText = styled.strong``;
+
+export const ScoreValue = styled.span`
+    font-weight: 500;
+    color: ${({ value }) => value > 0 ? 'green' : (value < 0 ? 'red' : 'gray' ) };
+`;
+

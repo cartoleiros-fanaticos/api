@@ -48,7 +48,7 @@ function crossing() {
     scout: { value: 'G', name: 'Gols' },
     posicao_id: { value: '', name: undefined },
     ultimas_rodadas: { value: 38, name: 'Todas as rodadas' },
-    total: { value: 'Nâo', name: 'Só casa x Só fora' },
+    total: { value: 'Não', name: 'Só casa x Só fora' },
   });
 
   const [data, sdata] = useState({});

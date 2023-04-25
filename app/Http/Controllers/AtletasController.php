@@ -207,7 +207,7 @@ class AtletasController extends Controller
                 WHERE atleta_id = ?
                 LIMIT ?
                 OFFSET ?
-            ', [$id, $qtde_rodada, $rodada - 1])
+            ', [$id, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada ])
         );
 
         return response()->json([

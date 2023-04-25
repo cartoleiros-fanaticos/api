@@ -4,7 +4,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import html2canvas from 'html2canvas';
 
 export const team = (team, orderBy) => {
-    return `*${(team.ranking[orderBy] || 1) < 10 ? ' ' : ''}${team.ranking[orderBy] || 1}º* - *${(orderBy === 'patrimonio' ? (team.patrimonio.toFixed(2) + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + ' pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
+    return `${(team.ranking[orderBy] || 1) < 10 ? ' ' : ''}*${team.ranking[orderBy] || 1}º* - *${(orderBy === 'patrimonio' ? (team.patrimonio.toFixed(2) + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + ' pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
 }
 
 export const share = (data, orderBy) => {

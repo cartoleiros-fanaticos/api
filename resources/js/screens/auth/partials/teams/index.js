@@ -73,7 +73,7 @@ function teams() {
             sdata(data);
             sloading(false);
 
-            if (data.game.statu_mercado != 1)
+            if (data.game.status_mercado != 1)
                 suri(`parciais/time/rodada/${teams_id}?rodada=${data.game.rodada_atual}`);
 
         } catch (e) {

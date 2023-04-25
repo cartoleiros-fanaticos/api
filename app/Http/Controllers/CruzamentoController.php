@@ -72,24 +72,24 @@ class CruzamentoController extends Controller
             $conquista_casa = COLLECT(DB::SELECT('
                 SELECT 
                     clube_casa_id id,
-                    IFNULL(SUM(?), 0) pontos
+                    IFNULL(SUM(' . $scout . '), 0) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
                 GROUP BY clube_casa_id
                 ORDER BY clube_casa_id
-            ', [$scout]))->keyBy('id');
+            '))->keyBy('id');
 
             $cedidas_casa = COLLECT(DB::SELECT('
                 SELECT 
                     clube_casa_id id,
-                    IFNULL(SUM(?), 0) pontos
+                    IFNULL(SUM(' . $scout . '), 0) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
                 GROUP BY clube_casa_id
                 ORDER BY clube_casa_id
-            ', [$scout]))->keyBy('id');
+            '))->keyBy('id');
 
         else :
 
@@ -158,24 +158,24 @@ class CruzamentoController extends Controller
             $conquista_fora = COLLECT(DB::SELECT('
                 SELECT 
                     clube_visitante_id id,
-                    IFNULL(SUM(?), 0) pontos
+                    IFNULL(SUM(' . $scout . '), 0) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
                 GROUP BY clube_visitante_id
                 ORDER BY clube_visitante_id
-            ', [$scout]))->keyBy('id');
+            '))->keyBy('id');
 
             $cedidas_fora = COLLECT(DB::SELECT('
                 SELECT 
                     clube_visitante_id id,
-                    IFNULL(SUM(?), 0) pontos
+                    IFNULL(SUM(' . $scout . '), 0) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) 
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
                 GROUP BY clube_visitante_id
                 ORDER BY clube_visitante_id
-            ', [$scout]))->keyBy('id');
+            '))->keyBy('id');
 
         else :
 
