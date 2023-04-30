@@ -4,7 +4,7 @@ import 'sweetalert2/src/sweetalert2.scss';
 import html2canvas from 'html2canvas';
 
 export const team = (team, orderBy) => {
-    return `${(team.ranking[orderBy] || 1) < 10 ? ' ' : ''}*${team.ranking[orderBy] || 1}º* - *${(orderBy === 'patrimonio' ? (team.patrimonio.toFixed(2) + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + ' pts' )}* ${team.nome.substr(0, 11).toLowerCase()}`
+    return `${(team.ranking[orderBy] || 1) < 10 ? ' ' : ''}*${team.ranking[orderBy] || 1}º* - *${(orderBy === 'patrimonio' ? (team.patrimonio.toFixed(2) + ' C$') : (team.pontos[orderBy] || 0).toFixed(2) + ' pts')}* ${team.nome.substr(0, 11).toLowerCase()}`
 }
 
 export const share = (data, orderBy) => {
@@ -235,10 +235,21 @@ export const download = async (data, text_left, text_right, filter) => {
 
         let span = document.createElement('span');
 
-        if (text_left === 'CONQUISTADOS')
-            span.innerText = data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0;
-        else
-            span.innerText = data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0
+        if (filter.scout.name === 'Média' || filter.scout.name === 'Pontos') {
+
+            if (text_left === 'CONQUISTADOS')
+                span.innerText = amount(data.data.conquista_casa[e.clube_casa_id]?.pontos || 0);
+            else
+                span.innerText = amount(data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0);
+
+        } else {
+
+            if (text_left === 'CONQUISTADOS')
+                span.innerText = data.data.conquista_casa[e.clube_casa_id]?.pontos || 0;
+            else
+                span.innerText = data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0;
+
+        }
 
         span.style.cssText = `
         font-weight: bold;
@@ -260,11 +271,21 @@ export const download = async (data, text_left, text_right, filter) => {
 
         span = document.createElement('span');
 
-        if (text_left === 'CONQUISTADOS')
-            span.innerText = data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0;
-        else
-            span.innerText = data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0
+        if (filter.scout.name === 'Média' || filter.scout.name === 'Pontos') {
 
+            if (text_left === 'CONQUISTADOS')
+                span.innerText = amount(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0);
+            else
+                span.innerText = amount(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0);
+
+        } else {
+
+            if (text_left === 'CONQUISTADOS')
+                span.innerText = data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0;
+            else
+                span.innerText = data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0
+
+        }
 
         span.style.cssText = `
         font-weight: bold;
@@ -284,10 +305,21 @@ export const download = async (data, text_left, text_right, filter) => {
 
         let strong = document.createElement('strong');
 
-        if (text_left === 'CONQUISTADOS')
-            strong.innerText = (data.data.conquista_casa.length ? data.data.conquista_casa[e.clube_casa_id].pontos : 0) + (data.data.cedidas_fora.length ? data.data.cedidas_fora[e.clube_visitante_id].pontos : 0)
-        else
-            strong.innerText = (data.data.cedidas_casa.length ? data.data.cedidas_casa[e.clube_casa_id].pontos : 0) + (data.data.conquista_fora.length ? data.data.conquista_fora[e.clube_visitante_id].pontos : 0);
+        if (filter.scout.name === 'Média' || filter.scout.name === 'Pontos') {
+
+            if (text_left === 'CONQUISTADOS')
+                strong.innerText = amount(parseFloat(data.data.conquista_casa[e.clube_casa_id]?.pontos || 0) + parseFloat(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0));
+            else
+                strong.innerText = amount(parseFloat(data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0) + parseFloat(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0));
+
+        } else {
+
+            if (text_left === 'CONQUISTADOS')
+                strong.innerText = parseInt(data.data.conquista_casa[e.clube_casa_id]?.pontos || 0) + parseInt(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0)
+            else
+                strong.innerText = parseInt(data.data.cedidas_casa[e.clube_casa_id]?.pontos || 0) + parseInt(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0);
+
+        }
 
         strong.style.cssText = `
             font-weight: bold;

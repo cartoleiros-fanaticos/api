@@ -287,14 +287,14 @@ class AtletasController extends Controller
                             SELECT 
                                 IFNULL(AVG(pontuacao), 0)
                             FROM parciais 
-                            WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
+                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
                         ) as media_pontos_casa,
 
                         (
                             SELECT 
                                 IFNULL(AVG(pontuacao), 0)
                             FROM parciais 
-                            WHERE atleta_id = ? AND rodada = (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
+                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
                         ) as media_pontos_fora  
                             
                     FROM 

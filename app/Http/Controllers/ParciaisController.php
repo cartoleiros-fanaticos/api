@@ -187,7 +187,7 @@ class ParciaisController extends Controller
             $rodada_atual_time = is_null($rodada->rodada_atual_time) ? 1 : $rodada->rodada_atual_time;
 
             while ($rodada_atual_time <= $rodada_atual) :
-                
+
                 $response = $client->get("https://api.cartolafc.globo.com/time/id/$id/$rodada_atual_time");
                 $response = json_decode($response->getBody(), true);
 
@@ -270,6 +270,7 @@ class ParciaisController extends Controller
 
             $times_cartola = TimesCartola::join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
                 ->where('times_cartolas_id', $time_cartola->id)
+                ->where('rodada_time_id', '<', $game->rodada_atual)
                 ->get();
 
             $geral = COLLECT([]);
@@ -307,6 +308,7 @@ class ParciaisController extends Controller
                     ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
                     ->join('posicoes', 'posicao_id', 'posicoes.id')
                     ->where('times_cartolas_id', $time_cartola->id)
+                    ->where('times_cartola_rodadas.rodada_time_id', '<', $game->rodada_atual)
                     ->where('titular', 'Sim')
                     ->where('entrou_em_campo', 'Sim')
                     ->get();
@@ -388,16 +390,29 @@ class ParciaisController extends Controller
 
                 endforeach;
 
+                $mais_escalados = $mais_escalados->sortBy([
+                    ['escalacao', 'desc'],
+                ]);
+
                 foreach ($atletas->groupBy('clube_id')->toArray() as $key => $val) :
 
-                    $clubes_mais_escalados->push([
-                        'id' => $clubes[$key]->id,
-                        'nome' => $clubes[$key]->nome,
-                        'escudo' => $clubes[$key]['60x60'],
-                        'escalacao' => COLLECT($val)->count()
-                    ]);
+
+                    if ($key != 1) :
+
+                        $clubes_mais_escalados->push([
+                            'id' => $clubes[$key]->id,
+                            'nome' => $clubes[$key]->nome,
+                            'escudo' => $clubes[$key]['60x60'],
+                            'escalacao' => COLLECT($val)->count()
+                        ]);
+
+                    endif;
 
                 endforeach;
+
+                $clubes_mais_escalados = $clubes_mais_escalados->sortBy([
+                    ['escalacao', 'desc'],
+                ]);
 
             endif;
 
@@ -736,7 +751,7 @@ class ParciaisController extends Controller
             ]
         )
             ->where('time_id', $id)
-            ->first();   
+            ->first();
 
         if (!$time->rodadas)
             return response()->json(['message' => "Time não foi escalado para a rodada $rodada_atual."], 401);
