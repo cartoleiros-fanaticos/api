@@ -17,6 +17,7 @@ class CruzamentoController extends Controller
         $game = Game::first();
 
         $tipo = $request->input('tipo', 'scouts');
+        $scout = $request->input('scout', 'G');
         $posicao_id = $request->input('posicao_id', null);
         $ultimas_rodadas = $request->input('ultimas_rodadas', 38);
         $total = $request->input('total', 'Não');
@@ -32,7 +33,7 @@ class CruzamentoController extends Controller
             ->keyBy('id');
 
         if ($tipo === 'scouts')
-            $data = $this->scouts('G', $posicao_id, $ultimas_rodadas, $total, $rodada_atual);
+            $data = $this->scouts($scout, $posicao_id, $ultimas_rodadas, $total, $rodada_atual);
         else if ($tipo === 'pontos')
             $data = $this->pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
         else if ($tipo === 'media')
