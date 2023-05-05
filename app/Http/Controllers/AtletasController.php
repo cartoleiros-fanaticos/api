@@ -207,7 +207,7 @@ class AtletasController extends Controller
                 WHERE atleta_id = ?
                 LIMIT ?
                 OFFSET ?
-            ', [$id, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada ])
+            ', [$id, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada])
         );
 
         return response()->json([
@@ -354,7 +354,7 @@ class AtletasController extends Controller
             SELECT 
                 nome,
                 30x30 as escudo,
-                IF(clubes.id = clube_visitante_id, \'mandante\', \'visitante\') as mando
+                IF(clubes.id = clube_visitante_id, \'visitante\', \'mandante\') as mando
             FROM clubes 
             INNER JOIN partidas ON clube_casa_id = clubes.id OR clube_visitante_id = clubes.id  
             WHERE clubes.id = ?	AND rodada = ?
@@ -396,8 +396,14 @@ class AtletasController extends Controller
 
             $confronto->atletas = DB::SELECT('
                     SELECT
-                        foto,
-                        apelido,
+                        atletas.atleta_id,
+                        atletas.foto,
+                        atletas.apelido,
+                        atletas.preco_num,
+                        clubes.abreviacao as abreviacao_clube,
+                        posicoes.nome as posicao,
+                        parciais.clube_id,
+                        entrou_em_campo,
                         pontuacao,
                         parciais.A,
                         parciais.G,
@@ -420,7 +426,10 @@ class AtletasController extends Controller
                         parciais.DE
                     FROM parciais 
                     INNER JOIN atletas ON parciais.atleta_id = atletas.atleta_id
+                    INNER JOIN posicoes ON posicoes.id = parciais.posicao_id
+                    INNER JOIN clubes ON clubes.id = parciais.clube_id
                     WHERE atletas.clube_id = ? AND rodada = ? AND atletas.posicao_id = ?
+                    ORDER BY pontuacao DESC
                 ', [$confronto->id, $confronto->rodada, $posicao_id]);
 
             $confronto->pontuacao_total = COLLECT($confronto->atletas)->sum('pontuacao');
@@ -431,11 +440,22 @@ class AtletasController extends Controller
             ->orderBy('tipo')
             ->get();
 
+        $parciais = COLLECT([]);
+
+        if (COLLECT($confrontos)->count()) :
+            foreach ($confrontos as $key => $val) :
+                foreach ($val->atletas as $key => $value) :
+                    $parciais->push($value);
+                endforeach;
+            endforeach;
+        endif;
+
         return response()->json([
             'time' => $time,
             'posicao' => $posicao,
             'confrontos' => $confrontos,
-            'scouts' => $scouts
+            'parciais' => $parciais->keyBy('atleta_id'),
+            'scouts' => $scouts,
         ]);
     }
 

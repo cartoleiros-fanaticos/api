@@ -1,6 +1,7 @@
 import React from 'react';
-import { amount } from '../../utils/helpers';
 
+import { amount } from '../../utils/helpers';
+import Player from '../../componets/player';
 
 import {
   Container,
@@ -12,13 +13,6 @@ import {
   Info,
   Teams,
   Time,
-  Players,
-  Player,
-  Photo,
-  NameScouts,
-  Name,
-  Scouts,
-  Scout,
   Score,
   Total,
   Text,
@@ -26,11 +20,7 @@ import {
 
 import { Message } from '../../utils/styles';
 
-function matches() {
-
-  const data = {
-    confrontos : []
-  }
+function matches({ data }) {
 
   return (
     <Container>
@@ -54,7 +44,13 @@ function matches() {
                     {
                       e.atletas.map(e =>
                         <>
-                          <Players>
+                          <Player
+                            key={i}
+                            data={e}
+                            scouts={data.scouts}
+                            parciais={data.parciais}
+                          />
+                          {/* <Players>
                             <Player>
                               <Photo src={e.foto} />
                               <NameScouts>
@@ -69,7 +65,7 @@ function matches() {
                               </NameScouts>
                             </Player>
                             <Score value={e.pontuacao}>{amount(e.pontuacao)}</Score>
-                          </Players>
+                          </Players> */}
                         </>
                       )
                     }

@@ -51,45 +51,6 @@ export const Content = styled.div`
     padding: 5px;
 `;
 
-export const Players = styled.div`
-    padding: 5px;
-    border-bottom: dashed thin #999;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-export const Player = styled.div`
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-`;
-
-export const Photo = styled.img`
-    width: 30px;
-    margin-right: 5px;
-`;
-
-export const NameScouts = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
-export const Name = styled.span`
-    font-size: 0.9em;
-`;
-
-export const Scouts = styled.span`
-    display: flex;
-`;
-
-export const Scout = styled.small`
-    font-size: 0.7em;
-    margin-right: 5px;
-    color: ${({ type }) => type > 'Positivo' ? 'green' : 'red'};
-    display: ${({ value }) => value > 0 ? 'block' : 'none'};
-`;
-
 export const Score = styled.strong`
     font-size: 0.8em;
     color: ${({ value }) => value > 0 ? 'green' : 'red'};
