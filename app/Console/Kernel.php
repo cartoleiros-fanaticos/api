@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:atletas')
             ->hourly();
 
+        $schedule->command('app:videos')
+            ->hourly();
+
         $schedule->command('app:planos')
             ->hourly();
 

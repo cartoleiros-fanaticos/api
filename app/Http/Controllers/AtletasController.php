@@ -106,7 +106,8 @@ class AtletasController extends Controller
 
                     clube_casa_id,
                     clube_visitante_id,
-                    DATE_FORMAT(partida_data, "%d/%m %H:%i") partida_data
+                    DATE_FORMAT(partida_data, "%d/%m %H:%i") partida_data,
+                    IF(clube_id = clube_visitante_id, \'mandante\', \'visitante\') as mando
 
                 FROM atletas
                 INNER JOIN partidas ON rodada = ? AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)

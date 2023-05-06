@@ -83,8 +83,10 @@ function player({ data, fnc }) {
   
         smodal(true);
         sloading(true);
+
+        const time_id = atleta.mando === 'visitante' ? atleta.clube_visitante_id : atleta.clube_casa_id;
   
-        const { data } = await api.get(`pontos-cedidos/atletas?time_id=${atleta.clube_id}&posicao_id=${atleta.posicao_id}`);
+        const { data } = await api.get(`pontos-cedidos/atletas?time_id=${time_id}&posicao_id=${atleta.posicao_id}`);
   
         sdatamatches(data);
         sloading(false);

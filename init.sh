@@ -8,6 +8,8 @@ chown -R $USER:www-data bootstrap/cache
 chmod -R 775 storage
 chmod -R 775 bootstrap/cache
 
+rm .env
+
 if [ ! -f .env ]
 then
         cp .env.example .env
