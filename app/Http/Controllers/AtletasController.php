@@ -12,8 +12,13 @@ use App\Models\Scouts;
 use App\Models\Status;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DB;
+use GuzzleHttp\Client;
+
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Database\QueryException;
 use Validator;
+use Exception;
+use DB;
 
 class AtletasController extends Controller
 {
@@ -472,5 +477,93 @@ class AtletasController extends Controller
             ->groupBy('tipo');
 
         return response()->json($response);
+    }
+
+    public function tem_atleta(Request $request, $atleta_id, $liga_id)
+    {
+        try {
+
+            $client = new Client();
+            $data = $client->get("https://api.cartola.globo.com/liga/$liga_id/times");
+            $data = json_decode($data->getBody(), true);
+
+            $headers = ['authorization' => 'Bearer ' . config('global.access_token_cartola')];
+
+            $liga = $client->get("https://api.cartola.globo.com/auth/liga/$request->slug", ['headers' => $headers]);
+            $liga = json_decode($liga->getBody(), true);
+
+            if ($liga['liga']['total_times_liga'] > 200)
+                return response()->json(['message' => 'Só é possível carregar ligas de até 200 times.'], 401);
+
+            $times = [];
+
+            foreach ($liga['times'] as $val) :
+
+                $times[] = [
+                    'time_id' => $val['time_id'],
+                    'nome' => $val['nome'],
+                    'nome_cartola' => $val['nome_cartola'],
+                    'url_escudo_png' => $val['url_escudo_png'],
+                ];
+
+            endforeach;
+
+            $game = Game::first();
+
+            $atleta = Atletas::select('atleta_id', 'apelido', 'foto', 'posicoes.nome as posicao_nome', 'posicoes.abreviacao as posicao_abreviacao', 'clubes.nome as clube', '60x60 as escudo')
+                ->selectRaw('IFNULL((SELECT pontuacao FROM parciais WHERE rodada = ' . $game->rodada_atual . ' AND atleta_id = atletas.atleta_id), 0) pontuacao')
+                ->join('clubes', 'clubes.id', 'atletas.clube_id')
+                ->join('posicoes', 'posicoes.id', 'atletas.posicao_id')
+                ->where('atleta_id', $atleta_id)
+                ->first();
+
+            $response = [
+                'atleta' => $atleta,
+                'sim' => [],
+                'nao' => [],
+            ];
+
+            $parciais = Parciais::where('rodada', $game->rodada_atual)
+                ->get()
+                ->keyBy('atleta_id');
+
+            foreach ($data as $time_id => $val) :
+
+                $pontos = 0;
+                $time = COLLECT($times)->keyBy('time_id');
+                $capitao = $val['capitao'] == $atleta_id ? 'Sim' : 'Não';
+
+                foreach ($val['atletas'] as $value)
+                    $pontos += isset($parciais[$value]) ? ($val['capitao'] == $value ? ($parciais[$value]->pontuacao * 1.5) : $parciais[$value]->pontuacao) : 0;
+
+                if (in_array($atleta_id, $val['atletas'])) :
+
+                    $response['sim'][] = [
+                        'capitao' => $capitao,
+                        'pontos' => $pontos,
+                        'time' => $time[$time_id],
+                    ];
+
+                else :
+
+                    $response['nao'][] = [
+                        'capitao' => $capitao,
+                        'pontos' => $pontos,
+                        'time' => $time[$time_id]
+                    ];
+
+                endif;
+
+            endforeach;
+
+            return response()->json($response);
+        } catch (QueryException $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        } catch (RequestException $e) {
+            $e = json_decode($e->getResponse()->getBody()->getContents(), true);
+            return response()->json(['message' => $e['mensagem']], 401);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }

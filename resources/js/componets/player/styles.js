@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div.attrs(() => ({
+    title: 'Clique para saber quem escalou esse atleta nessa rodada.'
+}))`
     padding: 10px;
     border-bottom: solid thin #cccccc;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     opacity: ${({ active }) => active === 'Sim' ? 1 : 0.3 };   
+    cursor: pointer;
+    transition-duration: 0.3s;
+    
+    &:hover {
+        transform: scale(1.05);
+    }
 
     @media screen and (max-width:900px){
         font-size: 0.9em;

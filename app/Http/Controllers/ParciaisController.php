@@ -19,7 +19,6 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
 use Validator;
 use Exception;
-use Log;
 use DB;
 use Illuminate\Support\Str;
 

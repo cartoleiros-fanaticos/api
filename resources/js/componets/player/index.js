@@ -16,9 +16,9 @@ import {
     Scout,
 } from './styles';
 
-function player({ data, capitao_id, scouts, parciais = [] }) {
+function player({ data, capitao_id, scouts, parciais = [], fnc = () => {} }) {
     return (
-        <Container active={data.entrou_em_campo}>
+        <Container onClick={() => fnc(data)} active={data.entrou_em_campo}>
             {capitao_id && <Captain captain={capitao_id === data.atleta_id}>C</Captain>}
             <Photo src={data.foto} />
             <Description>

@@ -8,6 +8,11 @@ import Player from '../../../../componets/player';
 import Live from '../../../../componets/live';
 import Search from '../../../../componets/search';
 
+import Modal from '../../../../componets/modal';
+import ModalLeague from '../../../../modal/leagues';
+
+import { useNavigate } from "react-router-dom";
+
 import {
   Content,
   List,
@@ -17,10 +22,16 @@ import { Message } from '../../../../utils/styles';
 
 function players() {
 
+  let navigate = useNavigate();
+
+  const [modal, smodal] = useState(false);
+
   const [control, scontrol] = useState('start');
 
   const [data, sdata] = useState({});
   const [players, splayers] = useState([]);
+
+  const [params, sparams] = useState({});
 
   const [loading_page, sloadingpage] = useState(true);
 
@@ -92,6 +103,10 @@ function players() {
                     data={e}
                     scouts={data.scouts}
                     parciais={data.parciais}
+                    fnc={(player) => {
+                      sparams(player);
+                      smodal(true)
+                    }}
                   />
                 )
               }
@@ -105,11 +120,27 @@ function players() {
   );
 
   return (
-    <Container
-      title='Parciais jogadores'
-      component={component}
-      loading={loading_page}
-    />
+    <>
+      <Container
+        title='Parciais jogadores'
+        component={component}
+        loading={loading_page}
+      />
+      {
+        modal &&
+        <Modal
+          icon="list"
+          title="Ligas do cartola"
+          modal={modal}
+          smodal={smodal}
+          Component={ModalLeague}
+          fnc={(liga) => {
+            navigate(`/atletas/${params.atleta_id}/${liga.liga_id}/${liga.slug}`);
+          }}
+          height='520px'
+        />
+      }
+    </>
   );
 }
 

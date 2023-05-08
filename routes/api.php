@@ -30,6 +30,8 @@ Route::post('recuperar-senha', [AuthController::class, 'recuperar_senha']);
 Route::post('refresh', [AuthController::class, 'refresh']);
 Route::post('notificacao-pix', [PlanosController::class, 'notificacaoPix']);
 
+Route::get('atletas/{atleta_id}/{liga_id}', [AtletasController::class, 'tem_atleta']);
+
 Route::resource('escalacao', EscalacaoController::class);
 Route::resource('usuarios', UsuariosController::class);
 

@@ -12,6 +12,7 @@ import "./index.css";
 import Login from './screens/login';
 import Register from './screens/register';
 import Recovery from './screens/recovery';
+import HasPlayer from './screens/hasPlayer';
 
 import Lineup from './screens/auth/lineup';
 
@@ -40,6 +41,7 @@ ReactDOM.createRoot(document.getElementById('app')).render(
             <Route index element={<Login />} />
             <Route path="/cadastro" element={<Register />} />
             <Route path="/recovery" element={<Recovery />} />
+            <Route path="/atletas/:atleta_id/:liga_id/:slug" element={<HasPlayer />} />
 
             <Route path="/auth/escalacao" element={<PrivateRoute component={Lineup} />} />
 

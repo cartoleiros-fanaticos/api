@@ -69,7 +69,7 @@ function leagues({ fnc, smodal }) {
             }
 
             smodal(false);
-            fnc(e.slug)
+            fnc(e)
 
         }
     }
@@ -99,7 +99,7 @@ function leagues({ fnc, smodal }) {
                                             leagues.map((e, i) =>
                                                 <Item onClick={() => {
                                                     smodal(false);
-                                                    fnc(e.slug)
+                                                    fnc(e)
                                                 }} key={i}>
                                                     <Shield src={e.imagem} />
                                                     <Name>{e.nome}</Name>
