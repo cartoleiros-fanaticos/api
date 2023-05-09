@@ -2,21 +2,10 @@ import styled from 'styled-components';
 
 export const Content = styled.div`
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-gap: 15px;
-    align-items: center;
-
-    @media screen and (max-width:900px){
-        grid-template-columns: auto auto auto;
-    }
-
-    @media screen and (max-width:600px){
-        grid-template-columns: auto auto;
-    }
-
-    @media screen and (max-width:400px){
-        grid-template-columns: auto;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
 `;
 
 export const Thumbnails = styled.div`
@@ -25,26 +14,29 @@ export const Thumbnails = styled.div`
     cursor: pointer;
     transition-duration: 0.5s;
     background-color: #fff;
-    width: 100%;
-
-    max-width: 300px;
+    width: 24%;
+    margin-bottom: 10px;
 
     &:hover {
         transform: scale(1.2);
     }
 
+    @media screen and (max-width:900px){
+        width: 32.5%;
+        font-size: 0.9em;
+    }
+
     @media screen and (max-width:600px){
-        max-width: 100%;
+        width: 48.5%;
     }
 
     @media screen and (max-width:400px){
-        max-width: 100%;
+        width: 100%;
     }
 `;
 
 export const Image = styled.img`
     width: 100%;
-    height: 172px;
 
     @media screen and (max-width:900px){
         font-size: 120px;

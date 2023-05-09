@@ -57,6 +57,7 @@ class Videos extends Command
                         'description' => substr($val['snippet']['description'], 0, 400),
                         'channel_id' => $val['snippet']['channelId'],
                         'thumbnails' => $val['snippet']['thumbnails']['high']['url'],
+                        'created_at' => $val['snippet']['publishedAt'],
                     ]
                 );
 

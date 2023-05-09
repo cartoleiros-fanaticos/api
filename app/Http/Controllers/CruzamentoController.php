@@ -37,7 +37,7 @@ class CruzamentoController extends Controller
         else if ($tipo === 'pontos')
             $data = $this->pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
         else if ($tipo === 'media')
-            $data = $this->pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
+            $data = $this->media($posicao_id, $ultimas_rodadas, $total, $rodada_atual);
 
         return response()->json([
             'rodada_atual' => $rodada_atual,

@@ -11,7 +11,9 @@ class VideosController extends Controller
 {
     public function index()
     {        
-        $response = Videos::get();
+        $response = Videos::orderBy('created_at', 'DESC')
+            ->get();
+            
         return response()->json($response);
 
     }

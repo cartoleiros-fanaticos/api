@@ -221,7 +221,7 @@ function crossing() {
                             parseInt(data.data.cedidas_fora[e.clube_visitante_id]?.pontos || 0)
                           )
                         }
-                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_casa_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_visitante_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>
                   }
                 </Total>
@@ -282,7 +282,7 @@ function crossing() {
                             parseInt(data.data.conquista_fora[e.clube_visitante_id]?.pontos || 0)
                           )
                         }
-                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_visitante_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
+                        {filter.posicao_id.value && <Icon onClick={() => pontos_cedidos({ clube_id: e.clube_casa_id, posicao_id: filter.posicao_id.value })} title="Clique para ver cruzamentos de posição por clubes.">add_circle</Icon>}
                       </>
                   }
                 </Total>
