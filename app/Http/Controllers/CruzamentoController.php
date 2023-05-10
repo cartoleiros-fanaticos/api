@@ -72,8 +72,24 @@ class CruzamentoController extends Controller
 
             $conquista_casa = COLLECT(DB::SELECT('
                 SELECT 
-                    clube_casa_id id,
-                    IFNULL(SUM(' . $scout . '), 0) pontos
+                    clube_casa_id id,    
+                    (
+                        CASE 
+                            WHEN ' . ($scout === 'SG' ? 'TRUE' : 'FALSE') . ' THEN (
+                                SELECT 
+                                    SUM(IF(SG > 0, 1, 0))
+                                FROM (
+                                    SELECT  
+                                        SUM(SG) SG 
+                                    FROM parciais p 
+                                    INNER JOIN partidas p1 ON clube_id = clube_casa_id AND p.rodada = p1.rodada
+                                    WHERE clube_id = partidas.clube_casa_id
+                                    GROUP BY p.rodada
+                                ) A
+                            )                           
+                            ELSE IFNULL(SUM(' . ($scout === 'F' ? 'FT + FD + FF + G' : $scout) . '), 0)
+                        END
+                    ) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -99,7 +115,22 @@ class CruzamentoController extends Controller
             $conquista_casa = COLLECT(DB::SELECT('
                 SELECT 
                     clube_id id,
-                    IFNULL(SUM(' . $scout . '), 0) pontos
+                    (
+                        CASE 
+                            WHEN ' . ($scout === 'SG' ? 'TRUE' : 'FALSE') . ' THEN (
+                                SELECT 
+                                    SUM(IF(SG > 0, 1, 0))
+                                FROM (
+                                    SELECT  
+                                        SUM(SG) SG 
+                                    FROM parciais p 
+                                    WHERE clube_id = parciais.clube_id
+                                    GROUP BY p.rodada
+                                ) A
+                            )                           
+                            ELSE IFNULL(SUM(' . ($scout === 'F' ? 'FT + FD + FF + G' : $scout) . '), 0)
+                        END
+                    ) pontos
                 FROM parciais
                 WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND rodada >= ?
                 GROUP BY clube_id
@@ -159,7 +190,23 @@ class CruzamentoController extends Controller
             $conquista_fora = COLLECT(DB::SELECT('
                 SELECT 
                     clube_visitante_id id,
-                    IFNULL(SUM(' . $scout . '), 0) pontos
+                    (
+                        CASE 
+                            WHEN ' . ($scout === 'SG' ? 'TRUE' : 'FALSE') . ' THEN (
+                                SELECT 
+                                    SUM(IF(SG > 0, 1, 0))
+                                FROM (
+                                    SELECT  
+                                        SUM(SG) SG 
+                                    FROM parciais p 
+                                    INNER JOIN partidas p1 ON clube_id = clube_visitante_id AND p.rodada = p1.rodada
+                                    WHERE clube_id = partidas.clube_visitante_id
+                                    GROUP BY p.rodada
+                                ) A
+                            )                           
+                            ELSE IFNULL(SUM(' . ($scout === 'F' ? 'FT + FD + FF + G' : $scout) . '), 0)
+                        END
+                    ) pontos
                 FROM partidas
                 INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
                 WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -185,7 +232,22 @@ class CruzamentoController extends Controller
             $conquista_fora = COLLECT(DB::SELECT('
                 SELECT 
                     clube_id id,
-                    IFNULL(SUM(' . $scout . '), 0) pontos
+                    (
+                        CASE 
+                            WHEN ' . ($scout === 'SG' ? 'TRUE' : 'FALSE') . ' THEN (
+                                SELECT 
+                                    SUM(IF(SG > 0, 1, 0))
+                                FROM (
+                                    SELECT  
+                                        SUM(SG) SG 
+                                    FROM parciais p 
+                                    WHERE clube_id = parciais.clube_id
+                                    GROUP BY p.rodada
+                                ) A
+                            )                           
+                            ELSE IFNULL(SUM(' . ($scout === 'F' ? 'FT + FD + FF + G' : $scout) . '), 0)
+                        END
+                    ) pontos
                 FROM parciais
                 WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND rodada >= ?
                 GROUP BY clube_id

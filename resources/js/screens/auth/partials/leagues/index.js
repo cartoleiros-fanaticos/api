@@ -63,7 +63,7 @@ function leagues() {
         if (slug) getData(slug)
     }, [orderBy])
 
-    async function getData(liga) {
+    async function getData(slug) {
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -71,13 +71,13 @@ function leagues() {
 
             sloading(true);
 
-            const { data } = await api.get(`parciais/liga/${liga.slug}?orderBy=${orderBy}`);
+            const { data } = await api.get(`parciais/liga/${slug}?orderBy=${orderBy}`);
 
-            sslug(liga.slug);
+            sslug(slug);
             sdata(data);
             sloading(false);
 
-            suri(`parciais/liga/${liga.slug}?orderBy=${orderBy}`);
+            suri(`parciais/liga/${slug}?orderBy=${orderBy}`);
 
         } catch (e) {
             message(e);
@@ -217,7 +217,7 @@ function leagues() {
                     modal={modal}
                     smodal={smodal}
                     Component={ModalLeague}
-                    fnc={getData}
+                    fnc={(liga) => getData(liga.slug)}
                     height='520px'
                 />
             }

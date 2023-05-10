@@ -42,6 +42,8 @@ function Player() {
   const [modal_compare, smodalcompare] = useState(false);
   const [data_player, sdataplayer] = useState({});
 
+  const [player_id, splayerid] = useState();
+
   const [filter, sfilter] = useState({
     clube_id: '',
     posicao_id: 5,
@@ -99,34 +101,38 @@ function Player() {
 
   async function getPlayer(atleta_id) {
 
-    const atleta_a = data.atletas.find(e => e.compare === true);
+    if (player_id != atleta_id) {
 
-    try {
+      try {
 
-      sloadingdataplayer(true);
+        sloadingdataplayer(true);
 
-      if (atleta_a) {
+        if (player_id) {
 
-        smodalcompare(true);
-        delete atleta_a.compare;
-        const response = await api.get(`compare/atletas?atleta_a=${atleta_a.atleta_id}&atleta_b=${atleta_id}`);
-        sdataplayer(response.data);
-        sdata(data);
+          smodalcompare(true);
 
-      } else {
+          const response = await api.get(`compare/atletas?atleta_a=${player_id}&atleta_b=${atleta_id}`);
 
-        smodalplayer(true);
-        const response = await api.get(`atletas/${atleta_id}`);
-        sdataplayer(response.data);
-      }
+          sdataplayer(response.data);
+          sdata(data);
+          splayerid(null);
 
-      sloadingdataplayer(false);
+        } else {
 
-    } catch (e) {
-      message(e);
-      smodalcompare(false);
-      sloadingdataplayer(false);
-    };
+          smodalplayer(true);
+          const response = await api.get(`atletas/${atleta_id}`);
+          sdataplayer(response.data);
+        }
+
+        sloadingdataplayer(false);
+
+      } catch (e) {
+        message(e);
+        smodalcompare(false);
+        sloadingdataplayer(false);
+      };
+
+    }
 
   }
 
@@ -136,9 +142,11 @@ function Player() {
 
     let atleta = data.atletas.find(e => e.atleta_id === atleta_id);
     atleta.compare = true;
+
     sdata(data);
     smodalplayer(false);
 
+    splayerid(atleta_id);
   }
 
   function order(event) {
@@ -171,12 +179,12 @@ function Player() {
       else
         data.atletas.sort((a, b) => a.preco_num > b.preco_num ? -1 : 1);
 
-      } else if (value === 'P. mínima') {
-  
-        if (order)
-          data.atletas.sort((a, b) => a.minimo_para_valorizar < b.minimo_para_valorizar ? -1 : 1);
-        else
-          data.atletas.sort((a, b) => a.minimo_para_valorizar > b.minimo_para_valorizar ? -1 : 1);
+    } else if (value === 'P. mínima') {
+
+      if (order)
+        data.atletas.sort((a, b) => a.minimo_para_valorizar < b.minimo_para_valorizar ? -1 : 1);
+      else
+        data.atletas.sort((a, b) => a.minimo_para_valorizar > b.minimo_para_valorizar ? -1 : 1);
 
     } else {
 
@@ -267,7 +275,7 @@ function Player() {
             {
               data.atletas.length ?
                 data.atletas.map(e =>
-                  <Tr compare={e.compare} onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
+                  <Tr compare={player_id === e.atleta_id} onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
                     <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
                     <Td>
                       <Image src={e.foto} />
