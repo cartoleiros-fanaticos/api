@@ -35,7 +35,7 @@ class UsuariosSeeder extends Seeder
             [
                 'nome' => 'Wedson Santos',
                 'celular' => '82981761793',
-                'password' => Hash::make('bhGj4Y'),
+                'password' => Hash::make('nosdew81'),
                 'funcao' => 'Admin',
                 'plano' => 'Plano Fanático',
                 'ativo' => 'Sim'
