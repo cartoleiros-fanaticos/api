@@ -360,7 +360,7 @@ class CruzamentoController extends Controller
         ];
     }
 
-    public function pontos($posicao_id, $ultimas_rodadas = 38, $total = 'Sim', $rodada_atual)
+    public function pontos($posicao_id, $ultimas_rodadas, $total, $rodada_atual)
     {
 
         DB::statement('CREATE TEMPORARY TABLE partidas_temporary  
@@ -383,10 +383,24 @@ class CruzamentoController extends Controller
             );
         ', [$ultimas_rodadas]);
 
+        $rodada = ($rodada_atual - $ultimas_rodadas) > 0 ? ($rodada_atual - $ultimas_rodadas) : 1;
+
         $conquista_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                IFNULL(SUM(pontuacao), 0) 
+                            FROM parciais
+                            WHERE clube_id = clube_casa_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                            GROUP BY clube_id
+                        )
+                        ELSE IFNULL(SUM(pontuacao), 0) 
+                    END
+                ) pontos
             FROM partidas
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -397,8 +411,33 @@ class CruzamentoController extends Controller
         $cedidas_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            (
+                                SELECT 
+                                    IFNULL(SUM(pontuacao), 0) 
+                                FROM partidas
+                                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                                GROUP BY clube_visitante_id
+                            )
+                            +
+                            (
+                                SELECT 
+                                    IFNULL(SUM(pontuacao), 0) 
+                                FROM partidas
+                                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                                GROUP BY clube_casa_id
+                            )
+                        )
+                        ELSE IFNULL(SUM(pontuacao), 0) 
+                    END
+                ) pontos
             FROM partidas
+            INNER JOIN clubes ON clube_casa_id = clubes.id
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_casa_id
@@ -430,7 +469,19 @@ class CruzamentoController extends Controller
         $conquista_fora = COLLECT(DB::SELECT('
             SELECT 
                 clube_visitante_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                IFNULL(SUM(pontuacao), 0) 
+                            FROM parciais
+                            WHERE clube_id = clube_visitante_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                            GROUP BY clube_id
+                        )
+                        ELSE IFNULL(SUM(pontuacao), 0) 
+                    END
+                ) pontos
             FROM partidas
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -441,8 +492,33 @@ class CruzamentoController extends Controller
         $cedidas_fora = COLLECT(DB::SELECT('
             SELECT 
                 clube_visitante_id id,
-                IFNULL(SUM(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            (
+                                SELECT 
+                                    IFNULL(SUM(pontuacao), 0) 
+                                FROM partidas
+                                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                                GROUP BY clube_visitante_id
+                            )
+                            +
+                            (
+                                SELECT 
+                                    IFNULL(SUM(pontuacao), 0) 
+                                FROM partidas
+                                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                                GROUP BY clube_casa_id
+                            )
+                        )
+                        ELSE IFNULL(SUM(pontuacao), 0) 
+                    END
+                ) pontos
             FROM partidas
+            INNER JOIN clubes ON clube_visitante_id = clubes.id
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) 
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_visitante_id
@@ -482,10 +558,24 @@ class CruzamentoController extends Controller
             );
         ', [$ultimas_rodadas]);
 
+        $rodada = ($rodada_atual - $ultimas_rodadas) > 0 ? ($rodada_atual - $ultimas_rodadas) : 1;
+
         $conquista_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(AVG(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                IFNULL(AVG(pontuacao), 0)
+                            FROM parciais
+                            WHERE clube_id = clube_casa_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                            GROUP BY clube_id
+                        )
+                        ELSE IFNULL(AVG(pontuacao), 0)
+                    END
+                ) pontos                
             FROM partidas
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -496,8 +586,35 @@ class CruzamentoController extends Controller
         $cedidas_casa = COLLECT(DB::SELECT('
             SELECT 
                 clube_casa_id id,
-                IFNULL(AVG(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                AVG(pontuacao) 
+                            FROM (
+
+                                SELECT 
+                                    pontuacao
+                                FROM partidas
+                                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '                                    
+
+                                UNION ALL
+
+                                SELECT 
+                                    pontuacao
+                                FROM partidas
+                                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+
+                            ) A
+                        ) 
+                        ELSE IFNULL(AVG(pontuacao), 0)
+                    END
+                ) pontos
             FROM partidas
+            INNER JOIN clubes ON clube_casa_id = clubes.id
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) 
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_casa_id
@@ -529,7 +646,19 @@ class CruzamentoController extends Controller
         $conquista_fora = COLLECT(DB::SELECT('
             SELECT 
                 clube_visitante_id id,
-                IFNULL(AVG(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                IFNULL(AVG(pontuacao), 0)
+                            FROM parciais
+                            WHERE clube_id = clube_visitante_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+                            GROUP BY clube_id
+                        )
+                        ELSE IFNULL(AVG(pontuacao), 0)
+                    END
+                ) pontos  
             FROM partidas
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id )
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
@@ -540,8 +669,35 @@ class CruzamentoController extends Controller
         $cedidas_fora = COLLECT(DB::SELECT('
             SELECT 
                 clube_visitante_id id,
-                IFNULL(AVG(pontuacao), 0) pontos
+                (
+                    CASE 
+                        WHEN ' . ($total === 'Sim' ? 'TRUE' : 'FALSE') . ' THEN 
+                        (
+                            SELECT 
+                                AVG(pontuacao) 
+                            FROM (
+
+                                SELECT 
+                                    pontuacao
+                                FROM partidas
+                                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '                                    
+
+                                UNION ALL
+
+                                SELECT 
+                                    pontuacao
+                                FROM partidas
+                                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada
+                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . '
+
+                            ) A
+                        ) 
+                        ELSE IFNULL(AVG(pontuacao), 0)
+                    END
+                ) pontos                
             FROM partidas
+            INNER JOIN clubes ON clube_visitante_id = clubes.id
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) 
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . '             
             GROUP BY clube_visitante_id

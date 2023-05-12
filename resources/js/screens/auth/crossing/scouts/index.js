@@ -152,7 +152,7 @@ function crossing() {
             <Icon>play_for_work</Icon>
           </Header>
           <List>
-            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 1, name: 'Todas as posições' } }) }}>Todas as posições</Item>
+            <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: '', name: 'Todas as posições' } }) }}>Todas as posições</Item>
             <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 3, name: 'Zagueiros' } }) }}>Zagueiros</Item>
             <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 2, name: 'Lateral' } }) }}>Lateral</Item>
             <Item onClick={(e) => { close(e); sfilter({ ...filter, posicao_id: { value: 4, name: 'Meias' } }) }}>Meias</Item>
