@@ -18,9 +18,34 @@ class UsuariosController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+
+        $regras = [
+            'email' => 'required'
+        ];
+
+        $mensagens = [
+            'email.required' => 'O campo email é obrigatório.',
+        ];
+
+        $validator = Validator::make($request->all(), $regras, $mensagens);
+
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
+
+        $email = $request->input('email');
+
+        $email = explode(',', $email);
+
+        $plano = $request->input('plano', 'Plano Fanático');
+
+        $response = Usuarios::whereIn('email', $email)->update([
+            'plano' => $plano
+        ]);
+
+        return $response;
+
     }
 
     /**

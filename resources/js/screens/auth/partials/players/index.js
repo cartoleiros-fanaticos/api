@@ -64,7 +64,7 @@ function players() {
 
     if (value && value.length >= 3) {
       scontrol('clean');
-      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1);
+      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1 ||  e.clube.toLowerCase().indexOf(value) != -1);
       sdata({ ...data, atletas });
     } else if (value === '') {
       sdata({ ...data, atletas: players });
@@ -74,48 +74,45 @@ function players() {
 
   const component = (
     <Content>
-      {
-        data.atletas?.length
-          ?
+      <List>
+        {data.game?.status_mercado === 2 &&
           <>
-            <List>
-              <Search
-                placeholder="Digite nome do atleta"
-                icon="directions_run"
-                onChange={search}
-              />
-              {data.game.status_mercado === 2 &&
-                <Live
-                  control={control}
-                  uri="parciais/atletas"
-                  fnc={(data) => {
-                    sdata(data);
-                    splayers(data.atletas);
-                  }}
+            <Search
+              placeholder="Digite nome do atleta"
+              icon="directions_run"
+              onChange={search}
+            />
+            <Live
+              control={control}
+              uri="parciais/atletas"
+              fnc={(data) => {
+                sdata(data);
+                splayers(data.atletas);
+              }}
 
-                />
-              }
-
-              {
-                data.atletas.map((e, i) =>
-                  <Player
-                    key={i}
-                    data={e}
-                    scouts={data.scouts}
-                    parciais={data.parciais}
-                    fnc={(player) => {
-                      sparams(player);
-                      smodal(true)
-                    }}
-                  />
-                )
-              }
-            </List>
+            />
           </>
-          :
-          <Message>Nenhum registro encontrado.</Message>
-      }
+        }
 
+        {
+          data.atletas?.length
+            ?
+            data.atletas.map((e, i) =>
+              <Player
+                key={i}
+                data={e}
+                scouts={data.scouts}
+                parciais={data.parciais}
+                fnc={(player) => {
+                  sparams(player);
+                  smodal(true)
+                }}
+              />
+            )
+            :
+            <Message>Nenhum registro encontrado.</Message>
+        }
+      </List>
     </Content>
   );
 

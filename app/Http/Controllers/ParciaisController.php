@@ -35,6 +35,7 @@ class ParciaisController extends Controller
             'atletas.apelido',
             'atletas.preco_num',
             'clubes.abreviacao as abreviacao_clube',
+            'clubes.nome as clube',
             'posicoes.nome as posicao',
             'parciais.clube_id',
             'entrou_em_campo'
