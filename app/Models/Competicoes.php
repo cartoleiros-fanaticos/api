@@ -9,4 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Competicoes extends Model
 {
     use HasFactory, SoftDeletes;
+
+    // public function usuario(){
+    //     return $this->belongsTo(Usuarios::class, 'usuarios_id', 'id');
+    // }
 }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('celular');
             $table->float('comissao')->nullable();
+            $table->string('token_payment')->nullable();
             $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->string('recovery')->nullable();

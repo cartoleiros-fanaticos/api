@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('competicoes_rodadas', function (Blueprint $table) {
             $table->id();
 
+            $table->float('pontos');
+            
             $table->integer('rodada');
 
             $table->foreignId('competicoes_id')

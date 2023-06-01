@@ -15,17 +15,18 @@ return new class extends Migration
             $table->id();
 
             $table->string('nome');
-            $table->string('descrição');
+            $table->string('descricao');
+            $table->enum('tipo', ['rodada', 'mensal', 'turno', 'anual'])->default('rodada');
+            $table->float('comissao')->default(0);
             $table->float('valor');
-            $table->float('comissao');
-            $table->enum('tipo', ['rodada', 'mensal', 'turno', 'anual']);
-            $table->enum('situacao', ['Aguardando', 'Em andamento', 'Encerrada'])->default('Aguardando');
-            $table->enum('ativo', ['Sim', 'Não']);
-
-            $table->enum('provedor', ['MERCADO PAGO']);
-
+            $table->integer('num_posicoes')->default(1);
             $table->integer('de');
             $table->integer('ate');
+            $table->enum('ativo', ['Sim', 'Não']);
+            $table->enum('situacao', ['Aguardando', 'Em andamento', 'Encerrada'])->default('Aguardando');
+            $table->enum('capitao', ['Sim', 'Não'])->default('Sim');
+
+            $table->enum('provedor', ['MERCADO PAGO'])->default('MERCADO PAGO');
 
             $table->foreignId('usuarios_id')
                 ->constrained('usuarios')

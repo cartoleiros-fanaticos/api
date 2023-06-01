@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AtletasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompeticaoController;
 use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\CruzamentoController;
 use App\Http\Controllers\EscalacaoController;
@@ -36,16 +37,16 @@ Route::resource('escalacao', EscalacaoController::class);
 Route::resource('usuarios', UsuariosController::class);
 
 Route::group([
-    
+
     'middleware' => 'jwt',
-    
+
 ], function ($router) {
-    
+
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('me', [AuthController::class, 'me']);
-    
 
-    Route::resource('cruzamento', CruzamentoController::class);   
+
+    Route::resource('cruzamento', CruzamentoController::class);
 
     Route::post('enviar-email/contato', [ContatoController::class, 'enviar_email']);
 
@@ -70,4 +71,7 @@ Route::group([
     Route::get('verificar-pix', [PlanosController::class, 'verificarPix']);
 
     Route::resource('videos', VideosController::class);
+
+    Route::resource('competicao', CompeticaoController::class);
+    Route::post('competicao/solicitacao', [CompeticaoController::class, 'solicitacao']);
 });
