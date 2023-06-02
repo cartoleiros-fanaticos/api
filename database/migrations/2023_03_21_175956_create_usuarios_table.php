@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('funcao', ['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
             $table->enum('plano', ['Demonstrativo', 'Free Cartoleiro', 'Plano Stats', 'Plano Fanático'])->default('Demonstrativo');
             $table->enum('ativo', ['Sim', 'Não'])->default('Sim');
+            $table->string('token_payment')->nullable();
             $table->timestamps();
         });
     }

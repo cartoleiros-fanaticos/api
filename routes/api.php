@@ -74,4 +74,5 @@ Route::group([
 
     Route::resource('competicao', CompeticaoController::class);
     Route::post('competicao/solicitacao', [CompeticaoController::class, 'solicitacao']);
+    Route::post('competicao/aceitar-solicitacao', [CompeticaoController::class, 'aceitar_solicitacao']);
 });

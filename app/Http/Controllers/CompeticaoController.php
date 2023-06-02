@@ -11,6 +11,10 @@ use App\Models\Game;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Validator;
+use GuzzleHttp\Client;
+
+use Exception;
+use Log;
 use DB;
 
 class CompeticaoController extends Controller
@@ -269,7 +273,8 @@ class CompeticaoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $response = Competicoes::destroy($id);
+        return response()->json($response);        
     }
 
     public function solicitacao(Request $request)
@@ -323,6 +328,102 @@ class CompeticaoController extends Controller
 
         endif;
 
+        return response()->json($response);
+    }
+
+    public function aceitar_solicitacao(Request $request)
+    {
+
+        if (isset($request->topic)) :
+
+            $id = $request->id;
+            $topic = $request->topic;
+
+            try {
+
+                if ($topic === 'payment') :
+
+                    $token = "";
+
+                    $headers = [
+                        'Content-Type' => 'application/json',
+                        'Authorization' => "Bearer $token"
+                    ];
+
+                    $client = new Client();
+                    $payment = $client->get("https://api.mercadopago.com/v1/payments/$id", ['timeout' => 60, 'headers' => $headers]);
+                    $payment = json_decode($payment->getBody(), true);
+
+                    if ($payment['status'] === 'approved') :
+
+                        DB::transaction(function () use ($payment) {
+
+                            $transacao = CompeticoesTransacoes::find($payment['external_reference']);
+                            $transacao->situacao =  'Aceita';
+                            $response = $transacao->save();
+
+                            if ($response && $transacao->situacao === 'Aceita') :
+
+                                $competicao = Competicoes::find($transacao->competicoes_id);
+
+                                $rodadas = new CompeticoesRodadas;
+                                $rodadas->competicoes_id = $competicao->nome;
+                                $rodadas->rodada = $competicao->de;
+                                $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
+                                $rodadas->save();
+
+                            endif;
+                        }, 3);
+
+                    endif;
+
+                endif;
+
+                return 'ok';
+            } catch (Exception $e) {
+                Log::error('PIX: ' . $e->getMessage());
+                return response()->json(['message' => $e->getMessage()], 400);
+            }
+
+        else :
+
+            $regras = [
+                'id' => 'required',
+                'situacao' => 'required',
+            ];
+
+            $mensagens = [
+                'id.required' => 'O campo id é obrigatório.',
+                'situacao.required' => 'O campo situacao é obrigatório.',
+            ];
+
+            $validator = Validator::make($request->all(), $regras, $mensagens);
+
+            if ($validator->fails())
+                return response()->json(['message' => $validator->errors()->first()], 400);
+
+            $response = DB::transaction(function () use ($request) {
+
+                $transacao = CompeticoesTransacoes::find($request->id);
+                $transacao->situacao =  $request->situacao;
+                $response = $transacao->save();
+
+                if ($response && $transacao->situacao === 'Aceita') :
+
+                    $competicao = Competicoes::find($transacao->competicoes_id);
+
+                    $rodadas = new CompeticoesRodadas;
+                    $rodadas->competicoes_id = $transacao->competicoes_id;
+                    $rodadas->rodada = $competicao->de;
+                    $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
+                    $rodadas->save();
+
+                endif;
+
+                return true;
+            }, 3);
+
+        endif;
 
         return response()->json($response);
     }
