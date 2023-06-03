@@ -11,24 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('competicoes_transacoes', function (Blueprint $table) {
+        Schema::create('competicoes_atletas', function (Blueprint $table) {
             $table->id();
-
-            $table->enum('situacao', ['Pendente', 'Aceita', 'Rejeitada'])->default('Pendente');
-
-            $table->foreignId('competicoes_id')
-                ->constrained('competicoes')
-                ->onDelete('cascade');
+            
+            $table->integer('rodada');            
+            $table->integer('atleta_id');
 
             $table->foreignId('competicoes_times_id')
                 ->constrained('competicoes_times')
                 ->onDelete('cascade');
 
-            $table->timestamps();
-            $table->softDeletes();
-        });
+            $table->unique(['atleta_id', 'competicoes_times_id']);
 
-        DB::statement('ALTER TABLE `competicoes_transacoes` ADD UNIQUE `competicoes_id_competicoes_times_id_unique`(`competicoes_id`, `competicoes_times_id`)');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -36,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('competicoes_transacoes');
+        Schema::dropIfExists('competicoes_atletas');
     }
 };

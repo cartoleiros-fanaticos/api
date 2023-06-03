@@ -9,7 +9,7 @@ class TimesCartolaRodadas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'rodada_time_id', 'capitao_id', 'esquema_id', 'valor_time', 'pontos', 'times_cartolas_id'];
+    protected $fillable = ['id', 'rodada_time_id', 'capitao_id', 'esquema_id', 'valor_time', 'pontos', 'pontos_sem_capitao', 'times_cartolas_id'];
 
     // public function newQuery()
     // {

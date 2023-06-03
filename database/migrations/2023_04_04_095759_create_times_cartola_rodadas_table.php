@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('esquema_id');
             $table->float('valor_time');
             $table->float('pontos')->default(0);
+            $table->float('pontos_sem_capitao')->default(0);
 
             $table->foreignId('times_cartolas_id')
                 ->constrained('times_cartolas')

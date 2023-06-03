@@ -24,17 +24,34 @@ class CompeticaoController extends Controller
      */
     public function index()
     {
-        $game = Game::first();
+        $user = auth('api')->user();
 
-        $usuarios = Usuarios::with(['competicoes'])
-            ->where('funcao', 'Dono de Liga')
+        $usuarios = Usuarios::where('funcao', 'Dono de Liga')
             ->paginate(50);
 
-        // $usuarios = Competicoes::with('usuario')->get();
+        $times = CompeticoesTimes::where('usuarios_id', $user->id)
+            ->get();
 
-        return $usuarios;
+        $solicitacoes = CompeticoesTransacoes::with(['competicao', 'time.time_cartola'])
+            ->whereIn('competicoes_times_id', COLLECT($times)->pluck('id'))
+            ->get();
+
+        return response()->json([
+            'usuarios' => $usuarios,
+            'times' => $times,
+            'solicitacoes' => $solicitacoes,
+        ]);
     }
 
+    public function ligas()
+    {
+        $game = Game::first();
+
+        $response = Competicoes::where('de', '>=', $game->rodada_atual)
+            ->paginate(50);
+
+        return response()->json($response);
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -145,8 +162,12 @@ class CompeticaoController extends Controller
     {
         $competicao = Competicoes::find($id);
 
-        $times = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
+        $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao as pontos';
+
+        $times = CompeticoesTransacoes::select('time_id', 'url_escudo_png', 'nome', 'nome_cartola', $pontos)
+            ->join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
             ->join('competicoes_rodadas', 'competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
+            ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('situacao', 'Aceita')
             ->paginate(100);
@@ -274,7 +295,13 @@ class CompeticaoController extends Controller
     public function destroy(string $id)
     {
         $response = Competicoes::destroy($id);
-        return response()->json($response);        
+        return response()->json($response);
+    }
+
+    public function deletar_times($id)
+    {
+        $response = CompeticoesTimes::destroy($id);
+        return response()->json($response);
     }
 
     public function solicitacao(Request $request)
@@ -306,12 +333,13 @@ class CompeticaoController extends Controller
 
             if (isset($response->original['time'])) :
 
-                $response = DB::transaction(function () use ($response, $competicoes_id) {
+                $response = DB::transaction(function () use ($response, $times_id, $competicoes_id) {
 
                     $user = auth('api')->user();
                     $time_cartola = $response->original['time'];
 
                     $times = new CompeticoesTimes;
+                    $times->time_id =  $times_id;
                     $times->times_cartolas_id =  $time_cartola['id'];
                     $times->usuarios_id =  $user->id;
                     $times->save();

@@ -136,7 +136,6 @@ class ParciaisController extends Controller
 
     public function parciais_time($id)
     {
-
         $game = Game::first();
 
         $rodada_atual = $game->rodada_atual;
@@ -195,6 +194,12 @@ class ParciaisController extends Controller
 
                     DB::transaction(function () use ($response, $rodada_atual_time, $time_cartola) {
 
+                        $atletas = COLLECT($response['atletas'])->keyBy('atleta_id');
+
+                        $pontos_atleta = $atletas[$response['capitao_id']]['pontos_num'] * config('global.multiplicador_capitao');
+                        $pontos_multiplicador = $pontos_atleta - $atletas[$response['capitao_id']]['pontos_num'];
+                        $pontos_sem_capitao = ($response['pontos'] ?? 0) - $pontos_multiplicador;
+
                         $time_cartola_rodadas = TimesCartolaRodadas::updateOrCreate(
                             [
                                 'rodada_time_id' => $rodada_atual_time,
@@ -205,6 +210,7 @@ class ParciaisController extends Controller
                                 'capitao_id' => $response['capitao_id'],
                                 'esquema_id' => $response['esquema_id'],
                                 'pontos' => $response['pontos'] ?? 0,
+                                'pontos_sem_capitao' => $pontos_sem_capitao,
                                 'valor_time' => $response['valor_time'],
                             ]
                         );
