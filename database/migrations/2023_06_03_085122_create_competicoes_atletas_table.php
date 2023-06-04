@@ -23,7 +23,7 @@ return new class extends Migration
 
             $table->unique(['atleta_id', 'competicoes_times_id']);
 
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

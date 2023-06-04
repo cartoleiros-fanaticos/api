@@ -338,11 +338,15 @@ class CompeticaoController extends Controller
                     $user = auth('api')->user();
                     $time_cartola = $response->original['time'];
 
-                    $times = new CompeticoesTimes;
-                    $times->time_id =  $times_id;
-                    $times->times_cartolas_id =  $time_cartola['id'];
-                    $times->usuarios_id =  $user->id;
-                    $times->save();
+                    $times = CompeticoesTimes::updateOrCreate(
+                        [
+                            'times_cartolas_id' => $time_cartola['id'],
+                            'usuarios_id' => $user->id
+                        ],
+                        [
+                            'time_id' => $times_id
+                        ]
+                    );
 
                     $transacao = new CompeticoesTransacoes;
                     $transacao->competicoes_id =  $competicoes_id;

@@ -2,11 +2,19 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\ParciaisController;
 use App\Models\Competicoes;
 use App\Models\CompeticoesAtletas;
+use App\Models\CompeticoesRodadas;
 use App\Models\CompeticoesTimes;
 use App\Models\Game;
 use Illuminate\Console\Command;
+use GuzzleHttp\Client;
+
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Database\QueryException;
+use Exception;
+use Log;
 
 class Competicao extends Command
 {
@@ -31,27 +39,102 @@ class Competicao extends Command
     {
         $game = Game::first();
 
-        $game->status_mercado = 2;
+        $game->status_mercado = 1;
 
-        if ($game->status_mercado === 2) :
+        echo PHP_EOL . '- Carregando times.' . PHP_EOL;
 
-            CompeticoesAtletas::where('rodada', '!=', $game->rodada_atual)
-                ->forceDelete();
+        $times = CompeticoesTimes::select('competicoes_times.id', 'time_id', 'competicoes_transacoes.competicoes_id')
+            ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_times.id')
+            ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
+            ->where('competicoes_transacoes.situacao', 'Aceita')
+            ->where('competicoes.situacao', 'Em andamento')
+            ->get()
+            ->keyBy('competicoes_times.id');
 
-            $times = CompeticoesTimes::select('time_id')
-                ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_transacoes.id')
-                ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
-                ->where('competicoes_transacoes.situacao', 'Aceita')
-                ->where('competicoes.situacao', 'Em andamento')
-                ->groupBy('time_id')
-                ->get();
+        echo '- Deletando atletas da rodada anterior.' . PHP_EOL;
 
-            if(COLLECT($times)->count()):
+        CompeticoesAtletas::where('rodada', $game->rodada_atual)
+            ->forceDelete();
 
-                
+        if (COLLECT($times)->count()) :
 
-            endif;
+            try {
 
+                echo '- Carregando times do site do cartola.' .  PHP_EOL;
+
+                $client = new Client();
+
+                $teams = [];
+
+                foreach ($times as $key => $val) :
+
+                    if ($game->status_mercado != 1) :
+
+
+                        if (!isset($teams[$key])) :
+
+                            $response = $client->get("https://api.cartolafc.globo.com/time/id/$val->time_id");
+                            $response = json_decode($response->getBody(), true);
+
+                            $data = [];
+
+                            if (isset($response['atletas'])) :
+
+                                $i = 0;
+
+                                foreach ($response['atletas'] as $value) :
+
+                                    $data[$i]['rodada'] = $game->rodada_atual;
+                                    $data[$i]['atleta_id'] = $value['atleta_id'];
+                                    $data[$i]['competicoes_times_id'] = $val->id;
+
+                                    $i++;
+
+                                endforeach;
+
+                                CompeticoesAtletas::insert($data);
+
+                            endif;
+
+                            $teams[$key] = $val;
+
+                        endif;
+
+                        echo  PHP_EOL . '- Time' . $response['time']['nome'] . ' carregado e atualizado.' . PHP_EOL;
+
+                    else :
+
+                        echo  '- Criando ou atualizando registro nova rodada.' . PHP_EOL;
+
+                        CompeticoesRodadas::updateOrCreate(
+                            [
+                                'rodada' => $game->rodada_atual,
+                                'competicoes_id' => $val->competicoes_id,
+                                'competicoes_times_id' =>  $val->id
+                            ],
+                            []
+                        );
+
+                        if (!isset($teams[$key])) :
+
+                            echo  '- Atualizando tabela times_cartolas.' . PHP_EOL;
+
+                            $parciais = new ParciaisController;
+                            $response = $parciais->parciais_time($val->time_id);
+
+                            $teams[$key] = $val;
+
+                        endif;
+
+                    endif;
+
+                endforeach;
+            } catch (Exception $e) {
+                echo PHP_EOL . $e->getMessage() . PHP_EOL;
+                Log::error($e->getMessage());
+            }
         endif;
+
+        echo '- Concluido' . PHP_EOL . PHP_EOL;
     }
 }
