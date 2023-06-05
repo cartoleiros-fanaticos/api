@@ -47,8 +47,7 @@ class CompeticaoController extends Controller
     {
         $game = Game::first();
 
-        $response = Competicoes::where('de', '>=', $game->rodada_atual)
-            ->paginate(50);
+        $response = Competicoes::paginate(50);
 
         return response()->json($response);
     }
@@ -97,6 +96,13 @@ class CompeticaoController extends Controller
         $posicoes = COLLECT($request->posicoes);
 
         $user = auth('api')->user();
+
+        $game = Game::first();
+
+        $rodada_atual = $game->status_mercado != 1 ? $game->rodada_atual : ($game->rodada_atual - 1);
+
+        if ($rodada_atual >= $de)
+            return response()->json(['message' => 'Não é possível cadastrar uma liga com rodada em andamento ou que já encerraram.'], 400);
 
         if ($request->tipo === 'rodada' && $de != $ate)
             return response()->json(['message' => 'Para liga do tipo rodada, os campos RODADA INÍCIO e FIM precisão ser iguais '], 400);
@@ -164,12 +170,20 @@ class CompeticaoController extends Controller
 
         $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao as pontos';
 
-        $times = CompeticoesTransacoes::select('time_id', 'url_escudo_png', 'nome', 'nome_cartola', $pontos)
+        $times = CompeticoesTransacoes::select('times_cartolas.time_id', 'url_escudo_png', 'times_cartolas.nome', 'nome_cartola')
+            ->selectRaw('SUM(' . $pontos . ') pontos')
+            ->join('competicoes', 'competicoes.id', 'competicoes_transacoes.competicoes_id')
             ->join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
             ->join('competicoes_rodadas', 'competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+            ->join('times_cartola_rodadas', function ($join) {
+                $join->on('times_cartola_rodadas.times_cartolas_id', 'times_cartolas.id')
+                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '>=', 'de')
+                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate');
+            })
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
-            ->where('situacao', 'Aceita')
+            ->where('competicoes_transacoes.situacao', 'Aceita')
+            ->groupBy('times_cartolas.time_id')
             ->paginate(100);
 
         $posicoes = CompeticoesPosicoes::where('competicoes_id', $competicao->id)
@@ -228,6 +242,13 @@ class CompeticaoController extends Controller
         $posicoes = COLLECT($request->posicoes);
 
         $user = auth('api')->user();
+
+        $game = Game::first();
+
+        $rodada_atual = $game->status_mercado != 1 ? $game->rodada_atual : ($game->rodada_atual - 1);
+
+        if ($rodada_atual >= $de)
+            return response()->json(['message' => 'Não é possível cadastrar uma liga com rodada em andamento ou que já encerraram.'], 400);
 
         if ($request->tipo === 'rodada' && $de != $ate)
             return response()->json(['message' => 'Para liga do tipo rodada, os campos RODADA INÍCIO e FIM precisão ser iguais '], 400);
@@ -309,12 +330,12 @@ class CompeticaoController extends Controller
 
         $regras = [
             'competicoes_id' => 'required',
-            'times_id' => 'required',
+            'time_id' => 'required',
         ];
 
         $mensagens = [
             'competicoes_id.required' => 'O campo competicoes_id é obrigatório.',
-            'times_id.required' => 'O campo times_id é obrigatório.',
+            'time_id.required' => 'O campo time_id é obrigatório.',
         ];
 
         $validator = Validator::make($request->all(), $regras, $mensagens);
@@ -324,16 +345,24 @@ class CompeticaoController extends Controller
 
         $acao = $request->input('acao', 'cadastrar');
         $competicoes_id = $request->competicoes_id;
-        $times_id = $request->times_id;
+        $time_id = $request->time_id;
 
         if ($acao === 'cadastrar') :
 
+            $contains = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_times_id')
+                ->where('competicoes_id', $competicoes_id)
+                ->where('time_id', $time_id)
+                ->count();
+
+            if ($contains)
+                return response()->json(['message' => 'Já existe uma solicitação de entrada nessa liga.'], 400);
+
             $parciais = new ParciaisController;
-            $response = $parciais->parciais_time($times_id);
+            $response = $parciais->parciais_time($time_id);
 
             if (isset($response->original['time'])) :
 
-                $response = DB::transaction(function () use ($response, $times_id, $competicoes_id) {
+                $response = DB::transaction(function () use ($response, $time_id, $competicoes_id) {
 
                     $user = auth('api')->user();
                     $time_cartola = $response->original['time'];
@@ -344,7 +373,7 @@ class CompeticaoController extends Controller
                             'usuarios_id' => $user->id
                         ],
                         [
-                            'time_id' => $times_id
+                            'time_id' => $time_id
                         ]
                     );
 

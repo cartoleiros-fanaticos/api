@@ -192,13 +192,35 @@ class ParciaisController extends Controller
 
                 if (count($response['atletas'])) :
 
-                    DB::transaction(function () use ($response, $rodada_atual_time, $time_cartola) {
+                    DB::transaction(function () use ($response, $rodada_atual_time, $time_cartola, $game) {
 
                         $atletas = COLLECT($response['atletas'])->keyBy('atleta_id');
 
                         $pontos_atleta = $atletas[$response['capitao_id']]['pontos_num'] * config('global.multiplicador_capitao');
                         $pontos_multiplicador = $pontos_atleta - $atletas[$response['capitao_id']]['pontos_num'];
                         $pontos_sem_capitao = ($response['pontos'] ?? 0) - $pontos_multiplicador;
+
+                        if ($game->status_mercado != 1 && $rodada_atual_time === $game->rodada_atual) :
+
+                            $atleta_id = COLLECT($response['atletas'])->pluck('atleta_id'); //->merge(COLLECT(isset($response['reservas']) ? $response['reservas'] : [])->pluck('atleta_id'));
+
+                            $parciais = Parciais::select('atleta_id', 'pontuacao')
+                                ->whereIn('atleta_id', $atleta_id)
+                                ->where('rodada', $game->rodada_atual)
+                                ->where('entrou_em_campo', 'Sim')
+                                ->get();
+
+                            $response['pontos'] = 0;
+                            $pontos_sem_capitao = 0;
+
+                            foreach ($parciais as $val) :
+
+                                $pontos_sem_capitao += $val->pontuacao;
+                                $response['pontos'] += ($val->atleta_id === $response['capitao_id']) ? $val->pontuacao * config('global.multiplicador_capitao') : $val->pontuacao;
+
+                            endforeach;
+
+                        endif;
 
                         $time_cartola_rodadas = TimesCartolaRodadas::updateOrCreate(
                             [
