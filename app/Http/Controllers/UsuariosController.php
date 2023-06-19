@@ -12,7 +12,7 @@ class UsuariosController extends Controller
 
     public function __construct()
     {
-        $this->middleware('jwt', ['except' => ['store']]);
+        $this->middleware('jwt', ['except' => ['index', 'store']]);
     }
     
     /**

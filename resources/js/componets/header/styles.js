@@ -36,7 +36,7 @@ export const Screen = styled.div`
 `;
 
 export const Logo = styled.img.attrs(() => ({
-    src: '../../images/favicon.png'
+    src: `${location.origin}/images/favicon.png`
 }))`
     height: 33px;     
 

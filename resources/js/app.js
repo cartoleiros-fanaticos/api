@@ -28,6 +28,8 @@ import Leagues from './screens/auth/partials/leagues';
 import Player from './screens/auth/player';
 import Videos from './screens/auth/videos';
 import League from './screens/auth/league';
+import PageLeague from './screens/auth/league/pages/leagues';
+import PageLeagueRound from './screens/auth/league/pages/league';
 import Emphasis from './screens/auth/emphasis';
 import Contact from './screens/auth/contact';
 import Plans from './screens/auth/plans';
@@ -58,6 +60,8 @@ ReactDOM.createRoot(document.getElementById('app')).render(
 
             <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
             <Route path="/auth/ligas" element={<PrivateRoute component={League} />} />
+            <Route path="/auth/ligas/:slug" element={<PrivateRoute component={PageLeague} />} />
+            <Route path="/auth/ligas/:slug/:round" element={<PrivateRoute component={PageLeagueRound} />} />
             <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
             <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
             <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
