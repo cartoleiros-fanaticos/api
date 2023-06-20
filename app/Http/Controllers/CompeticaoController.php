@@ -58,7 +58,6 @@ class CompeticaoController extends Controller
     {
         $regras = [
             'nome' => 'required',
-            'descricao' => 'required',
             'tipo' => 'required',
             'comissao' => 'required',
             'valor' => 'required',
@@ -72,9 +71,6 @@ class CompeticaoController extends Controller
 
         $mensagens = [
             'nome.required' => 'O campo nome é obrigatório.',
-            'descricao
-            .required' => 'O campo descricao
-             é obrigatório.',
             'tipo.required' => 'O campo tipo é obrigatório.',
             'comissao.required' => 'O campo comissao é obrigatório.',
             'valor.required' => 'O campo valor é obrigatório.',
@@ -205,7 +201,6 @@ class CompeticaoController extends Controller
     {
         $regras = [
             'nome' => 'required',
-            'descricao' => 'required',
             'tipo' => 'required',
             'comissao' => 'required',
             'valor' => 'required',
@@ -219,8 +214,6 @@ class CompeticaoController extends Controller
 
         $mensagens = [
             'nome.required' => 'O campo nome é obrigatório.',
-            'descricao.required' => 'O campo descricao
-             é obrigatório.',
             'tipo.required' => 'O campo tipo é obrigatório.',
             'comissao.required' => 'O campo comissao é obrigatório.',
             'valor.required' => 'O campo valor é obrigatório.',
@@ -466,7 +459,7 @@ class CompeticaoController extends Controller
             $response = DB::transaction(function () use ($request) {
 
                 $transacao = CompeticoesTransacoes::find($request->id);
-                $transacao->situacao =  $request->situacao;
+                $transacao->situacao = $request->situacao;
                 $response = $transacao->save();
 
                 if ($response && $transacao->situacao === 'Aceita') :

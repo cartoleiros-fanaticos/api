@@ -13,6 +13,18 @@ import { Message } from '../../../../../utils/styles';
 import {
   Content,
   Main,
+  Title,
+  Description,
+  List,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Name,
+  NameGame,
+  Image,
 } from './styles';
 
 function league() {
@@ -42,9 +54,66 @@ function league() {
   const component = (
     <Content>
       <Nav user={true} />
-      <Main>
-
-      </Main>
+      {
+        data.competicao ?
+          <Main>
+            <Title>{data.competicao?.nome}</Title>
+            <Description>
+              {data.competicao.tipo != 'rodada' ? `Início da rodada ${data.competicao?.de} até a rodada ${data.competicao?.ate}` : `Liga apenas para a rodada ${data.competicao?.de}`} <br />
+              Valor <strong>{amount(data.competicao?.valor)}</strong> reais, <strong>2.000 times</strong> cadastrados <br />
+              valor em <strong>prêmio 20.000</strong> reais <br />
+              {/* dividido em {data.posicoes?.length} posições, onde o <br /> */}
+              {
+                data.posicoes.map((e, i) =>
+                  <span key={i}><br />{e.posicao}º Lugar <strong>{e.percentual}%</strong> do valor</span>
+                )
+              }
+              {
+                data.competicao.descricao &&
+                <>
+                  <br /><br /><span><strong>Obs.: </strong> {data.competicao.descricao}</span>
+                </>
+              }
+            </Description>
+            <List>
+              {
+                data.times.data.length
+                  ?
+                  <Table>
+                    <Thead>
+                      <Tr>
+                        <Th>Posição</Th>
+                        <Th>Escudo</Th>
+                        <Th>Nome</Th>
+                        <Th>Rodada</Th>
+                        <Th>Total</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {
+                        data.times.data.map((e, i) =>
+                          <Tr key={i}>
+                            <Td>{i + 1}</Td>
+                            <Td><Image src={e.url_escudo_png} /></Td>
+                            <Td className='name'>
+                              <Name>{e.nome.substr(0, 10)}</Name>
+                              <NameGame>{e.nome_cartola}</NameGame>
+                            </Td>
+                            <Td>{e.pontos} pts</Td>
+                            <Td>{e.pontos} pts</Td>
+                          </Tr>
+                        )
+                      }
+                    </Tbody>
+                  </Table>
+                  :
+                  <Message>Nenhum time cadastrado.</Message>
+              }
+            </List>
+          </Main>
+          :
+          <></>
+      }
     </Content>
   );
 

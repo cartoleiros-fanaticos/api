@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
 
             $table->string('nome');
-            $table->string('descricao');
+            $table->string('descricao')->nullable();
             $table->enum('tipo', ['rodada', 'mensal', 'turno', 'anual'])->default('rodada');
             $table->float('comissao')->default(0);
             $table->float('valor');

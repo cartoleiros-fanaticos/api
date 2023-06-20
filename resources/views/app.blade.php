@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="/images/favicon.png">
 
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.webmanifest">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Cartoleiro Fanático">
@@ -24,7 +24,7 @@
 <body>
     <div id="app"></div>
     <script src="{{ mix('js/app.js') }}"></script>
-    <!-- <script src="/index.js"></script> -->
+    <script src="/index.js"></script>
 </body>
 
 </html>
