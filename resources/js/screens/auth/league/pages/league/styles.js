@@ -26,6 +26,23 @@ export const Description = styled.p`
   font-size: 0.9em;
 `;
 
+export const Enter = styled.a`
+  text-decoration: none;
+  color: #fff;
+  background-color: green;
+  padding: 7px 5px;
+  display: block;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  width: 150px;
+  margin: 15px auto 10px auto;
+  border-radius: 0.5em;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 export const List = styled.div`
     @media screen and (max-width:900px){
         width: 100%;

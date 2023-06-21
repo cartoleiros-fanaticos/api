@@ -481,4 +481,31 @@ class CompeticaoController extends Controller
 
         return response()->json($response);
     }
+
+    public function solicitacoes(Request $request)
+    {
+
+        $user = auth('api')->user();
+
+        $response = CompeticoesTransacoes::select('competicoes_transacoes.id', 'competicoes_transacoes.situacao', 'competicoes.nome as competicao', 'times_cartolas.nome', 'competicoes.valor')
+            ->join('competicoes', 'competicoes_id', 'competicoes.id')
+            ->join('competicoes_times', 'competicoes_times_id', 'competicoes_times.id')
+            ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+            ->where('competicoes_times.usuarios_id', $user->id)
+            ->get();
+
+        return response()->json($response);
+    }
+
+    public function times(Request $request)
+    {
+
+        $user = auth('api')->user();
+
+        $response = CompeticoesTimes::join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+            ->where('usuarios_id', $user->id)
+            ->get();
+
+        return response()->json($response);
+    }
 }

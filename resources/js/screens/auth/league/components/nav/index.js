@@ -24,11 +24,11 @@ function nav({ user }) {
                 <Icon>admin_panel_settings</Icon>
                 <Text>Minhas ligas</Text>
             </Item>
-            <Item>
+            <Item to="/auth/ligas/times">
                 <Icon>security</Icon>
                 <Text>Meus times</Text>
             </Item>
-            <Item>
+            <Item to="/auth/ligas/solicitacoes">
                 <Icon>confirmation_number</Icon>
                 <Text>Inscrições</Text>
             </Item>

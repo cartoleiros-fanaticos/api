@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams, NavLink } from "react-router-dom";
 
-import { amount, message, slug } from '../../../../../utils/helpers';
+import { amount, message, slug, swal_success } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
 
 import Container from '../../../../../componets/container';
+import Search from '../../../../../componets/search';
+import Modal from '../../../../../componets/modal';
+
+import ModalTeams from '../../../../../modal/teams';
 import Nav from '../../components/nav';
 
 import { Message } from '../../../../../utils/styles';
@@ -15,6 +19,7 @@ import {
   Main,
   Title,
   Description,
+  Enter,
   List,
   Table,
   Thead,
@@ -29,9 +34,10 @@ import {
 
 function league() {
 
-  const { round } = useParams();
+  const { competicoes_id } = useParams();
 
   const [data, sdata] = useState({});
+  const [modal, smodal] = useState(false);
 
   useEffect(() => {
     getData();
@@ -41,9 +47,23 @@ function league() {
 
     try {
 
-      const { data } = await api.get(`/competicao/${round}`);
+      const { data } = await api.get(`/competicao/${competicoes_id}`);
 
       sdata(data);
+
+    } catch (e) {
+      message(e);
+    };
+
+  }
+
+  async function teams(time_id) {
+
+    try {
+
+      await api.post(`/competicao/solicitacao`, { competicoes_id, time_id });
+
+      swal_success('Solicitação enviada com sucesso, após o pagamento enviei-nos o comprovante.');
 
     } catch (e) {
       message(e);
@@ -62,7 +82,6 @@ function league() {
               {data.competicao.tipo != 'rodada' ? `Início da rodada ${data.competicao?.de} até a rodada ${data.competicao?.ate}` : `Liga apenas para a rodada ${data.competicao?.de}`} <br />
               Valor <strong>{amount(data.competicao?.valor)}</strong> reais, <strong>2.000 times</strong> cadastrados <br />
               valor em <strong>prêmio 20.000</strong> reais <br />
-              {/* dividido em {data.posicoes?.length} posições, onde o <br /> */}
               {
                 data.posicoes.map((e, i) =>
                   <span key={i}><br />{e.posicao}º Lugar <strong>{e.percentual}%</strong> do valor</span>
@@ -74,6 +93,7 @@ function league() {
                   <br /><br /><span><strong>Obs.: </strong> {data.competicao.descricao}</span>
                 </>
               }
+              <Enter onClick={() => smodal(true)}>Participar</Enter>
             </Description>
             <List>
               {
@@ -118,10 +138,24 @@ function league() {
   );
 
   return (
-    <Container
-      title='Ligas'
-      component={component}
-    />
+    <>
+      <Container
+        title='Ligas'
+        component={component}
+      />
+      {
+        modal &&
+        <Modal
+          icon="list"
+          title="Lista times do cartola"
+          modal={modal}
+          smodal={smodal}
+          Component={ModalTeams}
+          fnc={teams}
+          height='500px'
+        />
+      }
+    </>
   );
 }
 

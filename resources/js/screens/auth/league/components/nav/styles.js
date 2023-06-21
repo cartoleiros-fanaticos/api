@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
 
 export const Container = styled.div`
     border: solid thin #ccc;
@@ -49,7 +50,7 @@ export const Title = styled.span`
     color: #fff;
 `;
 
-export const Item = styled.div`
+export const Item = styled(Link)`
     display: flex;
     align-items: center;
     padding: 12px 10px;
@@ -57,6 +58,8 @@ export const Item = styled.div`
     transition-duration: 0.3s;
     width: 100%;
     border-bottom: dashed thin #F68D42;
+    text-decoration: none;
+    color: #000;
 
     &:hover {
         background-color: #F68D42;

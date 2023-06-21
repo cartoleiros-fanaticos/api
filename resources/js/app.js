@@ -30,6 +30,8 @@ import Videos from './screens/auth/videos';
 import League from './screens/auth/league';
 import PageLeague from './screens/auth/league/pages/leagues';
 import PageLeagueRound from './screens/auth/league/pages/league';
+import PageLeagueTeams from './screens/auth/league/pages/teams';
+import PageLeagueTransactions from './screens/auth/league/pages/transactions';
 import Emphasis from './screens/auth/emphasis';
 import Contact from './screens/auth/contact';
 import Plans from './screens/auth/plans';
@@ -61,7 +63,9 @@ ReactDOM.createRoot(document.getElementById('app')).render(
             <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
             <Route path="/auth/ligas" element={<PrivateRoute component={League} />} />
             <Route path="/auth/ligas/:slug" element={<PrivateRoute component={PageLeague} />} />
-            <Route path="/auth/ligas/:slug/:round" element={<PrivateRoute component={PageLeagueRound} />} />
+            <Route path="/auth/ligas/:slug/:competicoes_id" element={<PrivateRoute component={PageLeagueRound} />} />
+            <Route path="/auth/ligas/times" element={<PrivateRoute component={PageLeagueTeams} />} />
+            <Route path="/auth/ligas/solicitacoes" element={<PrivateRoute component={PageLeagueTransactions} />} />
             <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
             <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
             <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
