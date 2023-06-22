@@ -16,43 +16,26 @@ function nav({ user }) {
                 <Icon size="25px">close</Icon>
                 <Title>Menu</Title>
             </Header>
+            <Item to="/auth/ligas">
+                <Icon>home</Icon>
+                <Text>Home</Text>
+            </Item>
             <Item>
                 <Icon>manage_accounts</Icon>
                 <Text>Minha conta</Text>
             </Item>
-            <Item>
+            <Item to="/auth/ligas/minhas-ligas">
                 <Icon>admin_panel_settings</Icon>
                 <Text>Minhas ligas</Text>
             </Item>
-            <Item to="/auth/ligas/times">
+            <Item to="/auth/ligas/meus-times">
                 <Icon>security</Icon>
                 <Text>Meus times</Text>
             </Item>
-            <Item to="/auth/ligas/solicitacoes">
+            <Item to="/auth/ligas/minhas-inscricoes">
                 <Icon>confirmation_number</Icon>
-                <Text>Inscrições</Text>
+                <Text>Minhas Inscrições</Text>
             </Item>
-            {
-                user &&
-                <>
-                    <Item>
-                        <Icon>emoji_events</Icon>
-                        <Text>Ligas anual</Text>
-                    </Item>
-                    <Item>
-                        <Icon>emoji_events</Icon>
-                        <Text>Ligas turno</Text>
-                    </Item>
-                    <Item>
-                        <Icon>emoji_events</Icon>
-                        <Text>Ligas mensal</Text>
-                    </Item>
-                    <Item>
-                        <Icon>emoji_events</Icon>
-                        <Text>Ligas rodada</Text>
-                    </Item>
-                </>
-            }
         </Container>
     );
 }

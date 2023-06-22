@@ -11,6 +11,11 @@ import { Message } from '../../../../../utils/styles';
 import {
   Content,
   Main,
+  Tabs,
+  Tab,
+  Icon,
+  Text,
+  List,
   Item,
   Header,
   Description,
@@ -44,22 +49,46 @@ function leagues() {
 
   const component = (
     <Content>
-      <Nav user={true} />
+      <Nav />
       <Main>
         {
           data.data?.length
             ?
-            data.data?.map((e, i) =>
-              <Item key={i} to={`${e.id}`}>
-                <Header>{e.nome}</Header>
-                <Description>
-                  <Image />
-                  <Total>R$ 10.000</Total>
-                  <Teams>Tipo {e.tipo}, 2.000 times</Teams>
-                </Description>
-                <Footer>R$ {amount(e.valor)}</Footer>
-              </Item>
-            )
+            <>
+              <Tabs>
+                <Tab>
+                  <Icon>emoji_events</Icon>
+                  <Text>ANUAL</Text>
+                </Tab>
+                <Tab>
+                  <Icon>emoji_events</Icon>
+                  <Text>TURNO</Text>
+                </Tab>
+                <Tab>
+                  <Icon>emoji_events</Icon>
+                  <Text>MENSAL</Text>
+                </Tab>
+                <Tab>
+                  <Icon>emoji_events</Icon>
+                  <Text>RODADA</Text>
+                </Tab>
+              </Tabs>
+              <List>
+                {
+                  data.data?.map((e, i) =>
+                    <Item key={i} to={`${e.id}`}>
+                      <Header>{e.nome}</Header>
+                      <Description>
+                        <Image />
+                        <Total>R$ 10.000</Total>
+                        <Teams>Tipo {e.tipo}, 2.000 times</Teams>
+                      </Description>
+                      <Footer>R$ {amount(e.valor)}</Footer>
+                    </Item>
+                  )
+                }
+              </List>
+            </>
             :
             <Message>Nenhum registro encontrado.</Message>
         }

@@ -33,7 +33,7 @@ function teams() {
 
     try {
 
-      const { data } = await api.get(`/competicao/times`);
+      const { data } = await api.get(`/competicao/meus-times`);
 
       sdata(data);
 

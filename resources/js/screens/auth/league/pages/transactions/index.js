@@ -99,7 +99,7 @@ function transactions() {
 
   return (
     <Container
-      title='Meus times'
+      title='MInhas inscrições'
       component={component}
     />
   );

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 export const Container = styled.div`
     border: solid thin #ccc;
-    padding: 10px;
     margin-right: 10px;
 `;
 
@@ -61,10 +60,13 @@ export const Item = styled(Link)`
     text-decoration: none;
     color: #000;
 
+    &:last-child{
+        border-bottom: none;
+    }
+
     &:hover {
         background-color: #F68D42;
         color: #FFF;
-        width: 110%;
 
         & > i {
             color: #FFF;

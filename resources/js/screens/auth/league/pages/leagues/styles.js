@@ -7,9 +7,58 @@ export const Content = styled.div`
 `;
 
 export const Main = styled.div`
-    display: flex;
-    flex-wrap: wrap;
 `;
+
+export const Tabs = styled.div`
+  display: flex;
+  width: 100%;
+  margin: 0 10px;
+`;
+
+export const Tab = styled.div`
+  flex: 1;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: solid 1px #000;
+  color: #000;
+  font-size: 0.9em;
+  cursor: pointer;
+  transition-duration: 0.3s;
+
+  &:hover {
+    background-color: #333;
+    color: #fff;
+  }
+`;
+
+export const Icon = styled.i.attrs(() => ({
+  className: 'material-icons'
+}))` 
+  user-select: none;
+  color: gold;
+  font-size: 24px;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Text = styled.strong`
+  display: block;
+  width: 100%;
+  text-align: center;
+`;
+
+export const List = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
 
 export const Item = styled(Link)`
   font-size: 0.9em;
