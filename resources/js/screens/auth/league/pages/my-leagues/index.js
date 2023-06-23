@@ -4,6 +4,8 @@ import { amount, message, slug } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
 
 import Container from '../../../../../componets/container';
+import Loading from '../../../../../componets/loading';
+
 import Nav from '../../components/nav';
 
 import { Message } from '../../../../../utils/styles';
@@ -17,12 +19,11 @@ import {
   Tbody,
   Tr,
   Td,
-  Image,
-  Icon,
 } from './styles';
 
 function leagues() {
 
+  const [loading, sloading] = useState(true);
   const [data, sdata] = useState({});
 
   useEffect(() => {
@@ -32,12 +33,13 @@ function leagues() {
   async function getData() {
 
     try {
-
+      sloading(true);
       const { data } = await api.get(`/competicao/minhas-ligas`);
-
       sdata(data);
+      sloading(false);
 
     } catch (e) {
+      sloading(false);
       message(e);
     };
 
@@ -45,37 +47,46 @@ function leagues() {
 
   const component = (
     <Content>
-      <Nav user={true} />
+      <Nav />
       <Main>
         {
-          data.length
-            ?
-            <>
-              <Table>
-                <Thead>
-                  <Tr>
-                    <Th>Time</Th>
-                    <Th>Liga</Th>
-                    <Th>Valor</Th>
-                    <Th>Status</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {
-                    data.map((e, i) =>
-                      <Tr key={i}>
-                        <Td>{e.nome}</Td>
-                        <Td>{e.competicao}</Td>
-                        <Td>{amount(e.valor)}</Td>
-                        <Td>{e.situacao}</Td>
-                      </Tr>
-                    )
-                  }
-                </Tbody>
-              </Table>
-            </>
+          loading ?
+            <Loading />
             :
-            <Message>Nenhum registro encontrado.</Message>
+            <>
+              {
+                data.length
+                  ?
+                  <>
+                    <Table>
+                      <Thead>
+                        <Tr>
+                          <Th>id</Th>
+                          <Th>Time</Th>
+                          <Th>Liga</Th>
+                          <Th>Valor</Th>
+                          <Th>Status</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {
+                          data.map((e, i) =>
+                            <Tr key={i}>
+                              <Td>{e.id}</Td>
+                              <Td>{e.nome}</Td>
+                              <Td>{e.competicao}</Td>
+                              <Td>{amount(e.valor)}</Td>
+                              <Td>{e.situacao}</Td>
+                            </Tr>
+                          )
+                        }
+                      </Tbody>
+                    </Table>
+                  </>
+                  :
+                  <Message>Nenhum registro encontrado.</Message>
+              }
+            </>
         }
       </Main>
     </Content>

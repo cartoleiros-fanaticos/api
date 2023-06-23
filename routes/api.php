@@ -72,13 +72,16 @@ Route::group([
 
     Route::resource('videos', VideosController::class);
 
-    Route::get('competicao/ligas', [CompeticaoController::class, 'ligas']);
+    Route::get('competicao/ligas/{id}', [CompeticaoController::class, 'ligas']);
+
     Route::get('competicao/meus-times', [CompeticaoController::class, 'times']);
+    Route::delete('competicao/meus-times/{id}', [CompeticaoController::class, 'deletar_times']);
+
     Route::get('competicao/minhas-ligas', [CompeticaoController::class, 'minhasLigas']);
+
     Route::get('competicao/solicitacoes', [CompeticaoController::class, 'solicitacoes']);
-    Route::post('competicao/solicitacao', [CompeticaoController::class, 'solicitacao']);
+    Route::post('competicao/solicitacao', [CompeticaoController::class, 'solicitacao']);    
     Route::post('competicao/aceitar-solicitacao', [CompeticaoController::class, 'aceitar_solicitacao']);
-    Route::delete('competicao/deletar-times', [CompeticaoController::class, 'deletar_times']);
 
     Route::resource('competicao', CompeticaoController::class);
 });

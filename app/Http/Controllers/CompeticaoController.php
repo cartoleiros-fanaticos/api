@@ -43,11 +43,12 @@ class CompeticaoController extends Controller
         ]);
     }
 
-    public function ligas()
+    public function ligas($id)
     {
         $game = Game::first();
 
-        $response = Competicoes::paginate(50);
+        $response = Competicoes::where('usuarios_id', $id)
+            ->paginate(50);
 
         return response()->json($response);
     }
@@ -488,10 +489,12 @@ class CompeticaoController extends Controller
         $user = auth('api')->user();
 
         $response = CompeticoesTransacoes::select('competicoes_transacoes.id', 'competicoes_transacoes.situacao', 'competicoes.nome as competicao', 'times_cartolas.nome', 'competicoes.valor')
+            ->selectRaw('DATE_FORMAT(competicoes_transacoes.created_at, "%d/%m %H:%i") as criado_em')
             ->join('competicoes', 'competicoes_id', 'competicoes.id')
             ->join('competicoes_times', 'competicoes_times_id', 'competicoes_times.id')
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->where('competicoes_times.usuarios_id', $user->id)
+            ->orderBy('id', 'DESC')
             ->get();
 
         return response()->json($response);
@@ -502,7 +505,8 @@ class CompeticaoController extends Controller
 
         $user = auth('api')->user();
 
-        $response = CompeticoesTimes::join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+        $response = CompeticoesTimes::select('competicoes_times.id', 'url_escudo_png', 'nome', 'patrimonio')
+            ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->where('usuarios_id', $user->id)
             ->get();
 

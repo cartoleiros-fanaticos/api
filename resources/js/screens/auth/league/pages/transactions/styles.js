@@ -7,6 +7,7 @@ export const Content = styled.div`
 `;
 
 export const Main = styled.div`
+  position: relative;
 `;
 
 export const Table = styled.table`
@@ -15,9 +16,6 @@ export const Table = styled.table`
 `;  
 
 export const Thead = styled.tbody`
-  & tr:nth-child(even) {
-    background-color: #f1f1f1;
-  }
 `;
 
 export const Th = styled.td`
@@ -29,7 +27,7 @@ export const Th = styled.td`
 `;
 
 export const Tbody = styled.tbody`
-  & tr:nth-child(even) {
+  & tr:nth-child(odd) {
     background-color: #f1f1f1;
   }
 `;
@@ -38,10 +36,12 @@ export const Tr = styled.tr`
 `;
 
 export const Td = styled.td`
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   align-items: center;
-  color: #666;
+  color: ${({ status  }) => status === 'Aceita' ? 'green' : '#666'};
+  font-weight: ${({ status  }) => status === 'Aceita' ? 'bold' : '500'};
+  font-size: 0.9em;
 `;
 
 export const Image = styled.img`

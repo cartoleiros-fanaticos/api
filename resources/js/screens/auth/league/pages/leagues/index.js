@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
+import { useParams, NavLink } from "react-router-dom";
+
 import { amount, message, slug } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
 
@@ -27,6 +29,8 @@ import {
 
 function leagues() {
 
+  const { id } = useParams();
+
   const [data, sdata] = useState({});
 
   useEffect(() => {
@@ -37,7 +41,7 @@ function leagues() {
 
     try {
 
-      const { data } = await api.get(`/competicao/ligas`);
+      const { data } = await api.get(`/competicao/ligas/${id}`);
 
       sdata(data);
 

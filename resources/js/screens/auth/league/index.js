@@ -49,7 +49,7 @@ function league() {
                     data.usuarios?.data.length
                         ?
                         data.usuarios.data.map((e, i) =>
-                            <Item key={i} to={`/auth/ligas/${slug(e.nome)}`}>
+                            <Item key={i} to={`/auth/ligas/${e.id}/${slug(e.nome)}`}>
                                 <Photo foto={e.foto} />
                                 <Name>{e.nome}</Name>
                             </Item>
