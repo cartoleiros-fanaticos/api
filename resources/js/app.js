@@ -63,11 +63,11 @@ ReactDOM.createRoot(document.getElementById('app')).render(
 
             <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
             <Route path="/auth/ligas" element={<PrivateRoute component={League} />} />
-            <Route path="/auth/ligas/:id/:slug" element={<PrivateRoute component={PageLeague} />} />
-            <Route path="/auth/ligas/:id/:slug/:competicoes_id" element={<PrivateRoute component={PageLeagueRound} />} />
-            <Route path="/auth/ligas/minhas-ligas" element={<PrivateRoute component={PageLeagueMyLeague} />} />
-            <Route path="/auth/ligas/meus-times" element={<PrivateRoute component={PageLeagueTeams} />} />
-            <Route path="/auth/ligas/minhas-inscricoes" element={<PrivateRoute component={PageLeagueTransactions} />} />
+            <Route path="/auth/:id/:slug" element={<PrivateRoute component={PageLeague} />} />
+            <Route path="/auth/:id/:slug/:competicoes_id" element={<PrivateRoute component={PageLeagueRound} />} />
+            <Route path="/auth/minhas-ligas" element={<PrivateRoute component={PageLeagueMyLeague} />} />
+            <Route path="/auth/meus-times" element={<PrivateRoute component={PageLeagueTeams} />} />
+            <Route path="/auth/minhas-inscricoes" element={<PrivateRoute component={PageLeagueTransactions} />} />
             <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
             <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
             <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />

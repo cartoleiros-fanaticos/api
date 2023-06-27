@@ -6,13 +6,10 @@ import api from '../../../../../utils/api';
 import Container from '../../../../../componets/container';
 import Loading from '../../../../../componets/loading';
 
-import Nav from '../../components/nav';
-
 import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
-  Main,
   Table,
   Thead,
   Th,
@@ -25,8 +22,8 @@ import {
 
 function teams() {
 
-  const [loading, sloading] = useState(true);
   const [data, sdata] = useState({});
+  const [loading, sloading] = useState(true);
 
   useEffect(() => {
     getData();
@@ -35,7 +32,6 @@ function teams() {
   async function getData() {
 
     try {
-      sloading(true);
       const { data } = await api.get(`/competicao/meus-times`);
       sdata(data);
       sloading(false);
@@ -70,8 +66,6 @@ function teams() {
 
   const component = (
     <Content>
-      <Nav user={true} />
-      <Main>
         {
           loading ?
             <Loading />
@@ -109,7 +103,6 @@ function teams() {
               }
             </>
         }
-      </Main>
     </Content>
   );
 
@@ -117,6 +110,7 @@ function teams() {
     <Container
       title='Meus times'
       component={component}
+      loading={loading}
     />
   );
 }

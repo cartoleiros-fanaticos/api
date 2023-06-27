@@ -2,13 +2,9 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: 250px auto;
-`;
-
-export const Main = styled.div`
-    display: flex;
-    flex-wrap: wrap;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
 `;
 
 export const Item = styled(Link)`
@@ -19,12 +15,27 @@ export const Item = styled(Link)`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    width: 23%;
+    width: 19%;
+    height: 200px;
     padding: 10px;
     margin: 1%;
     transition-duration: 0.5s;
     cursor: pointer;
     text-decoration: none;
+
+    @media screen and (max-width:900px){
+        width: 23%;
+    }
+
+    @media screen and (max-width:600px){
+        width: 46%;
+        margin: 2%
+    }
+
+    @media screen and (max-width:400px){
+        width: 99%;
+        margin: 1%
+    }
 
     &:hover {
         transform: scale(1.1);

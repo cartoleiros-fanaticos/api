@@ -194,10 +194,36 @@ function header() {
                         </NavLink>
                     </Item>
                     <Item>
-                        <NavLink to="/auth/ligas">
+                        <ButtonLink to="/auth/ligas">
                             <Icon>verified_user</Icon>
                             LIGAS
-                        </NavLink>
+                        </ButtonLink>
+                        <SubItem className='ligas'>
+                            <Item>
+                                <NavLink to="/auth/ligas">
+                                    <Icon>home</Icon>
+                                    HOME
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/minhas-ligas">
+                                    <Icon>admin_panel_settings</Icon>
+                                    MINHAS LIGAS
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/meus-times">
+                                    <Icon>security</Icon>
+                                    MEUS TIMES
+                                </NavLink>
+                            </Item>
+                            <Item>
+                                <NavLink to="/auth/minhas-inscricoes">
+                                    <Icon>confirmation_number</Icon>
+                                    MINHAS INSCRIÇÕES
+                                </NavLink>
+                            </Item>
+                        </SubItem>
                     </Item>
                     {/* <Item>
                         <NavLink to="/auth/loja">

@@ -4,13 +4,11 @@ import { amount, message, slug } from '../../../utils/helpers';
 import api from '../../../utils/api';
 
 import Container from '../../../componets/container';
-import Nav from './components/nav';
 
 import { Message } from '../../../utils/styles';
 
 import {
     Content,
-    Main,
     Item,
     Photo,
     Name,
@@ -19,7 +17,7 @@ import {
 function league() {
 
     const [data, sdata] = useState({});
-    const [loading_page, sloadingpage] = useState(true);
+    const [loading, sloading] = useState(true);
 
     useEffect(() => {
         getData();
@@ -32,40 +30,37 @@ function league() {
             const { data } = await api.get(`competicao`);
 
             sdata(data);
-            sloadingpage(false);
+            sloading(false);
 
         } catch (e) {
             message(e);
-            sloadingpage(false);
+            sloading(false);
         };
 
     }
 
     const component = (
         <Content>
-            <Nav />
-            <Main>
-                {
-                    data.usuarios?.data.length
-                        ?
-                        data.usuarios.data.map((e, i) =>
-                            <Item key={i} to={`/auth/ligas/${e.id}/${slug(e.nome)}`}>
-                                <Photo foto={e.foto} />
-                                <Name>{e.nome}</Name>
-                            </Item>
-                        )
-                        :
-                        <Message>Nenhum registro encontrado.</Message>
-                }
-            </Main>
+            {
+                data.usuarios?.data.length
+                    ?
+                    data.usuarios.data.map((e, i) =>
+                        <Item key={i} to={`/auth/${e.id}/${slug(e.nome)}`}>
+                            <Photo foto={e.foto} />
+                            <Name>{e.nome}</Name>
+                        </Item>
+                    )
+                    :
+                    <Message>Nenhum registro encontrado.</Message>
+            }
         </Content>
     );
 
     return (
         <Container
-            title='Ligas'
+            title='Administradores'
             component={component}
-            loading={loading_page}
+            loading={loading}
         />
     );
 }

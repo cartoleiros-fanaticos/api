@@ -6,13 +6,10 @@ import api from '../../../../../utils/api';
 import Container from '../../../../../componets/container';
 import Loading from '../../../../../componets/loading';
 
-import Nav from '../../components/nav';
-
 import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
-  Main,
   Table,
   Thead,
   Th,
@@ -23,8 +20,8 @@ import {
 
 function leagues() {
 
-  const [loading, sloading] = useState(true);
   const [data, sdata] = useState({});
+  const [loading, sloading] = useState(true);
 
   useEffect(() => {
     getData();
@@ -33,7 +30,6 @@ function leagues() {
   async function getData() {
 
     try {
-      sloading(true);
       const { data } = await api.get(`/competicao/minhas-ligas`);
       sdata(data);
       sloading(false);
@@ -47,8 +43,6 @@ function leagues() {
 
   const component = (
     <Content>
-      <Nav />
-      <Main>
         {
           loading ?
             <Loading />
@@ -88,14 +82,14 @@ function leagues() {
               }
             </>
         }
-      </Main>
     </Content>
   );
 
   return (
     <Container
-      title='Minhas'
+      title='Minhas ligas'
       component={component}
+      loading={loading}
     />
   );
 }

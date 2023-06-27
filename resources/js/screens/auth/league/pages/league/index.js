@@ -6,18 +6,14 @@ import { amount, message, slug, swal_success } from '../../../../../utils/helper
 import api from '../../../../../utils/api';
 
 import Container from '../../../../../componets/container';
-import Search from '../../../../../componets/search';
 import Modal from '../../../../../componets/modal';
 
 import ModalTeams from '../../../../../modal/teams';
-import Nav from '../../components/nav';
 
 import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
-  Main,
-  Title,
   Description,
   Enter,
   List,
@@ -31,13 +27,13 @@ import {
   NameGame,
   Image,
 } from './styles';
-
 function league() {
 
   const { competicoes_id } = useParams();
 
   const [data, sdata] = useState({});
   const [modal, smodal] = useState(false);
+  const [loading, sloading] = useState(true);
 
   useEffect(() => {
     getData();
@@ -50,9 +46,11 @@ function league() {
       const { data } = await api.get(`/competicao/${competicoes_id}`);
 
       sdata(data);
+      sloading(false);
 
     } catch (e) {
       message(e);
+      sloading(false);
     };
 
   }
@@ -73,66 +71,61 @@ function league() {
 
   const component = (
     <Content>
-      <Nav user={true} />
-      {
-        data.competicao ?
-          <Main>
-            <Title>{data.competicao?.nome}</Title>
-            <Description>
-              {data.competicao.tipo != 'rodada' ? `Início da rodada ${data.competicao?.de} até a rodada ${data.competicao?.ate}` : `Liga apenas para a rodada ${data.competicao?.de}`} <br />
-              Valor <strong>{amount(data.competicao?.valor)}</strong> reais, <strong>2.000 times</strong> cadastrados <br />
-              valor em <strong>prêmio 20.000</strong> reais <br />
-              {
-                data.posicoes.map((e, i) =>
-                  <span key={i}><br />{e.posicao}º Lugar <strong>{e.percentual}%</strong> do valor</span>
-                )
-              }
-              {
-                data.competicao.descricao &&
-                <>
-                  <br /><br /><span><strong>Obs.: </strong> {data.competicao.descricao}</span>
-                </>
-              }
-              <Enter onClick={() => smodal(true)}>Participar</Enter>
-            </Description>
-            <List>
-              {
-                data.times.data.length
-                  ?
-                  <Table>
-                    <Thead>
-                      <Tr>
-                        <Th>Posição</Th>
-                        <Th>Escudo</Th>
-                        <Th>Nome</Th>
-                        <Th>Rodada</Th>
-                        <Th>Total</Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      {
-                        data.times.data.map((e, i) =>
-                          <Tr key={i}>
-                            <Td>{i + 1}</Td>
-                            <Td><Image src={e.url_escudo_png} /></Td>
-                            <Td className='name'>
-                              <Name>{e.nome.substr(0, 10)}</Name>
-                              <NameGame>{e.nome_cartola}</NameGame>
-                            </Td>
-                            <Td>{e.pontos} pts</Td>
-                            <Td>{e.pontos} pts</Td>
-                          </Tr>
-                        )
-                      }
-                    </Tbody>
-                  </Table>
-                  :
-                  <Message>Nenhum time cadastrado.</Message>
-              }
-            </List>
-          </Main>
-          :
-          <></>
+      {data.competicao &&
+        <>
+          <Description>
+            {data.competicao.tipo != 'rodada' ? `Início da rodada ${data.competicao.de} até a rodada ${data.competicao.ate}` : `Liga apenas para a rodada ${data.competicao.de}`} <br />
+            Valor <strong>{amount(data.competicao.valor)}</strong> reais, <strong>{data.competicao.qtde_times} times</strong> cadastrados <br />
+            valor em <strong>prêmio {amount((data.competicao.qtde_times * data.competicao.valor) - (data.competicao.comissao / 100 * (data.competicao.qtde_times * data.competicao.valor)))}</strong> reais <br />
+            {
+              data.posicoes.map((e, i) =>
+                <span key={i}><br />{e.posicao}º Lugar <strong>{e.percentual}%</strong> do valor</span>
+              )
+            }
+            {
+              data.competicao.descricao &&
+              <>
+                <br /><br /><span><strong>Obs.: </strong> {data.competicao.descricao}</span>
+              </>
+            }
+            <Enter onClick={() => smodal(true)}>Participar</Enter>
+          </Description>
+          <List>
+            {
+              data.times.data.length
+                ?
+                <Table>
+                  <Thead>
+                    <Tr>
+                      <Th>Posição</Th>
+                      <Th>Escudo</Th>
+                      <Th>Nome</Th>
+                      <Th>Rodada</Th>
+                      <Th>Total</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {
+                      data.times.data.map((e, i) =>
+                        <Tr key={i}>
+                          <Td>{i + 1}</Td>
+                          <Td><Image src={e.url_escudo_png} /></Td>
+                          <Td className='name'>
+                            <Name>{e.nome.substr(0, 10)}</Name>
+                            <NameGame>{e.nome_cartola}</NameGame>
+                          </Td>
+                          <Td>{e.pontos} pts</Td>
+                          <Td>{e.pontos} pts</Td>
+                        </Tr>
+                      )
+                    }
+                  </Tbody>
+                </Table>
+                :
+                <Message>Nenhum time cadastrado.</Message>
+            }
+          </List>
+        </>
       }
     </Content>
   );
@@ -140,8 +133,9 @@ function league() {
   return (
     <>
       <Container
-        title='Ligas'
+        title={data?.competicao?.nome}
         component={component}
+        loading={loading}
       />
       {
         modal &&

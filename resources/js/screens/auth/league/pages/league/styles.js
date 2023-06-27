@@ -2,19 +2,9 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: 250px auto;
-`;
-
-export const Main = styled.div`
-`;
-
-export const Title = styled.strong`
-  display: block;
-  margin: auto;
-  text-align: center;
-  padding: 10px;
-  font-size: 1.2em;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Description = styled.p`

@@ -43,11 +43,26 @@ class CompeticaoController extends Controller
         ]);
     }
 
-    public function ligas($id)
+    public function ligas(Request $request, $id)
     {
         $game = Game::first();
 
-        $response = Competicoes::where('usuarios_id', $id)
+        $response = Competicoes::select('competicoes.id', 'competicoes.nome', 'valor', 'tipo', 'usuarios.comissao')
+            ->join('usuarios', 'usuarios.id', 'competicoes.usuarios_id')
+            ->selectRaw('
+                (
+                    SELECT 
+                        COUNT(id)
+                    FROM competicoes_transacoes 
+                    WHERE competicoes_id = competicoes.id AND situacao = \'Aceita\'
+                ) as qtde_times
+            ')
+            ->where('competicoes.usuarios_id', $id)
+            ->where(function ($q) use ($request) {
+
+                if ($request->type)
+                    $q->where('tipo', $request->type);
+            })
             ->paginate(50);
 
         return response()->json($response);
@@ -163,7 +178,17 @@ class CompeticaoController extends Controller
      */
     public function show(string $id)
     {
-        $competicao = Competicoes::find($id);
+        $competicao = Competicoes::select('competicoes.id', 'capitao', 'de', 'ate', 'competicoes.nome', 'valor', 'tipo', 'usuarios.comissao')
+            ->join('usuarios', 'usuarios.id', 'competicoes.usuarios_id')
+            ->selectRaw('
+                (
+                    SELECT 
+                        COUNT(id)
+                    FROM competicoes_transacoes 
+                    WHERE competicoes_id = competicoes.id AND situacao = \'Aceita\'
+                ) as qtde_times
+            ')
+            ->find($id);
 
         $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao as pontos';
 

@@ -6,13 +6,11 @@ import { amount, message, slug } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
 
 import Container from '../../../../../componets/container';
-import Nav from '../../components/nav';
 
 import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
-  Main,
   Tabs,
   Tab,
   Icon,
@@ -32,71 +30,81 @@ function leagues() {
   const { id } = useParams();
 
   const [data, sdata] = useState({});
+  const [loading, sloading] = useState(true);
+  const [type, stype] = useState('');
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [type])
 
   async function getData() {
 
     try {
 
-      const { data } = await api.get(`/competicao/ligas/${id}`);
+      const { data } = await api.get(`/competicao/ligas/${id}?type=${type}`);
 
       sdata(data);
+      sloading(false);
 
     } catch (e) {
       message(e);
+      sloading(false);
     };
 
   }
 
   const component = (
     <Content>
-      <Nav />
-      <Main>
-        {
-          data.data?.length
-            ?
-            <>
-              <Tabs>
-                <Tab>
-                  <Icon>emoji_events</Icon>
-                  <Text>ANUAL</Text>
-                </Tab>
-                <Tab>
-                  <Icon>emoji_events</Icon>
-                  <Text>TURNO</Text>
-                </Tab>
-                <Tab>
-                  <Icon>emoji_events</Icon>
-                  <Text>MENSAL</Text>
-                </Tab>
-                <Tab>
-                  <Icon>emoji_events</Icon>
-                  <Text>RODADA</Text>
-                </Tab>
-              </Tabs>
-              <List>
-                {
-                  data.data?.map((e, i) =>
-                    <Item key={i} to={`${e.id}`}>
-                      <Header>{e.nome}</Header>
-                      <Description>
-                        <Image />
-                        <Total>R$ 10.000</Total>
-                        <Teams>Tipo {e.tipo}, 2.000 times</Teams>
-                      </Description>
-                      <Footer>R$ {amount(e.valor)}</Footer>
-                    </Item>
-                  )
-                }
-              </List>
-            </>
-            :
-            <Message>Nenhum registro encontrado.</Message>
-        }
-      </Main>
+      <Tabs>
+        <Tab onClick={() => stype('anual')}>
+          <Icon>emoji_events</Icon>
+          <Text>ANUAL</Text>
+        </Tab>
+        <Tab onClick={() => stype('turno')}>
+          <Icon>emoji_events</Icon>
+          <Text>TURNO</Text>
+        </Tab>
+        <Tab onClick={() => stype('mensal')}>
+          <Icon>emoji_events</Icon>
+          <Text>MENSAL</Text>
+        </Tab>
+        <Tab onClick={() => stype('rodada')}>
+          <Icon>emoji_events</Icon>
+          <Text>RODADA</Text>
+        </Tab>
+      </Tabs>
+      {
+        data.data?.length
+          ?
+          <List>
+            {
+              data.data?.map((e, i) =>
+                <>
+                  <Item key={i} to={`${e.id}`}>
+                    <Header>{e.nome}</Header>
+                    <Description>
+                      <Image />
+                      <Total>R$ {amount((e.qtde_times * e.valor) - (e.comissao / 100 * (e.qtde_times * e.valor)))}</Total>
+                      <Teams>Tipo {e.tipo}, {e.qtde_times} times</Teams>
+                    </Description>
+                    <Footer>R$ {amount(e.valor)}</Footer>
+                  </Item>
+                  <Item key={i} to={`${e.id}`}>
+                    <Header>{e.nome}</Header>
+                    <Description>
+                      <Image />
+                      <Total>R$ {amount((e.qtde_times * e.valor) - (e.comissao / 100 * (e.qtde_times * e.valor)))}</Total>
+                      <Teams>Tipo {e.tipo}, {e.qtde_times} times</Teams>
+                    </Description>
+                    <Footer>R$ {amount(e.valor)}</Footer>
+                  </Item>
+                </>
+              )
+            }
+          </List>
+          :
+          <Message>Nenhum registro encontrado.</Message>
+      }
     </Content>
   );
 
@@ -104,6 +112,7 @@ function leagues() {
     <Container
       title='Ligas'
       component={component}
+      loading={loading}
     />
   );
 }

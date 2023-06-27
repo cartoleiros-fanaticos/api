@@ -2,21 +2,18 @@ import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
 export const Content = styled.div`
-  display: grid;
-  grid-template-columns: 250px auto;
-`;
-
-export const Main = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Tabs = styled.div`
   display: flex;
-  width: 100%;
-  margin: 0 10px;
+  margin: 0 10px;  
 `;
 
 export const Tab = styled.div`
-  flex: 1;
+  width: 100%;
   height: 40px;
   display: flex;
   justify-content: center;
@@ -26,6 +23,10 @@ export const Tab = styled.div`
   font-size: 0.9em;
   cursor: pointer;
   transition-duration: 0.3s;
+
+  @media screen and (max-width:900px){
+      height: 35px;
+  }
 
   &:hover {
     background-color: #333;
@@ -45,20 +46,31 @@ export const Icon = styled.i.attrs(() => ({
   background-color: #000;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
+
+  @media screen and (max-width:900px){
+    height: 35px;
+    width: 35px;
+    font-size: 16px;
+  }
+
 `;
 
 export const Text = styled.strong`
   display: block;
   width: 100%;
   text-align: center;
+
+  @media screen and (max-width:900px){
+    font-size: 0.85em;
+      margin: 0 1%
+  }
 `;
 
 export const List = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
-
 
 export const Item = styled(Link)`
   font-size: 0.9em;
@@ -67,13 +79,27 @@ export const Item = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 23%;
+  width: 19%;
   height: 200px;
   margin: 1%;
   transition-duration: 0.5s;
   cursor: pointer;
   text-decoration: none;
-  color: #666;
+  color: #666; 
+
+  @media screen and (max-width:900px){
+        width: 23%;
+  }
+
+  @media screen and (max-width:600px){
+      width: 46%;
+      margin: 2%
+  }
+
+  @media screen and (max-width:400px){
+      width: 99%;
+      margin: 1%
+  }
 
   &:hover {
       transform: scale(1.1);

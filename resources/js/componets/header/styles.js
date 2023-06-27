@@ -133,6 +133,12 @@ export const Item = styled.li`
         opacity: 1;
     }
 
+    &:hover ul.ligas {
+        visibility: visible;
+        height: 150px;
+        opacity: 1;
+    }
+
     a.planos {
         border: solid 1px #F68D42;
         background-color: #F68D42;
@@ -186,6 +192,10 @@ export const Item = styled.li`
         }
 
         &:hover ul.parciais {
+            height: 192px;
+        }
+
+        &:hover ul.ligas {
             height: 192px;
         }
 
