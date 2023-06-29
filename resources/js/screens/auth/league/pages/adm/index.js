@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { amount, message, slug } from '../../../utils/helpers';
-import api from '../../../utils/api';
+import { amount, message, slug } from '../../../../../utils/helpers';
+import api from '../../../../../utils/api';
 
-import Container from '../../../componets/container';
+import Container from '../../../../../componets/container';
 
-import { Message } from '../../../utils/styles';
+import { Message } from '../../../../../utils/styles';
 
 import {
     Content,

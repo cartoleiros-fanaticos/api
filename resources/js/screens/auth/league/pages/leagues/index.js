@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useParams, NavLink } from "react-router-dom";
+import Loader from 'react-loader-spinner';
 
 import { amount, message, slug } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
@@ -24,16 +25,28 @@ import {
   Teams,
   Footer,
 } from './styles';
+import loading from '../../../../../componets/loading';
 
 function leagues() {
 
   const { id } = useParams();
 
   const [data, sdata] = useState({});
-  const [loading, sloading] = useState(true);
+
+  const [loading, sloading] = useState({
+    anual: false,
+    turno: false,
+    mensal: false,
+    rodada: false,
+  });
+
+  const [loading_page, sloadingpage] = useState(true);
   const [type, stype] = useState('');
 
   useEffect(() => {
+    loading[type] = true;
+    console.log(loading);
+    sloading({ ...loading });
     getData();
   }, [type])
 
@@ -44,11 +57,26 @@ function leagues() {
       const { data } = await api.get(`/competicao/ligas/${id}?type=${type}`);
 
       sdata(data);
-      sloading(false);
+      sloadingpage(false);
+
+      sloading({
+        anual: false,
+        turno: false,
+        mensal: false,
+        rodada: false,
+      });
 
     } catch (e) {
       message(e);
-      sloading(false);
+      sloadingpage(false);
+
+      sloading({
+        anual: false,
+        turno: false,
+        mensal: false,
+        rodada: false,
+      });
+
     };
 
   }
@@ -58,19 +86,27 @@ function leagues() {
       <Tabs>
         <Tab onClick={() => stype('anual')}>
           <Icon>emoji_events</Icon>
-          <Text>ANUAL</Text>
+          <Text>
+            {loading.anual ? <Loader visible={true} style={{ display: 'block', textAlign: 'center' }} type="TailSpin" color="#000" height={24} width={24} /> : 'ANUAL'}
+          </Text>
         </Tab>
         <Tab onClick={() => stype('turno')}>
           <Icon>emoji_events</Icon>
-          <Text>TURNO</Text>
+          <Text>
+            {loading.turno ? <Loader visible={true} style={{ display: 'block', textAlign: 'center' }} type="TailSpin" color="#000" height={24} width={24} /> : 'TURNO'}
+          </Text>
         </Tab>
         <Tab onClick={() => stype('mensal')}>
           <Icon>emoji_events</Icon>
-          <Text>MENSAL</Text>
+          <Text>
+            {loading.mensal ? <Loader visible={true} style={{ display: 'block', textAlign: 'center' }} type="TailSpin" color="#000" height={24} width={24} /> : 'MENSAL'}
+          </Text>
         </Tab>
         <Tab onClick={() => stype('rodada')}>
           <Icon>emoji_events</Icon>
-          <Text>RODADA</Text>
+          <Text>
+            {loading.rodada ? <Loader visible={true} style={{ display: 'block', textAlign: 'center' }} type="TailSpin" color="#000" height={24} width={24} /> : 'RODADA'}
+          </Text>
         </Tab>
       </Tabs>
       {
@@ -79,8 +115,7 @@ function leagues() {
           <List>
             {
               data.data?.map((e, i) =>
-                <>
-                  <Item key={i} to={`${e.id}`}>
+                  <Item key={e.id} to={`${e.id}`}>
                     <Header>{e.nome}</Header>
                     <Description>
                       <Image />
@@ -89,16 +124,6 @@ function leagues() {
                     </Description>
                     <Footer>R$ {amount(e.valor)}</Footer>
                   </Item>
-                  <Item key={i} to={`${e.id}`}>
-                    <Header>{e.nome}</Header>
-                    <Description>
-                      <Image />
-                      <Total>R$ {amount((e.qtde_times * e.valor) - (e.comissao / 100 * (e.qtde_times * e.valor)))}</Total>
-                      <Teams>Tipo {e.tipo}, {e.qtde_times} times</Teams>
-                    </Description>
-                    <Footer>R$ {amount(e.valor)}</Footer>
-                  </Item>
-                </>
               )
             }
           </List>
@@ -112,7 +137,7 @@ function leagues() {
     <Container
       title='Ligas'
       component={component}
-      loading={loading}
+      loadingpage={loading_page}
     />
   );
 }

@@ -200,9 +200,9 @@ function header() {
                         </ButtonLink>
                         <SubItem className='ligas'>
                             <Item>
-                                <NavLink to="/auth/ligas">
+                                <NavLink to="/auth/donos-de-ligas">
                                     <Icon>home</Icon>
-                                    HOME
+                                    DONOS DE LIGAS
                                 </NavLink>
                             </Item>
                             <Item>
