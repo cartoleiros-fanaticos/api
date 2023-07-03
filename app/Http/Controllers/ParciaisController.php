@@ -20,6 +20,7 @@ use Illuminate\Database\QueryException;
 use Validator;
 use Exception;
 use DB;
+use Log;
 use Illuminate\Support\Str;
 
 class ParciaisController extends Controller
@@ -136,6 +137,9 @@ class ParciaisController extends Controller
 
     public function parciais_time($id)
     {
+
+        Log::debug(config('global.multiplicador_capitao'));
+
         $game = Game::first();
 
         $rodada_atual = $game->rodada_atual;
@@ -177,7 +181,7 @@ class ParciaisController extends Controller
                 ]
             );
 
-            $rodada_atual = $game->game_over ? 38 : ($game->status_mercado != 1 ? $rodada_atual : ($rodada_atual - 1));
+            $rodada_atual = $game->game_over ? 38 : $rodada_atual;//($game->status_mercado != 1 ? $rodada_atual : ($rodada_atual - 1));
 
             $rodada = TimesCartolaRodadas::selectRaw('MAX(rodada_time_id) as rodada_atual_time')
                 ->where('times_cartolas_id', $time_cartola->id)

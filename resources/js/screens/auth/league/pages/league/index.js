@@ -115,7 +115,7 @@ function league() {
                             <NameGame>{e.nome_cartola}</NameGame>
                           </Td>
                           <Td>{e.pontos} pts</Td>
-                          <Td>{e.pontos} pts</Td>
+                          <Td>{e.pontos_total} pts</Td>
                         </Tr>
                       )
                     }

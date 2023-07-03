@@ -178,6 +178,8 @@ class CompeticaoController extends Controller
      */
     public function show(string $id)
     {
+        $game = Game::first();
+
         $competicao = Competicoes::select('competicoes.id', 'capitao', 'de', 'ate', 'competicoes.nome', 'valor', 'tipo', 'usuarios.comissao')
             ->join('usuarios', 'usuarios.id', 'competicoes.usuarios_id')
             ->selectRaw('
@@ -190,13 +192,22 @@ class CompeticaoController extends Controller
             ')
             ->find($id);
 
-        $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao as pontos';
+        $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao';
 
         $times = CompeticoesTransacoes::select('times_cartolas.time_id', 'url_escudo_png', 'times_cartolas.nome', 'nome_cartola')
-            ->selectRaw('SUM(' . $pontos . ') pontos')
+            ->selectRaw('SUM(' . $pontos . ') as pontos_total')
+            ->selectRaw("(
+                    SELECT 
+                        $pontos
+                    FROM times_cartola_rodadas 
+                    WHERE rodada_time_id = $game->rodada_atual AND times_cartolas_id = times_cartolas.id
+                ) as pontos")
             ->join('competicoes', 'competicoes.id', 'competicoes_transacoes.competicoes_id')
             ->join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
-            ->join('competicoes_rodadas', 'competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
+            ->join('competicoes_rodadas', function ($join) {
+                $join->on('competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
+                    ->whereColumn('competicoes_rodadas.competicoes_id', 'competicoes.id');
+            })
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->join('times_cartola_rodadas', function ($join) {
                 $join->on('times_cartola_rodadas.times_cartolas_id', 'times_cartolas.id')
@@ -206,6 +217,7 @@ class CompeticaoController extends Controller
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')
             ->groupBy('times_cartolas.time_id')
+            ->orderBy($game->status_mercado != 1 ? 'pontos' : 'pontos_total', 'DESC')
             ->paginate(100);
 
         $posicoes = CompeticoesPosicoes::where('competicoes_id', $competicao->id)

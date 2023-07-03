@@ -11,8 +11,6 @@ use App\Models\Game;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 
-use GuzzleHttp\Exception\RequestException;
-use Illuminate\Database\QueryException;
 use Exception;
 use Log;
 
@@ -57,11 +55,11 @@ class Competicao extends Command
             ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_times.id')
             ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
             ->where('competicoes_transacoes.situacao', 'Aceita')
-            ->where('de', '>=', $rodada_atual)
-            ->where('ate', '<=', $rodada_atual)
+             ->where('de', '>=', $rodada_atual)
+            //->where('ate', '<=', $rodada_atual)
             ->where('competicoes.situacao', '!=', 'Encerrada')
             ->get()
-            ->keyBy('competicoes_times.id');
+            ->keyBy('time_id');
 
         echo '- Deletando atletas da rodada anterior.' . PHP_EOL;
 
@@ -79,6 +77,17 @@ class Competicao extends Command
                 $teams = [];
 
                 foreach ($times as $key => $val) :
+
+                    if (!isset($teams[$key])) :
+
+                        echo  "- Atualizando tabela times_cartolas ID: $val->time_id." . PHP_EOL;
+
+                        $parciais = new ParciaisController;
+                        $response = $parciais->parciais_time($val->time_id);
+
+                        //   $teams[$key] = $val;
+
+                    endif;
 
                     if ($game->status_mercado != 1) :
 
@@ -109,9 +118,9 @@ class Competicao extends Command
 
                                 endif;
 
-                                $teams[$key] = $val;
+                             //   $teams[$key] = $val;
 
-                                echo  PHP_EOL . '- Time' . $response['time']['nome'] . ' carregado e atualizado.' . PHP_EOL;
+                                echo  PHP_EOL . '- Time ' . $response['time']['nome'] . ' carregado e atualizado.' . PHP_EOL;
 
                             endif;
 
@@ -138,18 +147,9 @@ class Competicao extends Command
                             []
                         );
 
-                        if (!isset($teams[$key])) :
-
-                            echo  '- Atualizando tabela times_cartolas.' . PHP_EOL;
-
-                            $parciais = new ParciaisController;
-                            $response = $parciais->parciais_time($val->time_id);
-
-                            $teams[$key] = $val;
-
-                        endif;
-
                     endif;
+
+                    $teams[$key] = $val;
 
                 endforeach;
             } catch (Exception $e) {

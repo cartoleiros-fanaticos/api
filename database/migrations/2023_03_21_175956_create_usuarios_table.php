@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('nome');
             $table->string('celular');
             $table->float('comissao')->nullable();
-            $table->string('token_payment')->nullable();
             $table->string('foto')->nullable();
             $table->string('email')->unique();
             $table->string('recovery')->nullable();
@@ -24,7 +23,6 @@ return new class extends Migration
             $table->enum('funcao', ['Admin', 'Funcionario', 'Dono de Liga', 'Cartoleiro'])->default('Cartoleiro');
             $table->enum('plano', ['Demonstrativo', 'Free Cartoleiro', 'Plano Stats', 'Plano Fanático'])->default('Demonstrativo');
             $table->enum('ativo', ['Sim', 'Não'])->default('Sim');
-            $table->string('token_payment')->nullable();
             $table->timestamps();
         });
     }
