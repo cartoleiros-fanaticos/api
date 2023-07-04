@@ -249,6 +249,14 @@ function header() {
                             SAIR
                         </ButtonLink>
                     </Item>
+                    {(user.funcao === 'Admin' || user.funcao === 'Dono de Liga') &&
+                        <Item>
+                            <NavLink className="painel" to="/auth/adm/usuarios">
+                                <Icon>settings</Icon>
+                                PAINEL
+                            </NavLink>
+                        </Item>
+                    }
                     {(user.plano === 'Free Cartoleiro' || user.plano === 'Demonstrativo') &&
                         <Item>
                             <NavLink className="planos" to="/auth/planos">

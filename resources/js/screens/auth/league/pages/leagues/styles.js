@@ -125,7 +125,7 @@ export const Description = styled.div`
 `;
 
 export const Image = styled.img.attrs(() => ({
-  src: '../../../images/dolar.png'
+  src: '../../images/dolar.png'
 }))`
   width: 48px;
 `;

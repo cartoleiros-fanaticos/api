@@ -37,6 +37,8 @@ import Emphasis from './screens/auth/emphasis';
 import Contact from './screens/auth/contact';
 import Plans from './screens/auth/plans';
 
+import Users from './screens/adm/users';
+
 const PrivateRoute = ({ component: Component }) => localStorage.getItem('token') ? <Component /> : <Navigate to="/" />;
 
 ReactDOM.createRoot(document.getElementById('app')).render(
@@ -71,6 +73,8 @@ ReactDOM.createRoot(document.getElementById('app')).render(
             <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
             <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
             <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
+
+            <Route path="/auth/adm/usuarios" element={<PrivateRoute component={Users} />} />
         </Routes>
     </BrowserRouter>
     // </React.StrictMode>

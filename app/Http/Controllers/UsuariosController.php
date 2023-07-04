@@ -14,38 +14,30 @@ class UsuariosController extends Controller
     {
         $this->middleware('jwt', ['except' => ['index', 'store']]);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
 
-        $regras = [
-            'email' => 'required'
-        ];
+        $auth = auth('api')->user();
 
-        $mensagens = [
-            'email.required' => 'O campo email é obrigatório.',
-        ];
+        $usuarios = Usuarios::where(function ($q) use ($request) {
 
-        $validator = Validator::make($request->all(), $regras, $mensagens);
+            if ($request->pesquisar) :
 
-        if ($validator->fails())
-            return response()->json(['message' => $validator->errors()->first()], 400);
+                $q->where('nome', 'LIKE', '%' . $request->pesquisar . '%')
+                    ->orWhere('email', 'LIKE', '%' . $request->pesquisar . '%');
 
-        $email = $request->input('email');
+            endif;
+        })
+            ->paginate(100);
 
-        $email = explode(',', $email);
-
-        $plano = $request->input('plano', 'Plano Fanático');
-
-        $response = Usuarios::whereIn('email', $email)->update([
-            'plano' => $plano
+        return response()->json([ 
+            'auth' => $auth,
+            'usuarios' => $usuarios
         ]);
-
-        return $response;
-
     }
 
     /**
@@ -91,12 +83,12 @@ class UsuariosController extends Controller
         $usuario->ativo = 'Sim';
         $usuario->password = Hash::make($request->password);
 
-        $usuario->save();        
+        $usuario->save();
 
         $access_token = auth('api')->login($usuario);
 
         return response()->json([
-            'auth' => [ 'access_token' => $access_token ],
+            'auth' => ['access_token' => $access_token],
             'user' => $usuario
         ]);
     }
@@ -122,6 +114,7 @@ class UsuariosController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $response = Usuarios::destroy($id);
+        return response()->json($response);
     }
 }
