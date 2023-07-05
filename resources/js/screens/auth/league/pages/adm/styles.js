@@ -43,7 +43,7 @@ export const Item = styled(Link)`
 `;
 
 export const Photo = styled.img.attrs(({ foto }) => ({
-    src: foto ? `../../images/upload/ligas/${foto}` : '../../images/upload/ligas/avatar.png'
+    src: foto ? `../../images/upload/ligas/${foto}` : '../../images/upload/avatar.png'
 }))`
     border-radius: 50%;
     width: 100px;

@@ -9,7 +9,8 @@ export const Content = styled.div`
 
 export const Tabs = styled.div`
   display: flex;
-  margin: 0 10px;  
+  margin: 0 10px; 
+  margin-bottom: 15px; 
 `;
 
 export const Tab = styled.div`
@@ -98,7 +99,7 @@ export const Item = styled(Link)`
 
   @media screen and (max-width:400px){
       width: 99%;
-      margin: 1%
+      margin: 0 10px; 
   }
 
   &:hover {

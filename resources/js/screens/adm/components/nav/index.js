@@ -23,10 +23,13 @@ function nav({ data }) {
                     <Icon>account_circle</Icon>
                     <Text>Minha conta</Text>
                 </Item>
-                <Item to="/auth/adm/usuarios">
-                    <Icon>manage_accounts</Icon>
-                    <Text>Usuarios</Text>
-                </Item>
+                {
+                    data.auth.funcao === 'Admin' &&
+                    <Item to="/auth/adm/usuarios">
+                        <Icon>manage_accounts</Icon>
+                        <Text>Usuarios</Text>
+                    </Item>
+                }
                 <Item to="auth/adm/ligas">
                     <Icon>admin_panel_settings</Icon>
                     <Text>Ligas</Text>

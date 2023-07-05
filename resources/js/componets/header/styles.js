@@ -209,6 +209,17 @@ export const Item = styled.li`
                 color: #F68D42;
             }
         }
+
+        a.painel {
+            border: none;
+            background-color: transparent;
+            margin-left: 0;
+            color: #000 !important;
+
+            i {
+                color: #F68D42;
+            }
+        }
         
         & > a {
             justify-content: flex-start;

@@ -26,6 +26,27 @@ export const share = (data, orderBy) => {
 
 }
 
+export const share_league = (data, orderBy) => {
+
+    let br = '\n';
+    let text = `🏆 *${data.competicao.nome.substr(0, 22).toUpperCase()}* 🏆` + br + br;
+
+    text += `*_RANKING ${orderBy.toUpperCase()}_*` + br + br;
+
+    let pontos = orderBy === 'RODADA' ? 'pontos' : 'pontos_total';
+
+    for (let x in data.times.data)
+        text += `${parseInt(x) < 9 ? ' ' : ''}*${parseInt(x) + 1}º* - *${(data.times.data[x][pontos] || 0).toFixed(2) + ' pts'}* ${data.times.data[x].nome.substr(0, 11).toLowerCase()}` + br;
+
+    text += br + '_Última atualização: ' + new Date().toLocaleTimeString('pt-BR') + '_' + br;
+
+    text += br + '_Acompanhe:_ cartoleirofanatico.com.br';
+
+    text = window.encodeURIComponent(text);
+    window.open("https://api.whatsapp.com/send?text=" + text, "_blank");
+
+}
+
 export const amount = (value) => {
     return parseFloat(value || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }

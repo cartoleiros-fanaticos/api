@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { useParams, NavLink } from "react-router-dom";
 
-import { amount, message, slug, swal_success } from '../../../../../utils/helpers';
+import { amount, message, share_league, swal_ask, swal_success } from '../../../../../utils/helpers';
 import api from '../../../../../utils/api';
 
 import Container from '../../../../../componets/container';
@@ -15,6 +15,7 @@ import { Message } from '../../../../../utils/styles';
 import {
   Content,
   Description,
+  Share,
   Enter,
   List,
   Table,
@@ -74,6 +75,12 @@ function league() {
       {data.competicao &&
         <>
           <Description>
+            <Share onClick={() => {
+              swal_ask('Deseja compartilhar ranking rodada ou total?', 'RODADA', 'TOTAL').then(({ value }) => {
+                const orderBy = value ? 'RODADA' : 'TOTAL';
+                share_league(data, orderBy)
+              })
+            }}>share</Share>
             {data.competicao.tipo != 'rodada' ? `Início da rodada ${data.competicao.de} até a rodada ${data.competicao.ate}` : `Liga apenas para a rodada ${data.competicao.de}`} <br />
             Valor <strong>{amount(data.competicao.valor)}</strong> reais, <strong>{data.competicao.qtde_times} times</strong> cadastrados <br />
             valor em <strong>prêmio {amount((data.competicao.qtde_times * data.competicao.valor) - (data.competicao.comissao / 100 * (data.competicao.qtde_times * data.competicao.valor)))}</strong> reais <br />

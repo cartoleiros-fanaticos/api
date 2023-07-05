@@ -10,6 +10,7 @@ import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
+  List,
   Table,
   Thead,
   Th,
@@ -51,13 +52,14 @@ function leagues() {
               {
                 data.length
                   ?
-                  <>
+                  <List>
                     <Table>
                       <Thead>
                         <Tr>
                           <Th>id</Th>
                           <Th>Time</Th>
                           <Th>Liga</Th>
+                          <Th>Capitão</Th>
                           <Th>Valor</Th>
                           <Th>Status</Th>
                         </Tr>
@@ -69,6 +71,7 @@ function leagues() {
                               <Td>{e.id}</Td>
                               <Td>{e.nome}</Td>
                               <Td>{e.competicao}</Td>
+                              <Td>{e.capitao}</Td>
                               <Td>{amount(e.valor)}</Td>
                               <Td>{e.situacao}</Td>
                             </Tr>
@@ -76,7 +79,7 @@ function leagues() {
                         }
                       </Tbody>
                     </Table>
-                  </>
+                  </List>
                   :
                   <Message>Nenhum registro encontrado.</Message>
               }

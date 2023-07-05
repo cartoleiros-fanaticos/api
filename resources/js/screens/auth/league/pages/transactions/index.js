@@ -10,6 +10,7 @@ import { Message } from '../../../../../utils/styles';
 
 import {
   Content,
+  List,
   Table,
   Thead,
   Th,
@@ -53,7 +54,7 @@ function transactions() {
             {
               data.length
                 ?
-                <>
+                <List>
                   <Table>
                     <Thead>
                       <Tr>
@@ -80,7 +81,7 @@ function transactions() {
                       }
                     </Tbody>
                   </Table>
-                </>
+                </List>
                 :
                 <Message>Nenhum registro encontrado.</Message>
             }

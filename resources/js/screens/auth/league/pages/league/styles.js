@@ -14,6 +14,38 @@ export const Description = styled.p`
   text-align: center;
   color: #666;
   font-size: 0.9em;
+  position: relative;
+
+    @media screen and (max-width:900px){
+        width: 100%;
+    }
+`;
+
+export const Share = styled.i.attrs(() => ({
+    className: 'material-icons'
+}))` 
+    font-size: 28px;
+    padding: 15px;
+    border-radius: 50%;
+    border: solid 2px #25D366;
+    top: 15px;
+    right: 0;
+    position: absolute;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    color: #25D366;
+
+    &:hover {
+        color: #fff;
+        background-color: #25D366;
+    }
+
+    @media screen and (max-width:900px){
+        top: 50px;
+        right: 5%;
+        font-size: 22px;
+        padding: 10px;
+    }
 `;
 
 export const Enter = styled.a`

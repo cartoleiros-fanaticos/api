@@ -34,7 +34,7 @@ class UsuariosController extends Controller
         })
             ->paginate(100);
 
-        return response()->json([ 
+        return response()->json([
             'auth' => $auth,
             'usuarios' => $usuarios
         ]);
@@ -114,6 +114,11 @@ class UsuariosController extends Controller
      */
     public function destroy(string $id)
     {
+        $user = auth('api')->user();
+
+        if ($user->funcao != 'Admin')
+            return response()->json(['message' => 'Apenas administradores podem fazer essa operação.'], 401);
+
         $response = Usuarios::destroy($id);
         return response()->json($response);
     }

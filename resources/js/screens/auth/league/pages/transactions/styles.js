@@ -6,10 +6,19 @@ export const Content = styled.div`
   display: flex;
 `;
 
+export const List = styled.div`
+  width: 100%;
+  overflow: auto;
+`;
+
 export const Table = styled.table`
   width: 100%;
   font-size: 0.9em;
-`;  
+
+  @media screen and (max-width:900px){
+      width: 900px;      
+  }
+`;
 
 export const Thead = styled.tbody`
 `;

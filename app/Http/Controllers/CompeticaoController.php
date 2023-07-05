@@ -193,6 +193,7 @@ class CompeticaoController extends Controller
             ->find($id);
 
         $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao';
+        $rodada_atual = $game->status_mercado === 1 ? ($game->rodada_atual === 1 ? $game->rodada_atual : ($game->rodada_atual - 1)) : $game->rodada_atual;
 
         $times = CompeticoesTransacoes::select('times_cartolas.time_id', 'url_escudo_png', 'times_cartolas.nome', 'nome_cartola')
             ->selectRaw('SUM(' . $pontos . ') as pontos_total')
@@ -200,7 +201,7 @@ class CompeticaoController extends Controller
                     SELECT 
                         $pontos
                     FROM times_cartola_rodadas 
-                    WHERE rodada_time_id = $game->rodada_atual AND times_cartolas_id = times_cartolas.id
+                    WHERE rodada_time_id = $rodada_atual AND times_cartolas_id = times_cartolas.id
                 ) as pontos")
             ->join('competicoes', 'competicoes.id', 'competicoes_transacoes.competicoes_id')
             ->join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
@@ -554,7 +555,7 @@ class CompeticaoController extends Controller
     {
         $user = auth('api')->user();
 
-        $response = CompeticoesTransacoes::select('competicoes.id', 'competicoes.situacao', 'competicoes.nome as competicao', 'times_cartolas.nome', 'competicoes.valor')
+        $response = CompeticoesTransacoes::select('competicoes_transacoes.id', 'competicoes.situacao', 'competicoes.nome as competicao', 'capitao', 'times_cartolas.nome', 'competicoes.valor')
             ->join('competicoes', 'competicoes_id', 'competicoes.id')
             ->join('competicoes_times', 'competicoes_times_id', 'competicoes_times.id')
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
