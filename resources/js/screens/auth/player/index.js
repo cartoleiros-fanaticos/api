@@ -317,7 +317,6 @@ function Player() {
         loading={loading_page}
       />
       {
-
         modal_player &&
         <Modal
           icon="directions_run"

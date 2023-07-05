@@ -210,10 +210,11 @@ class CompeticaoController extends Controller
                     ->whereColumn('competicoes_rodadas.competicoes_id', 'competicoes.id');
             })
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
-            ->join('times_cartola_rodadas', function ($join) {
+            ->join('times_cartola_rodadas', function ($join) use ($rodada_atual) {
                 $join->on('times_cartola_rodadas.times_cartolas_id', 'times_cartolas.id')
                     ->whereColumn('times_cartola_rodadas.rodada_time_id', '>=', 'de')
-                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate');
+                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate')
+                    ->where('times_cartola_rodadas.rodada_time_id', $rodada_atual);
             })
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')
@@ -375,49 +376,49 @@ class CompeticaoController extends Controller
         if ($validator->fails())
             return response()->json(['message' => $validator->errors()->first()], 400);
 
-        $acao = $request->input('acao', 'cadastrar');
         $competicoes_id = $request->competicoes_id;
         $time_id = $request->time_id;
 
-        if ($acao === 'cadastrar') :
+        $competicao = Competicoes::find($competicoes_id);
 
-            $contains = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_times_id')
-                ->where('competicoes_id', $competicoes_id)
-                ->where('time_id', $time_id)
-                ->count();
+        if($competicao->situacao != 'Aguardando')
+            return response()->json(['message' => 'Não é possível mandar solicitação de inscrição após o inicio da liga.'], 400);
 
-            if ($contains)
-                return response()->json(['message' => 'Já existe uma solicitação de entrada nessa liga.'], 400);
+        $contains = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_times_id')
+            ->where('competicoes_id', $competicoes_id)
+            ->where('time_id', $time_id)
+            ->count();
 
-            $parciais = new ParciaisController;
-            $response = $parciais->parciais_time($time_id);
+        if ($contains)
+            return response()->json(['message' => 'Já existe uma solicitação de entrada nessa liga.'], 400);
 
-            if (isset($response->original['time'])) :
+        $parciais = new ParciaisController;
+        $response = $parciais->parciais_time($time_id);
 
-                $response = DB::transaction(function () use ($response, $time_id, $competicoes_id) {
+        if (isset($response->original['time'])) :
 
-                    $user = auth('api')->user();
-                    $time_cartola = $response->original['time'];
+            $response = DB::transaction(function () use ($response, $time_id, $competicoes_id) {
 
-                    $times = CompeticoesTimes::updateOrCreate(
-                        [
-                            'times_cartolas_id' => $time_cartola['id'],
-                            'usuarios_id' => $user->id
-                        ],
-                        [
-                            'time_id' => $time_id
-                        ]
-                    );
+                $user = auth('api')->user();
+                $time_cartola = $response->original['time'];
 
-                    $transacao = new CompeticoesTransacoes;
-                    $transacao->competicoes_id =  $competicoes_id;
-                    $transacao->competicoes_times_id =  $times->id;
-                    $response = $transacao->save();
+                $times = CompeticoesTimes::updateOrCreate(
+                    [
+                        'times_cartolas_id' => $time_cartola['id'],
+                        'usuarios_id' => $user->id
+                    ],
+                    [
+                        'time_id' => $time_id
+                    ]
+                );
 
-                    return $time_cartola;
-                }, 3);
+                $transacao = new CompeticoesTransacoes;
+                $transacao->competicoes_id =  $competicoes_id;
+                $transacao->competicoes_times_id =  $times->id;
+                $response = $transacao->save();
 
-            endif;
+                return $time_cartola;
+            }, 3);
 
         endif;
 
@@ -427,96 +428,96 @@ class CompeticaoController extends Controller
     public function aceitar_solicitacao(Request $request)
     {
 
-        if (isset($request->topic)) :
+        // if (isset($request->topic)) :
 
-            $id = $request->id;
-            $topic = $request->topic;
+        //     $id = $request->id;
+        //     $topic = $request->topic;
 
-            try {
+        //     try {
 
-                if ($topic === 'payment') :
+        //         if ($topic === 'payment') :
 
-                    $token = "";
+        //             $token = "";
 
-                    $headers = [
-                        'Content-Type' => 'application/json',
-                        'Authorization' => "Bearer $token"
-                    ];
+        //             $headers = [
+        //                 'Content-Type' => 'application/json',
+        //                 'Authorization' => "Bearer $token"
+        //             ];
 
-                    $client = new Client();
-                    $payment = $client->get("https://api.mercadopago.com/v1/payments/$id", ['timeout' => 60, 'headers' => $headers]);
-                    $payment = json_decode($payment->getBody(), true);
+        //             $client = new Client();
+        //             $payment = $client->get("https://api.mercadopago.com/v1/payments/$id", ['timeout' => 60, 'headers' => $headers]);
+        //             $payment = json_decode($payment->getBody(), true);
 
-                    if ($payment['status'] === 'approved') :
+        //             if ($payment['status'] === 'approved') :
 
-                        DB::transaction(function () use ($payment) {
+        //                 DB::transaction(function () use ($payment) {
 
-                            $transacao = CompeticoesTransacoes::find($payment['external_reference']);
-                            $transacao->situacao =  'Aceita';
-                            $response = $transacao->save();
+        //                     $transacao = CompeticoesTransacoes::find($payment['external_reference']);
+        //                     $transacao->situacao =  'Aceita';
+        //                     $response = $transacao->save();
 
-                            if ($response && $transacao->situacao === 'Aceita') :
+        //                     if ($response && $transacao->situacao === 'Aceita') :
 
-                                $competicao = Competicoes::find($transacao->competicoes_id);
+        //                         $competicao = Competicoes::find($transacao->competicoes_id);
 
-                                $rodadas = new CompeticoesRodadas;
-                                $rodadas->competicoes_id = $competicao->nome;
-                                $rodadas->rodada = $competicao->de;
-                                $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
-                                $rodadas->save();
+        //                         $rodadas = new CompeticoesRodadas;
+        //                         $rodadas->competicoes_id = $competicao->nome;
+        //                         $rodadas->rodada = $competicao->de;
+        //                         $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
+        //                         $rodadas->save();
 
-                            endif;
-                        }, 3);
+        //                     endif;
+        //                 }, 3);
 
-                    endif;
+        //             endif;
 
-                endif;
+        //         endif;
 
-                return 'ok';
-            } catch (Exception $e) {
-                Log::error('PIX: ' . $e->getMessage());
-                return response()->json(['message' => $e->getMessage()], 400);
-            }
+        //         return 'ok';
+        //     } catch (Exception $e) {
+        //         Log::error('PIX: ' . $e->getMessage());
+        //         return response()->json(['message' => $e->getMessage()], 400);
+        //     }
 
-        else :
+        // else :
 
-            $regras = [
-                'id' => 'required',
-                'situacao' => 'required',
-            ];
+        $regras = [
+            'id' => 'required',
+            'situacao' => 'required',
+        ];
 
-            $mensagens = [
-                'id.required' => 'O campo id é obrigatório.',
-                'situacao.required' => 'O campo situacao é obrigatório.',
-            ];
+        $mensagens = [
+            'id.required' => 'O campo id é obrigatório.',
+            'situacao.required' => 'O campo situacao é obrigatório.',
+        ];
 
-            $validator = Validator::make($request->all(), $regras, $mensagens);
+        $validator = Validator::make($request->all(), $regras, $mensagens);
 
-            if ($validator->fails())
-                return response()->json(['message' => $validator->errors()->first()], 400);
+        if ($validator->fails())
+            return response()->json(['message' => $validator->errors()->first()], 400);
 
-            $response = DB::transaction(function () use ($request) {
+        $response = DB::transaction(function () use ($request) {
 
-                $transacao = CompeticoesTransacoes::find($request->id);
-                $transacao->situacao = $request->situacao;
-                $response = $transacao->save();
+            $transacao = CompeticoesTransacoes::find($request->id);
+            $transacao->situacao = $request->situacao;
+            $response = $transacao->save();
 
-                if ($response && $transacao->situacao === 'Aceita') :
+            if ($response && $transacao->situacao === 'Aceita') :
 
-                    $competicao = Competicoes::find($transacao->competicoes_id);
+                $competicao = Competicoes::find($transacao->competicoes_id);
 
-                    $rodadas = new CompeticoesRodadas;
-                    $rodadas->competicoes_id = $transacao->competicoes_id;
-                    $rodadas->rodada = $competicao->de;
-                    $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
-                    $rodadas->save();
+                $rodadas = new CompeticoesRodadas;
+                $rodadas->competicoes_id = $transacao->competicoes_id;
+                $rodadas->rodada = $competicao->de;
+                $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
+                $rodadas->save();
 
-                endif;
+            endif;
 
-                return true;
-            }, 3);
+            return true;
+        }, 3);
 
-        endif;
+        // endif;
 
         return response()->json($response);
     }
