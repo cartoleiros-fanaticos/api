@@ -2,7 +2,7 @@
 
 service php8.1-fpm start
 service nginx start
-service cron start
+service cron restart
 chown -R $USER:www-data storage
 chown -R $USER:www-data bootstrap/cache
 chmod -R 775 storage
@@ -15,6 +15,6 @@ then
         cp .env.example .env
 fi
 
-composer clean
+composer clear
 
 php artisan migrate --seed --force
