@@ -14,7 +14,7 @@ export const Header = styled.div`
 export const Title = styled.div`
     display: flex;
     justify-content: space-between;
-    width: 150px;
+    width: 120px;
     color: #333;
     align-items: center;
 `;

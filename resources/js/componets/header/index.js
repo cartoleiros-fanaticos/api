@@ -219,7 +219,7 @@ function header() {
                             </Item>
                             <Item>
                                 <NavLink to="/auth/minhas-inscricoes">
-                                    <Icon>confirmation_number</Icon>
+                                    <Icon>inscrições</Icon>
                                     MINHAS INSCRIÇÕES
                                 </NavLink>
                             </Item>
@@ -249,9 +249,9 @@ function header() {
                             SAIR
                         </ButtonLink>
                     </Item>
-                    {(user.funcao === 'Admin' || user.funcao === 'Dono de Liga') &&
+                    {(user.funcao != 'Cartoleiro') &&
                         <Item>
-                            <NavLink className="painel" to="/auth/adm/usuarios">
+                            <NavLink className="painel" to={user.funcao === 'Dono de Liga' ? '/auth/adm/ligas' : '/auth/adm/usuarios'}>
                                 <Icon>settings</Icon>
                                 PAINEL
                             </NavLink>

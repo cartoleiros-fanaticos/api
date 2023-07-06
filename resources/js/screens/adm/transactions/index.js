@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { message, swal_ask } from '../../../utils/helpers';
+import { amount, message, swal_ask } from '../../../utils/helpers';
 import api from '../../../utils/api';
 
-import ModalUsers from '../modal/users';
+import ModalLeagues from '../modal/leagues';
 import Modal from '../../../componets/modal';
 import Container from '../components/container';
 
@@ -28,7 +28,7 @@ import {
     NavText,
 } from './styles';
 
-function users() {
+function transactions() {
 
     useEffect(() => {
         getData();
@@ -36,7 +36,7 @@ function users() {
 
     const [page, spage] = useState(1);
     const [search, ssearch] = useState('');
-    const [user, suser] = useState({});
+    const [user, sleague] = useState({});
     const [data, sdata] = useState({});
     const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(true);
@@ -45,7 +45,7 @@ function users() {
 
         try {
 
-            let { data } = await api.get(`usuarios?pesquisar=${value}&page=${page}`);
+            let { data } = await api.get(`competicao/solicitacoes?pesquisar=${value}&page=${page}`);
 
             sdata(data);
             sloading(false);
@@ -61,14 +61,14 @@ function users() {
 
     async function remove(e) {
 
-        swal_ask('Tem certeza que deseja deletar esse usuário fazendo isso você deletar todos os dados ligado ao mesmo.')
+        swal_ask('Tem certeza que deseja deletar essa liga fazendo isso você vai deletar todos os dados ligado a ela.')
             .then(async ({ value }) => {
 
                 if (value) {
 
                     try {
 
-                        await api.delete(`usuarios/${e.id}`);
+                        await api.delete(`competicao/${e.id}`);
 
                         getData();
                         sloading(false);
@@ -97,12 +97,12 @@ function users() {
     const component = (
         <>
             {
-                data.usuarios &&
+                data.solicitacoes &&
                 <>
                     <Header>
                         <Title>
                             <Icon>manage_accounts</Icon>
-                            {data.usuarios.total} Usuarios
+                            {data.solicitacoes.total} Inscrições
                         </Title>
                         <Label>
                             <Icon>search</Icon>
@@ -111,35 +111,29 @@ function users() {
                     </Header>
                     <List>
                         {
-                            data.usuarios.data.length
+                            data.solicitacoes.data.length
                                 ?
                                 <Table>
                                     <Thead>
                                         <Tr>
                                             <Th>ID</Th>
-                                            <Th>NOME</Th>
-                                            <Th>CELULAR</Th>
-                                            <Th>FUNCAO</Th>
-                                            <Th>PLANO</Th>
-                                            <Th>ATIVO</Th>
+                                            <Th>LIGA</Th>
+                                            <Th>TIME</Th>
+                                            <Th>VALOR</Th>
+                                            <Th>SITUAÇÃO</Th>
                                             <Th>AÇÃO</Th>
                                         </Tr>
                                     </Thead>
                                     <Tbody>
                                         {
-                                            data.usuarios.data.map((e, i) =>
+                                            data.solicitacoes.data.map((e, i) =>
                                                 <Tr key={i}>
                                                     <Td>{e.id}</Td>
-                                                    <Td width="270px">{e.nome}</Td>
-                                                    <Td>{e.celular}</Td>
-                                                    <Td>{e.funcao}</Td>
-                                                    <Td>{e.plano}</Td>
-                                                    <Td>{e.ativo}</Td>
-                                                    <Td className='action'>
-                                                        <ActionIcon onClick={() => {
-                                                            smodal(true);
-                                                            suser(e);
-                                                        }}>edit</ActionIcon>
+                                                    <Td width="270px">{e.competicao}</Td>
+                                                    <Td>{e.nome}</Td>
+                                                    <Td>{amount(e.valor)}</Td>
+                                                    <Td>{e.situacao}</Td>
+                                                    <Td width="50px">
                                                         <ActionIcon onClick={() => remove(e)}>delete</ActionIcon>
                                                     </Td>
                                                 </Tr>
@@ -151,11 +145,11 @@ function users() {
                         }
                     </List>
                     {
-                        data.usuarios.total > 100 &&
+                        data.solicitacoes.total > 100 &&
                         <Navigator>
                             <NavIcon onClick={() => getData(search, page === 1 ? 1 : (page - 1))}>navigate_before</NavIcon>
-                            <NavText>{data.usuarios.current_page}</NavText>
-                            <NavIcon onClick={() => getData(search, page === data.usuarios.total ? data.usuarios.total : (page + 1))}>navigate_next</NavIcon>
+                            <NavText>{data.solicitacoes.current_page}</NavText>
+                            <NavIcon onClick={() => getData(search, page === data.solicitacoes.total ? data.competicoes.total : (page + 1))}>navigate_next</NavIcon>
                         </Navigator>
                     }
                 </>
@@ -165,26 +159,12 @@ function users() {
     );
 
     return (
-        <>
-            <Container
-                data={data}
-                component={component}
-                loading={loading}
-            />
-            {
-                modal &&
-                <Modal
-                    icon="manage_accounts"
-                    title="Editar Usuários"
-                    data={user}
-                    modal={modal}
-                    smodal={smodal}
-                    Component={ModalUsers}
-                    height='430px'
-                />
-            }
-        </>
+        <Container
+            data={data}
+            component={component}
+            loading={loading}
+        />
     );
 }
 
-export default users;
+export default transactions;

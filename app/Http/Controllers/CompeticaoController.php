@@ -11,10 +11,6 @@ use App\Models\Game;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
 use Validator;
-use GuzzleHttp\Client;
-
-use Exception;
-use Log;
 use DB;
 
 class CompeticaoController extends Controller
@@ -381,7 +377,7 @@ class CompeticaoController extends Controller
 
         $competicao = Competicoes::find($competicoes_id);
 
-        if($competicao->situacao != 'Aguardando')
+        if ($competicao->situacao != 'Aguardando')
             return response()->json(['message' => 'Não é possível mandar solicitação de inscrição após o inicio da liga.'], 400);
 
         $contains = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_times_id')
@@ -428,59 +424,6 @@ class CompeticaoController extends Controller
     public function aceitar_solicitacao(Request $request)
     {
 
-        // if (isset($request->topic)) :
-
-        //     $id = $request->id;
-        //     $topic = $request->topic;
-
-        //     try {
-
-        //         if ($topic === 'payment') :
-
-        //             $token = "";
-
-        //             $headers = [
-        //                 'Content-Type' => 'application/json',
-        //                 'Authorization' => "Bearer $token"
-        //             ];
-
-        //             $client = new Client();
-        //             $payment = $client->get("https://api.mercadopago.com/v1/payments/$id", ['timeout' => 60, 'headers' => $headers]);
-        //             $payment = json_decode($payment->getBody(), true);
-
-        //             if ($payment['status'] === 'approved') :
-
-        //                 DB::transaction(function () use ($payment) {
-
-        //                     $transacao = CompeticoesTransacoes::find($payment['external_reference']);
-        //                     $transacao->situacao =  'Aceita';
-        //                     $response = $transacao->save();
-
-        //                     if ($response && $transacao->situacao === 'Aceita') :
-
-        //                         $competicao = Competicoes::find($transacao->competicoes_id);
-
-        //                         $rodadas = new CompeticoesRodadas;
-        //                         $rodadas->competicoes_id = $competicao->nome;
-        //                         $rodadas->rodada = $competicao->de;
-        //                         $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
-        //                         $rodadas->save();
-
-        //                     endif;
-        //                 }, 3);
-
-        //             endif;
-
-        //         endif;
-
-        //         return 'ok';
-        //     } catch (Exception $e) {
-        //         Log::error('PIX: ' . $e->getMessage());
-        //         return response()->json(['message' => $e->getMessage()], 400);
-        //     }
-
-        // else :
-
         $regras = [
             'id' => 'required',
             'situacao' => 'required',
@@ -516,8 +459,6 @@ class CompeticaoController extends Controller
 
             return true;
         }, 3);
-
-        // endif;
 
         return response()->json($response);
     }
@@ -565,5 +506,61 @@ class CompeticaoController extends Controller
             ->get();
 
         return response()->json($response);
+    }
+
+    public function ligasADM(Request $request)
+    {
+        $user = auth('api')->user();
+
+        $competicoes = Competicoes::where(function ($q) use ($request, $user) {
+
+            if ($user->funcao === 'Dono de Liga')
+                $q->where('usuarios_id', $user->id);
+
+            if ($request->pesquisar) :
+
+                $q->where('nome', 'LIKE', '%' . $request->pesquisar . '%')
+                    ->orWhere('tipo', 'LIKE', '%' . $request->pesquisar . '%');
+
+            endif;
+        })
+            ->orderBy('situacao')
+            ->paginate(100);
+
+        return response()->json([
+            'auth' => $user,
+            'competicoes' => $competicoes
+        ]);
+    }
+
+    public function solicitacoesADM(Request $request)
+    {
+        $user = auth('api')->user();
+
+        $solicitacoes = CompeticoesTransacoes::select('competicoes_transacoes.id', 'competicoes_transacoes.situacao', 'competicoes.nome as competicao', 'times_cartolas.nome', 'competicoes.valor')
+            ->selectRaw('DATE_FORMAT(competicoes_transacoes.created_at, "%d/%m %H:%i") as criado_em')
+            ->join('competicoes', 'competicoes_id', 'competicoes.id')
+            ->join('competicoes_times', 'competicoes_times_id', 'competicoes_times.id')
+            ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+
+            ->where(function ($q) use ($request, $user) {
+
+                if ($user->funcao === 'Dono de Liga')
+                    $q->where('competicoes.usuarios_id', $user->id);
+
+                if ($request->pesquisar) :
+
+                    $q->where('competicoes_transacoes.id', 'LIKE', '%' . $request->pesquisar . '%')
+                        ->orWhere('times_cartolas.nome', 'LIKE', '%' . $request->pesquisar . '%');
+
+                endif;
+            })
+            ->orderBy('competicoes_transacoes.situacao')
+            ->paginate(100);
+
+        return response()->json([
+            'auth' => $user,
+            'solicitacoes' => $solicitacoes
+        ]);
     }
 }

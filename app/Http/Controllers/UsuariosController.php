@@ -67,11 +67,24 @@ class UsuariosController extends Controller
             if ($validator->fails())
                 return response()->json(['message' => $validator->errors()->first()], 400);
 
+            $user = auth('api')->user();
+
+            if ($user->funcao != 'Admin') :
+                if (
+                    $user->funcao != $request->funcao or
+                    $user->plano != $request->plano or
+                    $user->ativo != $request->ativo or
+                    $user->comissao != $request->comissao
+                ) :
+                    return response()->json(['message' => 'Você não tem permissão para alterar esses dados.'], 401);
+                endif;
+            endif;
+
             $usuario = Usuarios::find($request->id);
 
             $usuario->nome = $request->nome;
             $usuario->celular = preg_replace('/[-() ]/', '', $request->celular);
-            $usuario->email = $request->email;
+            #$usuario->email = $request->email;
             $usuario->comissao = $request->comissao;
             $usuario->plano = $request->plano;
             $usuario->funcao = $request->funcao;

@@ -38,6 +38,8 @@ import Contact from './screens/auth/contact';
 import Plans from './screens/auth/plans';
 
 import Users from './screens/adm/users';
+import LeaguesADM from './screens/adm/leagues';
+import TransactionsADM from './screens/adm/transactions';
 
 const PrivateRoute = ({ component: Component }) => localStorage.getItem('token') ? <Component /> : <Navigate to="/" />;
 
@@ -75,6 +77,8 @@ ReactDOM.createRoot(document.getElementById('app')).render(
             <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
 
             <Route path="/auth/adm/usuarios" element={<PrivateRoute component={Users} />} />
+            <Route path="/auth/adm/ligas" element={<PrivateRoute component={LeaguesADM} />} />
+            <Route path="/auth/adm/inscricoes" element={<PrivateRoute component={TransactionsADM} />} />
         </Routes>
     </BrowserRouter>
     // </React.StrictMode>

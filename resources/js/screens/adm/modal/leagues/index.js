@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import { amount, message, swal_success } from '../../utils/helpers';
-import api from '../../utils/api';
+import { amount, message, swal_success } from '../../../../utils/helpers';
+import api from '../../../../utils/api';
 
 import InputMask from "react-input-mask";
 import Loader from 'react-loader-spinner';
@@ -79,7 +79,7 @@ function users({ data, smodal }) {
             </Label>
             <Label>
                 <Text>Função</Text>
-                <Select onChange={(e) => suser({ ...user, funcao: e.target.value })} value={user.funcao}>
+                <Select onChange={(e) => suser({ ...user, funcao: e.target.value })} value={user.funcao} disabled={user.funcao != 'Admin'}>
                     <Option value="Admin">Admin</Option>
                     <Option value="Funcionario">Funcionario</Option>
                     <Option value="Cartoleiro">Cartoleiro</Option>
@@ -88,11 +88,11 @@ function users({ data, smodal }) {
             </Label>
             <Label>
                 <Text>Comissão</Text>
-                <Input onChange={(e) => suser({ ...user, comissao: e.target.value })} value={user.comissao} disabled={user.funcao != 'Dono de Liga'} type="number" />
+                <Input onChange={(e) => suser({ ...user, comissao: e.target.value })} value={user.comissao} disabled={user.funcao != 'Admin'} type="number" />
             </Label>
             <Label>
                 <Text>Plano</Text>
-                <Select onChange={(e) => suser({ ...user, plano: e.target.value })} value={user.plano}>
+                <Select onChange={(e) => suser({ ...user, plano: e.target.value })} value={user.plano} disabled={user.funcao != 'Admin'}>
                     <Option value="Demonstrativo">Demonstrativo</Option>
                     <Option value="Free Cartoleiro">Free Cartoleiro</Option>
                     <Option value="Plano Stats">Plano Stats</Option>
@@ -101,7 +101,7 @@ function users({ data, smodal }) {
             </Label>
             <Label>
                 <Text>Ativo</Text>
-                <Select onChange={(e) => suser({ ...user, ativo: e.target.value })} value={user.ativo}>
+                <Select onChange={(e) => suser({ ...user, ativo: e.target.value })} value={user.ativo} disabled={user.funcao != 'Admin'}>
                     <Option value="Sim">Sim</Option>
                     <Option value="Não">Não</Option>
                 </Select>
