@@ -76,12 +76,14 @@ Route::group([
 
     Route::get('competicao/meus-times', [CompeticaoController::class, 'times']);
     Route::delete('competicao/meus-times/{id}', [CompeticaoController::class, 'deletar_times']);
+    Route::delete('competicao/meus-times/{id}', [CompeticaoController::class, 'deletar_times']);
 
     Route::get('competicao/minhas-ligas', [CompeticaoController::class, 'minhasLigas']);
 
     Route::get('competicao/solicitacoes', [CompeticaoController::class, 'solicitacoes']);
     Route::post('competicao/solicitacao', [CompeticaoController::class, 'solicitacao']);    
-    Route::post('competicao/aceitar-solicitacao', [CompeticaoController::class, 'aceitar_solicitacao']);
+    Route::delete('competicao/deletar-solicitacao/{id}', [CompeticaoController::class, 'deletar_solicitacao']);
+    Route::put('competicao/situacao-solicitacao/{id}', [CompeticaoController::class, 'situacao_solicitacao']);
 
     Route::get('competicao/adm', [CompeticaoController::class, 'ligasADM']);
     Route::get('competicao/solicitacoes', [CompeticaoController::class, 'solicitacoesADM']);

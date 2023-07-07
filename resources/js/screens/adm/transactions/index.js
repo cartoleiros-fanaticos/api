@@ -36,9 +36,7 @@ function transactions() {
 
     const [page, spage] = useState(1);
     const [search, ssearch] = useState('');
-    const [user, sleague] = useState({});
     const [data, sdata] = useState({});
-    const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(true);
 
     async function getData(value = '', page = 1) {
@@ -61,14 +59,14 @@ function transactions() {
 
     async function remove(e) {
 
-        swal_ask('Tem certeza que deseja deletar essa liga fazendo isso você vai deletar todos os dados ligado a ela.')
+        swal_ask('Tem certeza que deseja deletar essa inscrição?')
             .then(async ({ value }) => {
 
                 if (value) {
 
                     try {
 
-                        await api.delete(`competicao/${e.id}`);
+                        await api.delete(`competicao/deletar-solicitacao/${e.id}`);
 
                         getData();
                         sloading(false);
@@ -81,6 +79,35 @@ function transactions() {
                 }
 
             })
+
+    }
+
+    async function status(e) {
+
+        try {
+
+            await api.put(`competicao/situacao-solicitacao/${e.id}`, { situacao: e.situacao });
+
+            const newData = data.solicitacoes.data.map(data => {
+                if(data.id === e.id) data.situacao = data.situacao === 'Aceita' ? 'Rejeitada' : 'Aceita';
+                return data;
+            })
+
+            sdata({ 
+                ...data,
+                solicitacoes: {
+                    ...data.solicitacoes,
+                    data: newData
+                    
+                }
+             });
+
+            sloading(false);
+
+        } catch (e) {
+            message(e);
+            sloading(false);
+        };
 
     }
 
@@ -132,7 +159,7 @@ function transactions() {
                                                     <Td width="270px">{e.competicao}</Td>
                                                     <Td>{e.nome}</Td>
                                                     <Td>{amount(e.valor)}</Td>
-                                                    <Td>{e.situacao}</Td>
+                                                    <Td status={e.situacao}><span onClick={() => status(e)}>{e.situacao}</span></Td>
                                                     <Td width="50px">
                                                         <ActionIcon onClick={() => remove(e)}>delete</ActionIcon>
                                                     </Td>

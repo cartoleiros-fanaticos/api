@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { amount, message, swal_success } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
 
-import InputMask from "react-input-mask";
 import Loader from 'react-loader-spinner';
 
 import {
     Container,
+    Add,
+    List,
+    Item,
+    Clear,
     Label,
     Text,
     Input,
@@ -16,34 +19,46 @@ import {
     Button,
 } from './styles';
 
-function users({ data, smodal }) {
+function leagues({ data, smodal, fnc }) {
 
-    const [user, suser] = useState({ ...data, celular: format_phone(data.celular) });
+    const [league, sleague] = useState(data);
     const [loading, sloading] = useState(false);
 
-    function format_phone(phone) {
-        const ddd = phone.substr(0, 2);
-        const first = phone.substr(2, 5);
-        const second = phone.substr(7, 4);
+    function add() {
+        const percent = document.querySelector('.percent');
 
-        return `(${ddd}) ${first}-${second}`;
+        if (percent.value) {
+
+            sleague({
+                ...league,
+                posicoes: [
+                    ...league.posicoes,
+                    { posicao: league.posicoes.length + 1, percentual: percent.value }
+                ]
+            });
+
+            percent.value = '';
+        }
+
     }
-
-    const form = new FormData();
 
     async function enter(e) {
 
         e.preventDefault();
 
-        for (let x in user)
-            form.append(x, user[x]);
-
         sloading(true);
 
         try {
 
-            await api.post(`usuarios`, form);
+            league.num_posicoes = league.posicoes.length;
+
+            if (data.id)
+                await api.put(`competicao/${data.id}`, league);
+            else
+                await api.post(`competicao`, league);
+
             swal_success('Cadastro atualizado com sucesso.')
+            fnc();
 
             smodal(false);
             sloading(false);
@@ -59,56 +74,78 @@ function users({ data, smodal }) {
         <Container onSubmit={enter}>
             <Label>
                 <Text>Nome</Text>
-                <Input onChange={(e) => suser({ ...user, nome: e.target.value })} value={user.nome} />
+                <Input onChange={(e) => sleague({ ...league, nome: e.target.value })} value={league.nome} />
             </Label>
             <Label>
-                <Text>Senha</Text>
-                <Input onChange={(e) => suser({ ...user, password: e.target.value })} value={user.password} type="password" />
-            </Label>
-            <Label>
-                <Text>Email</Text>
-                <Input onChange={(e) => suser({ ...user, email: e.target.value })} value={user.email} disabled type="email" />
-            </Label>
-            <Label>
-                <Text>Foto</Text>
-                <Input onChange={(e) => { form.append('foto', e.target.files[0]); }} accept="image/png, image/jpeg, image/jpg" type="file" title="&nbsp;" />
-            </Label>
-            <Label>
-                <Text>Celular</Text>
-                <InputMask mask="(99) 99999-9999" required placeholder="WhatsApp" onChange={(e) => suser({ ...user, celular: e.target.value })} value={user.celular} />
-            </Label>
-            <Label>
-                <Text>Função</Text>
-                <Select onChange={(e) => suser({ ...user, funcao: e.target.value })} value={user.funcao} disabled={user.funcao != 'Admin'}>
-                    <Option value="Admin">Admin</Option>
-                    <Option value="Funcionario">Funcionario</Option>
-                    <Option value="Cartoleiro">Cartoleiro</Option>
-                    <Option value="Dono de Liga">Dono de Liga</Option>
+                <Text>Tipo</Text>
+                <Select onChange={(e) => sleague({ ...league, tipo: e.target.value })} value={league.tipo}>
+                    <Option value="">Selecione o tipo</Option>
+                    <Option value="rodada">Rodada</Option>
+                    <Option value="mensal">Mensal</Option>
+                    <Option value="turno">Turno</Option>
+                    <Option value="anual">Anual</Option>
                 </Select>
             </Label>
             <Label>
-                <Text>Comissão</Text>
-                <Input onChange={(e) => suser({ ...user, comissao: e.target.value })} value={user.comissao} disabled={user.funcao != 'Admin'} type="number" />
-            </Label>
-            <Label>
-                <Text>Plano</Text>
-                <Select onChange={(e) => suser({ ...user, plano: e.target.value })} value={user.plano} disabled={user.funcao != 'Admin'}>
-                    <Option value="Demonstrativo">Demonstrativo</Option>
-                    <Option value="Free Cartoleiro">Free Cartoleiro</Option>
-                    <Option value="Plano Stats">Plano Stats</Option>
-                    <Option value="Plano Fanático">Plano Fanático</Option>
-                </Select>
-            </Label>
-            <Label>
-                <Text>Ativo</Text>
-                <Select onChange={(e) => suser({ ...user, ativo: e.target.value })} value={user.ativo} disabled={user.funcao != 'Admin'}>
+                <Text>Com capitão</Text>
+                <Select onChange={(e) => sleague({ ...league, capitao: e.target.value })} value={league.capitao}>
+                    <Option value="">Selecione</Option>
                     <Option value="Sim">Sim</Option>
                     <Option value="Não">Não</Option>
                 </Select>
             </Label>
             <Label>
+                <Text>Comissão</Text>
+                <Input onChange={(e) => sleague({ ...league, comissao: e.target.value })} value={league.comissao} type="number" />
+            </Label>
+            <Label>
+                <Text>Valor</Text>
+                <Input onChange={(e) => sleague({ ...league, valor: e.target.value })} value={league.valor} type="number" />
+            </Label>
+            <Label>
+                <Text>Rodada inicial</Text>
+                <Input onChange={(e) => sleague({ ...league, de: e.target.value })} value={league.de} type="number" />
+            </Label>
+            <Label>
+                <Text>Rodada final</Text>
+                <Input onChange={(e) => sleague({ ...league, ate: e.target.value })} value={league.ate} type="number" />
+            </Label>
+            <Label>
+                <Text>Ativo</Text>
+                <Select onChange={(e) => sleague({ ...league, ativo: e.target.value })} value={league.ativo}>
+                    <Option value="Sim">Sim</Option>
+                    <Option value="Não">Não</Option>
+                </Select>
+            </Label>
+            <Label>
+                <Text>Posições</Text>
+                <Item>
+                    <Input className='percent' placeholder="Digite um valor percentual" type="number" />
+                    <Add onClick={add}>Adicionar</Add>
+                    <List>
+                        {
+                            league.posicoes.length ?
+                                <>
+                                    <Clear onClick={() => sleague({ ...league, posicoes: [] })}>Limpar posicões</Clear>
+                                    {
+                                        league.posicoes.map((e, i) =>
+                                            <p key={i}>{e.posicao}º posição - {e.percentual}% do valor total mesnos comissão</p>
+                                        )
+                                    }
+                                </>
+                                :
+                                <></>
+                        }
+                    </List>
+                </Item>
+            </Label>
+            <Label>
+                <Text>Descrição</Text>
+                <Input onChange={(e) => sleague({ ...league, descricao: e.target.value })} value={league.descricao} />
+            </Label>
+            <Label>
                 <Text>&nbsp;</Text>
-                <Button>
+                <Button type="submit">
                     {loading ? <Loader visible={true} type="TailSpin" color="#000" height={18} width={18} /> : <span>Atualizar</span>}
                 </Button>
             </Label>
@@ -116,4 +153,4 @@ function users({ data, smodal }) {
     );
 }
 
-export default users;
+export default leagues;

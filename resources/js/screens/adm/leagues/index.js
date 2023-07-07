@@ -15,6 +15,7 @@ import {
     Icon,
     Label,
     Input,
+    Button,
     List,
     Table,
     Thead,
@@ -36,7 +37,7 @@ function leagues() {
 
     const [page, spage] = useState(1);
     const [search, ssearch] = useState('');
-    const [user, sleague] = useState({});
+    const [league, sleague] = useState({});
     const [data, sdata] = useState({});
     const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(true);
@@ -104,6 +105,10 @@ function leagues() {
                             <Icon>manage_accounts</Icon>
                             {data.competicoes.total} Ligas
                         </Title>
+                        <Button onClick={() => {
+                            smodal(true);
+                            sleague({ posicoes: [], ativo: 'Sim' });
+                        }}>Criar liga</Button>
                         <Label>
                             <Icon>search</Icon>
                             <Input onKeyUp={onKeyUp} onChange={onChange} />
@@ -177,12 +182,13 @@ function leagues() {
                 modal &&
                 <Modal
                     icon="verified_user"
-                    title="Cadastrar Ligas"
+                    title={(league.id ? 'Editar' : 'Cadastrar') + ' Ligas'}
                     data={league}
                     modal={modal}
                     smodal={smodal}
+                    fnc={getData}
                     Component={ModalLeagues}
-                    height='430px'
+                    height='500px'
                 />
             }
         </>

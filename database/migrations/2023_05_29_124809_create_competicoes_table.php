@@ -26,8 +26,6 @@ return new class extends Migration
             $table->enum('situacao', ['Aguardando', 'Em andamento', 'Encerrada'])->default('Aguardando');
             $table->enum('capitao', ['Sim', 'Não'])->default('Sim');
 
-            $table->enum('provedor', ['MERCADO PAGO'])->default('MERCADO PAGO');
-
             $table->foreignId('usuarios_id')
                 ->constrained('usuarios')
                 ->onDelete('cascade');

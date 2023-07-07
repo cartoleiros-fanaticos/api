@@ -3,25 +3,31 @@ import styled from 'styled-components';
 export const Header = styled.div`  
     padding: 10px;
     color: #f1f1f1;
-    height: 50px;
     margin-bottom: 15px;
     background-color: #f1f1f1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 200px;
+    grid-column-gap: 10px;
+
+    @media screen and (max-width:900px){
+        grid-template-columns: auto 180px;        
+    }
 `;
 
 export const Title = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 150px;
     color: #333;
     align-items: center;
+    display: flex;
+
+    @media screen and (max-width:900px){
+        font-size: 0.8em;
+    }
 `;
 
 export const Icon = styled.i.attrs(() => ({
     className: 'material-icons'
 }))` 
+    margin-right: 10px;
 `;
 
 export const Label = styled.label`
@@ -30,6 +36,10 @@ export const Label = styled.label`
     align-items: center;
     background-color: #fff;
     padding: 5px;
+
+    i {
+        color: #666;
+    }
 `;
 
 export const Input = styled.input.attrs(() => ({

@@ -77,7 +77,6 @@ class CompeticaoController extends Controller
             'de' => 'required',
             'ate' => 'required',
             'capitao' => 'required',
-            'provedor' => 'required',
             'posicoes' => 'required',
         ];
 
@@ -90,7 +89,6 @@ class CompeticaoController extends Controller
             'de.required' => 'O campo rodada de início é obrigatório.',
             'ate.required' => 'O campo rodada final é obrigatório.',
             'capitao.required' => 'O campo capitão é obrigatório.',
-            'provedor' => 'O campo provedor é obrigatório.',
             'posicoes' => 'O campo posicoes é obrigatório.',
         ];
 
@@ -146,7 +144,6 @@ class CompeticaoController extends Controller
             $competicao->ate = $ate;
             $competicao->ativo = $request->ativo;
             $competicao->capitao = $request->capitao;
-            $competicao->provedor = $request->provedor;
             $competicao->usuarios_id = $user->id;
 
             $competicao->save();
@@ -244,7 +241,6 @@ class CompeticaoController extends Controller
             'de' => 'required',
             'ate' => 'required',
             'capitao' => 'required',
-            'provedor' => 'required',
             'posicoes' => 'required',
         ];
 
@@ -257,7 +253,6 @@ class CompeticaoController extends Controller
             'de.required' => 'O campo rodada de início é obrigatório.',
             'ate.required' => 'O campo rodada final é obrigatório.',
             'capitao.required' => 'O campo capitão é obrigatório.',
-            'provedor' => 'O campo provedor é obrigatório.',
             'posicoes' => 'O campo posicoes é obrigatório.',
         ];
 
@@ -313,7 +308,6 @@ class CompeticaoController extends Controller
             $competicao->ate = $ate;
             $competicao->ativo = $request->ativo;
             $competicao->capitao = $request->capitao;
-            $competicao->provedor = $request->provedor;
             $competicao->usuarios_id = $user->id;
 
             $competicao->save();
@@ -345,12 +339,6 @@ class CompeticaoController extends Controller
     public function destroy(string $id)
     {
         $response = Competicoes::destroy($id);
-        return response()->json($response);
-    }
-
-    public function deletar_times($id)
-    {
-        $response = CompeticoesTimes::destroy($id);
         return response()->json($response);
     }
 
@@ -421,6 +409,11 @@ class CompeticaoController extends Controller
         return response()->json($response);
     }
 
+    public function deletar_solicitacao($id){
+        $response = CompeticoesTransacoes::destroy($id);
+        return response()->json($response);
+    }
+
     public function aceitar_solicitacao(Request $request)
     {
 
@@ -463,6 +456,15 @@ class CompeticaoController extends Controller
         return response()->json($response);
     }
 
+    public function situacao_solicitacao(Request $request, $id){      
+
+        $transacao = CompeticoesTransacoes::find($id);
+        $transacao->situacao = $request->situacao === 'Aceita' ? 'Rejeitada' : 'Aceita';
+        $response = $transacao->save();
+
+        return response()->json($response);
+    }
+
     public function solicitacoes(Request $request)
     {
 
@@ -493,6 +495,12 @@ class CompeticaoController extends Controller
         return response()->json($response);
     }
 
+    public function deletar_times($id)
+    {
+        $response = CompeticoesTimes::destroy($id);
+        return response()->json($response);
+    }
+
     public function minhasLigas(Request $request)
     {
         $user = auth('api')->user();
@@ -512,18 +520,19 @@ class CompeticaoController extends Controller
     {
         $user = auth('api')->user();
 
-        $competicoes = Competicoes::where(function ($q) use ($request, $user) {
+        $competicoes = Competicoes::with('posicoes')
+            ->where(function ($q) use ($request, $user) {
 
-            if ($user->funcao === 'Dono de Liga')
-                $q->where('usuarios_id', $user->id);
+                if ($user->funcao === 'Dono de Liga')
+                    $q->where('usuarios_id', $user->id);
 
-            if ($request->pesquisar) :
+                if ($request->pesquisar) :
 
-                $q->where('nome', 'LIKE', '%' . $request->pesquisar . '%')
-                    ->orWhere('tipo', 'LIKE', '%' . $request->pesquisar . '%');
+                    $q->where('nome', 'LIKE', '%' . $request->pesquisar . '%')
+                        ->orWhere('tipo', 'LIKE', '%' . $request->pesquisar . '%');
 
-            endif;
-        })
+                endif;
+            })
             ->orderBy('situacao')
             ->paginate(100);
 

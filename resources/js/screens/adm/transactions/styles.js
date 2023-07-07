@@ -3,25 +3,31 @@ import styled from 'styled-components';
 export const Header = styled.div`  
     padding: 10px;
     color: #f1f1f1;
-    height: 50px;
     margin-bottom: 15px;
     background-color: #f1f1f1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 200px;
+    grid-column-gap: 10px;
+
+    @media screen and (max-width:900px){
+        grid-template-columns: auto 180px;        
+    }
 `;
 
 export const Title = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 120px;
     color: #333;
     align-items: center;
+    display: flex;
+
+    @media screen and (max-width:900px){
+        font-size: 0.8em;
+    }
 `;
 
 export const Icon = styled.i.attrs(() => ({
     className: 'material-icons'
 }))` 
+    margin-right: 10px;
 `;
 
 export const Label = styled.label`
@@ -30,11 +36,15 @@ export const Label = styled.label`
     align-items: center;
     background-color: #fff;
     padding: 5px;
+
+    i {
+        color: #666;
+    }
 `;
 
 export const Input = styled.input.attrs(() => ({
     type: 'search',
-    placeholder: 'Digite nome ou email'
+    placeholder: 'Digite id ou time'
 }))`
     padding: 5px;
     color: #666;
@@ -104,7 +114,14 @@ export const Td = styled.td`
     padding: 10px 5px;
     text-align: center;
     font-size: 0.9em;
-    color: #333;
+    color: ${({ status }) => status === 'Aceita' ? 'green' : (status === 'Rejeitada' ? 'red' : '#333')};
+
+    span {
+        &:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
 
     &.action {
         display: flex;
@@ -125,6 +142,7 @@ export const ActionIcon = styled.i.attrs(() => ({
     border-radius: 0.3em;
     font-size: 18px;
     cursor: pointer;
+    margin: auto;
 
     &:hover {
         color: #fff;

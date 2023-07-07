@@ -3,25 +3,31 @@ import styled from 'styled-components';
 export const Header = styled.div`  
     padding: 10px;
     color: #f1f1f1;
-    height: 50px;
     margin-bottom: 15px;
     background-color: #f1f1f1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: grid;
+    grid-template-columns: auto 120px 200px;
+    grid-column-gap: 10px;
+
+    @media screen and (max-width:900px){
+        grid-template-columns: auto 100px 150px;        
+    }
 `;
 
 export const Title = styled.div`
-    display: flex;
-    justify-content: space-between;
-    width: 120px;
     color: #333;
     align-items: center;
+    display: flex;
+
+    @media screen and (max-width:900px){
+        font-size: 0.8em;
+    }
 `;
 
 export const Icon = styled.i.attrs(() => ({
     className: 'material-icons'
 }))` 
+    margin-right: 10px;
 `;
 
 export const Label = styled.label`
@@ -30,11 +36,15 @@ export const Label = styled.label`
     align-items: center;
     background-color: #fff;
     padding: 5px;
+
+    i {
+        color: #666;
+    }
 `;
 
 export const Input = styled.input.attrs(() => ({
     type: 'search',
-    placeholder: 'Digite nome ou email'
+    placeholder: 'Digite nome'
 }))`
     padding: 5px;
     color: #666;
@@ -42,6 +52,20 @@ export const Input = styled.input.attrs(() => ({
     border: none;
     flex: 1;
     background-color: transparent;
+`;
+
+export const Button = styled.button`
+    padding: 10px;
+    border: solid 1px #000;
+    background-color: #F68D42;
+    outline: none;
+    width: 100%;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+    }
 `;
 
 export const List = styled.div`
