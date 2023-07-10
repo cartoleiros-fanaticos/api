@@ -21,7 +21,7 @@ return new class extends Migration
                 ->constrained('competicoes_times')
                 ->onDelete('cascade');
 
-            $table->unique(['atleta_id', 'competicoes_times_id']);
+            $table->unique(['rodada', 'atleta_id', 'competicoes_times_id']);
 
             $table->softDeletes();
         });

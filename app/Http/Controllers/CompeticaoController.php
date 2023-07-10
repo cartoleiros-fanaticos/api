@@ -198,20 +198,20 @@ class CompeticaoController extends Controller
                 ) as pontos")
             ->join('competicoes', 'competicoes.id', 'competicoes_transacoes.competicoes_id')
             ->join('competicoes_times', 'competicoes_times.id', 'competicoes_transacoes.competicoes_times_id')
-            ->join('competicoes_rodadas', function ($join) {
-                $join->on('competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
-                    ->whereColumn('competicoes_rodadas.competicoes_id', 'competicoes.id');
-            })
+            // ->join('competicoes_rodadas', function ($join) {
+            //     $join->on('competicoes_rodadas.competicoes_times_id', 'competicoes_times.id')
+            //         ->whereColumn('competicoes_rodadas.competicoes_id', 'competicoes.id');
+            // })
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->join('times_cartola_rodadas', function ($join) use ($rodada_atual) {
                 $join->on('times_cartola_rodadas.times_cartolas_id', 'times_cartolas.id')
                     ->whereColumn('times_cartola_rodadas.rodada_time_id', '>=', 'de')
-                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate')
-                    ->where('times_cartola_rodadas.rodada_time_id', $rodada_atual);
+                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate');
+                    //->where('times_cartola_rodadas.rodada_time_id', $rodada_atual);
             })
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')
-            ->groupBy('times_cartolas.time_id')
+            ->groupBy('times_cartolas.id')
             ->orderBy($game->status_mercado != 1 ? 'pontos' : 'pontos_total', 'DESC')
             ->paginate(100);
 

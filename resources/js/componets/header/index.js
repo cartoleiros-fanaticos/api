@@ -219,7 +219,7 @@ function header() {
                             </Item>
                             <Item>
                                 <NavLink to="/auth/minhas-inscricoes">
-                                    <Icon>inscrições</Icon>
+                                    <Icon>post_add</Icon>
                                     MINHAS INSCRIÇÕES
                                 </NavLink>
                             </Item>

@@ -55,8 +55,8 @@ class Competicao extends Command
             ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_times.id')
             ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
             ->where('competicoes_transacoes.situacao', 'Aceita')
-             ->where('de', '>=', $rodada_atual)
-            //->where('ate', '<=', $rodada_atual)
+             //->where('de', '>=', $rodada_atual)
+            //->where('ate', '>=', $rodada_atual)
             ->where('competicoes.situacao', '!=', 'Encerrada')
             ->get()
             ->keyBy('time_id');
