@@ -16,7 +16,7 @@ import {
     Button,
 } from './styles';
 
-function users({ data, smodal }) {
+function users({ data, smodal, fnc = () => {} }) {
 
     const [user, suser] = useState({ ...data, celular: format_phone(data.celular) });
     const [loading, sloading] = useState(false);
@@ -45,6 +45,8 @@ function users({ data, smodal }) {
             await api.post(`usuarios`, form);
             swal_success('Cadastro atualizado com sucesso.')
 
+            fnc();
+
             smodal(false);
             sloading(false);
 
@@ -65,7 +67,7 @@ function users({ data, smodal }) {
                 <Text>Senha</Text>
                 <Input onChange={(e) => suser({ ...user, password: e.target.value })} value={user.password} type="password" />
             </Label>
-            <Label>
+           <Label>
                 <Text>Email</Text>
                 <Input onChange={(e) => suser({ ...user, email: e.target.value })} value={user.email} disabled type="email" />
             </Label>
@@ -79,20 +81,20 @@ function users({ data, smodal }) {
             </Label>
             <Label>
                 <Text>Função</Text>
-                <Select onChange={(e) => suser({ ...user, funcao: e.target.value })} value={user.funcao} disabled={user.funcao != 'Admin'}>
+                <Select onChange={(e) => suser({ ...user, funcao: e.target.value })} value={user.funcao} disabled={user.level != 'Admin'}>
                     <Option value="Admin">Admin</Option>
                     <Option value="Funcionario">Funcionario</Option>
                     <Option value="Cartoleiro">Cartoleiro</Option>
                     <Option value="Dono de Liga">Dono de Liga</Option>
                 </Select>
             </Label>
-            <Label>
+             <Label>
                 <Text>Comissão</Text>
-                <Input onChange={(e) => suser({ ...user, comissao: e.target.value })} value={user.comissao} disabled={user.funcao != 'Admin'} type="number" />
+                <Input onChange={(e) => suser({ ...user, comissao: e.target.value })} value={user.comissao} disabled={user.level != 'Admin'} type="number" />
             </Label>
             <Label>
                 <Text>Plano</Text>
-                <Select onChange={(e) => suser({ ...user, plano: e.target.value })} value={user.plano} disabled={user.funcao != 'Admin'}>
+                <Select onChange={(e) => suser({ ...user, plano: e.target.value })} value={user.plano} disabled={user.level != 'Admin'}>
                     <Option value="Demonstrativo">Demonstrativo</Option>
                     <Option value="Free Cartoleiro">Free Cartoleiro</Option>
                     <Option value="Plano Stats">Plano Stats</Option>
@@ -101,7 +103,7 @@ function users({ data, smodal }) {
             </Label>
             <Label>
                 <Text>Ativo</Text>
-                <Select onChange={(e) => suser({ ...user, ativo: e.target.value })} value={user.ativo} disabled={user.funcao != 'Admin'}>
+                <Select onChange={(e) => suser({ ...user, ativo: e.target.value })} value={user.ativo} disabled={user.level != 'Admin'}>
                     <Option value="Sim">Sim</Option>
                     <Option value="Não">Não</Option>
                 </Select>

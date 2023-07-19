@@ -176,9 +176,10 @@ function users() {
                 <Modal
                     icon="manage_accounts"
                     title="Editar Usuários"
-                    data={user}
+                    data={{ ...user, level: data.auth.funcao }}
                     modal={modal}
                     smodal={smodal}
+                    fnc={getData}
                     Component={ModalUsers}
                     height='430px'
                 />

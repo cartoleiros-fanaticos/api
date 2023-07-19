@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.form.attrs(() => ({
-    method: 'PUT'
-}))`
+export const Container = styled.form`
     display: grid;
     grid-template-columns: auto 50%;
     grid-gap: 15px;

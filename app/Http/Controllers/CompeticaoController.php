@@ -206,8 +206,8 @@ class CompeticaoController extends Controller
             ->join('times_cartola_rodadas', function ($join) use ($rodada_atual) {
                 $join->on('times_cartola_rodadas.times_cartolas_id', 'times_cartolas.id')
                     ->whereColumn('times_cartola_rodadas.rodada_time_id', '>=', 'de')
-                    ->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate');
-                    //->where('times_cartola_rodadas.rodada_time_id', $rodada_atual);
+                    //->whereColumn('times_cartola_rodadas.rodada_time_id', '<=', 'ate');
+                    ->where('times_cartola_rodadas.rodada_time_id', '<=', $rodada_atual);
             })
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')

@@ -94,7 +94,7 @@ function nav({ data }) {
                 <Modal
                     icon="manage_accounts"
                     title="Editar Usuários"
-                    data={data.auth}
+                    data={{ ...data.auth, level: data.auth.funcao }}
                     modal={modal}
                     smodal={smodal}
                     Component={ModalUsers}
