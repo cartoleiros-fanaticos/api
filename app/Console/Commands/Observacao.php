@@ -61,9 +61,10 @@ class Observacao extends Command
                             clube_casa_id,
                             GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
                         FROM partidas
-                        WHERE valida = 1
+                        WHERE valida = 1 AND rodada != ' . $game->rodada_atual . '
                         GROUP BY clube_casa_id
                     ) p2 ON p2.clube_casa_id = p1.clube_casa_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= 3
+                    WHERE valida = 1 AND rodada != ' . $game->rodada_atual . '
                     ORDER BY 
                         p1.clube_casa_id
                 );
@@ -80,9 +81,10 @@ class Observacao extends Command
                             clube_visitante_id,
                             GROUP_CONCAT(DISTINCT rodada ORDER BY rodada DESC) rodadas
                         FROM partidas
-                        WHERE valida = 1
+                        WHERE valida = 1 AND rodada != ' . $game->rodada_atual . '
                         GROUP BY clube_visitante_id
                     ) p2 ON p2.clube_visitante_id = p1.clube_visitante_id AND FIND_IN_SET(p1.rodada, p2.rodadas) <= 3
+                    WHERE valida = 1 AND rodada != ' . $game->rodada_atual . '
                     ORDER BY 
                         p1.clube_visitante_id
                 );
@@ -104,7 +106,7 @@ class Observacao extends Command
 
             foreach ((array) $response['atletas'] as $key => $val) :
 
-                $partida = DB::SELECT('
+                    $partida = DB::SELECT('
                     SELECT 
                         (
                             CASE 
@@ -122,64 +124,64 @@ class Observacao extends Command
                     WHERE rodada = ? AND (clube_casa_id = ? OR clube_visitante_id = ?) AND valida = 1
                  ', [$val['clube_id'], $val['clube_id'], $game->rodada_atual, $val['clube_id'], $val['clube_id']])[0];
 
-                if ($partida->posicao === 'mandante') :
+                    if ($partida->posicao === 'mandante') :
 
-                    $parciais = DB::SELECT('
+                        $parciais = DB::SELECT('
                         SELECT 
-                            ROUND(IFNULL(SUM(pontuacao), 0), 2) as pontuacao
+                            ROUND(IFNULL(SUM(pontuacao), 0) / 3, 2) as pontuacao
                         FROM parciais                        
                         WHERE atleta_id = ? AND parciais.rodada IN (' .  $mandante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') . ')
                     ', [$val['atleta_id']])[0];
 
-                    $max_pontuacao = DB::SELECT('
+                        $max_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                         FROM parciais
                         WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
-                    $min_pontuacao = DB::SELECT('
+                        $min_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                         FROM parciais
                         WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
-                else :
+                    else :
 
-                    $parciais = DB::SELECT('
+                        $parciais = DB::SELECT('
                         SELECT 
-                            ROUND(IFNULL(AVG(pontuacao), 0), 2) as pontuacao
+                            ROUND(IFNULL(AVG(pontuacao), 0) / 3, 2) as pontuacao
                         FROM parciais                        
                         WHERE atleta_id = ? AND parciais.rodada IN (' .  $visitante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') . ')
                     ', [$val['atleta_id']])[0];
 
-                    $max_pontuacao = DB::SELECT('
+                        $max_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                         FROM parciais
                         WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
-                    $min_pontuacao = DB::SELECT('
+                        $min_pontuacao = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                         FROM parciais
                         WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
                     ', [$val['atleta_id']])[0];
 
-                endif;
+                    endif;
 
-                if (COLLECT($parciais)->count()) :
+                    if (COLLECT($parciais)->count()) :
 
-                    $observacao = 'O jogador ' . $val['apelido'] . ' nos últimos 3 jogos como ' . $partida->posicao . ' tem uma média de ' . $parciais->pontuacao . ' pontos, nesta rodada ele joga contra ( ' . $clubes[$partida->adversario_id]->nome . ' ) a maior nota dele como ' . $partida->posicao . ' foi ' . $max_pontuacao->pontos . ' pontos e a menor foi ' . $min_pontuacao->pontos . ' pontos.';
+                        $observacao = 'O jogador ' . $val['apelido'] . ' nos últimos 3 jogos como ' . $partida->posicao . ' tem uma média de ' . $parciais->pontuacao . ' pontos, nesta rodada ele joga contra ( ' . $clubes[$partida->adversario_id]->nome . ' ) a maior nota dele como ' . $partida->posicao . ' foi ' . $max_pontuacao->pontos . ' pontos e a menor foi ' . $min_pontuacao->pontos . ' pontos.';
 
-                    Atletas::where('atleta_id', $val['atleta_id'])
-                        ->update([
-                            'observacao' => $observacao
-                        ]);
+                        Atletas::where('atleta_id', $val['atleta_id'])
+                            ->update([
+                                'observacao' => $observacao
+                            ]);
 
-                endif;
+                    endif;
 
             endforeach;
 
