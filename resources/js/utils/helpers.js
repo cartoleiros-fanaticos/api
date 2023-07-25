@@ -35,6 +35,8 @@ export const share_league = (data, orderBy) => {
 
     let pontos = orderBy === 'RODADA' ? 'pontos' : 'pontos_total';
 
+    data.times.data.sort((a, b) => a[pontos] < b[pontos] ? 1 : -1);
+
     for (let x in data.times.data)
         text += `${parseInt(x) < 9 ? ' ' : ''}*${parseInt(x) + 1}º* - *${(data.times.data[x][pontos] || 0).toFixed(2) + ' pts'}* ${data.times.data[x].nome.substr(0, 11).toLowerCase()}` + br;
 

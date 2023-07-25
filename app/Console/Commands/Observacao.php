@@ -128,7 +128,7 @@ class Observacao extends Command
 
                         $parciais = DB::SELECT('
                         SELECT 
-                            ROUND(IFNULL(SUM(pontuacao), 0) / 3, 2) as pontuacao
+                            ROUND(IFNULL(AVG(pontuacao), 0), 2) as pontuacao
                         FROM parciais                        
                         WHERE atleta_id = ? AND parciais.rodada IN (' .  $mandante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') . ')
                     ', [$val['atleta_id']])[0];
@@ -151,7 +151,7 @@ class Observacao extends Command
 
                         $parciais = DB::SELECT('
                         SELECT 
-                            ROUND(IFNULL(AVG(pontuacao), 0) / 3, 2) as pontuacao
+                            ROUND(IFNULL(AVG(pontuacao), 0), 2) as pontuacao
                         FROM parciais                        
                         WHERE atleta_id = ? AND parciais.rodada IN (' .  $visitante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') . ')
                     ', [$val['atleta_id']])[0];
