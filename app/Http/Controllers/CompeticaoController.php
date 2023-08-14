@@ -59,6 +59,7 @@ class CompeticaoController extends Controller
                 if ($request->type)
                     $q->where('tipo', $request->type);
             })
+            ->orderBy('de', 'DESC')
             ->paginate(50);
 
         return response()->json($response);

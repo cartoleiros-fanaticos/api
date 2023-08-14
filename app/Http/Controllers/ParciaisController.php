@@ -138,8 +138,6 @@ class ParciaisController extends Controller
     public function parciais_time($id)
     {
 
-        Log::debug(config('global.multiplicador_capitao'));
-
         $game = Game::first();
 
         $rodada_atual = $game->rodada_atual;
@@ -181,7 +179,7 @@ class ParciaisController extends Controller
                 ]
             );
 
-            $rodada_atual = $game->game_over ? 38 : $rodada_atual;//($game->status_mercado != 1 ? $rodada_atual : ($rodada_atual - 1));
+            $rodada_atual = $game->game_over ? 38 : $rodada_atual; //($game->status_mercado != 1 ? $rodada_atual : ($rodada_atual - 1));
 
             $rodada = TimesCartolaRodadas::selectRaw('MAX(rodada_time_id) as rodada_atual_time')
                 ->where('times_cartolas_id', $time_cartola->id)
@@ -191,12 +189,12 @@ class ParciaisController extends Controller
 
             while ($rodada_atual_time <= $rodada_atual) :
 
-                $response = $client->get("https://api.cartolafc.globo.com/time/id/$id/$rodada_atual_time");
+                $response = $client->get("https://api.cartola.globo.com/time/id/$id/$rodada_atual_time");
                 $response = json_decode($response->getBody(), true);
 
                 if (count($response['atletas'])) :
 
-                    DB::transaction(function () use ($response, $rodada_atual_time, $time_cartola, $game) {
+                    DB::transaction(function () use ($client, $response, $rodada_atual_time, $id, $time_cartola, $game) {
 
                         $atletas = COLLECT($response['atletas'])->keyBy('atleta_id');
 
@@ -206,7 +204,13 @@ class ParciaisController extends Controller
 
                         if ($game->status_mercado != 1 && $rodada_atual_time === $game->rodada_atual) :
 
+                            $substituicao = $client->get("https://api.cartola.globo.com/time/substituicoes/$id/$rodada_atual_time");
+                            $substituicao = json_decode($substituicao->getBody(), true);
+
                             $atleta_id = COLLECT($response['atletas'])->pluck('atleta_id'); //->merge(COLLECT(isset($response['reservas']) ? $response['reservas'] : [])->pluck('atleta_id'));
+
+                            foreach ($substituicao as $val)
+                                $atleta_id->push($val['entrou']['atleta_id']);
 
                             $parciais = Parciais::select('atleta_id', 'pontuacao')
                                 ->whereIn('atleta_id', $atleta_id)
