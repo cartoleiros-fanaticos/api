@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { amount, message } from '../../utils/helpers';
 import api from '../../utils/api';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Modal from '../../componets/modal';
 import ModalMatches from '../../modal/matches';
@@ -40,6 +41,8 @@ import {
 } from './styles';
 
 function player({ data, fnc }) {
+
+    const seasson = useSelector(state => state);
 
     const [modal, smodal] = useState(false);
     const [loading, sloading] = useState(false);
@@ -86,7 +89,7 @@ function player({ data, fnc }) {
 
         const time_id = atleta.mando === 'visitante' ? atleta.clube_visitante_id : atleta.clube_casa_id;
   
-        const { data } = await api.get(`pontos-cedidos/atletas?time_id=${time_id}&posicao_id=${atleta.posicao_id}`);
+        const { data } = await api.get(`pontos-cedidos/atletas?time_id=${time_id}&posicao_id=${atleta.posicao_id}&temporada=${seasson}`);
   
         sdatamatches(data);
         sloading(false);

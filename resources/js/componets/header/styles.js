@@ -139,7 +139,7 @@ export const Item = styled.li`
         opacity: 1;
     }
 
-    a.planos, a.painel {
+    a.planos, a.painel, a.temporada {
         border: solid 1px #F68D42;
         background-color: #F68D42;
         margin-left: 10px;
@@ -211,6 +211,17 @@ export const Item = styled.li`
         }
 
         a.painel {
+            border: none;
+            background-color: transparent;
+            margin-left: 0;
+            color: #000 !important;
+
+            i {
+                color: #F68D42;
+            }
+        }        
+
+        a.temporada {
             border: none;
             background-color: transparent;
             margin-left: 0;

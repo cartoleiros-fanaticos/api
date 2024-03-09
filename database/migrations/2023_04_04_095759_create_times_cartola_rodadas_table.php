@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('times_cartola_rodadas', function (Blueprint $table) {
             $table->id();
-
+            $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->integer('rodada_time_id');
             $table->integer('capitao_id')->nullable();
             $table->integer('esquema_id');

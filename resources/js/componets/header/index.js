@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import moment from 'moment';
 
 import Loader from 'react-loader-spinner';
 import { NavLink } from "react-router-dom";
@@ -24,6 +26,11 @@ import {
 } from './styles';
 
 function header() {
+
+    const seasson = useSelector(state => state);
+    const dispatch = useDispatch();
+
+    const year = moment().format('Y');
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -265,6 +272,14 @@ function header() {
                             </NavLink>
                         </Item>
                     }
+                    <Item>
+                        <ButtonLink className="temporada" onClick={() => {
+                            dispatch({ type: 'ADD_SEASSON', seasson: year == seasson ? seasson - 1 : seasson + 1 });
+                        }}>
+                            <Icon>today</Icon>
+                            TEMPORADA { seasson }
+                        </ButtonLink>
+                    </Item>
                 </Nav>
             </Container >
             <Screen onClick={close_menu} ref={screen}></Screen>

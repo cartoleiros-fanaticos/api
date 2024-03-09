@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Loader from 'react-loader-spinner';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { amount, message } from '../../../utils/helpers';
 import api from '../../../utils/api';
@@ -38,6 +39,8 @@ import { Message } from '../../../utils/styles';
 
 function Player() {
 
+  const seasson = useSelector(state => state);
+  
   const [modal_player, smodalplayer] = useState(false);
   const [modal_compare, smodalcompare] = useState(false);
   const [data_player, sdataplayer] = useState({});
@@ -75,7 +78,7 @@ function Player() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [seasson])
 
   async function getData() {
 
@@ -83,7 +86,7 @@ function Player() {
 
       sloadingdata(true);
 
-      const { data } = await api.get(`atletas?clube_id=${filter.clube_id}&posicao_id=${filter.posicao_id}&status_id=${filter.status_id}&scout=${filter.scout}`);
+      const { data } = await api.get(`atletas?clube_id=${filter.clube_id}&posicao_id=${filter.posicao_id}&status_id=${filter.status_id}&scout=${filter.scout}&temporada=${seasson}`);
 
       sdata(data);
       splayers(data.atletas);
@@ -111,7 +114,7 @@ function Player() {
 
           smodalcompare(true);
 
-          const response = await api.get(`compare/atletas?atleta_a=${player_id}&atleta_b=${atleta_id}`);
+          const response = await api.get(`compare/atletas?atleta_a=${player_id}&atleta_b=${atleta_id}&temporada=${seasson}`);
 
           sdataplayer(response.data);
           sdata(data);
@@ -120,7 +123,7 @@ function Player() {
         } else {
 
           smodalplayer(true);
-          const response = await api.get(`atletas/${atleta_id}`);
+          const response = await api.get(`atletas/${atleta_id}?temporada=${seasson}`);
           sdataplayer(response.data);
         }
 

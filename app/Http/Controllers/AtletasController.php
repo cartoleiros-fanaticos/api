@@ -22,8 +22,16 @@ use DB;
 
 class AtletasController extends Controller
 {
+
+    private $temporada;
+
+    public function __construct(Request $request)
+    {
+        $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
+    }
     public function index(Request $request)
     {
+
         $game = Game::first();
 
         $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'minimo_para_valorizar', 'clube_id', 'posicao_id', 'status_id', 'rodada_id', 'A', 'G', 'CA', 'CV', 'DP', 'FC', 'FD', 'FF', 'FS', 'FT', 'GC', 'GS', 'I', 'PP', 'DS', 'SG', 'PS', 'PC', 'DE')
@@ -39,22 +47,27 @@ class AtletasController extends Controller
                 if ($request->status_id)
                     $q->where('status_id', $request->status_id);
             })
+            ->where('temporada', $this->temporada)
             ->orderBy(($request->scout ?? 'preco_num'), 'DESC')
             ->get();
 
         $clubes = Clubes::select('id', 'nome', 'abreviacao', '60x60')
+            ->where('temporada', $this->temporada)
             ->get()
             ->keyBy('id');
 
         $posicoes = Posicoes::select('id', 'nome')
+            ->where('temporada', $this->temporada)
             ->get()
             ->keyBy('id');
 
         $status = Status::select('id', 'nome')
+            ->where('temporada', $this->temporada)
             ->get()
             ->keyBy('id');
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->where('temporada', $this->temporada)
             ->orderBy('tipo')
             ->get();
 
@@ -70,7 +83,8 @@ class AtletasController extends Controller
     public function show(Request $request, string $id)
     {
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $atleta = DB::SELECT('
                 SELECT 
@@ -115,10 +129,10 @@ class AtletasController extends Controller
                     IF(clube_id = clube_visitante_id, \'mandante\', \'visitante\') as mando
 
                 FROM atletas
-                INNER JOIN partidas ON rodada = ? AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)
-                INNER JOIN posicoes ON posicoes.id = posicao_id
-                WHERE atleta_id = ?
-            ', [$game->rodada_atual, $id])[0];
+                INNER JOIN partidas ON rodada = ? AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id) AND partidas.temporada = ?
+                INNER JOIN posicoes ON posicoes.id = posicao_id AND posicoes.temporada = ?
+                WHERE atleta_id = ? AND atletas.temporada = ?
+            ', [$game->rodada_atual, $this->temporada, $this->temporada, $id, $this->temporada])[0];
 
         $geral = DB::select('
                 SELECT 
@@ -126,9 +140,9 @@ class AtletasController extends Controller
                     IFNULL(AVG(pontuacao), 0) media,
                     COUNT(partidas.id) jogos
                 FROM parciais 
-                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)
-                WHERE atleta_id = ?
-            ', [$id])[0];
+                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id) AND partidas.temporada = ?
+                WHERE atleta_id = ? AND parciais.temporada = ?
+            ', [$this->temporada, $id, $this->temporada])[0];
 
         $casa = DB::select('
                 SELECT 
@@ -136,9 +150,9 @@ class AtletasController extends Controller
                     IFNULL(AVG(pontuacao), 0) media,
                     COUNT(partidas.id) jogos
                 FROM parciais
-                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_casa_id = clube_id
-                WHERE atleta_id = ?
-            ', [$id])[0];
+                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_casa_id = clube_id AND partidas.temporada = ?
+                WHERE atleta_id = ? AND parciais.temporada = ?
+            ', [$this->temporada, $id, $this->temporada])[0];
 
         $fora = DB::select('
                 SELECT 
@@ -146,9 +160,9 @@ class AtletasController extends Controller
                     IFNULL(AVG(pontuacao), 0) media,
                     COUNT(partidas.id) jogos
                 FROM parciais
-                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_visitante_id = clube_id
-                WHERE atleta_id = ?
-            ', [$id])[0];
+                INNER JOIN partidas ON partidas.rodada = parciais.rodada AND clube_visitante_id = clube_id AND partidas.temporada = ?
+                WHERE atleta_id = ? AND parciais.temporada = ?
+                ', [$this->temporada, $id, $this->temporada])[0];
 
         $atleta->pontuacao = [
             'geral' => $geral->pontuacao,
@@ -175,16 +189,17 @@ class AtletasController extends Controller
                     abreviacao,
                     60x60 as escudo
                 FROM clubes
-                WHERE id IN (?, ?)
-            ', [$atleta->clube_casa_id, $atleta->clube_visitante_id]))
+                WHERE id IN (?, ?) and temporada = ?
+            ', [$atleta->clube_casa_id, $atleta->clube_visitante_id, $this->temporada]))
             ->keyBy('id');
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->where('temporada', $this->temporada)
             ->orderBy('tipo')
             ->get();
 
-        $games = Game::where('temporada', Carbon::now()->format('Y'))
-            ->first();
+        // $games = Game::where('temporada', Carbon::now()->format('Y'))
+        //     ->first();
 
         $rodadas = COLLECT([]);
 
@@ -193,7 +208,7 @@ class AtletasController extends Controller
 
         $a = 1;
         $qtde_rodada = 7;
-        $rodada = $games->game_over ? $atleta->rodada_id : $atleta->rodada_id;
+        $rodada = $game->game_over ? $atleta->rodada_id : $atleta->rodada_id;
 
         while ($a <= 38) :
             $rodadas->push($a . 'º rodada');
@@ -210,10 +225,10 @@ class AtletasController extends Controller
                     ROUND(IFNULL(pontuacao, 0), 2) as pontuacao,
                     ROUND(IFNULL(variacao_num, 0), 2) as variacao_num   
                 FROM parciais 
-                WHERE atleta_id = ?
+                WHERE atleta_id = ? AND temporada = ?
                 LIMIT ?
                 OFFSET ?
-            ', [$id, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada])
+            ', [$id, $this->temporada, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada])
         );
 
         return response()->json([
@@ -252,7 +267,7 @@ class AtletasController extends Controller
         if ($user->plano === 'Free Cartoleiro')
             return response()->json(['message' => 'Plano exclusivo para sócio cartoleiro fanático.'], 401);
 
-        function atletas($id)
+        function atletas($id, $temporada)
         {
 
             $response = DB::SELECT(
@@ -293,28 +308,29 @@ class AtletasController extends Controller
                             SELECT 
                                 IFNULL(AVG(pontuacao), 0)
                             FROM parciais 
-                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id))
+                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id)) AND temporada = ?
                         ) as media_pontos_casa,
 
                         (
                             SELECT 
                                 IFNULL(AVG(pontuacao), 0)
                             FROM parciais 
-                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id))
+                            WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id)) AND temporada = ?
                         ) as media_pontos_fora  
                             
                     FROM 
                         atletas
                     JOIN 
-                        clubes ON clube_id = clubes.id
+                        clubes ON clube_id = clubes.id AND clubes.temporada = ?
                     WHERE
-                        atleta_id = ?
+                        atleta_id = ? AND atletas.temporada = ?
                 ',
-                [$id, $id, $id]
+                [$id, $temporada, $id, $temporada, $temporada, $id, $temporada]
             )[0];
 
             $pontos = Parciais::selectRaw('IFNULL(MIN(pontuacao), 0) as pontuacao_minima')
                 ->selectRaw('IFNULL(MAX(pontuacao), 0) as pontuacao_maxima')
+                ->where('temporada', $temporada)
                 ->where('atleta_id', $id)
                 ->first();
 
@@ -325,8 +341,8 @@ class AtletasController extends Controller
         }
 
         return response()->json([
-            'atleta_a' => atletas($request->atleta_a),
-            'atleta_b' => atletas($request->atleta_b),
+            'atleta_a' => atletas($request->atleta_a, $this->temporada),
+            'atleta_b' => atletas($request->atleta_b, $this->temporada),
         ]);
     }
 
@@ -353,7 +369,8 @@ class AtletasController extends Controller
 
         $game = Game::first();
 
-        $posicao = Posicoes::where('id', $posicao_id)
+        $posicao = Posicoes::where('temporada', $this->temporada)
+            ->where('id', $posicao_id)
             ->first();
 
         $time = DB::SELECT('
@@ -362,9 +379,9 @@ class AtletasController extends Controller
                 30x30 as escudo,
                 IF(clubes.id = clube_visitante_id, \'visitante\', \'mandante\') as mando
             FROM clubes 
-            INNER JOIN partidas ON clube_casa_id = clubes.id OR clube_visitante_id = clubes.id  
-            WHERE clubes.id = ?	AND rodada = ?
-        ', [$time_id, $game->rodada_atual])[0];
+            INNER JOIN partidas ON clube_casa_id = clubes.id OR clube_visitante_id = clubes.id AND partidas.temporada = ?
+            WHERE clubes.id = ?	AND rodada = ? AND clubes.temporada = ? 
+        ', [$this->temporada, $time_id, $game->rodada_atual, $this->temporada])[0];
 
         if ($time->mando === 'visitante') :
 
@@ -377,9 +394,9 @@ class AtletasController extends Controller
                         rodada,
                         DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
                     FROM partidas
-                    INNER JOIN clubes ON clube_casa_id = clubes.id 
-                    WHERE clube_visitante_id = ? AND valida = 1 AND rodada != ?
-                ', [$time->nome, $time->escudo, $time_id, $game->rodada_atual]);
+                    INNER JOIN clubes ON clube_casa_id = clubes.id AND clubes.temporada = ?
+                    WHERE clube_visitante_id = ? AND valida = 1 AND rodada != ? AND partidas.temporada = ?
+                ', [$time->nome, $time->escudo, $this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
 
         else :
 
@@ -392,9 +409,9 @@ class AtletasController extends Controller
                         rodada,
                         DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
                     FROM partidas
-                    INNER JOIN clubes ON clube_visitante_id = clubes.id 
-                    WHERE clube_casa_id = ? AND valida = 1 AND rodada != ?
-                ', [$time->nome, $time->escudo, $time_id, $game->rodada_atual]);
+                    INNER JOIN clubes ON clube_visitante_id = clubes.id AND clubes.temporada = ?
+                    WHERE clube_casa_id = ? AND valida = 1 AND rodada != ? AND partidas.temporada = ?
+                    ', [$time->nome, $time->escudo, $this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
 
         endif;
 
@@ -431,18 +448,19 @@ class AtletasController extends Controller
                         parciais.PC,
                         parciais.DE
                     FROM parciais 
-                    INNER JOIN atletas ON parciais.atleta_id = atletas.atleta_id
-                    INNER JOIN posicoes ON posicoes.id = parciais.posicao_id
-                    INNER JOIN clubes ON clubes.id = parciais.clube_id
-                    WHERE atletas.clube_id = ? AND rodada = ? AND atletas.posicao_id = ?
+                    INNER JOIN atletas ON parciais.atleta_id = atletas.atleta_id AND atletas.temporada = ?
+                    INNER JOIN posicoes ON posicoes.id = parciais.posicao_id AND posicoes.temporada = ?
+                    INNER JOIN clubes ON clubes.id = parciais.clube_id AND clubes.temporada = ?
+                    WHERE atletas.clube_id = ? AND rodada = ? AND atletas.posicao_id = ? AND parciais.temporada = ?
                     ORDER BY pontuacao DESC
-                ', [$confronto->id, $confronto->rodada, $posicao_id]);
+                ', [$this->temporada,  $this->temporada,  $this->temporada, $confronto->id, $confronto->rodada, $posicao_id, $this->temporada]);
 
             $confronto->pontuacao_total = COLLECT($confronto->atletas)->sum('pontuacao');
 
         endforeach;
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->where('temporada', $this->temporada)
             ->orderBy('tipo')
             ->get();
 

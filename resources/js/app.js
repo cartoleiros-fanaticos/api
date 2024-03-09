@@ -1,5 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
+import { Provider } from 'react-redux';
+import store from './redux/index';
+
 import {
     BrowserRouter,
     Routes,
@@ -46,40 +50,42 @@ const PrivateRoute = ({ component: Component }) => localStorage.getItem('token')
 ReactDOM.createRoot(document.getElementById('app')).render(
     // <React.StrictMode>
     <BrowserRouter>
-        <Routes>
-            <Route index element={<Login />} />
-            <Route path="/cadastro" element={<Register />} />
-            <Route path="/recovery" element={<Recovery />} />
-            <Route path="/atletas/:atleta_id/:liga_id/:slug" element={<HasPlayer />} />
+        <Provider store={store}>
+            <Routes>
+                <Route index element={<Login />} />
+                <Route path="/cadastro" element={<Register />} />
+                <Route path="/recovery" element={<Recovery />} />
+                <Route path="/atletas/:atleta_id/:liga_id/:slug" element={<HasPlayer />} />
 
-            <Route path="/auth/escalacao" element={<PrivateRoute component={Lineup} />} />
+                <Route path="/auth/escalacao" element={<PrivateRoute component={Lineup} />} />
 
-            <Route path="/auth/cruzamento-scouts" element={<PrivateRoute component={Scouts} />} />
-            <Route path="/auth/cruzamento-pontos" element={<PrivateRoute component={Score} />} />
-            <Route path="/auth/cruzamento-media" element={<PrivateRoute component={Average} />} />
+                <Route path="/auth/cruzamento-scouts" element={<PrivateRoute component={Scouts} />} />
+                <Route path="/auth/cruzamento-pontos" element={<PrivateRoute component={Score} />} />
+                <Route path="/auth/cruzamento-media" element={<PrivateRoute component={Average} />} />
 
-            <Route path="/auth/parciais/atletas" element={<PrivateRoute component={Players} />} />
-            <Route path="/auth/parciais/clubes" element={<PrivateRoute component={Clubs} />} />
-            <Route path="/auth/parciais/times" element={<PrivateRoute component={Teams} />} />
-            <Route path="/auth/parciais/ligas" element={<PrivateRoute component={Leagues} />} />
+                <Route path="/auth/parciais/atletas" element={<PrivateRoute component={Players} />} />
+                <Route path="/auth/parciais/clubes" element={<PrivateRoute component={Clubs} />} />
+                <Route path="/auth/parciais/times" element={<PrivateRoute component={Teams} />} />
+                <Route path="/auth/parciais/ligas" element={<PrivateRoute component={Leagues} />} />
 
-            <Route path="/auth/atletas" element={<PrivateRoute component={Player} />} />
+                <Route path="/auth/atletas" element={<PrivateRoute component={Player} />} />
 
-            <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
-            <Route path="/auth/donos-de-ligas" element={<PrivateRoute component={League} />} />
-            <Route path="/auth/:id/:slug" element={<PrivateRoute component={PageLeague} />} />
-            <Route path="/auth/:id/:slug/:competicoes_id" element={<PrivateRoute component={PageLeagueRound} />} />
-            <Route path="/auth/minhas-ligas" element={<PrivateRoute component={PageLeagueMyLeague} />} />
-            <Route path="/auth/meus-times" element={<PrivateRoute component={PageLeagueTeams} />} />
-            <Route path="/auth/minhas-inscricoes" element={<PrivateRoute component={PageLeagueTransactions} />} />
-            <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
-            <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
-            <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
+                <Route path="/auth/videos" element={<PrivateRoute component={Videos} />} />
+                <Route path="/auth/donos-de-ligas" element={<PrivateRoute component={League} />} />
+                <Route path="/auth/:id/:slug" element={<PrivateRoute component={PageLeague} />} />
+                <Route path="/auth/:id/:slug/:competicoes_id" element={<PrivateRoute component={PageLeagueRound} />} />
+                <Route path="/auth/minhas-ligas" element={<PrivateRoute component={PageLeagueMyLeague} />} />
+                <Route path="/auth/meus-times" element={<PrivateRoute component={PageLeagueTeams} />} />
+                <Route path="/auth/minhas-inscricoes" element={<PrivateRoute component={PageLeagueTransactions} />} />
+                <Route path="/auth/destaques" element={<PrivateRoute component={Emphasis} />} />
+                <Route path="/auth/contato" element={<PrivateRoute component={Contact} />} />
+                <Route path="/auth/planos" element={<PrivateRoute component={Plans} />} />
 
-            <Route path="/auth/adm/usuarios" element={<PrivateRoute component={Users} />} />
-            <Route path="/auth/adm/ligas" element={<PrivateRoute component={LeaguesADM} />} />
-            <Route path="/auth/adm/inscricoes" element={<PrivateRoute component={TransactionsADM} />} />
-        </Routes>
+                <Route path="/auth/adm/usuarios" element={<PrivateRoute component={Users} />} />
+                <Route path="/auth/adm/ligas" element={<PrivateRoute component={LeaguesADM} />} />
+                <Route path="/auth/adm/inscricoes" element={<PrivateRoute component={TransactionsADM} />} />
+            </Routes>
+        </Provider>
     </BrowserRouter>
     // </React.StrictMode>
 );
