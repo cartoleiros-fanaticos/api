@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { amount, message, swal_warning } from '../../../utils/helpers';
 import api from '../../../utils/api';
@@ -21,11 +22,12 @@ import {
     ScoreText,
     ScoreValue,
     Title,
+    Message,
 } from './styles';
 
-import { Message } from '../../../utils/styles';
-
 function lineup() {
+
+    const seasson = useSelector(state => state);
 
     const player = useRef();
 
@@ -43,7 +45,7 @@ function lineup() {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [seasson])
 
     async function team({ rodada, time_id }) {
 
@@ -51,7 +53,7 @@ function lineup() {
 
             sloading(true);
 
-            const response = await api.get(`escalacao/${time_id}?rodada=${rodada}`);
+            const response = await api.get(`escalacao/${time_id}?rodada=${rodada}&temporada=${seasson}`);
 
             sdata({
                 ...data,
@@ -65,7 +67,7 @@ function lineup() {
             if (window.innerWidth <= 900)
                 window.scrollTo({ top: player.current.offsetTop - 56, behavior: 'smooth' });
 
-            suri(`escalacao/${time_id}?rodada=${rodada}`);
+            suri(`escalacao/${time_id}?rodada=${rodada}&temporada=${seasson}`);
 
         } catch (e) {
 
@@ -94,10 +96,12 @@ function lineup() {
 
             sloadingpage(true);
 
-            const { data } = await api.get(`escalacao`);
+            const { data } = await api.get(`escalacao?temporada=${seasson}`);
 
             sdata(data);
-            sactive({ ...active, rodada: data.game.rodada_atual });
+
+            if (!data.status)
+                sactive({ ...active, rodada: data.game.rodada_atual });
 
             sloadingpage(false);
 
@@ -110,82 +114,89 @@ function lineup() {
 
     const component = (
         <Content>
-            <Rounds
-                fnc={team}
-                data={{ rodada_atual: data.game?.rodada_atual, time_id: active.time_id }}
-            />
-            <Teams>
-                {
-                    data.times?.map((e, i) =>
-                        <Team className={active.time_id === e.time_id ? 'active' : ''} onClick={() => team({ rodada: active.rodada, time_id: e.time_id })} key={i}>
-                            <Shield src={e.url_escudo_png} />
-                            <Text><Bold>Nome:</Bold> {e.nome}</Text>
-                            <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>
-                            <Text><Bold>Campeonato:</Bold> {amount(e.pontos_campeonato)}</Text>
-                            <Text><Bold>Sócio:</Bold> {e.socio}</Text>
-                        </Team>
-                    )
-                }
-            </Teams>
-            <Players ref={player}>
-                {
-                    loading ?
-                        <Loading />
-                        :
-                        <>
+            {
+                data && data.status && data.status === 'Fechado' ?
+                    <Message>Temporada ainda não abriu clique no menu temporada para alternar para anterior.</Message>
+                    :
+                    <>
+                        <Rounds
+                            fnc={team}
+                            data={{ rodada_atual: data.game?.rodada_atual, time_id: active.time_id }}
+                        />
+                        <Teams>
                             {
-                                data.time ?
+                                data.times?.map((e, i) =>
+                                    <Team className={active.time_id === e.time_id ? 'active' : ''} onClick={() => team({ rodada: active.rodada, time_id: e.time_id })} key={i}>
+                                        <Shield src={e.url_escudo_png} />
+                                        <Text><Bold>Nome:</Bold> {e.nome}</Text>
+                                        <Text><Bold>Patrimônio:</Bold> {e.patrimonio} pts</Text>
+                                        <Text><Bold>Campeonato:</Bold> {amount(e.pontos_campeonato)}</Text>
+                                        <Text><Bold>Sócio:</Bold> {e.socio}</Text>
+                                    </Team>
+                                )
+                            }
+                        </Teams>
+                        <Players ref={player}>
+                            {
+                                loading ?
+                                    <Loading />
+                                    :
                                     <>
-                                        {data.game.status_mercado === 2 &&
-                                            <Live
-                                                uri={uri}
-                                                fnc={(response) => {
-                                                    sdata({ ...data, ...response });
-                                                }}
-                                            />
-                                        }
-                                        <Score>
-                                            <ScoreText>Pontuação:</ScoreText>
-                                            <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>
-                                        </Score>
                                         {
-                                            data.time.rodadas.atletas.map((e, i) =>
-                                                <Player
-                                                    key={i}
-                                                    data={e}
-                                                    scouts={data.scouts}
-                                                    capitao_id={data.time.rodadas.capitao_id}
-                                                    parciais={data.parciais}
-                                                />
-                                            )
+                                            data.time ?
+                                                <>
+                                                    {data.game.status_mercado === 2 &&
+                                                        <Live
+                                                            uri={uri}
+                                                            fnc={(response) => {
+                                                                sdata({ ...data, ...response });
+                                                            }}
+                                                        />
+                                                    }
+                                                    <Score>
+                                                        <ScoreText>Pontuação:</ScoreText>
+                                                        <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>
+                                                    </Score>
+                                                    {
+                                                        data.time.rodadas.atletas.map((e, i) =>
+                                                            <Player
+                                                                key={i}
+                                                                data={e}
+                                                                scouts={data.scouts}
+                                                                capitao_id={data.time.rodadas.capitao_id}
+                                                                parciais={data.parciais}
+                                                            />
+                                                        )
+                                                    }
+                                                </>
+                                                :
+                                                <Message>Selecione um time</Message>
+                                        }
+                                        {
+                                            (data.time && data.time.rodadas.reservas.length) ?
+                                                <>
+                                                    <Title>RESERVAS</Title>
+                                                    {
+                                                        data.time.rodadas.reservas.map((e, i) =>
+                                                            <Player
+                                                                key={i}
+                                                                data={e}
+                                                                scouts={data.scouts}
+                                                                capitao_id={data.time.rodadas.capitao_id}
+                                                                parciais={data.parciais}
+                                                            />
+                                                        )
+                                                    }
+                                                </>
+                                                :
+                                                <></>
                                         }
                                     </>
-                                    :
-                                    <Message>Selecione um time</Message>
                             }
-                            {
-                                (data.time && data.time.rodadas.reservas.length) ?
-                                    <>
-                                        <Title>RESERVAS</Title>
-                                        {
-                                            data.time.rodadas.reservas.map((e, i) =>
-                                                <Player
-                                                    key={i}
-                                                    data={e}
-                                                    scouts={data.scouts}
-                                                    capitao_id={data.time.rodadas.capitao_id}
-                                                    parciais={data.parciais}
-                                                />
-                                            )
-                                        }
-                                    </>
-                                    :
-                                    <></>
-                            }
-                        </>
-                }
-            </Players>
-        </Content >
+                        </Players>
+                    </>
+            }
+        </Content>
     );
 
     return (

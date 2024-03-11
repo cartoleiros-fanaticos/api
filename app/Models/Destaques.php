@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class Destaques extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'atleta_id', 'rodada', 'apelido', 'posicao', 'foto', 'escalacoes', 'tipo' ];
+    protected $fillable = [ 'atleta_id', 'temporada', 'rodada', 'apelido', 'posicao', 'foto', 'escalacoes', 'tipo' ];
 
     // public function newQuery()
     // {

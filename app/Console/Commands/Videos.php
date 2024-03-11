@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 use Exception;
 use Log;
 
@@ -33,46 +34,58 @@ class Videos extends Command
     public function handle(): void
     {
 
-        try {
+        $temporada = Carbon::now()->format('Y');
 
-            echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
+        $game = Game::where('temporada', $temporada)
+            ->first();
 
-            $key = 'AIzaSyDX6AOQbUlb-uKExT73bZrBCRIyI9DgzPI';
-            $playlistId = 'PLtrYO8pIjijhRI7RCSI1_bZV_tReIrooj';
+        if ($game) :
 
-            $client = new Client();
-            $response = $client->get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&order=date&playlistId=' . $playlistId . '&key=' . $key . '&maxResults=50');
-            $response = json_decode($response->getBody(), true);
+            try {
 
-            echo '- Atualizando tabela vídeos.' . PHP_EOL;
+                echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
-            foreach ((array) $response['items'] as $key => $val) :
+                $key = 'AIzaSyDX6AOQbUlb-uKExT73bZrBCRIyI9DgzPI';
+                $playlistId = 'PLtrYO8pIjijhRI7RCSI1_bZV_tReIrooj';
 
-                ModelsVideos::updateOrCreate(
-                    [
-                        'video_id' => $val['snippet']['resourceId']['videoId']
-                    ],
-                    [
-                        'title' => $val['snippet']['title'],
-                        'description' => substr($val['snippet']['description'], 0, 400),
-                        'channel_id' => $val['snippet']['channelId'],
-                        'thumbnails' => $val['snippet']['thumbnails']['high']['url'],
-                        'created_at' => $val['snippet']['publishedAt'],
-                    ]
-                );
+                $client = new Client();
+                $response = $client->get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&order=date&playlistId=' . $playlistId . '&key=' . $key . '&maxResults=50');
+                $response = json_decode($response->getBody(), true);
 
-            endforeach;
+                echo '- Atualizando tabela vídeos.' . PHP_EOL;
 
-            echo '- Atualização finalizada com sucesso.' . PHP_EOL . PHP_EOL;
-        } catch (QueryException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
-        } catch (RequestException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
-        } catch (Exception $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
-        }
+                foreach ((array) $response['items'] as $key => $val) :
+
+                    ModelsVideos::updateOrCreate(
+                        [
+                            'video_id' => $val['snippet']['resourceId']['videoId'],
+                            'temporada' => $temporada,
+                        ],
+                        [
+                            'title' => $val['snippet']['title'],
+                            'description' => substr($val['snippet']['description'], 0, 400),
+                            'channel_id' => $val['snippet']['channelId'],
+                            'thumbnails' => $val['snippet']['thumbnails']['high']['url'],
+                            'created_at' => $val['snippet']['publishedAt'],
+                        ]
+                    );
+
+                endforeach;
+
+                echo '- Atualização finalizada com sucesso.' . PHP_EOL . PHP_EOL;
+            } catch (QueryException $e) {
+                echo $e->getMessage() . PHP_EOL;
+                Log::error('Game: ' . $e->getMessage());
+            } catch (RequestException $e) {
+                echo $e->getMessage() . PHP_EOL;
+                Log::error('Game: ' . $e->getMessage());
+            } catch (Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
+                Log::error('Game: ' . $e->getMessage());
+            }
+
+        else :
+            echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
+        endif;
     }
 }

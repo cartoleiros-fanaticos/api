@@ -22,76 +22,137 @@ use Exception;
 use DB;
 use Log;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class ParciaisController extends Controller
 {
 
+    private $temporada;
+
+    public function __construct(Request $request)
+    {
+        $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
+    }
+
     public function parciais_atletas(Request $request)
     {
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
-        $atletas = Atletas::select(
-            'atletas.atleta_id',
-            'atletas.foto',
-            'atletas.apelido',
-            'atletas.preco_num',
-            'clubes.abreviacao as abreviacao_clube',
-            'clubes.nome as clube',
-            'posicoes.nome as posicao',
-            'parciais.clube_id',
-            'entrou_em_campo'
-        )
-            ->join('parciais', 'parciais.atleta_id', 'atletas.atleta_id')
-            ->join('posicoes', 'posicoes.id', 'atletas.posicao_id')
-            ->join('clubes', 'clubes.id', 'atletas.clube_id')
-            ->where('rodada', $game->rodada_atual)
-            ->orderBy('pontuacao', 'DESC')
-            ->get();
+        if ($game) :
 
-        $parciais = Parciais::where('rodada', $game->rodada_atual)
-            ->get()
-            ->keyBy('atleta_id');
+            $atletas = Atletas::select(
+                'atletas.atleta_id',
+                'atletas.foto',
+                'atletas.apelido',
+                'atletas.preco_num',
+                'clubes.abreviacao as abreviacao_clube',
+                'clubes.nome as clube',
+                'posicoes.nome as posicao',
+                'parciais.clube_id',
+                'entrou_em_campo'
+            )
+                ->join('parciais', function ($q) {
 
-        $scouts = Scouts::select('sigla', 'nome', 'tipo')
-            ->orderBy('tipo')
-            ->get();
+                    $q->on('parciais.atleta_id', 'atletas.atleta_id')
+                        ->where('parciais.temporada', $this->temporada);
+                })
+                ->join('posicoes', function ($q) {
 
-        return response()->json([
-            'game' => $game,
-            'atletas' => $atletas,
-            'parciais' => $parciais,
-            'scouts' => $scouts
-        ]);
+                    $q->on('posicoes.id', 'atletas.posicao_id')
+                        ->where('posicoes.temporada', $this->temporada);
+                })
+                ->join('clubes', function ($q) {
+
+                    $q->on('clubes.id', 'atletas.clube_id')
+                        ->where('clubes.temporada', $this->temporada);
+                })
+                ->where('atletas.temporada', $this->temporada)
+                ->where('rodada', $game->rodada_atual)
+                ->orderBy('pontuacao', 'DESC')
+                ->get();
+
+            $parciais = Parciais::where('rodada', $game->rodada_atual)
+                ->where('temporada', $this->temporada)
+                ->get()
+                ->keyBy('atleta_id');
+
+            $scouts = Scouts::select('sigla', 'nome', 'tipo')
+                ->where('temporada', $this->temporada)
+                ->orderBy('tipo')
+                ->get();
+
+            return response()->json([
+                'game' => $game,
+                'atletas' => $atletas,
+                'parciais' => $parciais,
+                'scouts' => $scouts
+            ]);
+
+        else :
+
+            return response()->json(['status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada]);
+
+        endif;
     }
 
     public function parciais_clubes(Request $request, $id)
     {
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $partida = Partidas::select('id', 'rodada', 'local', 'clube_casa_id', 'clube_visitante_id')
+            ->where('temporada', $this->temporada)
             ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
             ->find($id);
 
         $atletas_casa = Parciais::select('posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'foto', 'entrou_em_campo')
-            ->join('atletas', 'atletas.atleta_id', 'parciais.atleta_id')
-            ->join('clubes', 'clubes.id', 'parciais.clube_id')
-            ->join('posicoes', 'posicoes.id', 'parciais.posicao_id')
-            ->where('parciais.rodada', $partida->rodada)
+            ->join('atletas', function ($q) {
+
+                $q->on('atletas.atleta_id', 'parciais.atleta_id')
+                    ->where('atletas.temporada', $this->temporada);
+            })
+            ->join('posicoes', function ($q) {
+
+                $q->on('posicoes.id', 'parciais.posicao_id')
+                    ->where('posicoes.temporada', $this->temporada);
+            })
+            ->join('clubes', function ($q) {
+
+                $q->on('clubes.id', 'parciais.clube_id')
+                    ->where('clubes.temporada', $this->temporada);
+            })
+            ->where('parciais.temporada', $this->temporada)
             ->where('parciais.clube_id', $partida->clube_casa_id)
+            ->where('parciais.rodada', $partida->rodada)
             ->orderBy('parciais.posicao_id')
             ->get();
 
         $atleta_id = $atletas_casa->pluck('atleta_id');
 
         $parciais_atletas_casa = Parciais::whereIn('atleta_id', $atleta_id)
+            ->where('temporada', $this->temporada)
             ->where('rodada', $partida->rodada)
             ->get()
             ->keyBy('atleta_id');
 
         $atletas_visitante = Parciais::select('posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'foto', 'entrou_em_campo')
-            ->join('atletas', 'atletas.atleta_id', 'parciais.atleta_id')
-            ->join('clubes', 'clubes.id', 'parciais.clube_id')
-            ->join('posicoes', 'posicoes.id', 'parciais.posicao_id')
+            ->join('atletas', function ($q) {
+
+                $q->on('atletas.atleta_id', 'parciais.atleta_id')
+                    ->where('atletas.temporada', $this->temporada);
+            })
+            ->join('posicoes', function ($q) {
+
+                $q->on('posicoes.id', 'parciais.posicao_id')
+                    ->where('posicoes.temporada', $this->temporada);
+            })
+            ->join('clubes', function ($q) {
+
+                $q->on('clubes.id', 'parciais.clube_id')
+                    ->where('clubes.temporada', $this->temporada);
+            })
+            ->where('parciais.temporada', $this->temporada)
             ->where('parciais.rodada', $partida->rodada)
             ->where('parciais.clube_id', $partida->clube_visitante_id)
             ->orderBy('parciais.posicao_id')
@@ -100,13 +161,17 @@ class ParciaisController extends Controller
         $atleta_id = $atletas_visitante->pluck('atleta_id');
 
         $parciais_atletas_visitante = Parciais::whereIn('atleta_id', $atleta_id)
+            ->where('temporada', $this->temporada)
             ->where('rodada', $partida->rodada)
             ->get()
             ->keyBy('atleta_id');
 
-        $clubes = Clubes::get()->keyBy('id');
+        $clubes = Clubes::where('temporada', $this->temporada)
+            ->get()
+            ->keyBy('id');
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->where('temporada', $this->temporada)
             ->orderBy('tipo')
             ->get();
 
@@ -686,22 +751,33 @@ class ParciaisController extends Controller
 
     public function partidas(Request $request)
     {
-        $game = Game::first();
 
-        $rodada = $request->input('rodada', $game->rodada_atual);
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
-        $partidas = Partidas::select('id', 'clube_casa_id', 'clube_visitante_id', 'placar_oficial_mandante', 'placar_oficial_visitante')
-            ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
-            ->where('rodada', $rodada)
-            ->get();
+        if ($game) :
 
-        $clubes = Clubes::get()->keyBy('id');
+            $rodada = $request->input('rodada', $game->rodada_atual);
 
-        return response()->json([
-            'rodada_atual' => $game->rodada_atual,
-            'partidas' => $partidas,
-            'clubes' => $clubes,
-        ]);
+            $partidas = Partidas::select('id', 'clube_casa_id', 'clube_visitante_id', 'placar_oficial_mandante', 'placar_oficial_visitante')
+                ->selectRaw('DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data')
+                ->where('temporada', $this->temporada)
+                ->where('rodada', $rodada)
+                ->get();
+
+            $clubes = Clubes::get()->keyBy('id');
+
+            return response()->json([
+                'rodada_atual' => $game->rodada_atual,
+                'partidas' => $partidas,
+                'clubes' => $clubes,
+            ]);
+
+        else :
+
+            return response()->json(['status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada]);
+
+        endif;
     }
 
     public function ligas(Request $request)

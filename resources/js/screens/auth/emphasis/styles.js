@@ -54,3 +54,14 @@ export const Text = styled.span`
     font-size: 0.9em;
     color: #666666;  
 `;
+
+export const Message = styled.div`
+    display: block;
+    text-align: center;
+    margin: 35px auto;
+    color: #999;
+    font-size: 0.9em;
+    user-select: none;  
+    grid-column: 1/3;
+`;
+

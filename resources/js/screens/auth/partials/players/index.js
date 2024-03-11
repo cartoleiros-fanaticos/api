@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { amount, message } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
@@ -22,6 +23,8 @@ import { Message } from '../../../../utils/styles';
 
 function players() {
 
+  const seasson = useSelector(state => state);
+
   let navigate = useNavigate();
 
   const [modal, smodal] = useState(false);
@@ -37,7 +40,7 @@ function players() {
 
   useEffect(() => {
     getData();
-  }, [])
+  }, [seasson])
 
   async function getData() {
 
@@ -45,7 +48,7 @@ function players() {
 
       sloadingpage(true);
 
-      const { data } = await api.get(`parciais/atletas`);
+      const { data } = await api.get(`parciais/atletas?temporada=${seasson}`);
 
       sdata(data);
       splayers(data.atletas);
@@ -64,7 +67,7 @@ function players() {
 
     if (value && value.length >= 3) {
       scontrol('clean');
-      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1 ||  e.clube.toLowerCase().indexOf(value) != -1);
+      const atletas = players.filter(e => e.apelido.toLowerCase().indexOf(value) != -1 || e.clube.toLowerCase().indexOf(value) != -1);
       sdata({ ...data, atletas });
     } else if (value === '') {
       sdata({ ...data, atletas: players });
@@ -74,45 +77,52 @@ function players() {
 
   const component = (
     <Content>
-      <List>
-        {data.game?.status_mercado === 2 &&
+      {
+        data && data.status && data.status === 'Fechado' ?
+          <Message>Temporada ainda não abriu clique no menu temporada para alternar para anterior.</Message>
+          :
           <>
-            <Search
-              placeholder="Digite nome do atleta"
-              icon="directions_run"
-              onChange={search}
-            />
-            <Live
-              control={control}
-              uri="parciais/atletas"
-              fnc={(data) => {
-                sdata(data);
-                splayers(data.atletas);
-              }}
+            <List>
+              {data.game?.status_mercado === 2 &&
+                <>
+                  <Search
+                    placeholder="Digite nome do atleta"
+                    icon="directions_run"
+                    onChange={search}
+                  />
+                  <Live
+                    control={control}
+                    uri="parciais/atletas"
+                    fnc={(data) => {
+                      sdata(data);
+                      splayers(data.atletas);
+                    }}
 
-            />
+                  />
+                </>
+              }
+
+              {
+                data.atletas?.length
+                  ?
+                  data.atletas.map((e, i) =>
+                    <Player
+                      key={i}
+                      data={e}
+                      scouts={data.scouts}
+                      parciais={data.parciais}
+                      fnc={(player) => {
+                        sparams(player);
+                        smodal(true)
+                      }}
+                    />
+                  )
+                  :
+                  <Message>Nenhum registro encontrado.</Message>
+              }
+            </List>
           </>
-        }
-
-        {
-          data.atletas?.length
-            ?
-            data.atletas.map((e, i) =>
-              <Player
-                key={i}
-                data={e}
-                scouts={data.scouts}
-                parciais={data.parciais}
-                fnc={(player) => {
-                  sparams(player);
-                  smodal(true)
-                }}
-              />
-            )
-            :
-            <Message>Nenhum registro encontrado.</Message>
-        }
-      </List>
+      }
     </Content>
   );
 

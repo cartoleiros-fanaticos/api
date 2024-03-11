@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { amount, message } from '../../../utils/helpers';
 import api from '../../../utils/api';
@@ -18,6 +19,8 @@ import { Message } from '../../../utils/styles';
 
 function videos() {
 
+    const seasson = useSelector(state => state);
+
     const [data, sdata] = useState({});
 
     const [modal, smodal] = useState(false);
@@ -27,7 +30,7 @@ function videos() {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [seasson])
 
     async function getData() {
 
@@ -35,7 +38,7 @@ function videos() {
 
             sloadingpage(true);
 
-            const { data } = await api.get(`videos`);
+            const { data } = await api.get(`videos?temporada=${seasson}`);
 
             sdata(data);
             sloadingpage(false);
@@ -51,18 +54,25 @@ function videos() {
         <>
             <Content>
                 {
-                    data.length ?
-                        data.map((e, i) =>
-                            <Thumbnails key={i} onClick={() => {
-                                surl(`https://www.youtube.com/embed/${e.video_id}`);
-                                smodal(true)
-                            }}>
-                                <Image src={e.thumbnails} />
-                                <Title>{e.title}</Title>
-                            </Thumbnails>
-                        )
+                    data && data.status && data.status === 'Fechado' ?
+                        <Message>Temporada ainda não abriu clique no menu temporada para alternar para anterior.</Message>
                         :
-                        <Message>Nenhum registro encontrado.</Message>
+                        <>
+                            {
+                                data.length ?
+                                    data.map((e, i) =>
+                                        <Thumbnails key={i} onClick={() => {
+                                            surl(`https://www.youtube.com/embed/${e.video_id}`);
+                                            smodal(true)
+                                        }}>
+                                            <Image src={e.thumbnails} />
+                                            <Title>{e.title}</Title>
+                                        </Thumbnails>
+                                    )
+                                    :
+                                    <Message>Nenhum registro encontrado.</Message>
+                            }
+                        </>
                 }
             </Content>
 

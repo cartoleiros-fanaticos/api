@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { amount, message, swal_warning } from '../../../../utils/helpers';
 import api from '../../../../utils/api';
@@ -17,11 +18,14 @@ import {
     Shield,
     Text,
     Button,
+    Message,
 } from './styles';
 
 import Loading from '../../../../componets/loading';
 
 function clubs() {
+
+    const seasson = useSelector(state => state);
 
     const [modal, smodal] = useState(false);
 
@@ -32,7 +36,7 @@ function clubs() {
 
     useEffect(() => {
         getData();
-    }, [])
+    }, [seasson])
 
     async function getData() {
 
@@ -40,7 +44,7 @@ function clubs() {
 
             sloadingpage(true);
 
-            const { data } = await api.get(`parciais/partidas`);
+            const { data } = await api.get(`parciais/partidas?temporada=${seasson}`);
 
             sdata(data);
             sloading(false);
@@ -57,7 +61,7 @@ function clubs() {
     async function rounds(round = 1) {
 
         try {
-            const { data } = await api.get(`parciais/partidas?rodada=${round}`);
+            const { data } = await api.get(`parciais/partidas?rodada=${round}&temporada=${seasson}`);
             sdata(data);
         } catch (e) {
             message(e);
@@ -72,34 +76,38 @@ function clubs() {
                 loading ?
                     <Loading />
                     :
-                    <>
-                        <Rounds
-                            type="rounds"
-                            fnc={({ rodada }) => rounds(rodada)}
-                            data={{ rodada_atual: data.rodada_atual }}
-                        />
-                        <List>
-                            {
-                                data.partidas.map((e, i) =>
-                                    <Item onClick={() => {
-                                        sdata({
-                                            ...data,
-                                            partida: e
-                                        });
-                                        smodal(true)
-                                    }} key={i}>
-                                        <Date>{e.partida_data}</Date>
-                                        <Shield src={data.clubes[e.clube_casa_id]['60x60']} />
-                                        <Text>{e.placar_oficial_mandante}</Text>
-                                        <Text>x</Text>
-                                        <Text>{e.placar_oficial_visitante}</Text>
-                                        <Shield src={data.clubes[e.clube_visitante_id]['60x60']} />
-                                        <Button>VER SCOUTS</Button>
-                                    </Item>
-                                )
-                            }
-                        </List>
-                    </>
+                    data && data.status && data.status === 'Fechado' ?
+                        <Message>Temporada ainda não abriu clique no menu temporada para alternar para anterior.</Message>
+                        :
+                        <>
+                            <Rounds
+                                type="rounds"
+                                fnc={({ rodada }) => rounds(rodada)}
+                                data={{ rodada_atual: data.rodada_atual }}
+                            />
+                            <List>
+                                {
+                                    data.partidas.map((e, i) =>
+                                        <Item onClick={() => {
+                                            sdata({
+                                                ...data,
+                                                partida: e
+                                            });
+                                            smodal(true)
+                                        }} key={i}>
+                                            <Date>{e.partida_data}</Date>
+                                            <Shield src={data.clubes[e.clube_casa_id]['60x60']} />
+                                            <Text>{e.placar_oficial_mandante}</Text>
+                                            <Text>x</Text>
+                                            <Text>{e.placar_oficial_visitante}</Text>
+                                            <Shield src={data.clubes[e.clube_visitante_id]['60x60']} />
+                                            <Button>VER SCOUTS</Button>
+                                        </Item>
+                                    )
+                                }
+                            </List>
+                        </>
+
             }
         </Content>
     );
@@ -118,7 +126,7 @@ function clubs() {
                     title="Parciais por clube"
                     modal={modal}
                     smodal={smodal}
-                    data={data.partida}
+                    data={{ data: data.partida, seasson }}
                     Component={ModalScoutMatch}
                     width='70%'
                     height='500px'

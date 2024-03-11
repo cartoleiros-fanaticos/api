@@ -15,7 +15,7 @@ use Illuminate\Database\QueryException;
 use Exception;
 use Log;
 use DB;
-use Validator;
+use Carbon\Carbon;
 
 class Escalacao extends Command
 {
@@ -39,63 +39,74 @@ class Escalacao extends Command
     public function handle(): void
     {
 
-        $game = Game::first();
-        $request = new Request;
+        $temporada = Carbon::now()->format('Y');
 
-        $escalacao_times = EscalacaoTimes::select('id', 'access_token')
-            ->get();
+        $game = Game::where('temporada', $temporada)
+            ->first();
 
-        foreach ($escalacao_times as $val) :
+        if ($game) :
 
-            $request->replace(['access_token' => $val->access_token]);
+            $request = new Request;
 
-            if ($game->status_mercado === 1) :
+            $escalacao_times = EscalacaoTimes::select('id', 'access_token')
+                ->where('temporada', $temporada)
+                ->get();
 
-                $escalacao = new EscalacaoController;
-                $escalacao->store($request);
+            foreach ($escalacao_times as $val) :
 
-            else :
+                $request->replace(['access_token' => $val->access_token]);
 
-                try {
+                if ($game->status_mercado === 1) :
 
-                    $client = new Client();
+                    $escalacao = new EscalacaoController;
+                    $escalacao->store($request);
 
-                    $headers = ['authorization' => 'Bearer ' .  $val->access_token];
+                else :
 
-                    $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
-                    $response = json_decode($response->getBody(), true);
+                    try {
 
-                    if (count($response)) :
+                        $client = new Client();
 
-                        foreach ($response as $value) :
+                        $headers = ['authorization' => 'Bearer ' .  $val->access_token];
 
-                            DB::UPDATE('
-                                UPDATE escalacao_atletas 
-                                INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
-                                SET entrou_em_campo = "Sim"
-                                WHERE atleta_id = ? AND escalacao_times_id = ?
-                            ', [$value['entrou']['atleta_id'], $val->id]);
+                        $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
+                        $response = json_decode($response->getBody(), true);
 
-                            DB::UPDATE('
-                                UPDATE escalacao_atletas 
-                                INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
-                                SET entrou_em_campo = "Não"
-                                WHERE atleta_id = ? AND escalacao_times_id = ?
-                            ', [$value['saiu']['atleta_id'], $val->id]);
+                        if (count($response)) :
 
-                        endforeach;
+                            foreach ($response as $value) :
 
-                    endif;
-                } catch (RequestException $e) {
-                    echo $e->getMessage() . PHP_EOL;
-                    Log::error($e->getMessage());
-                } catch (Exception $e) {
-                    echo $e->getMessage() . PHP_EOL;
-                    Log::error($e->getMessage());
-                }
+                                DB::UPDATE('
+                                    UPDATE escalacao_atletas 
+                                    INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
+                                    SET entrou_em_campo = "Sim"
+                                    WHERE atleta_id = ? AND escalacao_times_id = ? escalacao_rodadas.temporada = ?
+                                ', [$value['entrou']['atleta_id'], $val->id, $temporada]);
 
-            endif;
+                                DB::UPDATE('
+                                    UPDATE escalacao_atletas 
+                                    INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
+                                    SET entrou_em_campo = "Não"
+                                    WHERE atleta_id = ? AND escalacao_times_id = ? escalacao_rodadas.temporada = ?
+                                ', [$value['saiu']['atleta_id'], $val->id, $temporada]);
 
-        endforeach;
+                            endforeach;
+
+                        endif;
+                    } catch (RequestException $e) {
+                        echo $e->getMessage() . PHP_EOL;
+                        Log::error($e->getMessage());
+                    } catch (Exception $e) {
+                        echo $e->getMessage() . PHP_EOL;
+                        Log::error($e->getMessage());
+                    }
+
+                endif;
+
+            endforeach;
+
+        else :
+            echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
+        endif;
     }
 }

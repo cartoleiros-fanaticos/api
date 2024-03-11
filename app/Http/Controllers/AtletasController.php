@@ -29,7 +29,7 @@ class AtletasController extends Controller
     {
         $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
     }
-    
+
     public function index(Request $request)
     {
 
@@ -85,7 +85,7 @@ class AtletasController extends Controller
 
         else :
 
-            return response()->json([ 'status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada ]);
+            return response()->json(['status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada]);
 
         endif;
     }
@@ -506,15 +506,25 @@ class AtletasController extends Controller
     public function destaques(Request $request)
     {
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
-        $response = Destaques::where('rodada', $game->rodada_atual)
-            ->orderBy('tipo')
-            ->orderBy('escalacoes', 'DESC')
-            ->get()
-            ->groupBy('tipo');
+        if ($game) :
 
-        return response()->json($response);
+            $response = Destaques::where('rodada', $game->rodada_atual)
+                ->where('temporada', $this->temporada)
+                ->orderBy('tipo')
+                ->orderBy('escalacoes', 'DESC')
+                ->get()
+                ->groupBy('tipo');
+
+            return response()->json($response);
+
+        else :
+
+            return response()->json(['status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada]);
+
+        endif;
     }
 
     public function tem_atleta(Request $request, $atleta_id, $liga_id)

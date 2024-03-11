@@ -11,6 +11,7 @@ use App\Models\Game;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 
+use Carbon\Carbon;
 use Exception;
 use Log;
 
@@ -35,129 +36,138 @@ class Competicao extends Command
      */
     public function handle(): void
     {
-        $game = Game::first();
+        $temporada = Carbon::now()->format('Y');
 
-        $rodada_atual = $game->rodada_atual;
+        $game = Game::where('temporada', $temporada)
+            ->first();
 
-        //$game->status_mercado = 1;
+        if ($game) :
 
-        echo PHP_EOL . '- Encerrando competições.' . PHP_EOL;
+            $rodada_atual = $game->rodada_atual;
 
-        Competicoes::where('situacao', '!=', 'Encerrada')
-            ->where('ate', '<', $rodada_atual)
-            ->update([
-                'situacao' => 'Encerrada'
-            ]);
+            //$game->status_mercado = 1;
 
-        echo '- Carregando times.' . PHP_EOL;
+            echo PHP_EOL . '- Encerrando competições.' . PHP_EOL;
 
-        $times = CompeticoesTimes::select('competicoes_times.id', 'time_id', 'competicoes_transacoes.competicoes_id', 'competicoes.situacao')
-            ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_times.id')
-            ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
-            ->where('competicoes_transacoes.situacao', 'Aceita')
-             //->where('de', '>=', $rodada_atual)
-            //->where('ate', '>=', $rodada_atual)
-            ->where('competicoes.situacao', '!=', 'Encerrada')
-            ->get()
-            ->keyBy('time_id');
+            Competicoes::where('situacao', '!=', 'Encerrada')
+                ->where('ate', '<', $rodada_atual)
+                ->update([
+                    'situacao' => 'Encerrada'
+                ]);
 
-        echo '- Deletando atletas da rodada anterior.' . PHP_EOL;
+            echo '- Carregando times.' . PHP_EOL;
 
-        CompeticoesAtletas::where('rodada', $rodada_atual)
-            ->forceDelete();
+            $times = CompeticoesTimes::select('competicoes_times.id', 'time_id', 'competicoes_transacoes.competicoes_id', 'competicoes.situacao')
+                ->join('competicoes_transacoes', 'competicoes_transacoes.competicoes_times_id', 'competicoes_times.id')
+                ->join('competicoes', 'competicoes_transacoes.competicoes_id', 'competicoes.id')
+                ->where('competicoes_transacoes.situacao', 'Aceita')
+                //->where('de', '>=', $rodada_atual)
+                //->where('ate', '>=', $rodada_atual)
+                ->where('competicoes.situacao', '!=', 'Encerrada')
+                ->get()
+                ->keyBy('time_id');
 
-        if (COLLECT($times)->count()) :
+            echo '- Deletando atletas da rodada anterior.' . PHP_EOL;
 
-            try {
+            CompeticoesAtletas::where('rodada', $rodada_atual)
+                ->forceDelete();
 
-                echo '- Carregando times do site do cartola.' .  PHP_EOL;
+            if (COLLECT($times)->count()) :
 
-                $client = new Client();
+                try {
 
-                $teams = [];
+                    echo '- Carregando times do site do cartola.' .  PHP_EOL;
 
-                foreach ($times as $key => $val) :
+                    $client = new Client();
 
-                    if (!isset($teams[$key])) :
+                    $teams = [];
 
-                        echo  "- Atualizando tabela times_cartolas ID: $val->time_id." . PHP_EOL;
+                    foreach ($times as $key => $val) :
 
-                        $parciais = new ParciaisController;
-                        $response = $parciais->parciais_time($val->time_id);
+                        if (!isset($teams[$key])) :
+
+                            echo  "- Atualizando tabela times_cartolas ID: $val->time_id." . PHP_EOL;
+
+                            $parciais = new ParciaisController;
+                            $response = $parciais->parciais_time($val->time_id);
 
                         //   $teams[$key] = $val;
 
-                    endif;
+                        endif;
 
-                    if ($game->status_mercado != 1) :
+                        if ($game->status_mercado != 1) :
 
-                        if ($val->situacao === 'Em andamento') :
+                            if ($val->situacao === 'Em andamento') :
 
-                            if (!isset($teams[$key])) :
+                                if (!isset($teams[$key])) :
 
-                                $response = $client->get("https://api.cartolafc.globo.com/time/id/$val->time_id");
-                                $response = json_decode($response->getBody(), true);
+                                    $response = $client->get("https://api.cartolafc.globo.com/time/id/$val->time_id");
+                                    $response = json_decode($response->getBody(), true);
 
-                                $data = [];
+                                    $data = [];
 
-                                if (isset($response['atletas'])) :
+                                    if (isset($response['atletas'])) :
 
-                                    $i = 0;
+                                        $i = 0;
 
-                                    foreach ($response['atletas'] as $value) :
+                                        foreach ($response['atletas'] as $value) :
 
-                                        $data[$i]['rodada'] = $game->rodada_atual;
-                                        $data[$i]['atleta_id'] = $value['atleta_id'];
-                                        $data[$i]['competicoes_times_id'] = $val->id;
+                                            $data[$i]['rodada'] = $game->rodada_atual;
+                                            $data[$i]['atleta_id'] = $value['atleta_id'];
+                                            $data[$i]['competicoes_times_id'] = $val->id;
 
-                                        $i++;
+                                            $i++;
 
-                                    endforeach;
+                                        endforeach;
 
-                                    CompeticoesAtletas::insert($data);
+                                        CompeticoesAtletas::insert($data);
+
+                                    endif;
+
+                                    //   $teams[$key] = $val;
+
+                                    echo  PHP_EOL . '- Time ' . $response['time']['nome'] . ' carregado e atualizado.' . PHP_EOL;
 
                                 endif;
 
-                             //   $teams[$key] = $val;
+                            else :
 
-                                echo  PHP_EOL . '- Time ' . $response['time']['nome'] . ' carregado e atualizado.' . PHP_EOL;
+                                echo '- Atualizando tabela competições.' .  PHP_EOL;
+
+                                $competicao = Competicoes::find($val->competicoes_id);
+                                $competicao->situacao = 'Em andamento';
+                                $competicao->save();
 
                             endif;
 
                         else :
 
-                            echo '- Atualizando tabela competições.' .  PHP_EOL;
+                            echo  '- Criando ou atualizando registro nova rodada.' . PHP_EOL;
 
-                            $competicao = Competicoes::find($val->competicoes_id);
-                            $competicao->situacao = 'Em andamento';
-                            $competicao->save();
+                            CompeticoesRodadas::updateOrCreate(
+                                [
+                                    'rodada' => $game->rodada_atual,
+                                    'competicoes_id' => $val->competicoes_id,
+                                    'competicoes_times_id' =>  $val->id
+                                ],
+                                []
+                            );
 
                         endif;
 
-                    else :
+                        $teams[$key] = $val;
 
-                        echo  '- Criando ou atualizando registro nova rodada.' . PHP_EOL;
+                    endforeach;
+                } catch (Exception $e) {
+                    echo PHP_EOL . $e->getMessage() . PHP_EOL;
+                    Log::error($e->getMessage());
+                }
+            endif;
 
-                        CompeticoesRodadas::updateOrCreate(
-                            [
-                                'rodada' => $game->rodada_atual,
-                                'competicoes_id' => $val->competicoes_id,
-                                'competicoes_times_id' =>  $val->id
-                            ],
-                            []
-                        );
+            echo '- Concluido' . PHP_EOL . PHP_EOL;
 
-                    endif;
-
-                    $teams[$key] = $val;
-
-                endforeach;
-            } catch (Exception $e) {
-                echo PHP_EOL . $e->getMessage() . PHP_EOL;
-                Log::error($e->getMessage());
-            }
+        else :
+            echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
         endif;
-
-        echo '- Concluido' . PHP_EOL . PHP_EOL;
     }
 }

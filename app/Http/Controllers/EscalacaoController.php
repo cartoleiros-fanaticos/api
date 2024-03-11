@@ -18,14 +18,18 @@ use Exception;
 use Log;
 use DB;
 use Validator;
+use Carbon\Carbon;
 
 
 class EscalacaoController extends Controller
 {
 
-    public function __construct()
+    private $temporada;
+
+    public function __construct(Request $request)
     {
         $this->middleware('jwt', ['except' => ['store']]);
+        $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
     }
 
     /**
@@ -34,14 +38,25 @@ class EscalacaoController extends Controller
     public function index(Request $request)
     {
 
-        $game = Game::first();
-        $times = EscalacaoTimes::orderBy('socio', 'ASC')
-            ->get();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
-        return response()->json([
-            'game' => $game,
-            'times' => $times
-        ]);
+        if ($game) :
+
+            $times = EscalacaoTimes::orderBy('socio', 'ASC')
+                ->where('temporada', $this->temporada)
+                ->get();
+
+            return response()->json([
+                'game' => $game,
+                'times' => $times
+            ]);
+
+        else :
+
+            return response()->json(['status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada]);
+
+        endif;
     }
 
     /**
@@ -74,11 +89,14 @@ class EscalacaoController extends Controller
 
             DB::transaction(function () use ($response, $request) {
 
+                $temporada = Carbon::now()->format('Y');
+
                 $time = $response['time'];
 
                 $escalacao_times = EscalacaoTimes::updateOrCreate(
                     [
-                        'time_id' => $time['time_id']
+                        'time_id' => $time['time_id'],
+                        'temporada' => $temporada
                     ],
                     [
                         'nome' => $time['nome'],
@@ -96,6 +114,7 @@ class EscalacaoController extends Controller
                         [
                             'escalacao_times_id' => $escalacao_times->id,
                             'rodada_time_id' => $time['rodada_time_id'],
+                            'temporada' => $temporada
                         ],
                         [
                             'capitao_id' => $response['capitao_id'],
@@ -106,11 +125,13 @@ class EscalacaoController extends Controller
 
                     EscalacaoAtletas::where('rodada_time_id', $time['rodada_time_id'])
                         ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
+                        ->where('temporada', $temporada)
                         ->delete();
 
                     foreach ((array) $response['atletas'] as $key => $val) :
 
                         EscalacaoAtletas::create([
+                            'temporada' => $temporada,
                             'atleta_id' => $val['atleta_id'],
                             'preco_num' => $val['preco_num'],
                             'rodada_time_id' => $time['rodada_time_id'],
@@ -124,6 +145,7 @@ class EscalacaoController extends Controller
                         foreach ((array) $response['reservas'] as $key => $val) :
 
                             EscalacaoAtletas::create([
+                                'temporada' => $temporada,
                                 'atleta_id' => $val['atleta_id'],
                                 'preco_num' => $val['preco_num'],
                                 'rodada_time_id' => $time['rodada_time_id'],
@@ -188,6 +210,7 @@ class EscalacaoController extends Controller
                 }
             ]
         )
+            ->where('temporada', $this->temporada)
             ->where('time_id', $id)
             ->first();
 
@@ -225,6 +248,7 @@ class EscalacaoController extends Controller
             'V',
         )
             ->selectRaw('IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao) as pontuacao')
+            ->where('temporada', $this->temporada)
             ->whereIn('atleta_id', $atleta_id)
             ->where('rodada', $rodada)
             ->get()
@@ -233,11 +257,13 @@ class EscalacaoController extends Controller
         $atleta_id = $time->rodadas->atletas->where('entrou_em_campo', 'Sim')->pluck('atleta_id')->merge($time->rodadas->reservas->where('entrou_em_campo', 'Sim')->pluck('atleta_id'));
 
         $pontos = Parciais::selectRaw('SUM(IF(atleta_id = ' . $time->rodadas->capitao_id . ', pontuacao * 1.5, pontuacao)) as total')
+            ->where('temporada', $this->temporada)
             ->whereIn('atleta_id', $atleta_id)
             ->where('rodada', $rodada)
             ->first();
 
         $scouts = Scouts::select('sigla', 'nome', 'tipo')
+            ->where('temporada', $this->temporada)
             ->orderBy('tipo')
             ->get();
 

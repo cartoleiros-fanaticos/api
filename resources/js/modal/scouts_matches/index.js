@@ -28,7 +28,7 @@ import {
 
 import { Message } from '../../utils/styles';
 
-function scouts({ data: { id } }) {
+function scouts({ data: { data: { id }, seasson } }) {
 
   const [uri, suri] = useState('');
 
@@ -43,12 +43,12 @@ function scouts({ data: { id } }) {
 
     try {
 
-      const { data } = await api.get(`parciais/clubes/${id}`);
+      const { data } = await api.get(`parciais/clubes/${id}?temporada=${seasson}`);
 
       sdata(data);
       sloading(false);
 
-      suri(`parciais/clubes/${id}`);
+      suri(`parciais/clubes/${id}?temporada=${seasson}`);
 
     } catch (e) {
       message(e);

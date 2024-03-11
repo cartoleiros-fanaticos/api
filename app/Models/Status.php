@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Status extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'id', 'nome' ];
+    protected $fillable = [ 'id', 'temporada', 'nome' ];
 
     // public function newQuery()
     // {

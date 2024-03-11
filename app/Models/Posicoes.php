@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Posicoes extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'id', 'nome', 'abreviacao' ];
+    protected $fillable = [ 'id', 'temporada', 'nome', 'abreviacao' ];
 
     // public function newQuery()
     // {

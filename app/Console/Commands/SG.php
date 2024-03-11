@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Atletas;
 use App\Models\Game;
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 use DB;
 
 class SG extends Command
@@ -28,24 +29,36 @@ class SG extends Command
      */
     public function handle(): void
     {
-        echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
-        $game = Game::first();
-        $atletas = Atletas::get();
+        $temporada = Carbon::now()->format('Y');
 
-        echo '- Atualizando tabela parciais.' . PHP_EOL;
+        $game = Game::where('temporada', $temporada)
+            ->first();
 
-        foreach ($atletas as $key => $val) :
+        if ($game) :
+            
+            echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
-            $rodada = $game->game_over ? 38 : ($val->rodada - 1);
+            $atletas = Atletas::where('temporada', $temporada)
+                ->get();
 
-            DB::UPDATE('
+            echo '- Atualizando tabela parciais.' . PHP_EOL;
+
+            foreach ($atletas as $key => $val) :
+
+                $rodada = $game->game_over ? 38 : ($val->rodada - 1);
+
+                DB::UPDATE('
                     UPDATE parciais SET SG = ? - SG
-                    WHERE atleta_id = ? AND rodada = ?
-                ', [$val->SG, $val->atleta_id, $rodada]);
+                    WHERE atleta_id = ? AND rodada = ? AND temporada = ?
+                ', [$val->SG, $val->atleta_id, $rodada, $temporada]);
 
-        endforeach;
+            endforeach;
 
-        echo '- Atualização finalizada com sucesso.' . PHP_EOL . PHP_EOL;
+            echo '- Atualização finalizada com sucesso.' . PHP_EOL . PHP_EOL;
+
+        else :
+            echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
+        endif;
     }
 }
