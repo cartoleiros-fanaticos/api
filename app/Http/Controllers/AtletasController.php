@@ -29,55 +29,65 @@ class AtletasController extends Controller
     {
         $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
     }
+    
     public function index(Request $request)
     {
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
-        $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'minimo_para_valorizar', 'clube_id', 'posicao_id', 'status_id', 'rodada_id', 'A', 'G', 'CA', 'CV', 'DP', 'FC', 'FD', 'FF', 'FS', 'FT', 'GC', 'GS', 'I', 'PP', 'DS', 'SG', 'PS', 'PC', 'DE')
-            ->selectRaw('(SELECT CONCAT(clube_casa_id, \'x\',  clube_visitante_id) FROM partidas WHERE rodada = ' . $game->rodada_atual . ' AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS confronto')
-            ->where(function ($q) use ($request) {
+        if ($game) :
 
-                if ($request->clube_id)
-                    $q->where('clube_id', $request->clube_id);
+            $atletas = Atletas::select('atleta_id', 'apelido', 'foto', 'variacao_num', 'preco_num', 'pontos_num', 'media_num', 'jogos_num', 'minimo_para_valorizar', 'clube_id', 'posicao_id', 'status_id', 'rodada_id', 'A', 'G', 'CA', 'CV', 'DP', 'FC', 'FD', 'FF', 'FS', 'FT', 'GC', 'GS', 'I', 'PP', 'DS', 'SG', 'PS', 'PC', 'DE')
+                ->selectRaw('(SELECT CONCAT(clube_casa_id, \'x\',  clube_visitante_id) FROM partidas WHERE rodada = ' . $game->rodada_atual . ' AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id)) AS confronto')
+                ->where(function ($q) use ($request) {
 
-                if ($request->posicao_id)
-                    $q->where('posicao_id', $request->posicao_id);
+                    if ($request->clube_id)
+                        $q->where('clube_id', $request->clube_id);
 
-                if ($request->status_id)
-                    $q->where('status_id', $request->status_id);
-            })
-            ->where('temporada', $this->temporada)
-            ->orderBy(($request->scout ?? 'preco_num'), 'DESC')
-            ->get();
+                    if ($request->posicao_id)
+                        $q->where('posicao_id', $request->posicao_id);
 
-        $clubes = Clubes::select('id', 'nome', 'abreviacao', '60x60')
-            ->where('temporada', $this->temporada)
-            ->get()
-            ->keyBy('id');
+                    if ($request->status_id)
+                        $q->where('status_id', $request->status_id);
+                })
+                ->where('temporada', $this->temporada)
+                ->orderBy(($request->scout ?? 'preco_num'), 'DESC')
+                ->get();
 
-        $posicoes = Posicoes::select('id', 'nome')
-            ->where('temporada', $this->temporada)
-            ->get()
-            ->keyBy('id');
+            $clubes = Clubes::select('id', 'nome', 'abreviacao', '60x60')
+                ->where('temporada', $this->temporada)
+                ->get()
+                ->keyBy('id');
 
-        $status = Status::select('id', 'nome')
-            ->where('temporada', $this->temporada)
-            ->get()
-            ->keyBy('id');
+            $posicoes = Posicoes::select('id', 'nome')
+                ->where('temporada', $this->temporada)
+                ->get()
+                ->keyBy('id');
 
-        $scouts = Scouts::select('sigla', 'nome', 'tipo')
-            ->where('temporada', $this->temporada)
-            ->orderBy('tipo')
-            ->get();
+            $status = Status::select('id', 'nome')
+                ->where('temporada', $this->temporada)
+                ->get()
+                ->keyBy('id');
 
-        return response()->json([
-            'atletas' => $atletas,
-            'clubes' => $clubes,
-            'posicoes' => $posicoes,
-            'status' => $status,
-            'scouts' => $scouts,
-        ]);
+            $scouts = Scouts::select('sigla', 'nome', 'tipo')
+                ->where('temporada', $this->temporada)
+                ->orderBy('tipo')
+                ->get();
+
+            return response()->json([
+                'atletas' => $atletas,
+                'clubes' => $clubes,
+                'posicoes' => $posicoes,
+                'status' => $status,
+                'scouts' => $scouts,
+            ]);
+
+        else :
+
+            return response()->json([ 'status' => 'Fechado', 'message' => 'Ainda não foi aberta a temporada ' . $this->temporada ]);
+
+        endif;
     }
 
     public function show(Request $request, string $id)
@@ -206,17 +216,27 @@ class AtletasController extends Controller
         // $games->game_over = 1;
         // $atleta->rodada_id = 38;
 
-        $a = 1;
+        //$a = 1;
         $qtde_rodada = 7;
-        $rodada = $game->game_over ? $atleta->rodada_id : $atleta->rodada_id;
+        // $rodada = $game->game_over ? $atleta->rodada_id : $atleta->rodada_id;
 
-        while ($a <= 38) :
-            $rodadas->push($a . 'º rodada');
-            $a++;
-        endwhile;
+        // while ($a <= 38) :
+        //     $rodadas->push($a . 'º rodada');
+        //     $a++;
+        // endwhile;
 
-        if ($rodada <= $qtde_rodada) $rodadas->splice($qtde_rodada);
-        else $rodadas = $rodadas->splice($rodada - $qtde_rodada, $qtde_rodada);
+        $rodadas = Parciais::select('rodada')
+            ->where('temporada', $this->temporada)
+            ->where('atleta_id', $id)
+            ->get()->transform(function ($i) {
+                return $i['rodada'] . 'º rodada';
+            });
+
+        // foreach ($rodadas as $val)
+        //     $rodadas->push($val->rodada . 'º rodada');
+
+        if ($rodadas->count() <= $qtde_rodada) $rodadas->splice($qtde_rodada);
+        else $rodadas = $rodadas->splice($rodadas->count() - $qtde_rodada, $qtde_rodada);
 
         $parciais = COLLECT(
             DB::SELECT('
@@ -228,18 +248,18 @@ class AtletasController extends Controller
                 WHERE atleta_id = ? AND temporada = ?
                 LIMIT ?
                 OFFSET ?
-            ', [$id, $this->temporada, $qtde_rodada, $rodada <= $qtde_rodada ? 0 : $rodada - $qtde_rodada])
+            ', [$id, $this->temporada, $qtde_rodada, $rodadas->count() <= $qtde_rodada ? 0 : $rodadas->count() - $qtde_rodada])
         );
 
         return response()->json([
-            'rodada' => $rodada,
+            'rodada' => $game->game_over ? $atleta->rodada_id : $atleta->rodada_id,
             'atleta' => $atleta,
             'clubes' => $clubes,
             'scouts' => $scouts,
             'grafico' => [
                 'rodadas' => $rodadas->all(),
-                'pontuacao' => $rodada ? $parciais->pluck('pontuacao') : [],
-                'variacao_num' => $rodada ? $parciais->pluck('variacao_num') : [],
+                'pontuacao' => $rodadas->count() ? $parciais->pluck('pontuacao') : [],
+                'variacao_num' => $rodadas->count() ? $parciais->pluck('variacao_num') : [],
             ]
         ]);
     }

@@ -242,6 +242,17 @@ export const Text3 = styled.p`
     font-size: 0.9em;
 `;
 
+export const Message = styled.div`
+    display: block;
+    text-align: center;
+    margin: 35px auto;
+    color: #999;
+    font-size: 0.9em;
+    user-select: none;  
+    grid-column: 1/3;
+`;
+
+
 
 
 

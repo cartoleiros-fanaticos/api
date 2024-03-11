@@ -40,7 +40,7 @@ import { Message } from '../../../utils/styles';
 function Player() {
 
   const seasson = useSelector(state => state);
-  
+
   const [modal_player, smodalplayer] = useState(false);
   const [modal_compare, smodalcompare] = useState(false);
   const [data_player, sdataplayer] = useState({});
@@ -216,99 +216,106 @@ function Player() {
 
   const component = (
     <Content>
-      <Filter>
-        <Select onChange={e => sfilter({ ...filter, clube_id: e.target.value })} value={filter.clube_id}>
-          <Option value="">Time</Option>
-          {
-            Object.values(data.clubes).map(e => <Option key={e.id} value={e.id}>{e.nome}</Option>)
-          }
-        </Select>
-        <Select onChange={e => sfilter({ ...filter, posicao_id: e.target.value })} value={filter.posicao_id}>
-          {
-            Object.values(data.posicoes).map((e) => <Option key={e.id} value={e.id}>{e.nome}</Option>)
-          }
-        </Select>
-        <Select onChange={e => sfilter({ ...filter, status_id: e.target.value })} value={filter.status_id}>
-          {
-            Object.values(data.status).map((e) => <Option key={e.id} value={e.id}>{e.nome}</Option>)
-          }
-        </Select>
-        <Select onChange={e => sfilter({ ...filter, scout: e.target.value })} value={filter.scout}>
-          <Option value="">Scouts</Option>
-          {
-            data.scouts.map((e) => <Option key={e.sigla} value={e.sigla}>{e.nome}</Option>)
-          }
-        </Select>
-        <Button onClick={getData}>
-          {loading_data ? <Loader visible={true} type="TailSpin" color="#000" height={18} width={18} /> : <span>Carregar</span>}
-        </Button>
-        <Label>
-          <Icon>directions_run</Icon>
-          <Input onChange={search} />
-        </Label>
-      </Filter>
-      <List>
-        <Table>
-          <Thead>
-            <Tr>
-              <Th>Time</Th>
-              <Th>Jogador</Th>
-              <Th>
-                <OrderBy onClick={order}>Preço</OrderBy>
-              </Th>
-              <Th>Status</Th>
-              <Th>
-                <OrderBy onClick={order}>Valorização</OrderBy>
-              </Th>
-              <Th>
-                <OrderBy onClick={order}>Última</OrderBy>
-              </Th>
-              <Th>
-                <OrderBy onClick={order}>Média</OrderBy>
-              </Th>
-              <Th>Jogos</Th>
-              <Th>
-                <OrderBy onClick={order}>P. mínima</OrderBy>
-              </Th>
-              <Th>{filter.scout || 'G'}</Th>
-              <Th>Confronto</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {
-              data.atletas.length ?
-                data.atletas.map(e =>
-                  <Tr compare={player_id === e.atleta_id} onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
-                    <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
-                    <Td>
-                      <Image src={e.foto} />
-                      <Description>
-                        <Name>{e.apelido.substr(0, 10)}</Name>
-                        <Position>{data.posicoes[e.posicao_id].nome}</Position>
-                      </Description>
-                    </Td>
-                    <Td>{amount(e.preco_num)}</Td>
-                    <Td><Ico color={status[e.status_id].color}>{status[e.status_id].icon}</Ico></Td>
-                    <Td>{amount(e.variacao_num)}</Td>
-                    <Td>{amount(e.pontos_num)}</Td>
-                    <Td>{amount(e.media_num)}</Td>
-                    <Td>{e.jogos_num}</Td>
-                    <Td>{amount(e.minimo_para_valorizar)}</Td>
-                    <Td>{e[filter.scout] || e.G}</Td>
-                    <Td>
-                      <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />
-                      x
-                      <Image src={data.clubes[e.confronto.split('x')[1]]['60x60']} />
-                    </Td>
+      {
+        data && data.status && data.status === 'Fechado' ?
+          <Message>Temporada ainda não abriu clique no menu temporada para alternar para anterior.</Message>
+          :
+          <>
+            <Filter>
+              <Select onChange={e => sfilter({ ...filter, clube_id: e.target.value })} value={filter.clube_id}>
+                <Option value="">Time</Option>
+                {
+                  Object.values(data.clubes).map(e => <Option key={e.id} value={e.id}>{e.nome}</Option>)
+                }
+              </Select>
+              <Select onChange={e => sfilter({ ...filter, posicao_id: e.target.value })} value={filter.posicao_id}>
+                {
+                  Object.values(data.posicoes).map((e) => <Option key={e.id} value={e.id}>{e.nome}</Option>)
+                }
+              </Select>
+              <Select onChange={e => sfilter({ ...filter, status_id: e.target.value })} value={filter.status_id}>
+                {
+                  Object.values(data.status).map((e) => <Option key={e.id} value={e.id}>{e.nome}</Option>)
+                }
+              </Select>
+              <Select onChange={e => sfilter({ ...filter, scout: e.target.value })} value={filter.scout}>
+                <Option value="">Scouts</Option>
+                {
+                  data.scouts.map((e) => <Option key={e.sigla} value={e.sigla}>{e.nome}</Option>)
+                }
+              </Select>
+              <Button onClick={getData}>
+                {loading_data ? <Loader visible={true} type="TailSpin" color="#000" height={18} width={18} /> : <span>Carregar</span>}
+              </Button>
+              <Label>
+                <Icon>directions_run</Icon>
+                <Input onChange={search} />
+              </Label>
+            </Filter>
+            <List>
+              <Table>
+                <Thead>
+                  <Tr>
+                    <Th>Time</Th>
+                    <Th>Jogador</Th>
+                    <Th>
+                      <OrderBy onClick={order}>Preço</OrderBy>
+                    </Th>
+                    <Th>Status</Th>
+                    <Th>
+                      <OrderBy onClick={order}>Valorização</OrderBy>
+                    </Th>
+                    <Th>
+                      <OrderBy onClick={order}>Última</OrderBy>
+                    </Th>
+                    <Th>
+                      <OrderBy onClick={order}>Média</OrderBy>
+                    </Th>
+                    <Th>Jogos</Th>
+                    <Th>
+                      <OrderBy onClick={order}>P. mínima</OrderBy>
+                    </Th>
+                    <Th>{filter.scout || 'G'}</Th>
+                    <Th>Confronto</Th>
                   </Tr>
-                )
-                :
-                <Message>Nenhum jogador encontrado</Message>
-            }
+                </Thead>
+                <Tbody>
+                  {
+                    data.atletas.length ?
+                      data.atletas.map(e =>
+                        <Tr compare={player_id === e.atleta_id} onClick={() => getPlayer(e.atleta_id)} key={e.atleta_id}>
+                          <Td><Image src={data.clubes[e.clube_id]['60x60']} /></Td>
+                          <Td>
+                            <Image src={e.foto} />
+                            <Description>
+                              <Name>{e.apelido.substr(0, 10)}</Name>
+                              <Position>{data.posicoes[e.posicao_id].nome}</Position>
+                            </Description>
+                          </Td>
+                          <Td>{amount(e.preco_num)}</Td>
+                          <Td><Ico color={status[e.status_id].color}>{status[e.status_id].icon}</Ico></Td>
+                          <Td>{amount(e.variacao_num)}</Td>
+                          <Td>{amount(e.pontos_num)}</Td>
+                          <Td>{amount(e.media_num)}</Td>
+                          <Td>{e.jogos_num}</Td>
+                          <Td>{amount(e.minimo_para_valorizar)}</Td>
+                          <Td>{e[filter.scout] || e.G}</Td>
+                          <Td>
+                            <Image src={data.clubes[e.confronto.split('x')[0]]['60x60']} />
+                            x
+                            <Image src={data.clubes[e.confronto.split('x')[1]]['60x60']} />
+                          </Td>
+                        </Tr>
+                      )
+                      :
+                      <Message>Nenhum jogador encontrado</Message>
+                  }
 
-          </Tbody>
-        </Table>
-      </List>
+                </Tbody>
+              </Table>
+            </List>
+          </>
+      }
     </Content>
   );
 
