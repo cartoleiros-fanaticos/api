@@ -1,9 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev": "vite",
     "watch": "mix watch",
-    "build": "vite build"
+    "prod": "npm run production",
+    "production": "mix --production"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.18.6",
