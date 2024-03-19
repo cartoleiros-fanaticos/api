@@ -60,7 +60,7 @@ class Atletas extends Command
 
                     Clubes::updateOrCreate(
                         [
-                            'id' => $val['id'],
+                            'clube_id' => $val['id'],
                             'temporada' => $temporada
                         ],
                         [
@@ -81,7 +81,7 @@ class Atletas extends Command
 
                     Posicoes::updateOrCreate(
                         [
-                            'id' => $val['id'],
+                            'posicoes_id' => $val['id'],
                             'temporada' => $temporada
                         ],
                         [
@@ -97,7 +97,7 @@ class Atletas extends Command
 
                     Status::updateOrCreate(
                         [
-                            'id' => $val['id'],
+                            'status_id' => $val['id'],
                             'temporada' => $temporada
                         ],
                         [

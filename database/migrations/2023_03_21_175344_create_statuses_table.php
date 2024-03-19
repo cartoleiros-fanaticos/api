@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('status_id');
             $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->string('nome');
             $table->timestamps();
+
+
+            $table->unique(['status_id', 'temporada']);
         });
     }
 

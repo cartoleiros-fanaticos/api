@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 
 import moment from 'moment';
 
-const data = 2023;//moment().format('Y');
+const data = moment().format('Y');
 
 function seasson(state = data, action) {
 

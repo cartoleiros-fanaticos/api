@@ -47,7 +47,7 @@ class Game extends Command
             $ano_atual = Carbon::now()->format('Y');
             $temporada = $response['temporada'];
 
-            if ($temporada === $ano_atual) :
+            if ($temporada == $ano_atual) :
                 
                 $dt = $response['fechamento'];
                 $rodada_atual = $response['rodada_atual'];
@@ -104,7 +104,9 @@ class Game extends Command
 
                 echo '- Carregando dados dos mais escalados.' . PHP_EOL;
 
-                $response = $client->get('https://api.cartola.globo.com/mercado/destaques');
+                $headers = ['authorization' => 'Bearer ' . config('global.access_token_cartola')];
+
+                $response = $client->get('https://api.cartola.globo.com/auth/mercado/destaques', ['headers' => $headers]);
                 $response = json_decode($response->getBody(), true);
 
                 foreach ((array) $response as $key => $val) :
@@ -128,7 +130,7 @@ class Game extends Command
 
                 echo '- Carregando dados dos reservas mais escalados.' . PHP_EOL;
 
-                $response = $client->get('https://api.cartola.globo.com/mercado/destaques/reservas');
+                $response = $client->get('https://api.cartola.globo.com/auth/mercado/destaques/reservas', ['headers' => $headers]);
                 $response = json_decode($response->getBody(), true);
 
                 foreach ((array) $response as $key => $val) :

@@ -20,8 +20,11 @@ return new class extends Migration
             $table->integer('rodada');
             $table->integer('atleta_id');
 
-            $table->foreignId('clube_id')->constrained('clubes');
-            $table->foreignId('posicao_id')->constrained('posicoes');
+            $table->unsignedBigInteger('clube_id'); 
+            $table->foreign('clube_id')->references('clube_id')->on('clubes');
+
+            $table->unsignedBigInteger('posicoes_id'); 
+            $table->foreign('posicoes_id')->references('posicoes_id')->on('posicoes');
             
             $table->float('pontuacao');
             $table->float('variacao_num')->default(0);
@@ -50,7 +53,7 @@ return new class extends Migration
             $table->integer('DE')->default(0);
             $table->integer('V')->default(0);
 
-            $table->unique([ 'rodada', 'atleta_id' ]);
+            $table->unique([ 'temporada', 'rodada', 'atleta_id' ]);
 
             $table->timestamps();
 

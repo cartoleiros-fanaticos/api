@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('clubes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('clube_id');
             $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->string('nome');
             $table->string('abreviacao');
@@ -22,6 +23,8 @@ return new class extends Migration
             $table->string('45x45');
             $table->string('30x30');
             $table->timestamps();
+
+            $table->unique(['clube_id', 'temporada']);
         });
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('atletas', function (Blueprint $table) {
             $table->id();
             $table->string('temporada')->default(Carbon::now()->format('Y'));
-            $table->integer('atleta_id')->unsigned()->unique();
+            $table->integer('atleta_id')->unsigned();
             $table->string('nome');
             $table->string('slug');
             $table->string('apelido');
@@ -24,9 +24,14 @@ return new class extends Migration
 
             $table->integer('rodada_id');
 
-            $table->foreignId('clube_id')->constrained('clubes');
-            $table->foreignId('posicao_id')->constrained('posicoes');
-            $table->foreignId('status_id')->constrained('statuses');
+            $table->unsignedBigInteger('clube_id'); 
+            $table->foreign('clube_id')->references('clube_id')->on('clubes');
+
+            $table->unsignedBigInteger('posicoes_id'); 
+            $table->foreign('posicoes_id')->references('posicoes_id')->on('posicoes');
+
+            $table->unsignedBigInteger('status_id'); 
+            $table->foreign('status_id')->references('status_id')->on('statuses');
 
             $table->float('pontos_num');
             $table->float('preco_num');
@@ -61,6 +66,8 @@ return new class extends Migration
             $table->integer('V')->default(0);
 
             $table->timestamps();
+
+            $table->unique([ 'temporada', 'atleta_id' ]);
         });
     }
 

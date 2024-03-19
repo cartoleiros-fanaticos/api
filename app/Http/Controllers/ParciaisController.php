@@ -59,12 +59,12 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.id', 'atletas.posicao_id')
+                    $q->on('posicoes.posicoes_id', 'atletas.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
 
-                    $q->on('clubes.id', 'atletas.clube_id')
+                    $q->on('clubes.clube_id', 'atletas.clube_id')
                         ->where('clubes.temporada', $this->temporada);
                 })
                 ->where('atletas.temporada', $this->temporada)
@@ -117,12 +117,12 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.id', 'parciais.posicao_id')
+                    $q->on('posicoes.posicoes_id', 'parciais.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
 
-                    $q->on('clubes.id', 'parciais.clube_id')
+                    $q->on('clubes.clube_id', 'parciais.clube_id')
                         ->where('clubes.temporada', $this->temporada);
                 })
                 ->where('parciais.temporada', $this->temporada)
@@ -147,12 +147,12 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.id', 'parciais.posicao_id')
+                    $q->on('posicoes.posicoes_id', 'parciais.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
 
-                    $q->on('clubes.id', 'parciais.clube_id')
+                    $q->on('clubes.clube_id', 'parciais.clube_id')
                         ->where('clubes.temporada', $this->temporada);
                 })
                 ->where('parciais.temporada', $this->temporada)
@@ -426,7 +426,7 @@ class ParciaisController extends Controller
                         ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
                         ->join('posicoes', function ($q) {
 
-                            $q->on('posicoes.id', 'atletas.posicao_id')
+                            $q->on('posicoes.posicoes_id', 'atletas.posicao_id')
                                 ->where('posicoes.temporada', $this->temporada);
                         })
                         ->where('times_cartolas_id', $time_cartola->id)

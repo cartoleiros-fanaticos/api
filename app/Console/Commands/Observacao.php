@@ -56,7 +56,7 @@ class Observacao extends Command
 
                 $clubes = Clubes::where('temporada', $temporada)
                     ->get()
-                    ->keyBy('id');
+                    ->keyBy('clube_id');
 
                 DB::statement('CREATE TEMPORARY TABLE partidas_mandante_temporary  
                 ( 

@@ -96,6 +96,7 @@ function player({ data, fnc }) {
   
       } catch (e) {
         message(e);
+        smodal(false);
         sloading(false);
       };
   
