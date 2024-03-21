@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('clube_id'); 
             $table->foreign('clube_id')->references('clube_id')->on('clubes');
 
-            $table->unsignedBigInteger('posicoes_id'); 
-            $table->foreign('posicoes_id')->references('posicoes_id')->on('posicoes');
+            $table->unsignedBigInteger('posicao_id'); 
+            $table->foreign('posicao_id')->references('posicao_id')->on('posicoes');
             
             $table->float('pontuacao');
             $table->float('variacao_num')->default(0);

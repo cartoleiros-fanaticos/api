@@ -25,7 +25,7 @@ function matches({ data }) {
   return (
     <Container>
       {
-        data.confrontos.length
+        (data?.confrontos && data.confrontos.length)
           ?
           <>
             <Title>Pontuação cedida do time do {data.time.nome.toUpperCase()} para os {data.posicao.nome.toUpperCase()}.</Title>

@@ -40,7 +40,7 @@ class CruzamentoController extends Controller
                 ->where('rodada', $rodada_atual)
                 ->get();
 
-            $clubes = Clubes::select('id', 'escudo')
+            $clubes = Clubes::select('clube_id as id', 'escudo')
                 ->where('temporada', $this->temporada)
                 ->get()
                 ->keyBy('id');
@@ -186,7 +186,7 @@ class CruzamentoController extends Controller
                                 )
                             FROM partidas
                             INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                            WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                            WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                             GROUP BY clube_visitante_id
                         )
                         +
@@ -205,13 +205,13 @@ class CruzamentoController extends Controller
                                 )
                             FROM partidas
                             INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                            WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                            WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                             GROUP BY clube_casa_id
                         )
                     ) pontos
                 FROM partidas
-                INNER JOIN clubes ON clube_casa_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
-                INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
+                INNER JOIN clubes ON clube_casa_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
+                INNER JOIN parciais ON clube_visitante_id = parciais.clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
                 WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.rodada >= ? AND partidas.temporada = ' . $this->temporada . '
                 GROUP BY clube_casa_id
             ', [$rodada]))->keyBy('id');
@@ -336,8 +336,8 @@ class CruzamentoController extends Controller
                                 END
                             )
                             FROM partidas
-                            INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                            WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                            INNER JOIN parciais ON clube_casa_id = parciais.clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
+                            WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                             GROUP BY clube_visitante_id
                         )
                         +
@@ -355,14 +355,14 @@ class CruzamentoController extends Controller
                                     END
                                 )
                             FROM partidas
-                            INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                            WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                            INNER JOIN parciais ON clube_visitante_id = parciais.clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
+                            WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                             GROUP BY clube_casa_id
                         )
                     ) pontos
                 FROM partidas
-                INNER JOIN clubes ON clube_visitante_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
-                INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
+                INNER JOIN clubes ON clube_visitante_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
+                INNER JOIN parciais ON clube_casa_id = parciais.clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
                 WHERE posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.rodada >= ? AND partidas.temporada = ' . $this->temporada . '
                 GROUP BY clube_visitante_id
             ', [$rodada]))->keyBy('id');
@@ -439,7 +439,7 @@ class CruzamentoController extends Controller
                                     IFNULL(SUM(pontuacao), 0) 
                                 FROM partidas
                                 INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                                 GROUP BY clube_visitante_id
                             )
                             +
@@ -448,7 +448,7 @@ class CruzamentoController extends Controller
                                     IFNULL(SUM(pontuacao), 0) 
                                 FROM partidas
                                 INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                                 GROUP BY clube_casa_id
                             )
                         )
@@ -456,7 +456,7 @@ class CruzamentoController extends Controller
                     END
                 ) pontos
             FROM partidas
-            INNER JOIN clubes ON clube_casa_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
+            INNER JOIN clubes ON clube_casa_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id ) AND parciais.temporada = ' . $this->temporada . '
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.temporada = ' . $this->temporada . '            
             GROUP BY clube_casa_id
@@ -520,7 +520,7 @@ class CruzamentoController extends Controller
                                     IFNULL(SUM(pontuacao), 0) 
                                 FROM partidas
                                 INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                                 GROUP BY clube_visitante_id
                             )
                             +
@@ -529,7 +529,7 @@ class CruzamentoController extends Controller
                                     IFNULL(SUM(pontuacao), 0) 
                                 FROM partidas
                                 INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
                                 GROUP BY clube_casa_id
                             )
                         )
@@ -537,7 +537,7 @@ class CruzamentoController extends Controller
                     END
                 ) pontos
             FROM partidas
-            INNER JOIN clubes ON clube_visitante_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
+            INNER JOIN clubes ON clube_visitante_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) AND parciais.temporada = ' . $this->temporada . '
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.temporada = ' . $this->temporada . '             
             GROUP BY clube_visitante_id
@@ -617,7 +617,7 @@ class CruzamentoController extends Controller
                                     pontuacao
                                 FROM partidas
                                 INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
 
                                 UNION ALL
 
@@ -625,7 +625,7 @@ class CruzamentoController extends Controller
                                     pontuacao
                                 FROM partidas
                                 INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
 
                             ) A
                         ) 
@@ -633,7 +633,7 @@ class CruzamentoController extends Controller
                     END
                 ) pontos
             FROM partidas
-            INNER JOIN clubes ON clube_casa_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
+            INNER JOIN clubes ON clube_casa_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
             INNER JOIN parciais ON partidas.clube_visitante_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_casa_id = partidas.clube_casa_id )  AND parciais.temporada = ' . $this->temporada . '
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.temporada = ' . $this->temporada . '            
             GROUP BY clube_casa_id
@@ -700,7 +700,7 @@ class CruzamentoController extends Controller
                                     pontuacao
                                 FROM partidas
                                 INNER JOIN parciais ON clube_casa_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_visitante_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_visitante_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
 
                                 UNION ALL
 
@@ -708,7 +708,7 @@ class CruzamentoController extends Controller
                                     pontuacao
                                 FROM partidas
                                 INNER JOIN parciais ON clube_visitante_id = clube_id AND partidas.rodada = parciais.rodada AND parciais.temporada = ' . $this->temporada . '
-                                WHERE clube_casa_id = clubes.id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
+                                WHERE clube_casa_id = clubes.clube_id AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND parciais.rodada >= ' . $rodada . ' AND partidas.temporada = ' . $this->temporada . '
 
                             ) A
                         ) 
@@ -716,7 +716,7 @@ class CruzamentoController extends Controller
                     END
                 ) pontos                
             FROM partidas
-            INNER JOIN clubes ON clube_visitante_id = clubes.id AND clubes.temporada = ' . $this->temporada . '
+            INNER JOIN clubes ON clube_visitante_id = clubes.clube_id AND clubes.temporada = ' . $this->temporada . '
             INNER JOIN parciais ON partidas.clube_casa_id = parciais.clube_id AND parciais.rodada = partidas.rodada AND partidas.rodada IN ( SELECT rodada FROM partidas_temporary pt WHERE clube_visitante_id = partidas.clube_visitante_id ) AND parciais.temporada = ' . $this->temporada . '
             WHERE valida = 1 AND posicao_id = ' . ($posicao_id ?? 'posicao_id') . ' AND partidas.temporada = ' . $this->temporada . '            
             GROUP BY clube_visitante_id

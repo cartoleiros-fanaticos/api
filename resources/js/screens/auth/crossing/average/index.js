@@ -100,6 +100,8 @@ function crossing() {
 
   }
 
+
+
   async function pontos_cedidos(atleta) {
 
     try {
@@ -113,6 +115,8 @@ function crossing() {
       sloadingmatches(false);
 
     } catch (e) {
+
+      smodal(false);
       message(e);
       sloadingmatches(false);
     };

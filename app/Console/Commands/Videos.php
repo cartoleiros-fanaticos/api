@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Videos as ModelsVideos;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
-
+use App\Models\Game;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Database\QueryException;
 use Carbon\Carbon;

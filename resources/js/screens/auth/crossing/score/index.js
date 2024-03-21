@@ -113,6 +113,8 @@ function crossing() {
       sloadingmatches(false);
 
     } catch (e) {
+
+      smodal(false);
       message(e);
       sloadingmatches(false);
     };

@@ -171,7 +171,7 @@ class ParciaisController extends Controller
 
             $clubes = Clubes::where('temporada', $this->temporada)
                 ->get()
-                ->keyBy('id');
+                ->keyBy('clube_id');
 
             $scouts = Scouts::select('sigla', 'nome', 'tipo')
                 ->where('temporada', $this->temporada)
@@ -807,7 +807,7 @@ class ParciaisController extends Controller
                 ->where('rodada', $rodada)
                 ->get();
 
-            $clubes = Clubes::get()->keyBy('id');
+            $clubes = Clubes::get()->keyBy('clube_id');
 
             return response()->json([
                 'rodada_atual' => $game->rodada_atual,
