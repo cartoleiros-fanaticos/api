@@ -43,7 +43,7 @@ class Observacao extends Command
             $game = Game::where('temporada', $temporada)
                 ->first();
 
-            if ($game) :
+            if ($game && $game->rodada_atual == 2) :
 
                 echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
@@ -197,10 +197,10 @@ class Observacao extends Command
                 DB::statement('DROP TEMPORARY TABLE partidas_mandante_temporary;');
                 DB::statement('DROP TEMPORARY TABLE partidas_visitante_temporary;');
 
-                echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+                echo '- Sucesso na atualizacao.' . PHP_EOL;
 
             else :
-                echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
+                echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL;
             endif;
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;

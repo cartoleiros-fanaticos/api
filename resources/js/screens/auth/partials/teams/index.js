@@ -123,240 +123,243 @@ function teams() {
                     <>
                         {
                             data.game?.rodada_atual ?
-                                <Content>
-                                    <Box>
-                                        <Rounds
-                                            fnc={team}
-                                            time_id={data.time_id}
-                                            data={{ time_id: data.time_id, rodada_atual: data.game.game_over ? 38 : (data.game.status_mercado != 1 ? data.game.rodada_atual : (data.game.rodada_atual - 1)) }}
-                                        />
-                                        <Fieldset>
-                                            <Legend>Escalação</Legend>
-                                            <Players>
-                                                {data.game.status_mercado === 2 &&
-                                                    <Live
-                                                        control={control}
-                                                        uri={uri}
-                                                        fnc={(response) => {
-                                                            sdata({ ...data, ...response });
-                                                        }}
-                                                    />
-                                                }
-                                                <Score>
-                                                    <ScoreText>Pontuação:</ScoreText>
-                                                    <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>
-                                                </Score>
-                                                {
-                                                    data.time.rodadas.atletas.map((e, i) =>
-                                                        <Player
-                                                            key={i}
-                                                            data={e}
-                                                            scouts={data.scouts}
-                                                            capitao_id={data.time.rodadas.capitao_id}
-                                                            parciais={data.parciais}
+                                data.game?.rodada_atual > 1 ?
+                                    <Content>
+                                        <Box>
+                                            <Rounds
+                                                fnc={team}
+                                                time_id={data.time_id}
+                                                data={{ time_id: data.time_id, rodada_atual: data.game.game_over ? 38 : (data.game.status_mercado != 1 ? data.game.rodada_atual : (data.game.rodada_atual - 1)) }}
+                                            />
+                                            <Fieldset>
+                                                <Legend>Escalação</Legend>
+                                                <Players>
+                                                    {data.game.status_mercado === 2 &&
+                                                        <Live
+                                                            control={control}
+                                                            uri={uri}
+                                                            fnc={(response) => {
+                                                                sdata({ ...data, ...response });
+                                                            }}
                                                         />
+                                                    }
+                                                    <Score>
+                                                        <ScoreText>Pontuação:</ScoreText>
+                                                        <ScoreValue value={data.pontuacao}>{amount(data.pontuacao)} pts</ScoreValue>
+                                                    </Score>
+                                                    {
+                                                        data.time.rodadas.atletas.map((e, i) =>
+                                                            <Player
+                                                                key={i}
+                                                                data={e}
+                                                                scouts={data.scouts}
+                                                                capitao_id={data.time.rodadas.capitao_id}
+                                                                parciais={data.parciais}
+                                                            />
+                                                        )
+                                                    }
+                                                    {
+                                                        (data.time && data.time.rodadas.reservas) &&
+                                                        <>
+                                                            <PlayerTitle>RESERVAS</PlayerTitle>
+                                                            {
+                                                                data.time.rodadas.reservas.map((e, i) =>
+                                                                    <Player
+                                                                        key={i}
+                                                                        data={e}
+                                                                        scouts={data.scouts}
+                                                                        capitao_id={data.time.rodadas.capitao_id}
+                                                                        parciais={data.parciais}
+                                                                    />
+                                                                )
+                                                            }
+                                                        </>
+                                                    }
+                                                </Players>
+                                            </Fieldset>
+                                        </Box>
+                                        <Box>
+                                            <Fieldset>
+                                                <Legend>Geral</Legend>
+                                                <Item>
+                                                    <Title>Total</Title>
+                                                    <Value>{amount(data.geral.pontos_campeonato)}</Value>
+                                                    <Text>Pontos</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Média</Title>
+                                                    <Value>{amount(data.geral.media)}</Value>
+                                                    <Text>Por rodada</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Patrimônio</Title>
+                                                    <Value>{amount(data.geral.patrimonio)}</Value>
+                                                    <Text>Cartoletas</Text>
+                                                </Item>
+                                            </Fieldset>
+
+                                            <Fieldset>
+                                                <Legend>Mais Escalados</Legend>
+                                                {
+                                                    data.escalados.atletas.map((e, i) =>
+                                                        <Item key={i}>
+                                                            <Photo src={e.foto} />
+                                                            <Value>{e.apelido}</Value>
+                                                            <Text>Escalações: {e.escalacao}</Text>
+                                                        </Item>
                                                     )
                                                 }
+                                            </Fieldset>
+
+                                            <Fieldset>
+                                                <Legend>Maior e menor preço</Legend>
+                                                <Item>
+                                                    <Title>Maior preço</Title>
+                                                    <Photo src={data.maior_e_menor_preco.maior_preco.foto} />
+                                                    <Value>{data.maior_e_menor_preco.maior_preco.apelido} | {data.maior_e_menor_preco.maior_preco.abreviacao.toUpperCase()}</Value>
+                                                    <Value>C$ {amount(data.maior_e_menor_preco.maior_preco.preco_num)}</Value>
+                                                    <Text>Rodada {data.maior_e_menor_preco.maior_preco.rodada_time_id}</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Menor preço</Title>
+                                                    <Photo src={data.maior_e_menor_preco.menor_preco.foto} />
+                                                    <Value>{data.maior_e_menor_preco.menor_preco.apelido} | {data.maior_e_menor_preco.menor_preco.abreviacao.toUpperCase()}</Value>
+                                                    <Value>C$ {amount(data.maior_e_menor_preco.menor_preco.preco_num)}</Value>
+                                                    <Text>Rodada {data.maior_e_menor_preco.menor_preco.rodada_time_id}</Text>
+                                                </Item>
+                                            </Fieldset>
+
+                                            <Fieldset>
+                                                <Legend>Pontos por posição</Legend>
                                                 {
-                                                    (data.time && data.time.rodadas.reservas) &&
-                                                    <>
-                                                        <PlayerTitle>RESERVAS</PlayerTitle>
-                                                        {
-                                                            data.time.rodadas.reservas.map((e, i) =>
-                                                                <Player
-                                                                    key={i}
-                                                                    data={e}
-                                                                    scouts={data.scouts}
-                                                                    capitao_id={data.time.rodadas.capitao_id}
-                                                                    parciais={data.parciais}
-                                                                />
-                                                            )
-                                                        }
-                                                    </>
+                                                    data.posicao.map((e, i) =>
+                                                        <Item key={i}>
+                                                            <Title>{e.nome}</Title>
+                                                            <Value>{amount(e.pontos)}</Value>
+                                                            <Text>Média {amount(e.media)}</Text>
+                                                        </Item>)
                                                 }
-                                            </Players>
-                                        </Fieldset>
-                                    </Box>
-                                    <Box>
-                                        <Fieldset>
-                                            <Legend>Geral</Legend>
-                                            <Item>
-                                                <Title>Total</Title>
-                                                <Value>{amount(data.geral.pontos_campeonato)}</Value>
-                                                <Text>Pontos</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Média</Title>
-                                                <Value>{amount(data.geral.media)}</Value>
-                                                <Text>Por rodada</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Patrimônio</Title>
-                                                <Value>{amount(data.geral.patrimonio)}</Value>
-                                                <Text>Cartoletas</Text>
-                                            </Item>
-                                        </Fieldset>
-
-                                        <Fieldset>
-                                            <Legend>Mais Escalados</Legend>
-                                            {
-                                                data.escalados.atletas.map((e, i) =>
-                                                    <Item key={i}>
-                                                        <Photo src={e.foto} />
-                                                        <Value>{e.apelido}</Value>
-                                                        <Text>Escalações: {e.escalacao}</Text>
-                                                    </Item>
-                                                )
-                                            }
-                                        </Fieldset>
-
-                                        <Fieldset>
-                                            <Legend>Maior e menor preço</Legend>
-                                            <Item>
-                                                <Title>Maior preço</Title>
-                                                <Photo src={data.maior_e_menor_preco.maior_preco.foto} />
-                                                <Value>{data.maior_e_menor_preco.maior_preco.apelido} | {data.maior_e_menor_preco.maior_preco.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.maior_e_menor_preco.maior_preco.preco_num)}</Value>
-                                                <Text>Rodada {data.maior_e_menor_preco.maior_preco.rodada_time_id}</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Menor preço</Title>
-                                                <Photo src={data.maior_e_menor_preco.menor_preco.foto} />
-                                                <Value>{data.maior_e_menor_preco.menor_preco.apelido} | {data.maior_e_menor_preco.menor_preco.abreviacao.toUpperCase()}</Value>
-                                                <Value>C$ {amount(data.maior_e_menor_preco.menor_preco.preco_num)}</Value>
-                                                <Text>Rodada {data.maior_e_menor_preco.menor_preco.rodada_time_id}</Text>
-                                            </Item>
-                                        </Fieldset>
-
-                                        <Fieldset>
-                                            <Legend>Pontos por posição</Legend>
-                                            {
-                                                data.posicao.map((e, i) =>
-                                                    <Item key={i}>
-                                                        <Title>{e.nome}</Title>
-                                                        <Value>{amount(e.pontos)}</Value>
-                                                        <Text>Média {amount(e.media)}</Text>
-                                                    </Item>)
-                                            }
-                                        </Fieldset>
-                                        <Fieldset>
-                                            <Legend>Variação por rodada</Legend>
-                                            <Table>
-                                                <Thead>
-                                                    <Tr>
-                                                        <Th>Rodada</Th>
-                                                        <Th>Pontos</Th>
-                                                        <Th>Variação</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    {data.variacao.map((e, i) =>
-                                                        <Tr key={i}>
-                                                            <Td>{e.rodada}</Td>
-                                                            <Td>{amount(e.pontos_num)}</Td>
-                                                            <Td color={e.variacao_num > 0 ? 'green' : 'red'}>C$ {amount(e.variacao_num)}</Td>
+                                            </Fieldset>
+                                            <Fieldset>
+                                                <Legend>Variação por rodada</Legend>
+                                                <Table>
+                                                    <Thead>
+                                                        <Tr>
+                                                            <Th>Rodada</Th>
+                                                            <Th>Pontos</Th>
+                                                            <Th>Variação</Th>
                                                         </Tr>
+                                                    </Thead>
+                                                    <Tbody>
+                                                        {data.variacao.map((e, i) =>
+                                                            <Tr key={i}>
+                                                                <Td>{e.rodada}</Td>
+                                                                <Td>{amount(e.pontos_num)}</Td>
+                                                                <Td color={e.variacao_num > 0 ? 'green' : 'red'}>C$ {amount(e.variacao_num)}</Td>
+                                                            </Tr>
 
-                                                    )}
-                                                </Tbody>
-                                            </Table>
-                                        </Fieldset>
+                                                        )}
+                                                    </Tbody>
+                                                </Table>
+                                            </Fieldset>
 
-                                    </Box>
-                                    <Box>
-                                        <Fieldset>
-                                            <Legend>Destaque</Legend>
-                                            <Item>
-                                                <Title>Maior pontuação</Title>
-                                                <Value>{amount(data.destaques.maior_pontuacao)}</Value>
-                                                <Text>Rodada {data.destaques.rodada_maior_pontuacao}</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Menor pontuação</Title>
-                                                <Value>{amount(data.destaques.menor_pontuacao)}</Value>
-                                                <Text>Rodada {data.destaques.rodada_menor_pontuacao}</Text>
-                                            </Item>
-                                        </Fieldset>
+                                        </Box>
+                                        <Box>
+                                            <Fieldset>
+                                                <Legend>Destaque</Legend>
+                                                <Item>
+                                                    <Title>Maior pontuação</Title>
+                                                    <Value>{amount(data.destaques.maior_pontuacao)}</Value>
+                                                    <Text>Rodada {data.destaques.rodada_maior_pontuacao}</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Menor pontuação</Title>
+                                                    <Value>{amount(data.destaques.menor_pontuacao)}</Value>
+                                                    <Text>Rodada {data.destaques.rodada_menor_pontuacao}</Text>
+                                                </Item>
+                                            </Fieldset>
 
-                                        <Fieldset>
-                                            <Legend>Mais Escalados</Legend>{
-                                                data.escalados.clubes.map((e, i) =>
-                                                    <Item key={i}>
-                                                        <Photo src={e.escudo} />
-                                                        <Value>{e.nome}</Value>
-                                                        <Text>Escalações: {e.escalacao}</Text>
-                                                    </Item>
-                                                )
-                                            }
-                                        </Fieldset>
+                                            <Fieldset>
+                                                <Legend>Mais Escalados</Legend>{
+                                                    data.escalados.clubes.map((e, i) =>
+                                                        <Item key={i}>
+                                                            <Photo src={e.escudo} />
+                                                            <Value>{e.nome}</Value>
+                                                            <Text>Escalações: {e.escalacao}</Text>
+                                                        </Item>
+                                                    )
+                                                }
+                                            </Fieldset>
 
-                                        <Fieldset>
-                                            <Legend>Maior e menor pontuador</Legend>
-                                            <Item>
-                                                <Title>Maior pontuador</Title>
-                                                <Photo src={data.maior_e_menor_pontuador.maior_pontuador.foto} />
-                                                <Value>{data.maior_e_menor_pontuador.maior_pontuador.apelido} | {data.maior_e_menor_pontuador.maior_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>{amount(data.maior_e_menor_pontuador.maior_pontuador.pontos_num)} pts</Value>
-                                                <Text>Rodada {data.maior_e_menor_pontuador.maior_pontuador.rodada_time_id}</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Menor pontuador</Title>
-                                                <Photo src={data.maior_e_menor_pontuador.menor_pontuador.foto} />
-                                                <Value>{data.maior_e_menor_pontuador.menor_pontuador.apelido} | {data.maior_e_menor_pontuador.menor_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>{amount(data.maior_e_menor_pontuador.menor_pontuador.pontos_num)} pts</Value>
-                                                <Text>Rodada {data.maior_e_menor_pontuador.menor_pontuador.rodada_time_id}</Text>
-                                            </Item>
-                                        </Fieldset>
+                                            <Fieldset>
+                                                <Legend>Maior e menor pontuador</Legend>
+                                                <Item>
+                                                    <Title>Maior pontuador</Title>
+                                                    <Photo src={data.maior_e_menor_pontuador.maior_pontuador.foto} />
+                                                    <Value>{data.maior_e_menor_pontuador.maior_pontuador.apelido} | {data.maior_e_menor_pontuador.maior_pontuador.abreviacao.toUpperCase()}</Value>
+                                                    <Value>{amount(data.maior_e_menor_pontuador.maior_pontuador.pontos_num)} pts</Value>
+                                                    <Text>Rodada {data.maior_e_menor_pontuador.maior_pontuador.rodada_time_id}</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Menor pontuador</Title>
+                                                    <Photo src={data.maior_e_menor_pontuador.menor_pontuador.foto} />
+                                                    <Value>{data.maior_e_menor_pontuador.menor_pontuador.apelido} | {data.maior_e_menor_pontuador.menor_pontuador.abreviacao.toUpperCase()}</Value>
+                                                    <Value>{amount(data.maior_e_menor_pontuador.menor_pontuador.pontos_num)} pts</Value>
+                                                    <Text>Rodada {data.maior_e_menor_pontuador.menor_pontuador.rodada_time_id}</Text>
+                                                </Item>
+                                            </Fieldset>
 
-                                        <Fieldset>
-                                            <Legend>Capitão</Legend>
-                                            <Item>
-                                                <Title>Maior pontuador</Title>
-                                                <Photo src={data.capitao.maior_pontuador.foto} />
-                                                <Value>{data.capitao.maior_pontuador.apelido} | {data.capitao.maior_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>{amount(data.capitao.maior_pontuador.pontos_num)} pts</Value>
-                                                <Text>Rodada {data.capitao.maior_pontuador.rodada_time_id}</Text>
-                                            </Item>
-                                            <Item>
-                                                <Text>Pontos: {amount(data.capitao.capitao_geral.pontos)}</Text>
-                                                <Text>Média: {amount(data.capitao.capitao_geral.media)}</Text>
-                                            </Item>
-                                            <Item>
-                                                <Title>Menor pontuador</Title>
-                                                <Photo src={data.capitao.menor_pontuador.foto} />
-                                                <Value>{data.capitao.menor_pontuador.apelido} | {data.capitao.menor_pontuador.abreviacao.toUpperCase()}</Value>
-                                                <Value>{amount(data.capitao.menor_pontuador.pontos_num)} pts</Value>
-                                                <Text>Rodada {data.capitao.menor_pontuador.rodada_time_id}</Text>
-                                            </Item>
-                                        </Fieldset>
-                                        <Fieldset>
-                                            <Legend>Variação por rodada</Legend>
-                                            <Table>
-                                                <Thead>
-                                                    <Tr>
-                                                        <Th>Rodada</Th>
-                                                        <Th>jogador</Th>
-                                                        <Th>Pontos</Th>
-                                                    </Tr>
-                                                </Thead>
-                                                <Tbody>
-                                                    {data.capitao.lista.map((e, i) =>
-                                                        <Tr key={i}>
-                                                            <Td>{e.rodada_time_id}</Td>
-                                                            <Td>
-                                                                <PhotoName>
-                                                                    <Photo src={e.foto} />
-                                                                    <Name>{e.apelido}</Name>
-                                                                </PhotoName>
-                                                            </Td>
-                                                            <Td>{amount(e.pontos_num)} <Multiply>1.5x</Multiply> {amount(1.5 * e.pontos_num)}</Td>
+                                            <Fieldset>
+                                                <Legend>Capitão</Legend>
+                                                <Item>
+                                                    <Title>Maior pontuador</Title>
+                                                    <Photo src={data.capitao.maior_pontuador.foto} />
+                                                    <Value>{data.capitao.maior_pontuador.apelido} | {data.capitao.maior_pontuador.abreviacao.toUpperCase()}</Value>
+                                                    <Value>{amount(data.capitao.maior_pontuador.pontos_num)} pts</Value>
+                                                    <Text>Rodada {data.capitao.maior_pontuador.rodada_time_id}</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Text>Pontos: {amount(data.capitao.capitao_geral.pontos)}</Text>
+                                                    <Text>Média: {amount(data.capitao.capitao_geral.media)}</Text>
+                                                </Item>
+                                                <Item>
+                                                    <Title>Menor pontuador</Title>
+                                                    <Photo src={data.capitao.menor_pontuador.foto} />
+                                                    <Value>{data.capitao.menor_pontuador.apelido} | {data.capitao.menor_pontuador.abreviacao.toUpperCase()}</Value>
+                                                    <Value>{amount(data.capitao.menor_pontuador.pontos_num)} pts</Value>
+                                                    <Text>Rodada {data.capitao.menor_pontuador.rodada_time_id}</Text>
+                                                </Item>
+                                            </Fieldset>
+                                            <Fieldset>
+                                                <Legend>Variação por rodada</Legend>
+                                                <Table>
+                                                    <Thead>
+                                                        <Tr>
+                                                            <Th>Rodada</Th>
+                                                            <Th>jogador</Th>
+                                                            <Th>Pontos</Th>
                                                         </Tr>
-                                                    )}
-                                                </Tbody>
-                                            </Table>
-                                        </Fieldset>
-                                    </Box>
-                                </Content>
+                                                    </Thead>
+                                                    <Tbody>
+                                                        {data.capitao.lista.map((e, i) =>
+                                                            <Tr key={i}>
+                                                                <Td>{e.rodada_time_id}</Td>
+                                                                <Td>
+                                                                    <PhotoName>
+                                                                        <Photo src={e.foto} />
+                                                                        <Name>{e.apelido}</Name>
+                                                                    </PhotoName>
+                                                                </Td>
+                                                                <Td>{amount(e.pontos_num)} <Multiply>1.5x</Multiply> {amount(1.5 * e.pontos_num)}</Td>
+                                                            </Tr>
+                                                        )}
+                                                    </Tbody>
+                                                </Table>
+                                            </Fieldset>
+                                        </Box>
+                                    </Content>
+                                    :
+                                    <Message>Dados apenas disponível a partir da 2ª rodada.</Message>
                                 :
                                 <Message>Pesquise por um time</Message>
                         }

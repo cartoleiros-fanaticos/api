@@ -40,7 +40,7 @@ class ParciaisRodadas extends Command
         $game = Game::where('temporada', $temporada)
             ->first();
 
-        if ($game) :
+        if ($game && $game->rodada_atual == 2) :
 
             $rodada = $game->game_over ? 38 : ($game->rodada_atual > 1 ? ($game->rodada_atual - 1) : 1);
 

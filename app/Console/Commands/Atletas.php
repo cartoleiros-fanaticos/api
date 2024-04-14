@@ -81,7 +81,7 @@ class Atletas extends Command
 
                     Posicoes::updateOrCreate(
                         [
-                            'posicoes_id' => $val['id'],
+                            'posicao_id' => $val['id'],
                             'temporada' => $temporada
                         ],
                         [
@@ -173,9 +173,9 @@ class Atletas extends Command
                 endforeach;
 
 
-                echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+                echo '- Sucesso na atualizacao.' . PHP_EOL;
             else :
-                echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
+                echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL;
             endif;
         } catch (QueryException $e) {
             echo $e->getMessage() . PHP_EOL;

@@ -10,11 +10,21 @@ use App\Models\CompeticoesTransacoes;
 use App\Models\Game;
 use App\Models\Usuarios;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Validator;
 use DB;
 
 class CompeticaoController extends Controller
 {
+
+    private $temporada;
+
+    public function __construct(Request $request)
+    {
+        $this->temporada = $request->input('temporada', Carbon::now()->format('Y'));
+    }
+
+
     /**
      * Display a listing of the resource.
      */
@@ -25,10 +35,12 @@ class CompeticaoController extends Controller
         $usuarios = Usuarios::where('funcao', 'Dono de Liga')
             ->paginate(50);
 
-        $times = CompeticoesTimes::where('usuarios_id', $user->id)
+        $times = CompeticoesTimes::where('temporada', $this->temporada)
+            ->where('usuarios_id', $user->id)
             ->get();
 
         $solicitacoes = CompeticoesTransacoes::with(['competicao', 'time.time_cartola'])
+            ->where('temporada', $this->temporada)
             ->whereIn('competicoes_times_id', COLLECT($times)->pluck('id'))
             ->get();
 
@@ -41,7 +53,8 @@ class CompeticaoController extends Controller
 
     public function ligas(Request $request, $id)
     {
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $response = Competicoes::select('competicoes.id', 'competicoes.nome', 'valor', 'tipo', 'usuarios.comissao')
             ->join('usuarios', 'usuarios.id', 'competicoes.usuarios_id')
@@ -53,6 +66,7 @@ class CompeticaoController extends Controller
                     WHERE competicoes_id = competicoes.id AND situacao = \'Aceita\'
                 ) as qtde_times
             ')
+            ->where('temporada', $this->temporada)
             ->where('competicoes.usuarios_id', $id)
             ->where(function ($q) use ($request) {
 
@@ -104,7 +118,8 @@ class CompeticaoController extends Controller
 
         $user = auth('api')->user();
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $rodada_atual = $game->status_mercado != 1 ? $game->rodada_atual : ($game->rodada_atual - 1);
 
@@ -123,8 +138,6 @@ class CompeticaoController extends Controller
         if ($de > $ate)
             return response()->json(['message' => 'O campo RODADA INÍCIO precisa ser menor ou igual a RODADA FIM'], 400);
 
-        $game = Game::first();
-
         if ($game->rodada_atual > $de)
             return response()->json(['message' => 'O campo RODADA INÍCIO tem que ser maior ou igual a rodada atual do campeonato brasileiro'], 400);
 
@@ -135,6 +148,7 @@ class CompeticaoController extends Controller
 
             $competicao = new Competicoes;
 
+            $competicao->temporada = $this->temporada;
             $competicao->nome = $request->nome;
             $competicao->descricao = $request->descricao;
             $competicao->tipo = $request->tipo;
@@ -153,6 +167,7 @@ class CompeticaoController extends Controller
 
                 $posicao = new CompeticoesPosicoes;
 
+                $posicao->temporada = $this->temporada;
                 $posicao->posicao = $val['posicao'];
                 $posicao->percentual = $val['percentual'];
                 $posicao->competicoes_id = $competicao->id;
@@ -172,7 +187,8 @@ class CompeticaoController extends Controller
      */
     public function show(string $id)
     {
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $competicao = Competicoes::select('competicoes.id', 'capitao', 'de', 'ate', 'competicoes.nome', 'valor', 'tipo', 'usuarios.comissao')
             ->join('usuarios', 'usuarios.id', 'competicoes.usuarios_id')
@@ -184,6 +200,7 @@ class CompeticaoController extends Controller
                     WHERE competicoes_id = competicoes.id AND situacao = \'Aceita\'
                 ) as qtde_times
             ')
+            ->where('temporada', $this->temporada)
             ->find($id);
 
         $pontos = $competicao->capitao === 'Sim' ? 'pontos' : 'pontos_sem_capitao';
@@ -212,11 +229,13 @@ class CompeticaoController extends Controller
             })
             ->where('competicoes_transacoes.competicoes_id', $competicao->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')
+            ->where('competicoes_transacoes.temporada', $this->temporada)
             ->groupBy('times_cartolas.id')
             ->orderBy($game->status_mercado != 1 ? 'pontos' : 'pontos_total', 'DESC')
             ->paginate(100);
 
         $posicoes = CompeticoesPosicoes::where('competicoes_id', $competicao->id)
+            ->where('temporada', $this->temporada)
             ->get();
 
         $response =  [
@@ -268,7 +287,8 @@ class CompeticaoController extends Controller
 
         $user = auth('api')->user();
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $rodada_atual = $game->status_mercado != 1 ? $game->rodada_atual : ($game->rodada_atual - 1);
 
@@ -286,8 +306,6 @@ class CompeticaoController extends Controller
 
         if ($de > $ate)
             return response()->json(['message' => 'O campo RODADA INÍCIO precisa ser menor ou igual a RODADA FIM'], 400);
-
-        $game = Game::first();
 
         if ($game->rodada_atual > $de)
             return response()->json(['message' => 'O campo RODADA INÍCIO tem que ser maior ou igual a rodada atual do campeonato brasileiro'], 400);
@@ -320,6 +338,7 @@ class CompeticaoController extends Controller
 
                 $posicao = new CompeticoesPosicoes;
 
+                $posicao->temporada = $this->temporada;
                 $posicao->posicao = $val['posicao'];
                 $posicao->percentual = $val['percentual'];
                 $posicao->competicoes_id = $competicao->id;
@@ -370,6 +389,7 @@ class CompeticaoController extends Controller
             return response()->json(['message' => 'Não é possível mandar solicitação de inscrição após o inicio da liga.'], 400);
 
         $contains = CompeticoesTransacoes::join('competicoes_times', 'competicoes_times.id', 'competicoes_times_id')
+            ->where('competicoes_transacoes.temporada', $this->temporada)
             ->where('competicoes_id', $competicoes_id)
             ->where('time_id', $time_id)
             ->count();
@@ -389,6 +409,7 @@ class CompeticaoController extends Controller
 
                 $times = CompeticoesTimes::updateOrCreate(
                     [
+                        'temporada' => $this->temporada,
                         'times_cartolas_id' => $time_cartola['id'],
                         'usuarios_id' => $user->id
                     ],
@@ -398,6 +419,7 @@ class CompeticaoController extends Controller
                 );
 
                 $transacao = new CompeticoesTransacoes;
+                $transacao->temporada =  $this->temporada;
                 $transacao->competicoes_id =  $competicoes_id;
                 $transacao->competicoes_times_id =  $times->id;
                 $response = $transacao->save();
@@ -410,7 +432,8 @@ class CompeticaoController extends Controller
         return response()->json($response);
     }
 
-    public function deletar_solicitacao($id){
+    public function deletar_solicitacao($id)
+    {
         $response = CompeticoesTransacoes::destroy($id);
         return response()->json($response);
     }
@@ -444,6 +467,7 @@ class CompeticaoController extends Controller
                 $competicao = Competicoes::find($transacao->competicoes_id);
 
                 $rodadas = new CompeticoesRodadas;
+                $rodadas->temporada = $this->temporada;
                 $rodadas->competicoes_id = $transacao->competicoes_id;
                 $rodadas->rodada = $competicao->de;
                 $rodadas->competicoes_times_id = $transacao->competicoes_times_id;
@@ -457,7 +481,8 @@ class CompeticaoController extends Controller
         return response()->json($response);
     }
 
-    public function situacao_solicitacao(Request $request, $id){      
+    public function situacao_solicitacao(Request $request, $id)
+    {
 
         $transacao = CompeticoesTransacoes::find($id);
         $transacao->situacao = $request->situacao === 'Aceita' ? 'Rejeitada' : 'Aceita';
@@ -477,6 +502,7 @@ class CompeticaoController extends Controller
             ->join('competicoes_times', 'competicoes_times_id', 'competicoes_times.id')
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->where('competicoes_times.usuarios_id', $user->id)
+            ->where('competicoes_transacoes.temporada', $this->temporada)
             ->orderBy('id', 'DESC')
             ->get();
 
@@ -490,6 +516,7 @@ class CompeticaoController extends Controller
 
         $response = CompeticoesTimes::select('competicoes_times.id', 'url_escudo_png', 'nome', 'patrimonio')
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
+            ->where('times_cartolas.temporada', $this->temporada)
             ->where('usuarios_id', $user->id)
             ->get();
 
@@ -512,6 +539,7 @@ class CompeticaoController extends Controller
             ->join('times_cartolas', 'times_cartolas_id', 'times_cartolas.id')
             ->where('competicoes_times.usuarios_id', $user->id)
             ->where('competicoes_transacoes.situacao', 'Aceita')
+            ->where('competicoes_transacoes.temporada', $this->temporada)
             ->get();
 
         return response()->json($response);
@@ -534,6 +562,7 @@ class CompeticaoController extends Controller
 
                 endif;
             })
+            ->where('temporada', $this->temporada)
             ->orderBy('situacao')
             ->paginate(100);
 
@@ -565,6 +594,7 @@ class CompeticaoController extends Controller
 
                 endif;
             })
+            ->where('competicoes_transacoes.temporada', $this->temporada)
             ->orderBy('competicoes_transacoes.situacao')
             ->paginate(100);
 

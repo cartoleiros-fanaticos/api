@@ -72,7 +72,7 @@ Route::group([
 
     Route::resource('videos', VideosController::class);
 
-    Route::get('competicao/ligas/{id}', [CompeticaoController::class, 'ligas']);
+    Route::get('competicao/ligas/{id}', [CompeticaoController::class, 'ligas']); // ok
 
     Route::get('competicao/meus-times', [CompeticaoController::class, 'times']);
     Route::delete('competicao/meus-times/{id}', [CompeticaoController::class, 'deletar_times']);
@@ -85,8 +85,8 @@ Route::group([
     Route::delete('competicao/deletar-solicitacao/{id}', [CompeticaoController::class, 'deletar_solicitacao']);
     Route::put('competicao/situacao-solicitacao/{id}', [CompeticaoController::class, 'situacao_solicitacao']);
 
-    Route::get('competicao/adm', [CompeticaoController::class, 'ligasADM']);
+    Route::get('competicao/adm', [CompeticaoController::class, 'ligasADM']); // ok
     Route::get('competicao/solicitacoes', [CompeticaoController::class, 'solicitacoesADM']);
 
-    Route::resource('competicao', CompeticaoController::class);
+    Route::resource('competicao', CompeticaoController::class); // store => ok, update => ok,
 });

@@ -60,7 +60,7 @@ class AtletasController extends Controller
                 ->get()
                 ->keyBy('id');
 
-            $posicoes = Posicoes::select('posicoes_id as id', 'nome')
+            $posicoes = Posicoes::select('posicao_id as id', 'nome')
                 ->where('temporada', $this->temporada)
                 ->get()
                 ->keyBy('id');
@@ -108,7 +108,7 @@ class AtletasController extends Controller
                     jogos_num,
                     clube_id,
                     posicoes.nome as posicao_nome,
-                    posicao_id,
+                    atletas.posicao_id,
                     status_id,
                     rodada_id,
                     observacao,
@@ -140,7 +140,7 @@ class AtletasController extends Controller
 
                 FROM atletas
                 INNER JOIN partidas ON rodada = ? AND (clube_casa_id = clube_id OR clube_visitante_id = clube_id) AND partidas.temporada = ?
-                INNER JOIN posicoes ON posicoes.posicoes_id = posicao_id AND posicoes.temporada = ?
+                INNER JOIN posicoes ON posicoes.posicao_id = atletas.posicao_id AND posicoes.temporada = ?
                 WHERE atleta_id = ? AND atletas.temporada = ?
             ', [$game->rodada_atual, $this->temporada, $this->temporada, $id, $this->temporada])[0];
 
@@ -390,7 +390,7 @@ class AtletasController extends Controller
         $game = Game::first();
 
         $posicao = Posicoes::where('temporada', $this->temporada)
-            ->where('posicoes_id', $posicao_id)
+            ->where('posicao_id', $posicao_id)
             ->first();
 
         $time = DB::SELECT('
@@ -474,7 +474,7 @@ class AtletasController extends Controller
                         parciais.DE
                     FROM parciais 
                     INNER JOIN atletas ON parciais.atleta_id = atletas.atleta_id AND atletas.temporada = ?
-                    INNER JOIN posicoes ON posicoes.posicoes_id = parciais.posicao_id AND posicoes.temporada = ?
+                    INNER JOIN posicoes ON posicoes.posicao_id = parciais.posicao_id AND posicoes.temporada = ?
                     INNER JOIN clubes ON clubes.clube_id = parciais.clube_id AND clubes.temporada = ?
                     WHERE atletas.clube_id = ? AND rodada = ? AND atletas.posicao_id = ? AND parciais.temporada = ?
                     ORDER BY pontuacao DESC
@@ -566,7 +566,7 @@ class AtletasController extends Controller
             $atleta = Atletas::select('atleta_id', 'apelido', 'foto', 'posicoes.nome as posicao_nome', 'posicoes.abreviacao as posicao_abreviacao', 'clubes.nome as clube', '60x60 as escudo')
                 ->selectRaw('IFNULL((SELECT pontuacao FROM parciais WHERE rodada = ' . $game->rodada_atual . ' AND atleta_id = atletas.atleta_id), 0) pontuacao')
                 ->join('clubes', 'clubes.clube_id', 'atletas.clube_id')
-                ->join('posicoes', 'posicoes.posicoes_id', 'atletas.posicao_id')
+                ->join('posicoes', 'posicoes.posicao_id', 'atletas.posicao_id')
                 ->where('atleta_id', $atleta_id)
                 ->first();
 

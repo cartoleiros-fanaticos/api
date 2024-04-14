@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('posicoes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('posicoes_id');
+            $table->unsignedBigInteger('posicao_id');
             $table->string('temporada')->default(Carbon::now()->format('Y'));
             $table->string('nome');
             $table->string('abreviacao');
             $table->timestamps();
 
-            $table->unique(['posicoes_id', 'temporada']);
+            $table->unique(['posicao_id', 'temporada']);
         });
     }
 

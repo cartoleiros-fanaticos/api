@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('times_cartolas', function (Blueprint $table) {
             $table->id();
             $table->string('temporada')->default(Carbon::now()->format('Y'));
-            $table->integer('time_id')->unsigned()->unique();
+            $table->integer('time_id')->unsigned();
             $table->string('nome');
             $table->string('nome_cartola');
             $table->string('slug');
@@ -26,6 +26,8 @@ return new class extends Migration
             $table->float('patrimonio');
             $table->boolean('assinante');
             $table->timestamps();
+
+            $table->unique([ 'temporada', 'time_id' ]);
         });
     }
 

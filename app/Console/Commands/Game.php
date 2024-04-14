@@ -175,11 +175,11 @@ class Game extends Command
 
                 endforeach;
 
-                echo '- Sucesso na atualizacao.' . PHP_EOL . PHP_EOL;
+                echo '- Sucesso na atualizacao.' . PHP_EOL;
 
             else :
 
-                echo '- Atemporada não iniciou.' . PHP_EOL . PHP_EOL;
+                echo '- Atemporada não iniciou.' . PHP_EOL;
 
             endif;
         } catch (QueryException $e) {

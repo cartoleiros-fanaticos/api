@@ -72,7 +72,7 @@ class Videos extends Command
 
                 endforeach;
 
-                echo '- Atualização finalizada com sucesso.' . PHP_EOL . PHP_EOL;
+                echo '- Atualização finalizada com sucesso.' . PHP_EOL;
             } catch (QueryException $e) {
                 echo $e->getMessage() . PHP_EOL;
                 Log::error('Game: ' . $e->getMessage());

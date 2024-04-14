@@ -59,7 +59,7 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.posicoes_id', 'atletas.posicao_id')
+                    $q->on('posicoes.posicao_id', 'atletas.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
@@ -117,7 +117,7 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.posicoes_id', 'parciais.posicao_id')
+                    $q->on('posicoes.posicao_id', 'parciais.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
@@ -147,7 +147,7 @@ class ParciaisController extends Controller
                 })
                 ->join('posicoes', function ($q) {
 
-                    $q->on('posicoes.posicoes_id', 'parciais.posicao_id')
+                    $q->on('posicoes.posicao_id', 'parciais.posicao_id')
                         ->where('posicoes.temporada', $this->temporada);
                 })
                 ->join('clubes', function ($q) {
@@ -388,7 +388,7 @@ class ParciaisController extends Controller
                 $times_cartola = TimesCartola::join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
                     ->where('times_cartolas_id', $time_cartola->id)
                     ->where('rodada_time_id', '<', $game->rodada_atual)
-                    ->where('temporada', $this->temporada)
+                    ->where('times_cartolas.temporada', $this->temporada)
                     ->get();
 
                 $geral = COLLECT([]);
@@ -426,7 +426,7 @@ class ParciaisController extends Controller
                         ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
                         ->join('posicoes', function ($q) {
 
-                            $q->on('posicoes.posicoes_id', 'atletas.posicao_id')
+                            $q->on('posicoes.posicao_id', 'atletas.posicao_id')
                                 ->where('posicoes.temporada', $this->temporada);
                         })
                         ->where('times_cartolas_id', $time_cartola->id)
