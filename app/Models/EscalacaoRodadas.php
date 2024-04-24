@@ -9,33 +9,51 @@ class EscalacaoRodadas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id', 'rodada_time_id', 'capitao_id', 'esquema_id', 'valor_time', 'pontos', 'escalacao_times_id'];
-
-    // public function newQuery()
-    // {
-    //     return parent::newQuery()
-    //         ->where('temporada', Carbon::now()->format('Y'));
-    // }
+    protected $fillable = ['id', 'temporada', 'rodada_time_id', 'capitao_id', 'esquema_id', 'valor_time', 'pontos', 'escalacao_times_id'];
 
     public function atletas()
     {
         return $this->hasMany(EscalacaoAtletas::class, 'escalacao_rodadas_id', 'id')
-            ->select('escalacao_rodadas_id', 'clube_id', 'posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'posicao_id', 'atletas.preco_num', 'titular', 'foto', 'entrou_em_campo')
-            ->join('atletas', 'atletas.atleta_id', 'escalacao_atletas.atleta_id')
-            ->join('clubes', 'clube_id', 'clubes.id')
-            ->join('posicoes', 'posicao_id', 'posicoes.id')
+            ->select('escalacao_rodadas_id', 'atletas.clube_id', 'posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'posicoes.posicao_id', 'atletas.preco_num', 'titular', 'foto', 'entrou_em_campo')
+            ->join('atletas', function ($join) {
+
+                $join->on('atletas.atleta_id', 'escalacao_atletas.atleta_id')
+                    ->whereColumn('escalacao_atletas.temporada', 'atletas.temporada');
+            })
+            ->join('clubes', function ($join) {
+
+                $join->on('atletas.clube_id', 'clubes.clube_id')
+                    ->whereColumn('clubes.temporada', 'atletas.temporada');
+            })
+            ->join('posicoes', function ($join) {
+
+                $join->on('atletas.posicao_id', 'posicoes.posicao_id')
+                    ->whereColumn('posicoes.temporada', 'atletas.temporada');
+            })
             ->where('titular', 'Sim')
-            ->orderBy('posicao_id');
+            ->orderBy('posicoes.posicao_id');
     }
 
     public function reservas()
     {
         return $this->hasMany(EscalacaoAtletas::class, 'escalacao_rodadas_id', 'id')
-            ->select('escalacao_rodadas_id', 'clube_id', 'posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'posicao_id', 'atletas.preco_num', 'titular', 'foto', 'entrou_em_campo')
-            ->join('atletas', 'atletas.atleta_id', 'escalacao_atletas.atleta_id')
-            ->join('clubes', 'clube_id', 'clubes.id')
-            ->join('posicoes', 'posicao_id', 'posicoes.id')
+            ->select('escalacao_rodadas_id', 'atletas.clube_id', 'posicoes.nome as posicao', 'clubes.abreviacao as abreviacao_clube', 'atletas.atleta_id', 'apelido', 'posicoes.posicao_id', 'atletas.preco_num', 'titular', 'foto', 'entrou_em_campo')
+            ->join('atletas', function ($join) {
+
+                $join->on('atletas.atleta_id', 'escalacao_atletas.atleta_id')
+                    ->whereColumn('escalacao_atletas.temporada', 'atletas.temporada');
+            })
+            ->join('clubes', function ($join) {
+
+                $join->on('atletas.clube_id', 'clubes.clube_id')
+                    ->whereColumn('clubes.temporada', 'atletas.temporada');
+            })
+            ->join('posicoes', function ($join) {
+
+                $join->on('atletas.posicao_id', 'posicoes.posicao_id')
+                    ->whereColumn('posicoes.temporada', 'atletas.temporada');
+            })
             ->where('titular', 'Não')
-            ->orderBy('posicao_id');
+            ->orderBy('posicoes.posicao_id');
     }
 }

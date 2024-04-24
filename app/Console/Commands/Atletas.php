@@ -107,12 +107,19 @@ class Atletas extends Command
 
                 endforeach;
 
-                echo '- Atualizando tabela atletas.' . PHP_EOL;
+                echo '- Carregando minimo para valorizar.' . PHP_EOL;
+                
+                $headers = ['authorization' => 'Bearer ' .  config('global.access_token_cartola')];
+
+                $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
+                $var = json_decode($var->getBody(), true);
 
                 ModelsAtletas::where('temporada', $temporada)
                     ->update([
                         'fora_do_cartola' => 'Sim'
                     ]);
+
+                echo '- Atualizando tabela atletas.' . PHP_EOL;
 
                 foreach ((array) $response['atletas'] as $key => $val) :
 
@@ -146,7 +153,7 @@ class Atletas extends Command
                                 'variacao_num' => $val['variacao_num'],
                                 'media_num' => $val['media_num'],
                                 'jogos_num' => $val['jogos_num'],
-                                'minimo_para_valorizar' => $val['minimo_para_valorizar'] ?? 0,
+                                'minimo_para_valorizar' => ($var && isset($var[$val['atleta_id']]) && $var[$val['atleta_id']]['minimo_para_valorizar']) ? $var[$val['atleta_id']]['minimo_para_valorizar']  : 0,
                                 'fora_do_cartola' => 'Não',
                                 'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                                 'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),

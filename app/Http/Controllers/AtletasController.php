@@ -387,7 +387,8 @@ class AtletasController extends Controller
         $time_id = $request->time_id;
         $posicao_id = $request->posicao_id;
 
-        $game = Game::first();
+        $game = Game::where('temporada', $this->temporada)
+            ->first();
 
         $posicao = Posicoes::where('temporada', $this->temporada)
             ->where('posicao_id', $posicao_id)
@@ -403,7 +404,7 @@ class AtletasController extends Controller
             WHERE clubes.clube_id = ?	AND rodada = ? AND clubes.temporada = ? 
         ', [$this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
 
-        if(isset($time[0]))
+        if (!isset($time[0]))
             return response()->json(['message' => 'Ainda não existe dados.'], 400);
 
         $time = $time[0];
@@ -426,17 +427,17 @@ class AtletasController extends Controller
         else :
 
             $confrontos = DB::SELECT('
-                    SELECT 
-                        clubes.clube_id as id,
-                        CONCAT(?, \' x \', nome) as confronto,
-                        ? as escudo_casa,
-                        30x30 as escudo_fora,
-                        rodada,
-                        DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
-                    FROM partidas
-                    INNER JOIN clubes ON clube_visitante_id = clubes.clube_id AND clubes.temporada = ?
-                    WHERE clube_casa_id = ? AND valida = 1 AND rodada != ? AND partidas.temporada = ?
-                    ', [$time->nome, $time->escudo, $this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
+                SELECT 
+                    clubes.clube_id as id,
+                    CONCAT(?, \' x \', nome) as confronto,
+                    ? as escudo_casa,
+                    30x30 as escudo_fora,
+                    rodada,
+                    DATE_FORMAT(partida_data, "%d/%m %H:%i") as partida_data
+                FROM partidas
+                INNER JOIN clubes ON clube_visitante_id = clubes.clube_id AND clubes.temporada = ?
+                WHERE clube_casa_id = ? AND valida = 1 AND rodada != ? AND partidas.temporada = ?
+            ', [$time->nome, $time->escudo, $this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
 
         endif;
 

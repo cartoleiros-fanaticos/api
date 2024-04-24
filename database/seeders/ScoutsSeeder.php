@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Scouts;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class ScoutsSeeder extends Seeder
 {
@@ -13,6 +14,8 @@ class ScoutsSeeder extends Seeder
      */
     public function run(): void
     {
+
+        $temporada = Carbon::now()->format('Y');
 
         $scouts = [
             [
@@ -142,7 +145,8 @@ class ScoutsSeeder extends Seeder
 
             Scouts::updateOrCreate(
                 [
-                    'nome' => $val['nome']
+                    'nome' => $val['nome'],
+                    'temporada' => $temporada
                 ],
                 [
                     'sigla' => $val['sigla'],

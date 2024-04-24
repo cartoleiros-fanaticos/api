@@ -198,15 +198,18 @@ class EscalacaoController extends Controller
         $time = EscalacaoTimes::with(
             [
                 'rodadas' => function ($q) use ($rodada) {
-                    $q->where('rodada_time_id', $rodada);
+                    $q->where('rodada_time_id', $rodada)
+                        ->where('escalacao_rodadas.temporada', $this->temporada);
                 },
 
                 'rodadas.atletas' => function ($q) use ($rodada) {
-                    $q->where('rodada_time_id', $rodada);
+                    $q->where('rodada_time_id', $rodada)
+                        ->where('escalacao_atletas.temporada', $this->temporada);
                 },
 
                 'rodadas.reservas' => function ($q) use ($rodada) {
-                    $q->where('rodada_time_id', $rodada);
+                    $q->where('rodada_time_id', $rodada)
+                        ->where('escalacao_atletas.temporada', $this->temporada);
                 }
             ]
         )

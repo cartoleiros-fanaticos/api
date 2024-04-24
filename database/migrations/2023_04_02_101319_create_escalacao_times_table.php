@@ -19,11 +19,13 @@ return new class extends Migration
             $table->string('slug');
             $table->float('patrimonio');
             $table->float('pontos_campeonato')->default(0);
-            $table->integer('time_id')->unique();
+            $table->integer('time_id');
             $table->string('url_escudo_png');
             $table->enum('socio', [ 'Sim', 'Não' ])->default('Não');
-            $table->text('access_token');
+            $table->text('access_token')->nullable();
             $table->timestamps();
+
+            $table->unique([ 'temporada', 'time_id' ]);
         });
     }
 

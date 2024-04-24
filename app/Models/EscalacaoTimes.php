@@ -11,11 +11,6 @@ class EscalacaoTimes extends Model
 
     protected $fillable = [ 'id', 'temporada', 'nome', 'slug', 'patrimonio', 'time_id', 'pontos_campeonato', 'url_escudo_png', 'socio', 'access_token' ];
 
-    // public function newQuery()
-    // {
-    //     return parent::newQuery()
-    //         ->where('temporada', Carbon::now()->format('Y'));
-    // }
     protected $hidden = [
         'access_token'
     ];

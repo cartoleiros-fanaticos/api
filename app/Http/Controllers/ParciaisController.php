@@ -233,11 +233,11 @@ class ParciaisController extends Controller
 
                 $clubes = Clubes::where('temporada', $this->temporada)
                     ->get()
-                    ->keyBy('id');
+                    ->keyBy('clube_id');
 
                 $posicoes = Posicoes::where('temporada', $this->temporada)
                     ->get()
-                    ->keyBy('id');
+                    ->keyBy('posicao_id');
 
                 $time = $response['time'];
 
@@ -421,12 +421,12 @@ class ParciaisController extends Controller
                         'rodada_menor_pontuacao' => $times_cartola->where('pontos', $menor_pontuacao)->first()->rodada_time_id,
                     ];
 
-                    $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'posicao_id', 'clube_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
+                    $atletas = TimesCartola::select('atleta_id', 'capitao_id', 'times_cartola_atletas.posicao_id', 'clube_id', 'apelido', 'pontos_num', 'foto', 'abreviacao', 'variacao_num', 'preco_num', 'times_cartola_atletas.rodada_time_id')
                         ->join('times_cartola_rodadas', 'times_cartolas_id', 'times_cartolas.id')
                         ->join('times_cartola_atletas', 'times_cartola_rodadas_id', 'times_cartola_rodadas.id')
                         ->join('posicoes', function ($q) {
 
-                            $q->on('posicoes.posicao_id', 'atletas.posicao_id')
+                            $q->on('posicoes.posicao_id', 'times_cartola_atletas.posicao_id')
                                 ->where('posicoes.temporada', $this->temporada);
                         })
                         ->where('times_cartolas_id', $time_cartola->id)
@@ -435,7 +435,6 @@ class ParciaisController extends Controller
                         ->where('entrou_em_campo', 'Sim')
                         ->where('times_cartolas.temporada', $this->temporada)
                         ->get();
-
                     $maior_pontuador = $atletas->max('pontos_num');
                     $menor_pontuador = $atletas->min('pontos_num');
 
@@ -488,6 +487,7 @@ class ParciaisController extends Controller
                     ];
 
                     foreach ($atletas->groupBy('posicao_id')->toArray() as $key => $val) :
+
                         $posicao->push([
                             'nome' => $posicoes[$key]->nome,
                             'pontos' => COLLECT($val)->sum('pontos_num'),
@@ -518,7 +518,6 @@ class ParciaisController extends Controller
                     ]);
 
                     foreach ($atletas->groupBy('clube_id')->toArray() as $key => $val) :
-
 
                         if ($key != 1) :
 

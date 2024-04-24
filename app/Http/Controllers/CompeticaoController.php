@@ -397,7 +397,7 @@ class CompeticaoController extends Controller
         if ($contains)
             return response()->json(['message' => 'Já existe uma solicitação de entrada nessa liga.'], 400);
 
-        $parciais = new ParciaisController;
+        $parciais = new ParciaisController($request);
         $response = $parciais->parciais_time($time_id);
 
         if (isset($response->original['time'])) :

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\EscalacaoController;
+use App\Models\EscalacaoAtletas;
 use App\Models\EscalacaoRodadas;
 use App\Models\EscalacaoTimes;
 use App\Models\Game;
@@ -39,6 +40,8 @@ class Escalacao extends Command
     public function handle(): void
     {
 
+        echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
+
         $temporada = Carbon::now()->format('Y');
 
         $game = Game::where('temporada', $temporada)
@@ -48,24 +51,111 @@ class Escalacao extends Command
 
             $request = new Request;
 
-            $escalacao_times = EscalacaoTimes::select('id', 'access_token')
+            $escalacao_times = EscalacaoTimes::select('id', 'time_id', 'access_token')
                 ->where('temporada', $temporada)
                 ->get();
 
-            foreach ($escalacao_times as $val) :
+            try {
 
-                $request->replace(['access_token' => $val->access_token]);
+                echo '- Atualizando times.' . PHP_EOL;
 
-                if ($game->status_mercado === 1) :
+                $client = new Client();
 
-                    $escalacao = new EscalacaoController;
-                    $escalacao->store($request);
+                foreach ($escalacao_times as $val) :
 
-                else :
 
-                    try {
+                    if ($game->status_mercado === 1) :
 
-                        $client = new Client();
+                        if (!is_null($val->access_token)) :
+
+                            $request->replace(['access_token' => $val->access_token]);
+
+                            $escalacao = new EscalacaoController($request);
+                            $escalacao->store($request);
+                            
+                        endif;
+
+                        if ($game->rodada_atual >= 2) :
+
+                            $rodada = ($game->rodada_atual == 38 && $game->game_over == 1) ? 38 : ($game->rodada_atual - 1);
+
+                            $response = $client->get("https://api.cartola.globo.com/time/id/$val->time_id/$rodada");
+                            $response = json_decode($response->getBody(), true);
+
+                            DB::transaction(function () use ($response, $temporada) {
+
+                                $time = $response['time'];
+
+                                $escalacao_times = EscalacaoTimes::updateOrCreate(
+                                    [
+                                        'time_id' => $time['time_id'],
+                                        'temporada' => $temporada
+                                    ],
+                                    [
+                                        'nome' => $time['nome'],
+                                        'slug' => $time['slug'],
+                                        'patrimonio' => $response['patrimonio'],
+                                        'pontos_campeonato' => $response['pontos_campeonato'] ?? 0,
+                                        'url_escudo_png' => $time['url_escudo_png']
+                                    ]
+                                );
+
+                                if (COLLECT($response['atletas'])->count()) :
+
+                                    $escalacao_rodadas = EscalacaoRodadas::updateOrCreate(
+                                        [
+                                            'escalacao_times_id' => $escalacao_times->id,
+                                            'rodada_time_id' => $response['rodada_atual'],
+                                            'temporada' => $temporada
+                                        ],
+                                        [
+                                            'capitao_id' => $response['capitao_id'],
+                                            'esquema_id' => $response['esquema_id'],
+                                            'valor_time' => $response['valor_time'],
+                                        ]
+                                    );
+
+                                    EscalacaoAtletas::where('rodada_time_id', $response['rodada_atual'])
+                                        ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
+                                        ->where('temporada', $temporada)
+                                        ->delete();
+
+                                    foreach ((array) $response['atletas'] as $key => $val) :
+
+                                        EscalacaoAtletas::create([
+                                            'temporada' => $temporada,
+                                            'atleta_id' => $val['atleta_id'],
+                                            'preco_num' => $val['preco_num'],
+                                            'rodada_time_id' => $response['rodada_atual'],
+                                            'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                                        ]);
+
+                                    endforeach;
+
+                                    if (isset($response['reservas'])) :
+
+                                        foreach ((array) $response['reservas'] as $key => $val) :
+
+                                            EscalacaoAtletas::create([
+                                                'temporada' => $temporada,
+                                                'atleta_id' => $val['atleta_id'],
+                                                'preco_num' => $val['preco_num'],
+                                                'rodada_time_id' => $response['rodada_atual'],
+                                                'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                                                'titular' => 'Não',
+                                                'entrou_em_campo' => 'Não'
+                                            ]);
+
+                                        endforeach;
+
+                                    endif;
+
+                                endif;
+                            }, 3);
+
+                        endif;
+
+                    else :
 
                         $headers = ['authorization' => 'Bearer ' .  $val->access_token];
 
@@ -93,17 +183,19 @@ class Escalacao extends Command
                             endforeach;
 
                         endif;
-                    } catch (RequestException $e) {
-                        echo $e->getMessage() . PHP_EOL;
-                        Log::error($e->getMessage());
-                    } catch (Exception $e) {
-                        echo $e->getMessage() . PHP_EOL;
-                        Log::error($e->getMessage());
-                    }
 
-                endif;
+                    endif;
 
-            endforeach;
+                endforeach;
+
+                echo '- Processo finalizado.' . PHP_EOL . PHP_EOL;
+            } catch (RequestException $e) {
+                echo $e->getMessage() . PHP_EOL;
+                Log::error($e->getMessage());
+            } catch (Exception $e) {
+                echo $e->getMessage() . PHP_EOL;
+                Log::error($e->getMessage());
+            }
 
         else :
             echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;

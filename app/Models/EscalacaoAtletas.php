@@ -9,11 +9,6 @@ class EscalacaoAtletas extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['atleta_id', 'preco_num', 'rodada_time_id', 'titular', 'entrou_em_campo', 'escalacao_rodadas_id'];
+    protected $fillable = ['atleta_id', 'temporada', 'preco_num', 'rodada_time_id', 'titular', 'entrou_em_campo', 'escalacao_rodadas_id'];
 
-    // public function newQuery()
-    // {
-    //     return parent::newQuery()
-    //         ->where('temporada', Carbon::now()->format('Y'));
-    // }
 }

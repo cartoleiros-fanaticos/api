@@ -46,7 +46,7 @@ class Videos extends Command
                 echo PHP_EOL . '- Carregando dados.' . PHP_EOL;
 
                 $key = 'AIzaSyDX6AOQbUlb-uKExT73bZrBCRIyI9DgzPI';
-                $playlistId = 'PLtrYO8pIjijhRI7RCSI1_bZV_tReIrooj';
+                $playlistId = 'PLtrYO8pIjijhuFGpoBd7JebEpEPpmLHBd';
 
                 $client = new Client();
                 $response = $client->get('https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&order=date&playlistId=' . $playlistId . '&key=' . $key . '&maxResults=50');
