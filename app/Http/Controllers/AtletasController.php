@@ -400,8 +400,8 @@ class AtletasController extends Controller
                 30x30 as escudo,
                 IF(clubes.clube_id = clube_visitante_id, \'visitante\', \'mandante\') as mando
             FROM clubes 
-            INNER JOIN partidas ON clube_casa_id = clubes.clube_id OR clube_visitante_id = clubes.clube_id AND partidas.temporada = ?
-            WHERE clubes.clube_id = ?	AND rodada = ? AND clubes.temporada = ? 
+            INNER JOIN partidas ON (clube_casa_id = clubes.clube_id OR clube_visitante_id = clubes.clube_id) AND partidas.temporada = ?
+            WHERE clubes.clube_id = ? AND rodada = ? AND clubes.temporada = ? 
         ', [$this->temporada, $time_id, $game->rodada_atual, $this->temporada]);
 
         if (!isset($time[0]))
