@@ -27,10 +27,11 @@ return new class extends Migration
 
             $table->unique(['rodada_time_id', 'escalacao_times_id']);
 
-            DB::statement('ALTER TABLE `escalacao_atletas` ADD UNIQUE `temporada_rodada_time_id_escalacao_times_id_unique`(`temporada`, `rodada_time_id`, `escalacao_times_id`)');
-
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE `escalacao_rodadas` ADD UNIQUE `temporada_rodada_time_id_escalacao_times_id_unique`(`temporada`, `rodada_time_id`, `escalacao_times_id`)');
+
     }
 
     /**
