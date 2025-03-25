@@ -114,7 +114,7 @@ export const Option = styled.option`
     
 `;
 
-export const Button = styled.button`
+export const Button = styled.a`
     height: 40px;
     cursor: pointer;
 `;

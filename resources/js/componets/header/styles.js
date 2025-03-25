@@ -109,10 +109,6 @@ export const Close = styled.i.attrs(() => ({
     border-radius: 2em;
     border: solid 2x red;
     cursor: pointer;
-
-    &:hover {
-        opacity: 0.8;
-    }
 `;
 
 
@@ -250,6 +246,15 @@ export const Item = styled.li`
         }
     }
 
+`;
+
+export const Select = styled.select`
+    padding: 6px;
+    border: none;
+    margin-left: 5px;
+`;
+
+export const Option = styled.option`
 `;
 
 export const ButtonLink = styled.a.attrs(() => ({

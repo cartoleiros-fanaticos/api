@@ -21,6 +21,8 @@ import {
     Title,
     Close,
     Item,
+    Select,
+    Option,
     ButtonLink,
     SubItem,
 } from './styles';
@@ -273,12 +275,19 @@ function header() {
                         </Item>
                     }
                     <Item>
-                        <ButtonLink className="temporada" onClick={() => {
+                        {/* <ButtonLink className="temporada" onClick={() => {
                             dispatch({ type: 'ADD_SEASSON', seasson: year == seasson ? seasson - 1 : seasson + 1 });
                         }}>
                             <Icon>today</Icon>
                             TEMPORADA { seasson }
-                        </ButtonLink>
+                        </ButtonLink> */}
+                        <Select onChange={(e) => {
+                            dispatch({ type: 'ADD_SEASSON', seasson: e.target.value });
+                        }} value={seasson}>
+                            <Option value="2025">TEMPORADA 2025</Option>
+                            <Option value="2024">TEMPORADA 2024</Option>
+                            <Option value="2023">TEMPORADA 2023</Option>
+                        </Select>
                     </Item>
                 </Nav>
             </Container >
