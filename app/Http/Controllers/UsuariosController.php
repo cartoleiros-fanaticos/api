@@ -85,7 +85,7 @@ class UsuariosController extends Controller
             $usuario->nome = $request->nome;
             $usuario->celular = preg_replace('/[-() ]/', '', $request->celular);
             #$usuario->email = $request->email;
-            $usuario->comissao = $request->comissao;
+            $usuario->comissao = $request->comissao == 'null' ? 0 : $request->comissao;
             $usuario->plano = $request->plano;
             $usuario->funcao = $request->funcao;
             $usuario->ativo = $request->ativo;
