@@ -63,6 +63,7 @@ class Escalacao extends Command
 
                 foreach ($escalacao_times as $val) :
 
+                    $id = $val->id;
 
                     if ($game->status_mercado === 1) :
 
@@ -161,6 +162,25 @@ class Escalacao extends Command
 
                         $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
                         $response = json_decode($response->getBody(), true);
+
+                        if (isset($response['mensagem']) && $response['mensagem'] === 'Expired'):
+            
+                            $headers = ['Content-Type' => 'application/json'];
+                            $body = json_encode(['access_token' => $val->access_token]);
+            
+                            $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+                            $auth = json_decode($auth->getBody(), true);
+
+                            $time = EscalacaoTimes::find($id);            
+                            $time->access_token = $auth['access_token'];
+                            $time->save();
+
+                            $headers = ['authorization' => 'Bearer ' .  $auth['access_token']];
+
+                            $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
+                            $response = json_decode($response->getBody(), true);
+            
+                        endif;
 
                         if (count($response)) :
 

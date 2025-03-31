@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Atletas as ModelsAtletas;
 use App\Models\Clubes;
+use App\Models\Config;
 use App\Models\Game;
 use App\Models\Parciais;
 use App\Models\Posicoes;
@@ -108,11 +109,31 @@ class Atletas extends Command
                 endforeach;
 
                 echo '- Carregando minimo para valorizar.' . PHP_EOL;
-                
-                $headers = ['authorization' => 'Bearer ' .  config('global.access_token_cartola')];
+
+                $config = Config::find(1);
+
+                $headers = ['authorization' => 'Bearer ' . $config->cartola_access_token];
 
                 $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
                 $var = json_decode($var->getBody(), true);
+
+                if (isset($var['mensagem']) && $var['mensagem'] === 'Expired'):
+
+                    $headers = ['Content-Type' => 'application/json'];
+                    $body = json_encode(['access_token' => $config->cartola_access_token]);
+
+                    $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+                    $auth = json_decode($auth->getBody(), true);
+
+                    $config->cartola_access_token = $auth['access_token'];
+                    $config->save();
+
+                    $headers = ['authorization' => 'Bearer ' . $auth['access_token']];
+    
+                    $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
+                    $var = json_decode($var->getBody(), true);
+
+                endif;
 
                 ModelsAtletas::where('temporada', $temporada)
                     ->update([

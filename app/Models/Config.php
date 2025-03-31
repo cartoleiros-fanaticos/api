@@ -10,10 +10,4 @@ class Config extends Model
     use HasFactory;
 
     protected $fillable = [ 'id', 'cartola_access_token', 'mp_access_token' ];
-
-    // public function newQuery()
-    // {
-    //     return parent::newQuery()
-    //         ->where('temporada', Carbon::now()->format('Y'));
-    // }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Atletas;
 use App\Models\Clubes;
+use App\Models\Config;
 use App\Models\Game;
 use App\Models\Parciais;
 use App\Models\Partidas;
@@ -655,10 +656,30 @@ class ParciaisController extends Controller
 
                 $client = new Client();
 
-                $headers = ['authorization' => 'Bearer ' . config('global.access_token_cartola')];
+                $config = Config::find(1);
+    
+                $headers = ['authorization' => 'Bearer ' . $config->cartola_access_token];
 
                 $response = $client->get("https://api.cartola.globo.com/auth/liga/$slug?orderBy=$orderBy&page=$page", ['headers' => $headers]);
                 $response = json_decode($response->getBody(), true);
+
+                if (isset($response['mensagem']) && $response['mensagem'] === 'Expired'):
+
+                    $headers = ['Content-Type' => 'application/json'];
+                    $body = json_encode(['access_token' => $config->cartola_access_token]);
+
+                    $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+                    $auth = json_decode($auth->getBody(), true);
+
+                    $config->cartola_access_token = $auth['access_token'];
+                    $config->save();
+
+                    $headers = ['authorization' => 'Bearer ' . $auth['access_token']];
+
+                    $response = $client->get("https://api.cartola.globo.com/auth/liga/$slug?orderBy=$orderBy&page=$page", ['headers' => $headers]);
+                    $response = json_decode($response->getBody(), true);
+
+                endif;
 
                 if ($response['liga']['total_times_liga'] > 200)
                     return response()->json(['message' => 'Só é possível carregar ligas de até 200 times.'], 401);
