@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
             ->everyTenMinutes();
 
         $schedule->command('app:atletas')
-            ->hourly();
+            ->everyTenMinutes();
 
         $schedule->command('app:videos')
             ->hourly();

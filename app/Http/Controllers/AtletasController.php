@@ -549,23 +549,23 @@ class AtletasController extends Controller
             $liga = $client->get("https://api.cartola.globo.com/auth/liga/$request->slug", ['headers' => $headers]);
             $liga = json_decode($liga->getBody(), true);
 
-            if (isset($liga['mensagem']) && $liga['mensagem'] === 'Expired'):
+            // if (isset($liga['mensagem']) && $liga['mensagem'] === 'Expired'):
 
-                $headers = ['Content-Type' => 'application/json'];
-                $body = json_encode(['access_token' => $config->cartola_access_token]);
+            //     $headers = ['Content-Type' => 'application/json'];
+            //     $body = json_encode(['access_token' => $config->cartola_access_token]);
 
-                $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
-                $auth = json_decode($auth->getBody(), true);
+            //     $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+            //     $auth = json_decode($auth->getBody(), true);
 
-                $config->cartola_access_token = $auth['access_token'];
-                $config->save();
+            //     $config->cartola_access_token = $auth['access_token'];
+            //     $config->save();
 
-                $headers = ['authorization' => 'Bearer ' . $auth['access_token']];
+            //     $headers = ['authorization' => 'Bearer ' . $auth['access_token']];
     
-                $liga = $client->get("https://api.cartola.globo.com/auth/liga/$request->slug", ['headers' => $headers]);
-                $liga = json_decode($liga->getBody(), true);
+            //     $liga = $client->get("https://api.cartola.globo.com/auth/liga/$request->slug", ['headers' => $headers]);
+            //     $liga = json_decode($liga->getBody(), true);
 
-            endif;
+            // endif;
 
             if ($liga['liga']['total_times_liga'] > 200)
                 return response()->json(['message' => 'Só é possível carregar ligas de até 200 times.'], 401);

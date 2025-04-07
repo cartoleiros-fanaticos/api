@@ -117,24 +117,6 @@ class Atletas extends Command
                 $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
                 $var = json_decode($var->getBody(), true);
 
-                if (isset($var['mensagem']) && $var['mensagem'] === 'Expired'):
-
-                    $headers = ['Content-Type' => 'application/json'];
-                    $body = json_encode(['access_token' => $config->cartola_access_token]);
-
-                    $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
-                    $auth = json_decode($auth->getBody(), true);
-
-                    $config->cartola_access_token = $auth['access_token'];
-                    $config->save();
-
-                    $headers = ['authorization' => 'Bearer ' . $auth['access_token']];
-    
-                    $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
-                    $var = json_decode($var->getBody(), true);
-
-                endif;
-
                 ModelsAtletas::where('temporada', $temporada)
                     ->update([
                         'fora_do_cartola' => 'Sim'
@@ -206,11 +188,38 @@ class Atletas extends Command
                 echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL;
             endif;
         } catch (QueryException $e) {
+
             echo $e->getMessage() . PHP_EOL;
             Log::error('Game: ' . $e->getMessage());
+
         } catch (RequestException $e) {
-            echo $e->getMessage() . PHP_EOL;
-            Log::error('Game: ' . $e->getMessage());
+
+            $msg = $e->getMessage();
+            $msg = json_decode(substr($msg, strpos($msg, "{")));
+
+            if (isset($msg->mensagem) && $msg->mensagem === 'Expired'):
+
+                echo '- Atualizando token.' . PHP_EOL;
+
+                $config = Config::find(1);
+
+                $headers = ['Content-Type' => 'application/json'];
+                $body = json_encode(['access_token' => $config->cartola_access_token]);
+
+                $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+                $auth = json_decode($auth->getBody(), true);
+
+                $config->cartola_access_token = $auth['access_token'];
+                $config->save();
+
+                echo '- Token atualizado.' . PHP_EOL;
+
+            else:
+
+               echo $e->getMessage() . PHP_EOL;
+               Log::error('Game: ' . $e->getMessage());
+
+            endif;
         } catch (Exception $e) {
             echo $e->getMessage() . PHP_EOL;
             Log::error('Game: ' . $e->getMessage());

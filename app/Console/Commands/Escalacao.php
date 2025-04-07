@@ -55,73 +55,87 @@ class Escalacao extends Command
                 ->where('temporada', $temporada)
                 ->get();
 
-            try {
+            // try {
 
-                echo '- Atualizando times.' . PHP_EOL;
+            echo '- Atualizando times.' . PHP_EOL;
 
-                $client = new Client();
+            $client = new Client();
 
-                foreach ($escalacao_times as $val) :
+            foreach ($escalacao_times as $val) :
 
-                    $id = $val->id;
+                $id = $val->id;
 
-                    if ($game->status_mercado === 1) :
+                if ($game->status_mercado === 1) :
 
-                        if (!is_null($val->access_token)) :
+                    if (!is_null($val->access_token)) :
 
-                            $request->replace(['access_token' => $val->access_token]);
+                        $request->replace(['access_token' => $val->access_token]);
 
-                            $escalacao = new EscalacaoController($request);
-                            $escalacao->store($request);
-                            
-                        endif;
+                        $escalacao = new EscalacaoController($request);
+                        $escalacao->store($request);
 
-                        if ($game->rodada_atual >= 2) :
+                    endif;
 
-                            $rodada = ($game->rodada_atual == 38 && $game->game_over == 1) ? 38 : ($game->rodada_atual - 1);
+                    if ($game->rodada_atual >= 2) :
 
-                            $response = $client->get("https://api.cartola.globo.com/time/id/$val->time_id/$rodada");
-                            $response = json_decode($response->getBody(), true);
+                        $rodada = ($game->rodada_atual == 38 && $game->game_over == 1) ? 38 : ($game->rodada_atual - 1);
 
-                            DB::transaction(function () use ($response, $temporada) {
+                        $response = $client->get("https://api.cartola.globo.com/time/id/$val->time_id/$rodada");
+                        $response = json_decode($response->getBody(), true);
 
-                                $time = $response['time'];
+                        DB::transaction(function () use ($response, $temporada) {
 
-                                $escalacao_times = EscalacaoTimes::updateOrCreate(
+                            $time = $response['time'];
+
+                            $escalacao_times = EscalacaoTimes::updateOrCreate(
+                                [
+                                    'time_id' => $time['time_id'],
+                                    'temporada' => $temporada
+                                ],
+                                [
+                                    'nome' => $time['nome'],
+                                    'slug' => $time['slug'],
+                                    'patrimonio' => $response['patrimonio'],
+                                    'pontos_campeonato' => $response['pontos_campeonato'] ?? 0,
+                                    'url_escudo_png' => $time['url_escudo_png']
+                                ]
+                            );
+
+                            if (COLLECT($response['atletas'])->count()) :
+
+                                $escalacao_rodadas = EscalacaoRodadas::updateOrCreate(
                                     [
-                                        'time_id' => $time['time_id'],
+                                        'escalacao_times_id' => $escalacao_times->id,
+                                        'rodada_time_id' => $response['rodada_atual'],
                                         'temporada' => $temporada
                                     ],
                                     [
-                                        'nome' => $time['nome'],
-                                        'slug' => $time['slug'],
-                                        'patrimonio' => $response['patrimonio'],
-                                        'pontos_campeonato' => $response['pontos_campeonato'] ?? 0,
-                                        'url_escudo_png' => $time['url_escudo_png']
+                                        'capitao_id' => $response['capitao_id'],
+                                        'esquema_id' => $response['esquema_id'],
+                                        'valor_time' => $response['valor_time'],
                                     ]
                                 );
 
-                                if (COLLECT($response['atletas'])->count()) :
+                                EscalacaoAtletas::where('rodada_time_id', $response['rodada_atual'])
+                                    ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
+                                    ->where('temporada', $temporada)
+                                    ->delete();
 
-                                    $escalacao_rodadas = EscalacaoRodadas::updateOrCreate(
-                                        [
-                                            'escalacao_times_id' => $escalacao_times->id,
-                                            'rodada_time_id' => $response['rodada_atual'],
-                                            'temporada' => $temporada
-                                        ],
-                                        [
-                                            'capitao_id' => $response['capitao_id'],
-                                            'esquema_id' => $response['esquema_id'],
-                                            'valor_time' => $response['valor_time'],
-                                        ]
-                                    );
+                                foreach ((array) $response['atletas'] as $key => $val) :
 
-                                    EscalacaoAtletas::where('rodada_time_id', $response['rodada_atual'])
-                                        ->where('escalacao_rodadas_id', $escalacao_rodadas->id)
-                                        ->where('temporada', $temporada)
-                                        ->delete();
+                                    EscalacaoAtletas::create([
+                                        'temporada' => $temporada,
+                                        'atleta_id' => $val['atleta_id'],
+                                        'preco_num' => $val['preco_num'],
+                                        'rodada_time_id' => $response['rodada_atual'],
+                                        'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                                    ]);
 
-                                    foreach ((array) $response['atletas'] as $key => $val) :
+                                endforeach;
+
+                                if (isset($response['reservas'])) :
+
+                                    foreach ((array) $response['reservas'] as $key => $val) :
 
                                         EscalacaoAtletas::create([
                                             'temporada' => $temporada,
@@ -129,93 +143,80 @@ class Escalacao extends Command
                                             'preco_num' => $val['preco_num'],
                                             'rodada_time_id' => $response['rodada_atual'],
                                             'escalacao_rodadas_id' => $escalacao_rodadas->id,
+                                            'titular' => 'Não',
+                                            'entrou_em_campo' => 'Não'
                                         ]);
 
                                     endforeach;
 
-                                    if (isset($response['reservas'])) :
-
-                                        foreach ((array) $response['reservas'] as $key => $val) :
-
-                                            EscalacaoAtletas::create([
-                                                'temporada' => $temporada,
-                                                'atleta_id' => $val['atleta_id'],
-                                                'preco_num' => $val['preco_num'],
-                                                'rodada_time_id' => $response['rodada_atual'],
-                                                'escalacao_rodadas_id' => $escalacao_rodadas->id,
-                                                'titular' => 'Não',
-                                                'entrou_em_campo' => 'Não'
-                                            ]);
-
-                                        endforeach;
-
-                                    endif;
-
                                 endif;
-                            }, 3);
 
-                        endif;
+                            endif;
+                        }, 3);
 
-                    else :
+                    endif;
 
-                        $headers = ['authorization' => 'Bearer ' .  $val->access_token];
+                else :
+
+                    $headers = ['authorization' => 'Bearer ' .  $val->access_token];
+
+                    $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
+                    $response = json_decode($response->getBody(), true);
+
+                    if (isset($response['mensagem']) && $response['mensagem'] === 'Expired'):
+
+                        $headers = ['Content-Type' => 'application/json'];
+                        $body = json_encode(['access_token' => $val->access_token]);
+
+                        $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
+                        $auth = json_decode($auth->getBody(), true);
+
+                        $time = EscalacaoTimes::find($id);
+                        $time->access_token = $auth['access_token'];
+                        $time->save();
+
+                        $headers = ['authorization' => 'Bearer ' .  $auth['access_token']];
 
                         $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
                         $response = json_decode($response->getBody(), true);
 
-                        if (isset($response['mensagem']) && $response['mensagem'] === 'Expired'):
-            
-                            $headers = ['Content-Type' => 'application/json'];
-                            $body = json_encode(['access_token' => $val->access_token]);
-            
-                            $auth = $client->post("https://api.cartola.globo.com/refresh", ['timeout' => 180, 'headers' => $headers, 'body' => $body]);
-                            $auth = json_decode($auth->getBody(), true);
+                    endif;
 
-                            $time = EscalacaoTimes::find($id);            
-                            $time->access_token = $auth['access_token'];
-                            $time->save();
+                    if (count($response)) :
 
-                            $headers = ['authorization' => 'Bearer ' .  $auth['access_token']];
+                        foreach ($response as $value) :
 
-                            $response = $client->get("https://api.cartola.globo.com/auth/time/substituicoes", ['headers' => $headers]);
-                            $response = json_decode($response->getBody(), true);
-            
-                        endif;
-
-                        if (count($response)) :
-
-                            foreach ($response as $value) :
-
-                                DB::UPDATE('
+                            DB::UPDATE('
                                     UPDATE escalacao_atletas 
                                     INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
                                     SET entrou_em_campo = "Sim"
                                     WHERE atleta_id = ? AND escalacao_times_id = ? escalacao_rodadas.temporada = ?
                                 ', [$value['entrou']['atleta_id'], $val->id, $temporada]);
 
-                                DB::UPDATE('
+                            DB::UPDATE('
                                     UPDATE escalacao_atletas 
                                     INNER JOIN escalacao_rodadas ON escalacao_rodadas_id = escalacao_rodadas.id
                                     SET entrou_em_campo = "Não"
                                     WHERE atleta_id = ? AND escalacao_times_id = ? escalacao_rodadas.temporada = ?
                                 ', [$value['saiu']['atleta_id'], $val->id, $temporada]);
 
-                            endforeach;
-
-                        endif;
+                        endforeach;
 
                     endif;
 
-                endforeach;
+                endif;
 
-                echo '- Processo finalizado.' . PHP_EOL . PHP_EOL;
-            } catch (RequestException $e) {
-                echo $e->getMessage() . PHP_EOL;
-                Log::error($e->getMessage());
-            } catch (Exception $e) {
-                echo $e->getMessage() . PHP_EOL;
-                Log::error($e->getMessage());
-            }
+            endforeach;
+
+            echo '- Processo finalizado.' . PHP_EOL . PHP_EOL;
+
+        // } catch (RequestException $e) {
+        //     echo $e->getMessage() . PHP_EOL;
+        //     Log::error($e->getMessage());
+        // } catch (Exception $e) {
+        //     echo $e->getMessage() . PHP_EOL;
+        //     Log::error($e->getMessage());
+        // }
 
         else :
             echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL . PHP_EOL;
