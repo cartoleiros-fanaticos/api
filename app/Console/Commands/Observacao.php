@@ -130,69 +130,75 @@ class Observacao extends Command
                             ) as adversario_id
                         FROM partidas
                         WHERE rodada = ? AND (clube_casa_id = ? OR clube_visitante_id = ?) AND valida = 1 AND temporada = ?
-                    ', [$val['clube_id'], $val['clube_id'], $game->rodada_atual, $val['clube_id'], $val['clube_id'], $temporada])[0];
+                    ', [$val['clube_id'], $val['clube_id'], $game->rodada_atual, $val['clube_id'], $val['clube_id'], $temporada]);
 
-                    if ($partida->posicao === 'mandante') :
+                    if (isset($partida[0])):
 
-                        $rodadas = (isset($mandante_rodada_id[$val['clube_id']]) ? $mandante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') : 'NULL');
+                        $partida = $partida[0];
 
-                        $parciais = DB::SELECT('
+                        if ($partida->posicao === 'mandante') :
+
+                            $rodadas = (isset($mandante_rodada_id[$val['clube_id']]) ? $mandante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') : 'NULL');
+
+                            $parciais = DB::SELECT('
                         SELECT 
                             ROUND(IFNULL(AVG(pontuacao), 0), 2) as pontuacao
                         FROM parciais                        
                         WHERE atleta_id = ? AND parciais.rodada IN (' .  $rodadas . ') AND temporada = ?
                     ', [$val['atleta_id'], $temporada])[0];
 
-                        $max_pontuacao = DB::SELECT('
+                            $max_pontuacao = DB::SELECT('
                             SELECT 
                                 ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                             FROM parciais
                             WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id)) AND temporada = ?
                         ', [$val['atleta_id'], $temporada])[0];
 
-                        $min_pontuacao = DB::SELECT('
+                            $min_pontuacao = DB::SELECT('
                             SELECT 
                                 ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                             FROM parciais
                             WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_casa_id IN (clube_id)) AND temporada = ?
                         ', [$val['atleta_id'], $temporada])[0];
 
-                    else :
+                        else :
 
-                        $rodadas = (isset($visitante_rodada_id[$val['clube_id']]) ? $visitante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') : 'NULL');
+                            $rodadas = (isset($visitante_rodada_id[$val['clube_id']]) ? $visitante_rodada_id[$val['clube_id']]->pluck('rodada')->implode(',') : 'NULL');
 
-                        $parciais = DB::SELECT('
+                            $parciais = DB::SELECT('
                             SELECT 
                                 ROUND(IFNULL(AVG(pontuacao), 0), 2) as pontuacao
                             FROM parciais                        
                             WHERE atleta_id = ? AND parciais.rodada IN (' .  $rodadas . ') AND temporada = ?
                         ', [$val['atleta_id'], $temporada])[0];
 
-                        $max_pontuacao = DB::SELECT('
+                            $max_pontuacao = DB::SELECT('
                             SELECT 
                                 ROUND(IFNULL(MAX(pontuacao), 0), 2) pontos
                             FROM parciais
                             WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id)) AND temporada = ?
                         ', [$val['atleta_id'], $temporada])[0];
 
-                        $min_pontuacao = DB::SELECT('
+                            $min_pontuacao = DB::SELECT('
                             SELECT 
                                 ROUND(IFNULL(MIN(pontuacao), 0), 2) pontos
                             FROM parciais
                             WHERE atleta_id = ? AND rodada IN (SELECT rodada FROM partidas WHERE valida = 1 AND clube_visitante_id IN (clube_id)) AND temporada = ?
                         ', [$val['atleta_id'], $temporada])[0];
 
-                    endif;
+                        endif;
 
-                    if (COLLECT($parciais)->count()) :
+                        if (COLLECT($parciais)->count()) :
 
-                        $observacao = 'O jogador ' . $val['apelido'] . ' nos últimos 3 jogos como ' . $partida->posicao . ' tem uma média de ' . $parciais->pontuacao . ' pontos, nesta rodada ele joga contra ( ' . $clubes[$partida->adversario_id]->nome . ' ) a maior nota dele como ' . $partida->posicao . ' foi ' . $max_pontuacao->pontos . ' pontos e a menor foi ' . $min_pontuacao->pontos . ' pontos.';
+                            $observacao = 'O jogador ' . $val['apelido'] . ' nos últimos 3 jogos como ' . $partida->posicao . ' tem uma média de ' . $parciais->pontuacao . ' pontos, nesta rodada ele joga contra ( ' . $clubes[$partida->adversario_id]->nome . ' ) a maior nota dele como ' . $partida->posicao . ' foi ' . $max_pontuacao->pontos . ' pontos e a menor foi ' . $min_pontuacao->pontos . ' pontos.';
 
-                        Atletas::where('atleta_id', $val['atleta_id'])
-                            ->where('temporada', $temporada)
-                            ->update([
-                                'observacao' => $observacao
-                            ]);
+                            Atletas::where('atleta_id', $val['atleta_id'])
+                                ->where('temporada', $temporada)
+                                ->update([
+                                    'observacao' => $observacao
+                                ]);
+
+                        endif;
 
                     endif;
 

@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Config;
 use App\Models\Destaques;
 use App\Models\Game as ModelsGame;
 use App\Models\Partidas;
@@ -104,7 +105,9 @@ class Game extends Command
 
                 echo '- Carregando dados dos mais escalados.' . PHP_EOL;
 
-                $headers = ['authorization' => 'Bearer ' . config('global.access_token_cartola')];
+                $config = Config::first();
+
+                $headers = ['authorization' => 'Bearer ' . $config->cartola_access_token];
 
                 $response = $client->get('https://api.cartola.globo.com/auth/mercado/destaques', ['headers' => $headers]);
                 $response = json_decode($response->getBody(), true);
