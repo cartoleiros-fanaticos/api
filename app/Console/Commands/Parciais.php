@@ -67,41 +67,45 @@ class Parciais extends Command
 
                         foreach ((array) $response['atletas'] as $id => $val) :
 
-                            ModelsParciais::updateOrCreate(
-                                [
-                                    'atleta_id' => $id,
-                                    'rodada' => $response['rodada'],
-                                    'temporada' => $temporada
+                            if (!in_array($id, [91970, 143411, 120612])):
 
-                                ],
-                                [
-                                    'pontuacao' => $val['pontuacao'],
-                                    'clube_id' => $val['clube_id'],
-                                    'posicao_id' => $atletas[$id]->posicao_id,
-                                    'variacao_num' => 0,
-                                    'entrou_em_campo' => $val['entrou_em_campo'] ? 'Sim' : 'Não',
-                                    'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
-                                    'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
-                                    'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),
-                                    'CA' => (isset($val['scout']['CA']) ? $val['scout']['CA'] : 0),
-                                    'CV' => (isset($val['scout']['CV']) ? $val['scout']['CV'] : 0),
-                                    'SG' => (isset($val['scout']['SG']) ? $val['scout']['SG'] : 0),
-                                    'DP' => (isset($val['scout']['DP']) ? $val['scout']['DP'] : 0),
-                                    'GS' => (isset($val['scout']['GS']) ? $val['scout']['GS'] : 0),
-                                    'FS' => (isset($val['scout']['FS']) ? $val['scout']['FS'] : 0),
-                                    'A' => (isset($val['scout']['A']) ? $val['scout']['A'] : 0),
-                                    'FT' => (isset($val['scout']['FT']) ? $val['scout']['FT'] : 0),
-                                    'FD' => (isset($val['scout']['FD']) ? $val['scout']['FD'] : 0),
-                                    'FF' => (isset($val['scout']['FF']) ? $val['scout']['FF'] : 0),
-                                    'G' => (isset($val['scout']['G']) ? $val['scout']['G'] : 0),
-                                    'I' => (isset($val['scout']['I']) ? $val['scout']['I'] : 0),
-                                    'PP' => (isset($val['scout']['PP']) ? $val['scout']['PP'] : 0),
-                                    'PS' => (isset($val['scout']['PS']) ? $val['scout']['PS'] : 0),
-                                    'PC' => (isset($val['scout']['PC']) ? $val['scout']['PC'] : 0),
-                                    'DE' => (isset($val['scout']['DE']) ? $val['scout']['DE'] : 0),
-                                    'V' => (isset($val['scout']['V']) ? $val['scout']['V'] : 0),
-                                ]
-                            );
+                                ModelsParciais::updateOrCreate(
+                                    [
+                                        'atleta_id' => $id,
+                                        'rodada' => $response['rodada'],
+                                        'temporada' => $temporada
+
+                                    ],
+                                    [
+                                        'pontuacao' => $val['pontuacao'],
+                                        'clube_id' => $val['clube_id'],
+                                        'posicao_id' => $atletas[$id]->posicao_id,
+                                        'variacao_num' => 0,
+                                        'entrou_em_campo' => $val['entrou_em_campo'] ? 'Sim' : 'Não',
+                                        'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
+                                        'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
+                                        'GC' => (isset($val['scout']['GC']) ? $val['scout']['GC'] : 0),
+                                        'CA' => (isset($val['scout']['CA']) ? $val['scout']['CA'] : 0),
+                                        'CV' => (isset($val['scout']['CV']) ? $val['scout']['CV'] : 0),
+                                        'SG' => (isset($val['scout']['SG']) ? $val['scout']['SG'] : 0),
+                                        'DP' => (isset($val['scout']['DP']) ? $val['scout']['DP'] : 0),
+                                        'GS' => (isset($val['scout']['GS']) ? $val['scout']['GS'] : 0),
+                                        'FS' => (isset($val['scout']['FS']) ? $val['scout']['FS'] : 0),
+                                        'A' => (isset($val['scout']['A']) ? $val['scout']['A'] : 0),
+                                        'FT' => (isset($val['scout']['FT']) ? $val['scout']['FT'] : 0),
+                                        'FD' => (isset($val['scout']['FD']) ? $val['scout']['FD'] : 0),
+                                        'FF' => (isset($val['scout']['FF']) ? $val['scout']['FF'] : 0),
+                                        'G' => (isset($val['scout']['G']) ? $val['scout']['G'] : 0),
+                                        'I' => (isset($val['scout']['I']) ? $val['scout']['I'] : 0),
+                                        'PP' => (isset($val['scout']['PP']) ? $val['scout']['PP'] : 0),
+                                        'PS' => (isset($val['scout']['PS']) ? $val['scout']['PS'] : 0),
+                                        'PC' => (isset($val['scout']['PC']) ? $val['scout']['PC'] : 0),
+                                        'DE' => (isset($val['scout']['DE']) ? $val['scout']['DE'] : 0),
+                                        'V' => (isset($val['scout']['V']) ? $val['scout']['V'] : 0),
+                                    ]
+                                );
+
+                            endif;
 
                         endforeach;
 
