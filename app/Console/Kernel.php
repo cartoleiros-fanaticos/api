@@ -22,14 +22,14 @@ class Kernel extends ConsoleKernel
         $schedule->command('app:competicao')
             ->everyFiveMinutes();
 
-        $schedule->command('app:token')
-            ->everyFiveMinutes();
-
         $schedule->command('app:game')
             ->everyTenMinutes();
 
         $schedule->command('app:atletas')
             ->everyTenMinutes();
+
+        $schedule->command('app:token')
+            ->everyThirtyMinutes();
 
         $schedule->command('app:videos')
             ->hourly();
