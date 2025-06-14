@@ -108,15 +108,6 @@ class Atletas extends Command
 
                 endforeach;
 
-                echo '- Carregando minimo para valorizar.' . PHP_EOL;
-
-                $config = Config::find(1);
-
-                $headers = ['authorization' => 'Bearer ' . $config->cartola_access_token];
-
-                $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
-                $var = json_decode($var->getBody(), true);
-
                 ModelsAtletas::where('temporada', $temporada)
                     ->update([
                         'fora_do_cartola' => 'Sim'
@@ -156,7 +147,6 @@ class Atletas extends Command
                                 'variacao_num' => $val['variacao_num'],
                                 'media_num' => $val['media_num'],
                                 'jogos_num' => $val['jogos_num'],
-                                'minimo_para_valorizar' => ($var && isset($var[$val['atleta_id']]) && $var[$val['atleta_id']]['minimo_para_valorizar']) ? $var[$val['atleta_id']]['minimo_para_valorizar']  : 0,
                                 'fora_do_cartola' => 'Não',
                                 'DS' => (isset($val['scout']['DS']) ? $val['scout']['DS'] : 0),
                                 'FC' => (isset($val['scout']['FC']) ? $val['scout']['FC'] : 0),
@@ -182,8 +172,34 @@ class Atletas extends Command
                     endif;
                 endforeach;
 
+                echo '- Carregando minimo para valorizar.' . PHP_EOL;
+
+                $config = Config::find(1);
+
+                $headers = ['authorization' => 'Bearer ' . $config->cartola_access_token];
+
+                $var = $client->get('https://api.cartola.globo.com/auth/gatomestre/atletas', ['headers' => $headers]);
+                $var = json_decode($var->getBody(), true);
+
+                foreach ((array) $response['atletas'] as $key => $val) :
+
+                    if ($val['clube_id'] != 1) :
+
+                        ModelsAtletas::updateOrCreate(
+                            [
+                                'atleta_id' => $val['atleta_id'],
+                                'temporada' => $temporada
+                            ],
+                            [
+                                'minimo_para_valorizar' => ($var && isset($var[$val['atleta_id']]) && $var[$val['atleta_id']]['minimo_para_valorizar']) ? $var[$val['atleta_id']]['minimo_para_valorizar']  : 0,
+                            ]
+                        );
+                        
+                    endif;
+                endforeach;
 
                 echo '- Sucesso na atualizacao.' . PHP_EOL;
+
             else :
                 echo PHP_EOL . '- Temporada ainda não disponível.' . PHP_EOL;
             endif;
